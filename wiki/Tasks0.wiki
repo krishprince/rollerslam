@@ -1,0 +1,133 @@
+#summary Initial task division - e-mail thread
+
+==	von		Marcos Aurélio <maurelio1234@gmail.com> ==
+	an		Weslei A. de T. Marinho <weslei@gmail.com>	 
+	cc	
+
+
+	Cleyton Rodrigues <cleyton.rodrigues@gmail.com>,
+Breno Batista Machado <brenomachado@gmail.com>,
+Pablo de Santana <pablodesantana@gmail.com>,
+Antônio José <tonze00@gmail.com>	 
+
+	datum		31.05.2007 12:14	 
+	betreff		Re: Projeto MCI	 
+	gesendet von		gmail.com	 
+
+Pessoal,
+
+estou pensando em a gente se dividir inicialmente nos seguintes problemas:
+
+(1) Fechar um ppt com os requisitos (para a gente apresentar onde que que tenha que ser apresentado - 2 pessoas
+
+(2) Montar a infra estrutura inicial, decidir IDE, ambiente e etc... (trabalho mais focado pra SD) - 2 pessoas
+
+(3) Modelar mundo físico do jogo - 2 pessoas
+
+por favor, respondam este e-mail o mais rápido possível dizendo em que grupo vc gostaria de ficar.  (até 22hs de hoje, or else alocação automática :P)
+
+Depois que os grupos estiverem fechados, cada grupo dê um jeito de quebrar sua tarefa grande no máximo da tarefas menores de tamanho razoável e cadastrar como issue no site do projeto ( http://code.google.com/p/rollerslam - acho )
+
+ps: eu fico no grupo 2 ;-)
+
+ps2: eu coloquei um ppt com parte da modelgem física já no site... pra ser extendido pelo pessoal do grupo 1.
+
+maas
+
+==	von		Antônio José <tonze00@gmail.com> 		 ==
+	an		Marcos Aurélio <maurelio1234@gmail.com>	 
+	cc	
+
+
+	Weslei A. de T. Marinho <weslei@gmail.com>,
+Cleyton Rodrigues <cleyton.rodrigues@gmail.com>,
+Breno Batista Machado <brenomachado@gmail.com>,
+Pablo de Santana <pablodesantana@gmail.com>	 
+	datum		31.05.2007 14:43	 
+	betreff		Re: Projeto MCI	 
+	gesendet von		gmail.com	 
+Eu posso ficar no grupo 1.
+
+Em 31/05/07, Marcos Aurélio <maurelio1234@gmail.com> escreveu:
+- Zitierten Text anzeigen -
+
+
+- Zitierten Text anzeigen -
+
+-- 
+Antônio José de Vasconcelos Costa
+Engenheiro de Teste do Projeto CIN-UFPE/Motorola
+Pós-Graduação em Gestão de Segurança da Informação - DSC-UFCG / CEFET-PB
+Mestrando em Ciências da Computação - CIN-UFPE 
+
+	
+==	von		Weslei A. de T. Marinho <weslei@gmail.com> 		==
+	an		Marcos Aurélio <maurelio1234@gmail.com>	 
+	cc	
+
+
+	Cleyton Rodrigues <cleyton.rodrigues@gmail.com>,
+Breno Batista Machado <brenomachado@gmail.com>,
+Pablo de Santana <pablodesantana@gmail.com>,
+Antônio José <tonze00@gmail.com>	 
+	datum		31.05.2007 15:05	 
+	betreff		Re: Projeto MCI	 
+	gesendet von		gmail.com	 
+gostaria e entrar no (2) tb...
+
+[]'s
+- Zitierten Text anzeigen -
+
+
+==	von		Breno Batista Machado <brenomachado@gmail.com> 		 ==
+	an		Weslei A. de T. Marinho <weslei@gmail.com>	 
+	cc	
+
+
+	Marcos Aurélio <maurelio1234@gmail.com>,
+Cleyton Rodrigues <cleyton.rodrigues@gmail.com>,
+Pablo de Santana <pablodesantana@gmail.com>,
+Antônio José <tonze00@gmail.com>	 
+	datum		31.05.2007 16:37	 
+	betreff		Re: Projeto MCI	 
+	gesendet von		gmail.com	 
+posso ficar no grupo 1
+
+=]
+- Zitierten Text anzeigen -
+
+-- 
+  Att.
+  Breno Batista Machado 
+
+== Pablo de Santana <pablodesantana@gmail.com> 		 ==
+	an		Breno Batista Machado <brenomachado@gmail.com>	 
+	cc	
+
+
+	Weslei A. de T. Marinho <weslei@gmail.com>,
+Marcos Aurélio <maurelio1234@gmail.com>,
+Cleyton Rodrigues <cleyton.rodrigues@gmail.com>,
+Antônio José <tonze00@gmail.com>	 
+	datum		31.05.2007 17:13	 
+	betreff		Re: Projeto MCI	 
+	gesendet von		gmail.com	 
+Entao sobrou o 3 pra mim e Cleyton :P
+- Zitierten Text anzeigen -
+-- 
+[]'s, Pablo
+
+==	von		Cleyton Rodrigues <cleyton.rodrigues@gmail.com> 	==
+	an		Pablo de Santana <pablodesantana@gmail.com>	 
+	cc	
+
+
+	Breno Batista Machado <brenomachado@gmail.com>,
+Weslei A. de T. Marinho <weslei@gmail.com>,
+Marcos Aurélio <maurelio1234@gmail.com>,
+Antônio José <tonze00@gmail.com>	 
+	datum		31.05.2007 20:40	 
+	betreff		Re: Projeto MCI	 
+	gesendet von		gmail.com	 
+Por mim, blza.
+- Zitierten Text anzeigen -
