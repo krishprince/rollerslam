@@ -31,7 +31,7 @@ import java.rmi.RemoteException;
  */
 public class SimulationThread extends Thread {
 	private boolean running = false;
-	private long THINKING_INTERVAL = 5000;
+	private long THINKING_INTERVAL = 500;
 	private EnvironmentAgent environment = new EnvironmentAgentImpl();
 	
 	/**
@@ -79,7 +79,7 @@ public class SimulationThread extends Thread {
 				}
 			}
 
-			System.out.println("THINKING...");
+			System.out.println("THINKING... " + environment);
 			try {
 				environment.think();
 			} catch (RemoteException e1) {
