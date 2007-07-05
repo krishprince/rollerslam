@@ -23,7 +23,6 @@ package test.environment;
 
 import java.rmi.RemoteException;
 
-import rollerslam.infrastructure.server.Message;
 import rollerslam.infrastructure.server.ProxiedEnvironmentAgent;
 import rollerslam.infrastructure.server.ServerFacade;
 
@@ -33,6 +32,11 @@ import rollerslam.infrastructure.server.ServerFacade;
  * @author maas
  */
 public class TestEnvironmentAgent implements TestEnvironment {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8636889844418101095L;
 
 	/**
 	 * @see test.environment.TestEnvironment#notifyValue(int)
@@ -46,8 +50,8 @@ public class TestEnvironmentAgent implements TestEnvironment {
 	}
 	
 	public static void main(String[] args) throws Exception {
+		ServerFacade.init(1099, new ProxiedEnvironmentAgent(new TestEnvironmentAgent()));
 		ServerFacade server = ServerFacade.getInstance();
-		server.init(1099, new ProxiedEnvironmentAgent(new TestEnvironmentAgent()));
 		server.getSimulationAdmin().run();
 	}
 
