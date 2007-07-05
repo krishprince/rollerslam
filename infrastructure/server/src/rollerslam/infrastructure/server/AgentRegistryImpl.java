@@ -31,7 +31,7 @@ import rollerslam.agents.Agent;
  * 
  * @author maas
  */
-public class AgentRegistryImpl implements AgentRegistry {
+public class AgentRegistryImpl implements AgentRegistry, AgentRegistryExtended {
 
 	private Set<Agent> agents = new HashSet<Agent>();
 	private SimulationAdmin simulation = null;
@@ -54,6 +54,8 @@ public class AgentRegistryImpl implements AgentRegistry {
 	public void register(Agent a) throws RemoteException {
 		if (simulation.getState() == SimulationState.CREATED) {
 			agents.add(a);
+			
+			System.out.println(this + "@AGENT ADDED! " + agents);
 		}
 	}
 
@@ -62,6 +64,13 @@ public class AgentRegistryImpl implements AgentRegistry {
 	 */
 	public void unregister(Agent a) {
 		agents.remove(a);
+	}
+
+	/**
+	 * @see rollerslam.infrastructure.server.AgentRegistryExtended#getRegisteredAgents()
+	 */
+	public Agent[] getRegisteredAgents() {
+		return agents.toArray(new Agent[0]);
 	}
 
 }
