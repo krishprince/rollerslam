@@ -19,7 +19,7 @@
  *  
  */
 
-package test.agents.testagent;
+package test.agents;
 
 import java.rmi.RemoteException;
 import java.util.Random;
