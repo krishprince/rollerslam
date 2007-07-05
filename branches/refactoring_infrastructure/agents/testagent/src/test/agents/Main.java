@@ -23,7 +23,7 @@ package test.agents;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 
-import rollerslam.agents.Agent;
+import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.client.ClientFacade;
 import test.environment.TestEnvironment;
 

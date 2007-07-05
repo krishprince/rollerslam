@@ -4,16 +4,19 @@ import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.util.Random;
 
-
-
-import rollerslam.agents.Agent;
 import rollerslam.infrastructure.ProxiedAgent;
+import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.client.ClientFacade;
-import tictactoe.environment.BoardState;
-import tictactoe.environment.Marker;
+import tictactoe.BoardState;
+import tictactoe.Marker;
 import tictactoe.environment.TicTacToeEnvironment;
 
 public class TicTacToeRandomAgent implements TicTacToeAgent, Runnable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7841469923776595703L;
 	
 	// agents memory
 	private TicTacToeEnvironment environment;

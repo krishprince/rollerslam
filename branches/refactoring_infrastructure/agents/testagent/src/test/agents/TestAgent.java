@@ -24,7 +24,7 @@ package test.agents;
 import java.rmi.RemoteException;
 import java.util.Random;
 
-import rollerslam.agents.Agent;
+import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.server.Message;
 import test.environment.TestEnvironment;
 
