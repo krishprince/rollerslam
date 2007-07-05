@@ -22,6 +22,7 @@ package rollerslam.infrastructure.server;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.Set;
 
 import rollerslam.agents.Agent;
 
@@ -47,5 +48,6 @@ public interface AgentRegistry extends Remote {
 	 * @param d the Agent to be unregistered
 	 * @throws RemoteException
 	 */
-	void unregister(Agent a) throws RemoteException;;
+	void unregister(Agent a) throws RemoteException;
+	
 }
