@@ -18,7 +18,7 @@
  *  http://code.google.com/p/rollerslam
  *  
  */
-package test.agents.testagent;
+package test.agents;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
