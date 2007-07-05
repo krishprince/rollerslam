@@ -23,7 +23,7 @@ package rollerslam.infrastructure.server;
 
 import java.rmi.RemoteException;
 
-import rollerslam.agents.Agent;
+import rollerslam.infrastructure.agent.Agent;
 
 /**
  * Default implementation for the SimulationAdmin

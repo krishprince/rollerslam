@@ -23,9 +23,8 @@ package rollerslam.infrastructure;
 import java.lang.reflect.Method;
 import java.rmi.RemoteException;
 
-import rollerslam.agents.Agent;
+import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.server.Message;
-import rollerslam.infrastructure.server.MethodCallMessage;
 
 /**
  * Proxied agent
@@ -63,7 +62,7 @@ public class ProxiedAgent implements Agent {
 			}
 			
 			try {
-				targetMethod.invoke(target, mcm.parameters);
+				targetMethod.invoke(target, (Object[])mcm.parameters);
 			} catch (Exception e) {
 				e.printStackTrace();
 				throw new RemoteException("Exception on proxied agent!", e);

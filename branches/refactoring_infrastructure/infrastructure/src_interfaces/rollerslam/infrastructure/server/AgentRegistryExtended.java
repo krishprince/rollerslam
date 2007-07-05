@@ -1,6 +1,6 @@
 package rollerslam.infrastructure.server;
 
-import rollerslam.agents.Agent;
+import rollerslam.infrastructure.agent.Agent;
 
 public interface AgentRegistryExtended {
 	/**

@@ -24,9 +24,8 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
-import rollerslam.agents.Agent;
+import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.annotations.message;
-import rollerslam.infrastructure.server.MethodCallMessage;
 
 /**
  * Handles invocations to agent proxies

@@ -7,8 +7,8 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
-import rollerslam.agents.Agent;
 import rollerslam.infrastructure.RemoteAgentInvocationHandler;
+import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.annotations.agent;
 
 /**

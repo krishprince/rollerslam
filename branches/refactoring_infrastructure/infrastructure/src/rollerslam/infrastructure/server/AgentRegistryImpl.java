@@ -24,7 +24,7 @@ import java.rmi.RemoteException;
 import java.util.HashSet;
 import java.util.Set;
 
-import rollerslam.agents.Agent;
+import rollerslam.infrastructure.agent.Agent;
 
 /**
  * Default implementation for the AgentRegistry.
