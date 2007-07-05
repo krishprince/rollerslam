@@ -44,5 +44,5 @@ public interface Server extends Remote {
 	 * @return the SimulationAdmin port.
 	 * @throws RemoteException
 	 */
-	SimulationAdmin getSimulationAdmin() throws RemoteException;
+	SimulationAdmin getSimulationAdmin() throws RemoteException;	
 }

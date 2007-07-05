@@ -13,14 +13,8 @@ import rollerslam.agents.Agent;
  * 
  * @author maas
  */
-public interface EnvironmentAgent extends Agent {
+public interface EnvironmentAgent extends Agent, EnvironmentCycleProcessor {
 
-	/**
-	 * This method is called each cycle. At this method all the bufferized messages should be processed.
-	 * The perceptions of the agents should be generated and sent to the agents.
-	 * 
-	 * @throws RemoteException
-	 */
-	void think() throws RemoteException;
+
 
 }

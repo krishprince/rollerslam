@@ -18,34 +18,21 @@
  *  http://code.google.com/p/rollerslam
  *  
  */
-package rollerslam.infrastructure.server;
+
+package rollerslam.infrastructure.annotations;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * Message used for testing purposes
+ * Marks agent methods
  * 
  * @author maas
  */
-public class TestMessage implements Message {
-	/**
-	 * Serial version
-	 */
-	private static final long serialVersionUID = 2925240449693073561L;
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface message {
 
-	private int msg;
-	
-	/**
-	 * Default Constructor
-	 * 
-	 * @param i
-	 */
-	public TestMessage(int i) {
-		msg = i;	
-	}
-	
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	public String toString() {
-		return "["+msg+"]";
-	}
 }
