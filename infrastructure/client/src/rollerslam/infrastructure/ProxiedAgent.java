@@ -18,26 +18,57 @@
  *  http://code.google.com/p/rollerslam
  *  
  */
+package rollerslam.infrastructure;
 
-package rollerslam.infrastructure.client;
-
+import java.lang.reflect.Method;
 import java.rmi.RemoteException;
 
 import rollerslam.agents.Agent;
 import rollerslam.infrastructure.server.Message;
+import rollerslam.infrastructure.server.MethodCallMessage;
 
 /**
+ * Proxied agent
+ * 
  * @author maas
- *
  */
-public class AnnotatedAgent implements Agent {
+public class ProxiedAgent implements Agent {
 
+	Object target;
+	
+	/**
+	 * Default constructor 
+	 * @param target proxy target
+	 */
+	public ProxiedAgent(Object target) {
+		this.target = target;
+	}
+	
 	/**
 	 * @see rollerslam.agents.Agent#sendPerception(rollerslam.infrastructure.server.Message)
 	 */
 	public void sendPerception(Message m) throws RemoteException {
-		// TODO Auto-generated method stub
-
+		if (m instanceof MethodCallMessage) {
+			MethodCallMessage mcm = (MethodCallMessage) m;
+			
+			Class targetClass = target.getClass();
+			Method[] methods = targetClass.getMethods();
+			
+			Method targetMethod = null;
+			for (Method method : methods) {
+				if (method.getName().equals(mcm.methodName)) {
+					targetMethod = method;
+					break;
+				}
+			}
+			
+			try {
+				targetMethod.invoke(target, mcm.parameters);
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new RemoteException("Exception on proxied agent!", e);
+			}
+		}
 	}
 
 }

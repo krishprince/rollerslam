@@ -21,6 +21,7 @@
 
 package rollerslam.infrastructure.client;
 
+import java.lang.reflect.Proxy;
 import java.rmi.AlreadyBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -28,6 +29,9 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
+import rollerslam.agents.Agent;
+import rollerslam.infrastructure.RemoteAgentInvocationHandler;
+import rollerslam.infrastructure.annotations.agent;
 import rollerslam.infrastructure.server.AgentRegistry;
 import rollerslam.infrastructure.server.DisplayRegistry;
 import rollerslam.infrastructure.server.Server;
@@ -39,9 +43,9 @@ import rollerslam.infrastructure.server.SimulationAdmin;
  * 
  * @author maas
  */
-public final class ServerImpl implements Server {
+public final class ClientFacade implements Server {
 
-	private static ServerImpl instance;
+	private static ClientFacade instance;
 	private AgentRegistry ar;
 	private DisplayRegistry dr;
 	private SimulationAdmin sa;
@@ -52,7 +56,7 @@ public final class ServerImpl implements Server {
 	/**
 	 * Default constructor
 	 */
-	private ServerImpl() {
+	private ClientFacade() {
 		
 		try {
 			registry = LocateRegistry.getRegistry(host);
@@ -81,9 +85,9 @@ public final class ServerImpl implements Server {
 	/**
 	 * @return the unique instance for this object
 	 */
-	public static ServerImpl getInstance() {
+	public static ClientFacade getInstance() {
 		if (instance == null) {
-			instance = new ServerImpl();
+			instance = new ClientFacade();
 		}
 		return instance;
 	}
@@ -120,7 +124,42 @@ public final class ServerImpl implements Server {
 	 */
 	public Remote exportObject(Remote obj) throws RemoteException, AlreadyBoundException {
 		Remote ret = UnicastRemoteObject.exportObject(obj, 0);		
-		registry.bind(obj.getClass().getSimpleName()+"_" + obj.hashCode(), ret);
+		registry.bind(obj.getClass().getSimpleName()+"_" + obj.hashCode()+"_"+(System.currentTimeMillis()), ret);
 		return ret;
+	}
+	
+	/**
+	 * @param proxyInterface the interface implemented by the proxy
+	 * @param remoteAgent the remote agent
+	 * @return a proxy for the remote agent
+	 */
+	public Object getProxyForRemoteAgent(Class proxyInterface, Agent remoteAgent) {
+		if (validateAgentProxy(proxyInterface)) {
+			return Proxy.newProxyInstance(proxyInterface
+					.getClassLoader(), new Class[] { proxyInterface },
+					new RemoteAgentInvocationHandler(remoteAgent));
+		} else {
+			throw new IllegalArgumentException(proxyInterface + " is not a valid proxy interface.");
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private boolean validateAgentProxy(Class proxyInterface) {
+		if (proxyInterface.isAnnotationPresent(agent.class) &&
+		proxyInterface.isInterface()) {
+			
+			Class[] supers = proxyInterface.getInterfaces();
+			
+			boolean found = true;
+			for (Class class1 : supers) {
+				if (class1.equals(Remote.class)) {
+					found = true;
+					break;
+				}
+			}
+			
+			return found;
+		}
+		return false;
 	}
 }
