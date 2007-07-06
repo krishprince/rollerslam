@@ -25,6 +25,7 @@ import java.rmi.RemoteException;
 
 import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.client.ClientFacade;
+import rollerslam.infrastructure.client.ClientFacadeImpl;
 import test.environment.TestEnvironment;
 
 /**
@@ -41,9 +42,9 @@ public class Main {
 	 */
 	public static void main(String[] args) throws RemoteException,
 			AlreadyBoundException {
-		ClientFacade.init(args[0]);
+		ClientFacadeImpl.init(args[0]);
 
-		ClientFacade server = ClientFacade.getInstance();
+		ClientFacade server = ClientFacadeImpl.getInstance();
 		TestAgent realAgent = new TestAgent(
 				(TestEnvironment) server.getProxyForRemoteAgent(
 						TestEnvironment.class, 
