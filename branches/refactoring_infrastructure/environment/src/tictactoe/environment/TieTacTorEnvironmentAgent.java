@@ -1,12 +1,12 @@
 package tictactoe.environment;
 
 import java.rmi.RemoteException;
-import java.util.Vector;
 
 import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.server.AgentRegistryExtended;
 import rollerslam.infrastructure.server.ProxiedEnvironmentAgent;
 import rollerslam.infrastructure.server.ServerFacade;
+import rollerslam.infrastructure.server.ServerFacadeImpl;
 import tictactoe.BoardState;
 import tictactoe.Marker;
 import tictactoe.agents.TicTacToeAgent;
@@ -18,28 +18,23 @@ public class TieTacTorEnvironmentAgent implements TicTacToeEnvironment {
 	 */
 	private static final long serialVersionUID = -7075214945324283051L;
 	
+	ServerFacade server = ServerFacadeImpl.getInstance();
 	BoardState currentBoard = new BoardState();
 	boolean gameRunning = false;
 	TicTacToeAgent[] agents = new TicTacToeAgent[2];
-	
-	Vector x;
-	
+
 	public void think() throws RemoteException {
 		if (!gameRunning) {
+			Object[] regAgents = ((AgentRegistryExtended) server
+					.getAgentRegistry()).getRegisteredAgents();
 			
-			System.out.println("WAITING FOR PLAYERS!");
-			Object[] regAgents = ((AgentRegistryExtended) ServerFacade
-					.getInstance().getAgentRegistry()).getRegisteredAgents();
-			
-			System.out.println(ServerFacade.getInstance().getAgentRegistry()
-					+ "AR");
-			if (regAgents.length >= 2) {
+			if (regAgents.length == 2) {
 				System.out.println("STARTING GAME!");
 
-				agents[0] = (TicTacToeAgent) ServerFacade.getInstance()
+				agents[0] = (TicTacToeAgent) server
 						.getProxyForRemoteAgent(TicTacToeAgent.class,
 								(Agent) regAgents[0]);
-				agents[1] = (TicTacToeAgent) ServerFacade.getInstance()
+				agents[1] = (TicTacToeAgent) server 
 						.getProxyForRemoteAgent(TicTacToeAgent.class,
 								(Agent) regAgents[1]);
 				
@@ -53,10 +48,10 @@ public class TieTacTorEnvironmentAgent implements TicTacToeEnvironment {
 				agents[1].boardStateChanged(currentBoard);
 				agents[0].boardStateChanged(currentBoard);
 			} else {
-				System.out.println("STILL " + regAgents.length + " player(s).");
+				System.out.println("NOT ENOUGH PLAYERS TO START SIMULATION");
 			}
 		} else {
-			
+			System.out.println("SIMULATION FINISHED");
 		}
 	}
 	
@@ -98,7 +93,7 @@ public class TieTacTorEnvironmentAgent implements TicTacToeEnvironment {
 	}
 
 	public static void main(String[] args) throws Exception {
-		ServerFacade.init(1099, new ProxiedEnvironmentAgent(new TieTacTorEnvironmentAgent()));
+		ServerFacadeImpl.init(1099, new ProxiedEnvironmentAgent(new TieTacTorEnvironmentAgent()));
 	}	
 
 }

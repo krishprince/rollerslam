@@ -25,6 +25,7 @@ import java.rmi.RemoteException;
 
 import rollerslam.infrastructure.server.ProxiedEnvironmentAgent;
 import rollerslam.infrastructure.server.ServerFacade;
+import rollerslam.infrastructure.server.ServerFacadeImpl;
 
 /**
  * TicTacToe Agent
@@ -50,8 +51,8 @@ public class TestEnvironmentAgent implements TestEnvironment {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		ServerFacade.init(1099, new ProxiedEnvironmentAgent(new TestEnvironmentAgent()));
-		ServerFacade server = ServerFacade.getInstance();
+		ServerFacadeImpl.init(1099, new ProxiedEnvironmentAgent(new TestEnvironmentAgent()));
+		ServerFacade server = ServerFacadeImpl.getInstance();
 		server.getSimulationAdmin().run();
 	}
 
