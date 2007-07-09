@@ -36,13 +36,19 @@ public class TicTacToeRandomAgent implements TicTacToeAgent, Runnable {
 	}
 
 	public void gameStarted(Marker player) {
+		try {
+			Thread.sleep(Long.MAX_VALUE);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		playerIAm = player;
 		gameRunning = true;
 		gameFinished = false;
 
 		System.out.println("GAME STARTED! I'M " + player);
 		
-		while(true);
 	}
 
 	public void wrongMove() {
@@ -102,16 +108,13 @@ public class TicTacToeRandomAgent implements TicTacToeAgent, Runnable {
 	 * @throws AlreadyBoundException
 	 */
 	public static void main(String[] args) throws Exception {		
-		ClientFacadeImpl.init(args[0]);
-		
-		ClientFacade server = ClientFacadeImpl.getInstance();
+		ClientFacadeImpl.init(args[0]);		
+		ClientFacade facade = ClientFacadeImpl.getInstance();
 
-		TicTacToeRandomAgent realAgent = new TicTacToeRandomAgent(
-				(TicTacToeEnvironment) server.getProxyForRemoteAgent(
-						TicTacToeEnvironment.class, 
-						server.getSimulationAdmin().getEnvironmentAgent()));
+		TicTacToeRandomAgent realAgent = new TicTacToeRandomAgent((TicTacToeEnvironment) facade
+				.getProxiedEnvironment(TicTacToeEnvironment.class));
 		
-		server.exportAgent(realAgent, TicTacToeAgent.class);
+		facade.exportAgent(realAgent, TicTacToeAgent.class);
 				
 		new Thread(realAgent).run();
 	}
