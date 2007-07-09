@@ -18,23 +18,23 @@ public class TieTacTorEnvironmentAgent implements TicTacToeEnvironment {
 	 */
 	private static final long serialVersionUID = -7075214945324283051L;
 	
-	ServerFacade server = ServerFacadeImpl.getInstance();
+	ServerFacade facade = ServerFacadeImpl.getInstance();
 	BoardState currentBoard = new BoardState();
 	boolean gameRunning = false;
 	TicTacToeAgent[] agents = new TicTacToeAgent[2];
 
 	public void think() throws RemoteException {
 		if (!gameRunning) {
-			Object[] regAgents = ((AgentRegistryExtended) server
+			Object[] regAgents = ((AgentRegistryExtended) facade
 					.getAgentRegistry()).getRegisteredAgents();
 			
 			if (regAgents.length == 2) {
 				System.out.println("STARTING GAME!");
 
-				agents[0] = (TicTacToeAgent) server
+				agents[0] = (TicTacToeAgent) facade
 						.getProxyForRemoteAgent(TicTacToeAgent.class,
 								(Agent) regAgents[0]);
-				agents[1] = (TicTacToeAgent) server 
+				agents[1] = (TicTacToeAgent) facade 
 						.getProxyForRemoteAgent(TicTacToeAgent.class,
 								(Agent) regAgents[1]);
 				
