@@ -63,4 +63,12 @@ public interface ClientFacade extends Server {
 	 */
 	void exportAgent(Object realAgent, Class agentInterface) throws Exception;
 
+	/**
+	 * Creates a proxy for the environment and returns it
+	 * 
+	 * @param environmentInterface the interface implemented by the environment
+	 * @throws RemoteException
+	 */
+	Object getProxiedEnvironment(Class environmentInterface) throws RemoteException;
+
 }

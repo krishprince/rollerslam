@@ -85,8 +85,8 @@ public final class ClientFacadeImpl implements ClientFacade {
 		ClientFacade server = getInstance();
 
 		Agent proxiedAgent = new ProxiedAgent(realAgent);		
-		Agent testAgent = (Agent) server.exportObject(proxiedAgent);
-		server.getAgentRegistry().register(testAgent);
+		Agent stubAgent = (Agent) server.exportObject(proxiedAgent);
+		server.getAgentRegistry().register(stubAgent);
 	}
 	
 	/**
@@ -134,6 +134,15 @@ public final class ClientFacadeImpl implements ClientFacade {
 	 */
 	public Object getProxyForRemoteAgent(Class proxyInterface, Agent remoteAgent) {
 		return ProxyHelperImpl.getInstance().getProxyForRemoteAgent(proxyInterface, remoteAgent);
+	}
+
+	/* (non-Javadoc)
+	 * @see rollerslam.infrastructure.client.ClientFacade#getProxiedEnvironment(java.lang.Class)
+	 */
+	public Object getProxiedEnvironment(Class environmentInterface)
+			throws RemoteException {
+		return getProxyForRemoteAgent(environmentInterface,
+				getSimulationAdmin().getEnvironmentAgent());
 	}
 
 }

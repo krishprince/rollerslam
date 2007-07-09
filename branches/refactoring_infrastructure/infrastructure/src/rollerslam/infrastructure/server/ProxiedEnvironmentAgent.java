@@ -40,7 +40,7 @@ public class ProxiedEnvironmentAgent implements EnvironmentAgent {
 	
 	public ProxiedEnvironmentAgent(EnvironmentCycleProcessor proxyTarget) {		
 		realAgent = proxyTarget;
-		realAgentProxy = new ProxiedAgent(proxyTarget);
+		realAgentProxy = new ProxiedAgent(proxyTarget, false);
 	}
 	
 	/**
