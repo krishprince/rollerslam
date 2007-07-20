@@ -18,43 +18,35 @@
  *  http://code.google.com/p/rollerslam
  *  
  */
-package test.agents;
+package rollerslam.infrastructure.server;
 
-import java.rmi.AlreadyBoundException;
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import rollerslam.infrastructure.agent.Agent;
-import rollerslam.infrastructure.client.ClientFacade;
-import rollerslam.infrastructure.client.ClientFacadeImpl;
-import test.environment.TestEnvironment;
 
 /**
- * Main class of the test agent
+ * Represents the service that keeps track of all the list of
+ * registered agents. Every agent should be registered 
+ * in order to be able to take part of the simulation. 
  * 
  * @author maas
  */
-public class Main {
-
+public interface AgentRegistry extends Remote {
 	/**
-	 * @param args
+	 * Register a new agent. Agents can only be registered during the CREATED state.
+	 * 
+	 * @param d the Agent to be registered
 	 * @throws RemoteException
-	 * @throws AlreadyBoundException
 	 */
-	public static void main(String[] args) throws RemoteException,
-			AlreadyBoundException {
-		ClientFacadeImpl.init(args[0]);
-
-		ClientFacade server = ClientFacadeImpl.getInstance();
-		TestAgent realAgent = new TestAgent(
-				(TestEnvironment) server.getProxyForRemoteAgent(
-						TestEnvironment.class, 
-						server.getSimulationAdmin().getEnvironmentAgent()));
-		
-		Agent testAgent = (Agent) server.exportObject(realAgent);
-
-		server.getAgentRegistry().register(testAgent);
-		server.getSimulationAdmin().run();
-		
-		realAgent.start();
-	}
+	void register(Agent a) throws RemoteException;
+	/**
+	 * Unregister an agent. If the passed agent has not 
+	 * been registered yet this method should have any effect.
+	 * 
+	 * @param d the Agent to be unregistered
+	 * @throws RemoteException
+	 */
+	void unregister(Agent a) throws RemoteException;
+	
 }

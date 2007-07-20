@@ -19,54 +19,56 @@
  *  
  */
 
-package test.agents;
+package rollerslam.infrastructure.server;
 
 import java.rmi.RemoteException;
-import java.util.Random;
+import java.util.List;
+import java.util.Vector;
 
-import rollerslam.infrastructure.agent.Agent;
-import rollerslam.infrastructure.server.Message;
-import test.environment.TestEnvironment;
+import rollerslam.infrastructure.ProxiedAgent;
 
 /**
- * Simple agent for testing purposes.
+ * Default implementation for the EnvironmentAgent
  * 
  * @author maas
  */
-public class TestAgent extends Thread implements Agent {
+public class ProxiedEnvironmentAgent implements EnvironmentAgent {
 
-	private TestEnvironment server;
+	List<Message> messages = new Vector<Message>();
+	ProxiedAgent  realAgentProxy = null;
+	EnvironmentCycleProcessor realAgent = null;
 	
-	public TestAgent(TestEnvironment server) {
-		this.server = server;
+	public ProxiedEnvironmentAgent(EnvironmentCycleProcessor proxyTarget) {		
+		realAgent = proxyTarget;
+		realAgentProxy = new ProxiedAgent(proxyTarget, false);
 	}
 	
-	/* (non-Javadoc)
+	/**
 	 * @see rollerslam.agents.Agent#sendPerception(rollerslam.infrastructure.server.Message)
 	 */
 	public void sendPerception(Message m) throws RemoteException {
-
-	}
-	
-	public void run() {
-		Random r = new Random();
-		
-		while(true) {
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			
-			int msg = r.nextInt(1000);
-			
-			System.out.println("SENDING MSG " + msg);
-			try {
-				server.notifyValue(msg);
-			} catch (RemoteException e) {
-				e.printStackTrace();
-				break;
-			}
+		synchronized (messages) {
+			messages.add(m);
 		}
 	}
+
+	/**
+	 * @throws RemoteException 
+	 * @see rollerslam.infrastructure.server.EnvironmentAgent#think()
+	 */
+	public void think() throws RemoteException {
+		synchronized (messages) {
+			for (Message m : messages) {
+				processMessage(m);
+			}
+			messages.clear();		
+		}
+		
+		realAgent.think();
+	}
+
+	private void processMessage(Message m) throws RemoteException {
+		realAgentProxy.sendPerception(m);
+	}
+
 }

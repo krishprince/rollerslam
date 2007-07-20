@@ -18,43 +18,25 @@
  *  http://code.google.com/p/rollerslam
  *  
  */
-package test.agents;
+package rollerslam.infrastructure.agent;
 
-import java.rmi.AlreadyBoundException;
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-import rollerslam.infrastructure.agent.Agent;
-import rollerslam.infrastructure.client.ClientFacade;
-import rollerslam.infrastructure.client.ClientFacadeImpl;
-import test.environment.TestEnvironment;
+import rollerslam.infrastructure.server.Message;
 
 /**
- * Main class of the test agent
+ * The interface exported by all agents
  * 
  * @author maas
  */
-public class Main {
-
+public interface Agent extends Remote {
 	/**
-	 * @param args
+	 * The server should invoke this method in order to send a perception 
+	 * to an agent.
+	 * 
+	 * @param m the Perception message
 	 * @throws RemoteException
-	 * @throws AlreadyBoundException
 	 */
-	public static void main(String[] args) throws RemoteException,
-			AlreadyBoundException {
-		ClientFacadeImpl.init(args[0]);
-
-		ClientFacade server = ClientFacadeImpl.getInstance();
-		TestAgent realAgent = new TestAgent(
-				(TestEnvironment) server.getProxyForRemoteAgent(
-						TestEnvironment.class, 
-						server.getSimulationAdmin().getEnvironmentAgent()));
-		
-		Agent testAgent = (Agent) server.exportObject(realAgent);
-
-		server.getAgentRegistry().register(testAgent);
-		server.getSimulationAdmin().run();
-		
-		realAgent.start();
-	}
+	void sendPerception(Message m) throws RemoteException;
 }

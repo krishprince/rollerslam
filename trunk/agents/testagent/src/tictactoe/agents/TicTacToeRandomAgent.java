@@ -4,16 +4,18 @@ import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.util.Random;
 
-
-
-import rollerslam.agents.Agent;
-import rollerslam.infrastructure.ProxiedAgent;
 import rollerslam.infrastructure.client.ClientFacade;
-import tictactoe.environment.BoardState;
-import tictactoe.environment.Marker;
+import rollerslam.infrastructure.client.ClientFacadeImpl;
+import tictactoe.BoardState;
+import tictactoe.Marker;
 import tictactoe.environment.TicTacToeEnvironment;
 
 public class TicTacToeRandomAgent implements TicTacToeAgent, Runnable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7841469923776595703L;
 	
 	// agents memory
 	private TicTacToeEnvironment environment;
@@ -34,11 +36,19 @@ public class TicTacToeRandomAgent implements TicTacToeAgent, Runnable {
 	}
 
 	public void gameStarted(Marker player) {
+		try {
+			Thread.sleep(Long.MAX_VALUE);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		playerIAm = player;
 		gameRunning = true;
 		gameFinished = false;
 
 		System.out.println("GAME STARTED! I'M " + player);
+		
 	}
 
 	public void wrongMove() {
@@ -97,22 +107,15 @@ public class TicTacToeRandomAgent implements TicTacToeAgent, Runnable {
 	 * @throws RemoteException
 	 * @throws AlreadyBoundException
 	 */
-	public static void main(String[] args) throws RemoteException,
-			AlreadyBoundException {
-		ClientFacade.init(args[0]);
+	public static void main(String[] args) throws Exception {		
+		ClientFacadeImpl.init(args[0]);		
+		ClientFacade facade = ClientFacadeImpl.getInstance();
 
-		ClientFacade server = ClientFacade.getInstance();
-		TicTacToeRandomAgent realAgent = new TicTacToeRandomAgent(
-				(TicTacToeEnvironment) server.getProxyForRemoteAgent(
-						TicTacToeEnvironment.class, 
-						server.getSimulationAdmin().getEnvironmentAgent()));
+		TicTacToeRandomAgent realAgent = new TicTacToeRandomAgent((TicTacToeEnvironment) facade
+				.getProxiedEnvironment(TicTacToeEnvironment.class));
 		
-		Agent proxiedAgent = new ProxiedAgent(realAgent);
-		
-		Agent testAgent = (Agent) server.exportObject(proxiedAgent);
-
-		server.getAgentRegistry().register(testAgent);
-		
+		facade.exportAgent(realAgent, TicTacToeAgent.class);
+				
 		new Thread(realAgent).run();
 	}
 	
