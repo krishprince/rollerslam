@@ -18,43 +18,24 @@
  *  http://code.google.com/p/rollerslam
  *  
  */
-package test.agents;
-
-import java.rmi.AlreadyBoundException;
-import java.rmi.RemoteException;
+package rollerslam.infrastructure.server;
 
 import rollerslam.infrastructure.agent.Agent;
-import rollerslam.infrastructure.client.ClientFacade;
-import rollerslam.infrastructure.client.ClientFacadeImpl;
-import test.environment.TestEnvironment;
 
 /**
- * Main class of the test agent
+ * Server facade.
+ * Used mainly to start the server using default configurations.
  * 
  * @author maas
  */
-public class Main {
+public interface ServerFacade extends Server {
 
 	/**
-	 * @param args
-	 * @throws RemoteException
-	 * @throws AlreadyBoundException
+	 * @param proxyInterface the interface implemented by the proxy
+	 * @param remoteAgent the remote agent
+	 * @return a proxy for the remote agent
 	 */
-	public static void main(String[] args) throws RemoteException,
-			AlreadyBoundException {
-		ClientFacadeImpl.init(args[0]);
+	Object getProxyForRemoteAgent(Class proxyInterface,
+			Agent remoteAgent);
 
-		ClientFacade server = ClientFacadeImpl.getInstance();
-		TestAgent realAgent = new TestAgent(
-				(TestEnvironment) server.getProxyForRemoteAgent(
-						TestEnvironment.class, 
-						server.getSimulationAdmin().getEnvironmentAgent()));
-		
-		Agent testAgent = (Agent) server.exportObject(realAgent);
-
-		server.getAgentRegistry().register(testAgent);
-		server.getSimulationAdmin().run();
-		
-		realAgent.start();
-	}
 }
