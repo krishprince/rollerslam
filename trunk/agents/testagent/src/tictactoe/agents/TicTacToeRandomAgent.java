@@ -8,6 +8,7 @@ import rollerslam.infrastructure.client.ClientFacade;
 import rollerslam.infrastructure.client.ClientFacadeImpl;
 import tictactoe.BoardState;
 import tictactoe.Marker;
+import tictactoe.agent.TicTacToeAgent;
 import tictactoe.environment.TicTacToeEnvironment;
 
 public class TicTacToeRandomAgent implements TicTacToeAgent, Runnable {
@@ -36,13 +37,6 @@ public class TicTacToeRandomAgent implements TicTacToeAgent, Runnable {
 	}
 
 	public void gameStarted(Marker player) {
-		try {
-			Thread.sleep(Long.MAX_VALUE);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 		playerIAm = player;
 		gameRunning = true;
 		gameFinished = false;
@@ -78,7 +72,8 @@ public class TicTacToeRandomAgent implements TicTacToeAgent, Runnable {
 					e.printStackTrace();
 				}
 
-				if (gameRunning && currentBoardState.currentPlayer == playerIAm) {
+				if (gameRunning && currentBoardState != null
+						&& currentBoardState.currentPlayer == playerIAm) {
 					System.out.println("THINKING...");
 					int i, j;
 					for (i = 0; i < currentBoardState.board.length; ++i) {
