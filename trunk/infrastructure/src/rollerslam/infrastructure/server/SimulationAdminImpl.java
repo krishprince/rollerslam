@@ -36,9 +36,15 @@ public class SimulationAdminImpl implements SimulationAdmin {
 	private SimulationThread simulationThread;
 	private EnvironmentAgent environment;
 	
-	public SimulationAdminImpl(EnvironmentAgent environmentAgent) {
+	/**
+	 * Default constructor 
+	 * 
+	 * @param environmentAgent
+	 * @param dri 
+	 */
+	public SimulationAdminImpl(EnvironmentAgent environmentAgent, DisplayRegistryServer dri) {
 		this.environment = environmentAgent;
-		this.simulationThread = new SimulationThread(environment);
+		this.simulationThread = new SimulationThread(environment, dri);
 		simulationThread.start();
 	}
 	

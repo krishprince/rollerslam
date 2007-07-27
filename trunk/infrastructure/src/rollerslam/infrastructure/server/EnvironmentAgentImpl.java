@@ -59,4 +59,11 @@ public class EnvironmentAgentImpl implements EnvironmentAgent {
 		System.out.println("Message received: " + m);
 	}
 
+	/**
+	 * @see rollerslam.infrastructure.server.EnvironmentCycleProcessor#getEnvironmentState()
+	 */
+	public Message getEnvironmentState() throws RemoteException {
+		return null;
+	}
+
 }

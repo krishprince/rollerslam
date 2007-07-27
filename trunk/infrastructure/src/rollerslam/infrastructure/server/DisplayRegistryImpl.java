@@ -31,7 +31,7 @@ import rollerslam.infrastructure.display.Display;
  * 
  * @author maas
  */
-public class DisplayRegistryImpl implements DisplayRegistry {
+public class DisplayRegistryImpl implements DisplayRegistryServer {
 
 	private Set<Display> displays = new HashSet<Display>();
 	
@@ -49,4 +49,12 @@ public class DisplayRegistryImpl implements DisplayRegistry {
 		displays.remove(d);
 	}
 
+	/**
+	 * @see rollerslam.infrastructure.server.DisplayRegistryExt#getRegisteredDisplays()
+	 */
+	public Set<Display> getRegisteredDisplays() {
+		return displays;
+	}
+
+	
 }

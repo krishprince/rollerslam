@@ -11,4 +11,12 @@ public interface EnvironmentCycleProcessor {
 	 * @throws RemoteException
 	 */
 	void think() throws RemoteException;
+	
+	/**
+	 * @return a message containing the current environment state this message is sent
+	 * to the registered monitors.
+	 * 
+	 * @throws RemoteException
+	 */
+	Message getEnvironmentState() throws RemoteException;
 }
