@@ -31,7 +31,7 @@ import rollerslam.infrastructure.agent.Agent;
  * 
  * @author maas
  */
-public class AgentRegistryImpl implements AgentRegistry, AgentRegistryExtended {
+public class AgentRegistryImpl implements AgentRegistryServer {
 
 	private Set<Agent> agents = new HashSet<Agent>();
 	private SimulationAdmin simulation = null;
@@ -69,8 +69,8 @@ public class AgentRegistryImpl implements AgentRegistry, AgentRegistryExtended {
 	/**
 	 * @see rollerslam.infrastructure.server.AgentRegistryExtended#getRegisteredAgents()
 	 */
-	public Agent[] getRegisteredAgents() {
-		return agents.toArray(new Agent[0]);
+	public Set<Agent> getRegisteredAgents() {
+		return agents;
 	}
 
 }
