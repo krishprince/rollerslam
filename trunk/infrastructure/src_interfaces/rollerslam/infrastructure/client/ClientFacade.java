@@ -36,6 +36,13 @@ import rollerslam.infrastructure.server.Server;
 public interface ClientFacade extends Server {
 
 	/**
+	 * Call this method before any other method.
+	 * 
+	 * @param nameserver the name service host
+	 */
+	void init(String nameserver);
+
+	/**
 	 * Helps clients on registering remote objects. Every object that is supposed to be
 	 * accessed remotely should be exported first. 
 	 * 
@@ -46,13 +53,6 @@ public interface ClientFacade extends Server {
 	 */
 	Remote exportObject(Remote obj) throws RemoteException,
 			AlreadyBoundException;
-
-	/**
-	 * @param proxyInterface the interface implemented by the proxy
-	 * @param remoteAgent the remote agent
-	 * @return a proxy for the remote agent
-	 */
-	Object getProxyForRemoteAgent(Class proxyInterface,	Agent remoteAgent);
 	
 	/**
 	 * Creates a proxy for the agent and exports it
@@ -70,5 +70,5 @@ public interface ClientFacade extends Server {
 	 * @throws RemoteException
 	 */
 	Object getProxiedEnvironment(Class environmentInterface) throws RemoteException;
-
+	
 }

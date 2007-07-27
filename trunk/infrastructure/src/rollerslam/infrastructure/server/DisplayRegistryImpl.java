@@ -50,7 +50,7 @@ public class DisplayRegistryImpl implements DisplayRegistryServer {
 	}
 
 	/**
-	 * @see rollerslam.infrastructure.server.DisplayRegistryExt#getRegisteredDisplays()
+	 * @see rollerslam.infrastructure.server.DisplayRegistryExtended#getRegisteredDisplays()
 	 */
 	public Set<Display> getRegisteredDisplays() {
 		return displays;

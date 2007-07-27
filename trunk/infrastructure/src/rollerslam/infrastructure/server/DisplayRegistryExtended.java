@@ -11,7 +11,7 @@ import rollerslam.infrastructure.display.Display;
  * 
  * @author maas
  */
-public interface DisplayRegistryExt {
+public interface DisplayRegistryExtended {
 	/**
 	 * @return the current list of registered displays
 	 */

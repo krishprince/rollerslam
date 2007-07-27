@@ -31,11 +31,29 @@ import rollerslam.infrastructure.agent.Agent;
 public interface ServerFacade extends Server {
 
 	/**
+	 * Initializes the server using the passed agent as the environment agent
+	 * 
+	 * @param port the name server port
+	 * @param environmentAgent the environment agent
+	 * @throws Exception
+	 */
+	void init(int port, EnvironmentAgent environmentAgent) throws Exception;
+
+	/**
+	 * Initializes the server using the passed agent as the environment agent.
+	 * Assumes that the environment needs to be proxied.
+	 * 
+	 * @param port the name server port
+	 * @param environmentAgent the environment agent
+	 * @throws Exception
+	 */
+	void initProxiedEnvironment(int port, EnvironmentCycleProcessor environmentAgent) throws Exception;
+
+	/**
 	 * @param proxyInterface the interface implemented by the proxy
 	 * @param remoteAgent the remote agent
 	 * @return a proxy for the remote agent
 	 */
-	Object getProxyForRemoteAgent(Class proxyInterface,
-			Agent remoteAgent);
-
+	@SuppressWarnings("unchecked")
+	Object getProxyForRemoteAgent(Class proxyInterface,	Agent remoteAgent);
 }

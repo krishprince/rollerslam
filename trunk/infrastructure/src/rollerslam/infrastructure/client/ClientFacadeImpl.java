@@ -55,6 +55,14 @@ public final class ClientFacadeImpl implements ClientFacade {
 	 */
 	private ClientFacadeImpl() {
 		
+	}
+
+	/**
+	 * @see rollerslam.infrastructure.client.ClientFacade#init(java.lang.String)
+	 */
+	public void init(String nameserver) {
+		host = nameserver;
+
 		try {
 			registry = LocateRegistry.getRegistry(host);
 			
@@ -67,20 +75,13 @@ public final class ClientFacadeImpl implements ClientFacade {
 			ar = null;
 			dr = null;
 			sa = null;
-		}		
-	}
-	/**
-	 * Call this method before invoking getInstance.
-	 * 
-	 * @param nameserver the name service host
-	 */
-	public static void init(String nameserver) {
-		host = nameserver;
+		}				
 	}
 	
 	/**
 	 * @see rollerslam.infrastructure.client.ClientFacade#exportAgent(java.lang.Object, java.lang.Class)
 	 */
+	@SuppressWarnings("unchecked")
 	public void exportAgent(Object realAgent, Class agentInterface) throws Exception {
 		ClientFacade server = getInstance();
 
@@ -99,46 +100,50 @@ public final class ClientFacadeImpl implements ClientFacade {
 		return instance;
 	}
 	
-	/* (non-Javadoc)
+	/**
 	 * @see rollerslam.infrastructure.client.ClientFacade#getAgentRegistry()
 	 */
 	public AgentRegistry getAgentRegistry() throws RemoteException {
 		return ar;
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see rollerslam.infrastructure.client.ClientFacade#getDisplayRegistry()
 	 */
 	public DisplayRegistry getDisplayRegistry() throws RemoteException {
 		return dr;
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see rollerslam.infrastructure.client.ClientFacade#getSimulationAdmin()
 	 */
 	public SimulationAdmin getSimulationAdmin() throws RemoteException {
 		return sa;
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see rollerslam.infrastructure.client.ClientFacade#exportObject(java.rmi.Remote)
 	 */
 	public Remote exportObject(Remote obj) throws RemoteException, AlreadyBoundException {
 		Remote ret = UnicastRemoteObject.exportObject(obj, 0);		
 		registry.bind(obj.getClass().getSimpleName()+"_" + obj.hashCode()+"_"+(System.currentTimeMillis()), ret);
 		return ret;
-	}
-	
-	/* (non-Javadoc)
-	 * @see rollerslam.infrastructure.client.ClientFacade#getProxyForRemoteAgent(java.lang.Class, rollerslam.infrastructure.agent.Agent)
+	}	
+
+	/**
+	 * @param proxyInterface the interface implemented by the proxy
+	 * @param remoteAgent the remote agent
+	 * @return a proxy for the remote agent
 	 */
-	public Object getProxyForRemoteAgent(Class proxyInterface, Agent remoteAgent) {
+	@SuppressWarnings("unchecked")
+	private Object getProxyForRemoteAgent(Class proxyInterface, Agent remoteAgent) {
 		return ProxyHelperImpl.getInstance().getProxyForRemoteAgent(proxyInterface, remoteAgent);
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see rollerslam.infrastructure.client.ClientFacade#getProxiedEnvironment(java.lang.Class)
 	 */
+	@SuppressWarnings("unchecked")
 	public Object getProxiedEnvironment(Class environmentInterface)
 			throws RemoteException {
 		return getProxyForRemoteAgent(environmentInterface,

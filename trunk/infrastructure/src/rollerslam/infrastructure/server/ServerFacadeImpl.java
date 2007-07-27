@@ -36,7 +36,7 @@ import rollerslam.infrastructure.agent.Agent;
 public class ServerFacadeImpl implements Server, ServerFacade {
 	
 	private static ServerFacade instance = null;
-	private static AgentRegistry ari;
+	private static AgentRegistryServer ari;
 	private static DisplayRegistryServer dri;
 	private static SimulationAdmin sai;
 	
@@ -55,13 +55,9 @@ public class ServerFacadeImpl implements Server, ServerFacade {
 	}
 	
 	/**
-	 * Initializes the server using the passed agent as the environment agent
-	 * 
-	 * @param port the name server port
-	 * @param environmentAgent the environment agent
-	 * @throws Exception
+	 * @see rollerslam.infrastructure.server.ServerFacade#init(int, rollerslam.infrastructure.server.EnvironmentAgent)
 	 */
-	public static void init(int port, EnvironmentAgent environmentAgent) throws Exception {
+	public void init(int port, EnvironmentAgent environmentAgent) throws Exception {
 		Registry registry = LocateRegistry.createRegistry(1099);
 
 		EnvironmentAgent eas = (EnvironmentAgent) UnicastRemoteObject
@@ -85,41 +81,47 @@ public class ServerFacadeImpl implements Server, ServerFacade {
 	}
 
 	/**
-	 * Initializes the server with the default environment agent
-	 * 
-	 * @param port the name server port
-	 * @throws Exception
+	 * @see rollerslam.infrastructure.server.ServerFacade#initProxiedEnvironment(int, rollerslam.infrastructure.server.EnvironmentAgent)
 	 */
-	public static void init(int port) throws Exception {
+	public void initProxiedEnvironment(int port,
+			EnvironmentCycleProcessor environmentAgent) throws Exception {
+		init(port, new ProxiedEnvironmentAgent(environmentAgent));		
+	}
+	
+	/**
+	 * @see rollerslam.infrastructure.server.ServerFacade#init(int)
+	 */
+	public void init(int port) throws Exception {
 		init(port, new EnvironmentAgentImpl());
 	}
 
-	/* (non-Javadoc)
+	/**
+	 * @see rollerslam.infrastructure.server.ServerFacade#getProxyForRemoteAgent(java.lang.Class, rollerslam.infrastructure.agent.Agent)
+	 */
+	@SuppressWarnings("unchecked")
+	public Object getProxyForRemoteAgent(Class proxyInterface,	Agent remoteAgent) {
+		return ProxyHelperImpl.getInstance().getProxyForRemoteAgent(proxyInterface, remoteAgent);
+	}
+	
+	/**
 	 * @see rollerslam.infrastructure.server.ServerFacade#getAgentRegistry()
 	 */
 	public AgentRegistry getAgentRegistry() throws RemoteException {
 		return ari;
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see rollerslam.infrastructure.server.ServerFacade#getDisplayRegistry()
 	 */
 	public DisplayRegistry getDisplayRegistry() throws RemoteException {
 		return dri;
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see rollerslam.infrastructure.server.ServerFacade#getSimulationAdmin()
 	 */
 	public SimulationAdmin getSimulationAdmin() throws RemoteException {
 		return sai;
 	}
-	
-	/* (non-Javadoc)
-	 * @see rollerslam.infrastructure.server.ServerFacade#getProxyForRemoteAgent(java.lang.Class, rollerslam.infrastructure.agent.Agent)
-	 */
-	public Object getProxyForRemoteAgent(Class proxyInterface, Agent remoteAgent) {
-		return ProxyHelperImpl.getInstance().getProxyForRemoteAgent(proxyInterface, remoteAgent);
-	}
-	
+		
 }

@@ -35,7 +35,7 @@ public class SimulationThread extends Thread {
 	private boolean running = false;
 	private long THINKING_INTERVAL = 500;
 	private EnvironmentAgent environment = new EnvironmentAgentImpl();
-	private DisplayRegistryExt displayRegistry = null;
+	private DisplayRegistryExtended displayRegistry = null;
 	
 	/**
 	 * Default constructor
@@ -43,7 +43,7 @@ public class SimulationThread extends Thread {
 	 * @param environment the environment Agent
 	 * @param dri 
 	 */
-	public SimulationThread(EnvironmentAgent environment, DisplayRegistryExt dri) {
+	public SimulationThread(EnvironmentAgent environment, DisplayRegistryExtended dri) {
 		this.environment = environment;
 		this.displayRegistry = dri;
 	}
