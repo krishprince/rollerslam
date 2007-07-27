@@ -103,7 +103,7 @@ public class TicTacToeRandomAgent implements TicTacToeAgent, Runnable {
 	 * @throws AlreadyBoundException
 	 */
 	public static void main(String[] args) throws Exception {		
-		ClientFacadeImpl.init(args[0]);		
+		ClientFacadeImpl.getInstance().init(args[0]);		
 		ClientFacade facade = ClientFacadeImpl.getInstance();
 
 		TicTacToeRandomAgent realAgent = new TicTacToeRandomAgent((TicTacToeEnvironment) facade
