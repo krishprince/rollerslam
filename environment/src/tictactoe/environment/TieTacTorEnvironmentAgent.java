@@ -1,11 +1,12 @@
 package tictactoe.environment;
 
 import java.rmi.RemoteException;
+import java.util.Iterator;
+import java.util.Set;
 
 import rollerslam.infrastructure.agent.Agent;
-import rollerslam.infrastructure.server.AgentRegistryExtended;
+import rollerslam.infrastructure.server.AgentRegistryServer;
 import rollerslam.infrastructure.server.Message;
-import rollerslam.infrastructure.server.ProxiedEnvironmentAgent;
 import rollerslam.infrastructure.server.ServerFacade;
 import rollerslam.infrastructure.server.ServerFacadeImpl;
 import tictactoe.BoardState;
@@ -27,18 +28,21 @@ public class TieTacTorEnvironmentAgent implements TicTacToeEnvironment {
 
 	public void think() throws RemoteException {
 		if (!gameRunning) {
-			Object[] regAgents = ((AgentRegistryExtended) facade
+			Set<Agent> setAgents = ((AgentRegistryServer) facade
 					.getAgentRegistry()).getRegisteredAgents();
 			
-			if (regAgents.length == 2) {
+			if (setAgents.size() == 2) {
+				
+				Iterator<Agent> it = setAgents.iterator();				
+				
 				System.out.println("STARTING GAME!");
 
 				agents[0] = (TicTacToeAgent) facade
 						.getProxyForRemoteAgent(TicTacToeAgent.class,
-								(Agent) regAgents[0]);
+								it.next());
 				agents[1] = (TicTacToeAgent) facade 
 						.getProxyForRemoteAgent(TicTacToeAgent.class,
-								(Agent) regAgents[1]);
+								it.next());
 				
 				gameRunning = true;
 				
@@ -95,7 +99,7 @@ public class TieTacTorEnvironmentAgent implements TicTacToeEnvironment {
 	}
 
 	public static void main(String[] args) throws Exception {
-		ServerFacadeImpl.init(1099, new ProxiedEnvironmentAgent(new TieTacTorEnvironmentAgent()));
+		ServerFacadeImpl.getInstance().initProxiedEnvironment(1099, new TieTacTorEnvironmentAgent());
 	}
 
 	public Message getEnvironmentState() throws RemoteException {

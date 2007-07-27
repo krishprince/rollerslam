@@ -1,0 +1,4 @@
+
+state_power(Agent, Ax, Ay), perception_dash(Agent, NAx, NAy)
+	 <=> state_power(Agent, NAx, NAy).		 
+		
