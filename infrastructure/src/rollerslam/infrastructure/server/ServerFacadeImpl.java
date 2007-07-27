@@ -37,7 +37,7 @@ public class ServerFacadeImpl implements Server, ServerFacade {
 	
 	private static ServerFacade instance = null;
 	private static AgentRegistry ari;
-	private static DisplayRegistry dri;
+	private static DisplayRegistryServer dri;
 	private static SimulationAdmin sai;
 	
 	/**
@@ -67,9 +67,9 @@ public class ServerFacadeImpl implements Server, ServerFacade {
 		EnvironmentAgent eas = (EnvironmentAgent) UnicastRemoteObject
 				.exportObject(environmentAgent, 0);
 
-		sai = new SimulationAdminImpl(eas);
-		ari = new AgentRegistryImpl(sai);
 		dri = new DisplayRegistryImpl();
+		sai = new SimulationAdminImpl(eas, dri);
+		ari = new AgentRegistryImpl(sai);
 		
 		SimulationAdmin sas = (SimulationAdmin) UnicastRemoteObject
 				.exportObject(sai, 0);

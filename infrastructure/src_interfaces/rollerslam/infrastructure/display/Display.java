@@ -20,6 +20,7 @@
  */
 package rollerslam.infrastructure.display;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import rollerslam.infrastructure.server.Message;
@@ -31,7 +32,7 @@ import rollerslam.infrastructure.server.Message;
  * 
  * @author maas
  */
-public interface Display {
+public interface Display extends Remote {
 	/**
 	 * @param m the status message
 	 * @throws RemoteException

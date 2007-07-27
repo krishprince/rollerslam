@@ -23,6 +23,8 @@ package rollerslam.infrastructure.server;
 
 import java.rmi.RemoteException;
 
+import rollerslam.infrastructure.display.Display;
+
 /**
  * Thread that runs the simulation. Controls the cycles. 
  * Calls the environment {@link EnvironmentAgent#think()} method each cycle. 
@@ -33,14 +35,17 @@ public class SimulationThread extends Thread {
 	private boolean running = false;
 	private long THINKING_INTERVAL = 500;
 	private EnvironmentAgent environment = new EnvironmentAgentImpl();
+	private DisplayRegistryExt displayRegistry = null;
 	
 	/**
 	 * Default constructor
 	 * 
 	 * @param environment the environment Agent
+	 * @param dri 
 	 */
-	public SimulationThread(EnvironmentAgent environment) {
+	public SimulationThread(EnvironmentAgent environment, DisplayRegistryExt dri) {
 		this.environment = environment;
+		this.displayRegistry = dri;
 	}
 
 	/**
@@ -86,6 +91,28 @@ public class SimulationThread extends Thread {
 				e1.printStackTrace();
 			}
 
+			Message state = null;			
+			try {
+				state = environment.getEnvironmentState();
+			} catch (RemoteException e1) {
+				e1.printStackTrace();
+			}
+			
+			System.out.println("SENDING STATUS...");
+			if (state != null) {
+				try {
+					for (Display d : displayRegistry.getRegisteredDisplays()) {
+						try {
+							d.update(state);
+						} catch (RemoteException e) {
+							e.printStackTrace();
+						}
+					}
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				}
+			}
+			
 			System.out.println("SLEEPING...");
 			try {
 				Thread.sleep(THINKING_INTERVAL);

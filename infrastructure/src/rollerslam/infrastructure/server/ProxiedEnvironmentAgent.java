@@ -67,8 +67,16 @@ public class ProxiedEnvironmentAgent implements EnvironmentAgent {
 		realAgent.think();
 	}
 
+	/**
+	 * @see rollerslam.infrastructure.server.EnvironmentCycleProcessor#getEnvironmentState()
+	 */
+	public Message getEnvironmentState() throws RemoteException {
+		return realAgent.getEnvironmentState();
+	}
+
 	private void processMessage(Message m) throws RemoteException {
 		realAgentProxy.sendPerception(m);
 	}
+
 
 }
