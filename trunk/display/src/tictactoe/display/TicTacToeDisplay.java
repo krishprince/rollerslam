@@ -16,8 +16,8 @@ public class TicTacToeDisplay implements Display {
 	}
 
 	public static void main(String[] args) throws RemoteException, AlreadyBoundException {
-		ClientFacadeImpl.init(args[0]);		
 		ClientFacade facade = ClientFacadeImpl.getInstance();
+		facade.init(args[0]);
 		
 		facade.getDisplayRegistry().register((Display) facade.exportObject(new TicTacToeDisplay()));		
 	}
