@@ -1,0 +1,7 @@
+
+state_power(Agent, Ax, Ay) / state_position(Agent, Sx, Sy), state_speed(Agent, Vx, Vy)
+ <=> sum(Sx,Vx)=NSx, sum(Sy,Vy)=NSy, 
+ 	 state_position(Agent, NSx, NSy), 
+ 	 
+ 	 NVx = sum(Vx,Ax), NVy = sum(Vy,Ay),
+ 	 state_speed(Agent, NVx, NVy).

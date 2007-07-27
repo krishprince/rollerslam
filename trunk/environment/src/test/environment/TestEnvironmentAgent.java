@@ -52,8 +52,8 @@ public class TestEnvironmentAgent implements TestEnvironment {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		ServerFacadeImpl.init(1099, new ProxiedEnvironmentAgent(new TestEnvironmentAgent()));
 		ServerFacade server = ServerFacadeImpl.getInstance();
+		server.init(1099, new ProxiedEnvironmentAgent(new TestEnvironmentAgent()));
 		server.getSimulationAdmin().run();
 	}
 
