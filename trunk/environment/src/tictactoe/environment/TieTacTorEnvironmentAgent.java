@@ -4,12 +4,14 @@ import java.rmi.RemoteException;
 
 import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.server.AgentRegistryExtended;
+import rollerslam.infrastructure.server.Message;
 import rollerslam.infrastructure.server.ProxiedEnvironmentAgent;
 import rollerslam.infrastructure.server.ServerFacade;
 import rollerslam.infrastructure.server.ServerFacadeImpl;
 import tictactoe.BoardState;
 import tictactoe.Marker;
-import tictactoe.agents.TicTacToeAgent;
+import tictactoe.StateMessage;
+import tictactoe.agent.TicTacToeAgent;
 
 public class TieTacTorEnvironmentAgent implements TicTacToeEnvironment {
 
@@ -94,6 +96,12 @@ public class TieTacTorEnvironmentAgent implements TicTacToeEnvironment {
 
 	public static void main(String[] args) throws Exception {
 		ServerFacadeImpl.init(1099, new ProxiedEnvironmentAgent(new TieTacTorEnvironmentAgent()));
+	}
+
+	public Message getEnvironmentState() throws RemoteException {
+		StateMessage state = new StateMessage();
+		state.state = currentBoard;
+		return state;
 	}	
 
 }
