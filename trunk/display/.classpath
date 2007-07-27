@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/infrastructure/dist/infrastructure.jar"/>
+	<classpathentry kind="lib" path="/infrastructure/dist/infrastructure.jar" sourcepath="/infrastructure"/>
 	<classpathentry kind="lib" path="/interfaces/dist/interfaces.jar"/>
 	<classpathentry kind="output" path="build"/>
 </classpath>
