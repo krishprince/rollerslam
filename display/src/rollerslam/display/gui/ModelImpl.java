@@ -7,12 +7,10 @@ public class ModelImpl implements Model {
 
 	public World model;
 	
-	@Override
 	public World getModel() {
 		return model;
 	}
 
-	@Override
 	public void setModel(World w) {
 		this.model = w;
 	}

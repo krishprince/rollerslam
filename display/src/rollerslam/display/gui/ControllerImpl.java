@@ -31,12 +31,10 @@ public class ControllerImpl implements Controller {
 	/**
 	 * @see rollerslam.display.gui.mvc.Controller#connect(java.lang.String)
 	 */
-	@Override
 	public void connect(String host) throws Exception {
 		facade.init(host);
 		facade.getDisplayRegistry().register((Display) facade.exportObject(new Display() {
 
-			@Override
 			public void update(Message m) throws RemoteException {
 				if (m instanceof StateMessage) {
 					ControllerImpl.this.model.setModel(((StateMessage)m).model);
@@ -49,7 +47,6 @@ public class ControllerImpl implements Controller {
 	/**
 	 * @see rollerslam.display.gui.mvc.Controller#startSimulation()
 	 */
-	@Override
 	public void startSimulation() throws Exception {
 		try {
 			facade.getSimulationAdmin().run();
@@ -61,7 +58,6 @@ public class ControllerImpl implements Controller {
 	/**
 	 * @see rollerslam.display.gui.mvc.Controller#stopSimulation()
 	 */
-	@Override
 	public void stopSimulation() throws Exception {
 		try {
 			facade.getSimulationAdmin().stop();
