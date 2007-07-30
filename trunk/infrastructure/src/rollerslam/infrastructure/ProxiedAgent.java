@@ -73,6 +73,7 @@ public class ProxiedAgent implements Agent, Runnable {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	private void processMessage(Message m) throws RemoteException {
 		if (m instanceof MethodCallMessage) {
 			MethodCallMessage mcm = (MethodCallMessage) m;

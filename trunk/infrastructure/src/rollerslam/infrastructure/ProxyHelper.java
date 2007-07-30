@@ -14,6 +14,7 @@ public interface ProxyHelper {
 	 * @param remoteAgent the remote agent
 	 * @return a proxy for the remote agent
 	 */
+	@SuppressWarnings("unchecked")
 	Object getProxyForRemoteAgent(Class proxyInterface, Agent remoteAgent);
 	
 	

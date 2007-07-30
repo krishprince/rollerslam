@@ -24,6 +24,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Vector;
 
 import rollerslam.infrastructure.ProxyHelperImpl;
 import rollerslam.infrastructure.agent.Agent;
@@ -39,6 +40,9 @@ public class ServerFacadeImpl implements Server, ServerFacade {
 	private static AgentRegistryServer ari;
 	private static DisplayRegistryServer dri;
 	private static SimulationAdmin sai;
+	
+	//stores a reference to all exported object so they will not ever be available to garbage collection
+	static private Vector<Object> exportedObjects = new Vector<Object>();
 	
 	/**
 	 * @return the unique instance for the server facade
@@ -63,6 +67,9 @@ public class ServerFacadeImpl implements Server, ServerFacade {
 		EnvironmentAgent eas = (EnvironmentAgent) UnicastRemoteObject
 				.exportObject(environmentAgent, 0);
 
+		exportedObjects.add(environmentAgent);
+		exportedObjects.add(eas);
+		
 		dri = new DisplayRegistryImpl();
 		sai = new SimulationAdminImpl(eas, dri);
 		ari = new AgentRegistryImpl(sai);
@@ -74,10 +81,24 @@ public class ServerFacadeImpl implements Server, ServerFacade {
 		DisplayRegistry drs = (DisplayRegistry) UnicastRemoteObject
 				.exportObject(dri, 0);
 
+		exportedObjects.add(sai);
+		exportedObjects.add(ari);
+		exportedObjects.add(dri);
+		exportedObjects.add(sas);
+		exportedObjects.add(ars);
+		exportedObjects.add(drs);
+
 		registry.bind(AgentRegistry.class.getSimpleName(),   ars);
 		registry.bind(DisplayRegistry.class.getSimpleName(), drs);
 		registry.bind(SimulationAdmin.class.getSimpleName(), sas);
-		registry.bind(EnvironmentAgent.class.getSimpleName(), eas);	
+		registry.bind(EnvironmentAgent.class.getSimpleName(), eas);
+		
+		//http://forum.java.sun.com/thread.jspa?threadID=5161052&tstart=180
+		Object o = new Object();
+		
+		synchronized (o) {
+			o.wait();			
+		}
 	}
 
 	/**
