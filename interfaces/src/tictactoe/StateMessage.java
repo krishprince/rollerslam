@@ -7,6 +7,7 @@ import rollerslam.infrastructure.server.Message;
  * 
  * @author maas
  */
+@SuppressWarnings("serial")
 public class StateMessage implements Message {
 
 	public BoardState state;
