@@ -9,6 +9,7 @@ import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.client.ClientFacade;
 import rollerslam.infrastructure.client.ClientFacadeImpl;
 
+@SuppressWarnings("serial")
 public class RollerslamDummyAgent implements RollerslamAgent, Runnable {
 	public ClientFacade          facade      = null;	
 	public RollerslamEnvironment environment = null;
