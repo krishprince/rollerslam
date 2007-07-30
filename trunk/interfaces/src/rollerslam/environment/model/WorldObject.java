@@ -51,7 +51,6 @@ public class WorldObject implements Serializable, Visitable {
 		}
 	}
 
-	@Override
 	public void accept(Visitor visitor) {
 		visitor.visit((WorldObject)this);
 	}
