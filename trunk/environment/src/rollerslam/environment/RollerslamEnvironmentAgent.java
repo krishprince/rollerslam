@@ -3,7 +3,6 @@ package rollerslam.environment;
 import java.rmi.RemoteException;
 import java.util.Hashtable;
 
-import rollerslam.agent.RollerslamAgent;
 import rollerslam.environment.model.Player;
 import rollerslam.environment.model.PlayerTeam;
 import rollerslam.environment.model.World;
@@ -14,10 +13,10 @@ import rollerslam.infrastructure.server.ServerFacadeImpl;
 
 @SuppressWarnings("serial")
 public class RollerslamEnvironmentAgent implements RollerslamEnvironment {
-	public ServerFacade             facade                        = ServerFacadeImpl.getInstance();
-	public World 		            worldModel                    = new World();
-	public RamificationWorldVisitor ramificationsHandler          = new RamificationWorldVisitor();
-	public ActionInterpreter        actionInterpretationComponent = new JavaActionInterpreter();
+	public ServerFacade               facade                        = ServerFacadeImpl.getInstance();
+	public World 		              worldModel                    = new World();
+	public RamificationComponent      ramificationsHandler          = new RamificationWorldVisitor();
+	public ActionInterpretationComponent          actionInterpretationComponent = new JavaActionInterpretationComponent();
 	
 	public Hashtable<Integer, Player> playersMap                  = new Hashtable<Integer, Player>();
 	public Hashtable<Player, Integer> idsMap                      = new Hashtable<Player, Integer>();
@@ -30,9 +29,8 @@ public class RollerslamEnvironmentAgent implements RollerslamEnvironment {
 		}
 	}
 
-	@Override
 	public void joinWorld(Agent agent, PlayerTeam playerTeam)
-			throws RemoteException {
+			throws RemoteException {							
 		Player body = null;
 		if (playerTeam == PlayerTeam.TEAM_A) {
 			body = getBodyForAgent(worldModel.playersA);
@@ -43,8 +41,8 @@ public class RollerslamEnvironmentAgent implements RollerslamEnvironment {
 		if (body != null) {
 			int id = nextAgentID++;
 			playersMap.put(id, body);
-			
-			((RollerslamAgent)facade.getProxyForRemoteAgent(RollerslamAgent.class, agent)).gameStarted(id);
+
+			actionInterpretationComponent.joinWorld(agent, playerTeam, id);
 		}
 	}
 	
@@ -59,12 +57,10 @@ public class RollerslamEnvironmentAgent implements RollerslamEnvironment {
 	}
 
 	public void think() throws RemoteException {
-		worldModel.accept(ramificationsHandler);
+		ramificationsHandler.processRamifications(worldModel);
 	}
 
 	public Message getEnvironmentState() throws RemoteException {
-		System.out.println();
-		worldModel.accept(new DumpWorldVisitor());
 		return new StateMessage(worldModel);
 	}
 	

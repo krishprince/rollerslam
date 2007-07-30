@@ -20,7 +20,6 @@ public class DumpWorldVisitor implements Visitor {
 	/* (non-Javadoc)
 	 * @see rollerslam.environment.model.visitor.Visitor#visit(rollerslam.environment.model.World)
 	 */
-	@Override
 	public void visit(World obj) {
 		System.out.println("WORLD");
 	}
@@ -28,7 +27,6 @@ public class DumpWorldVisitor implements Visitor {
 	/* (non-Javadoc)
 	 * @see rollerslam.environment.model.visitor.Visitor#visit(rollerslam.environment.model.WorldObject)
 	 */
-	@Override
 	public void visit(WorldObject obj) {
 		System.out.println("\tsx: " + obj.sx + " sy: " + obj.sy);
 		System.out.println("\twx: " + obj.width + " wy: " + obj.height);
@@ -37,7 +35,6 @@ public class DumpWorldVisitor implements Visitor {
 	/* (non-Javadoc)
 	 * @see rollerslam.environment.model.visitor.Visitor#visit(rollerslam.environment.model.AnimatedObject)
 	 */
-	@Override
 	public void visit(AnimatedObject obj) {
 		this.visit((WorldObject)obj);
 		System.out.println("\tvx: " + obj.vx + " vy: " + obj.vy);
@@ -47,7 +44,6 @@ public class DumpWorldVisitor implements Visitor {
 	/* (non-Javadoc)
 	 * @see rollerslam.environment.model.visitor.Visitor#visit(rollerslam.environment.model.Ball)
 	 */
-	@Override
 	public void visit(Ball obj) {
 		System.out.println("BALL");
 		this.visit((AnimatedObject)obj);
@@ -56,7 +52,6 @@ public class DumpWorldVisitor implements Visitor {
 	/* (non-Javadoc)
 	 * @see rollerslam.environment.model.visitor.Visitor#visit(rollerslam.environment.model.OutTrack)
 	 */
-	@Override
 	public void visit(OutTrack obj) {
 		System.out.println("OUTTRACK");
 		this.visit((WorldObject)obj);
@@ -65,7 +60,6 @@ public class DumpWorldVisitor implements Visitor {
 	/* (non-Javadoc)
 	 * @see rollerslam.environment.model.visitor.Visitor#visit(rollerslam.environment.model.Player)
 	 */
-	@Override
 	public void visit(Player obj) {
 		System.out.println("PLAYER");
 		System.out.println("\t" + obj.team);
