@@ -1,4 +1,4 @@
-package rollerslam.display.gui;
+package rollerslam.display.gui.sprite;
 import java.awt.Graphics;
 import java.awt.Image;
 
