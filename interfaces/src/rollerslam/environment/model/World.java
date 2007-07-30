@@ -32,7 +32,6 @@ public class World implements Serializable, Visitable {
 		}
 	}
 
-	@Override
 	public void accept(Visitor visitor) {
 		visitor.visit((World)this);
 
