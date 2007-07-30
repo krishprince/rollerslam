@@ -1,10 +1,9 @@
 package testfield.environment;
 
-import chr.runtime.*;
-import chr.runtime.builtin.*;
-import chr.runtime.language.*;
-import chr.runtime.util.*;
-import java.util.*;
+import chr.runtime.ChrMachine;
+import chr.runtime.language.Constraint;
+import chr.runtime.language.FConstraint;
+import chr.runtime.language.Variable;
 
 class EnvironmentRamification extends ChrMachine {
     Object A0,A1,A2,A3,A4,A5,A6,A7,A8,A9,A10,A11,A12,A13,A14,A15,A16,A17,A18,A19;
