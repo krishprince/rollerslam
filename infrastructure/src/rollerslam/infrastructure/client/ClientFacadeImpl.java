@@ -27,6 +27,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Vector;
 
 import rollerslam.infrastructure.ProxiedAgent;
 import rollerslam.infrastructure.ProxyHelperImpl;
@@ -48,6 +49,9 @@ public final class ClientFacadeImpl implements ClientFacade {
 	private SimulationAdmin sa;
 	private Registry registry = null;
 		
+	//stores a reference to all exported object so they will not ever be available to garbage collection
+	static private Vector<Object> exportedObjects = new Vector<Object>();
+	
 	private static String host = null;
 	
 	/**
@@ -82,12 +86,14 @@ public final class ClientFacadeImpl implements ClientFacade {
 	 * @see rollerslam.infrastructure.client.ClientFacade#exportAgent(java.lang.Object, java.lang.Class)
 	 */
 	@SuppressWarnings("unchecked")
-	public void exportAgent(Object realAgent, Class agentInterface) throws Exception {
+	public Agent exportAgent(Object realAgent, Class agentInterface) throws Exception {
 		ClientFacade server = getInstance();
 
 		Agent proxiedAgent = new ProxiedAgent(realAgent);		
 		Agent stubAgent = (Agent) server.exportObject(proxiedAgent);
 		server.getAgentRegistry().register(stubAgent);
+		
+		return stubAgent;
 	}
 	
 	/**
@@ -127,6 +133,10 @@ public final class ClientFacadeImpl implements ClientFacade {
 	public Remote exportObject(Remote obj) throws RemoteException, AlreadyBoundException {
 		Remote ret = UnicastRemoteObject.exportObject(obj, 0);		
 		registry.bind(obj.getClass().getSimpleName()+"_" + obj.hashCode()+"_"+(System.currentTimeMillis()), ret);
+		
+		exportedObjects.add(obj);
+		exportedObjects.add(ret);
+		
 		return ret;
 	}	
 

@@ -61,7 +61,8 @@ public interface ClientFacade extends Server {
 	 * @param agentInterface the interface implemented by the agent
 	 * @throws Exception
 	 */
-	void exportAgent(Object realAgent, Class agentInterface) throws Exception;
+	@SuppressWarnings("unchecked")
+	Agent exportAgent(Object realAgent, Class agentInterface) throws Exception;
 
 	/**
 	 * Creates a proxy for the environment and returns it
@@ -69,6 +70,7 @@ public interface ClientFacade extends Server {
 	 * @param environmentInterface the interface implemented by the environment
 	 * @throws RemoteException
 	 */
+	@SuppressWarnings("unchecked")
 	Object getProxiedEnvironment(Class environmentInterface) throws RemoteException;
 	
 }

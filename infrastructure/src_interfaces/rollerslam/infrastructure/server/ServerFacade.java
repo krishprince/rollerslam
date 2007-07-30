@@ -31,7 +31,9 @@ import rollerslam.infrastructure.agent.Agent;
 public interface ServerFacade extends Server {
 
 	/**
-	 * Initializes the server using the passed agent as the environment agent
+	 * Initializes the server using the passed agent as the environment agent.
+	 * The passed agent will never be available to garbage collection.
+	 * This method does not return.
 	 * 
 	 * @param port the name server port
 	 * @param environmentAgent the environment agent
@@ -41,7 +43,9 @@ public interface ServerFacade extends Server {
 
 	/**
 	 * Initializes the server using the passed agent as the environment agent.
+	 * The passed agent will never be available to garbage collection.
 	 * Assumes that the environment needs to be proxied.
+	 * This method does not return.
 	 * 
 	 * @param port the name server port
 	 * @param environmentAgent the environment agent

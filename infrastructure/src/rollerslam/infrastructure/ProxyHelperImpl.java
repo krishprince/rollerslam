@@ -51,6 +51,7 @@ public class ProxyHelperImpl implements ProxyHelper {
 	 * @param remoteAgent the remote agent
 	 * @return a proxy for the remote agent
 	 */
+	@SuppressWarnings("unchecked")
 	public Object getProxyForRemoteAgent(Class proxyInterface, Agent remoteAgent) {
 		if (validateAgentProxy(proxyInterface)) {
 			return Proxy.newProxyInstance(proxyInterface
