@@ -11,9 +11,9 @@ import java.awt.image.BufferStrategy;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import rollerslam.environment.StateMessage;
 import rollerslam.environment.model.OutTrack;
 import rollerslam.environment.model.Player;
-import rollerslam.environment.model.StateMessage;
 import rollerslam.environment.model.World;
 import rollerslam.infrastructure.display.Display;
 import rollerslam.infrastructure.server.Message;
@@ -94,15 +94,15 @@ public class Game extends Canvas implements Display {
     }
     
 	public void update(Message arg0) throws RemoteException {
-		World w = ((StateMessage)arg0).state;
+		World w = ((StateMessage)arg0).model;
 		this.world = w;
 	}
 	
 	private int translatex(int sx) {
-		return (sx * 800) / OutTrack.WIDTH;
+		return ((sx + OutTrack.WIDTH/2) * 800) / OutTrack.WIDTH;
 	}
 
 	private int translatey(int sy) {
-		return (sy * 600) / OutTrack.HEIGHT;
+		return ((sy + OutTrack.HEIGHT/2) * 600) / OutTrack.HEIGHT;
 	}
 }

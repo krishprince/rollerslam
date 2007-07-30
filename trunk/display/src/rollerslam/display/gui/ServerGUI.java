@@ -44,7 +44,7 @@ public class ServerGUI extends JFrame {
             rollerslam.display.gui.Game g = new rollerslam.display.gui.Game();
 
             final ClientFacade facade = ClientFacadeImpl.getInstance();
-    		facade.getDisplayRegistry().register((Display) facade.exportObject(new TicTacToeDisplay()));		
+    		facade.getDisplayRegistry().register((Display) facade.exportObject(g));		
 
             panel.add(g);
 
