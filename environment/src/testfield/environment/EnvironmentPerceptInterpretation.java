@@ -1,10 +1,8 @@
 package testfield.environment;
 
-import chr.runtime.*;
-import chr.runtime.builtin.*;
-import chr.runtime.language.*;
-import chr.runtime.util.*;
-import java.util.*;
+import chr.runtime.ChrMachine;
+import chr.runtime.language.Constraint;
+import chr.runtime.language.FConstraint;
 
 class EnvironmentPerceptInterpretation extends ChrMachine {
     Object A0,A1,A2,A3,A4,A5,A6,A7;
