@@ -1,7 +1,7 @@
 package rollerslam.environment;
 
 import rollerslam.environment.model.World;
-import rollerslam.infrastructure.server.Message;
+import rollerslam.infrastructure.agent.Message;
 
 @SuppressWarnings("serial")
 public class StateMessage implements Message {
