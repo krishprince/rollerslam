@@ -1,70 +1,57 @@
 package rollerslam.agents;
 
-import java.rmi.RemoteException;
+import java.util.Set;
 
-import rollerslam.agent.RollerslamAgent;
-import rollerslam.environment.RollerslamEnvironment;
 import rollerslam.environment.model.PlayerTeam;
+import rollerslam.environment.model.actions.DashAction;
+import rollerslam.environment.model.actions.JoinGameAction;
+import rollerslam.environment.model.perceptions.GameStartedPerception;
 import rollerslam.infrastructure.agent.Agent;
+import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.client.ClientFacade;
 import rollerslam.infrastructure.client.ClientFacadeImpl;
 
 @SuppressWarnings("serial")
-public class RollerslamDummyAgent implements RollerslamAgent, Runnable {
+public class RollerslamDummyAgent implements Agent, Runnable {
 	public ClientFacade          facade      = null;	
-	public RollerslamEnvironment environment = null;
 	public Agent                 remoteThis  = null;
 
-	public int agentID = -1;
+	public boolean gameStarted = false;
 	
-	public RollerslamDummyAgent(RollerslamEnvironment environment) throws Exception {
-		this.environment = environment;
-		
+	public RollerslamDummyAgent() throws Exception {
 		facade = ClientFacadeImpl.getInstance();
-		remoteThis = facade.exportAgent(this, RollerslamDummyAgent.class);
-	}
-
-	@Override
-	public void gameStarted(int yourAgentID) throws RemoteException {
-		agentID = yourAgentID;
-
-		synchronized (this) {
-			this.notifyAll();			
-		}
+		remoteThis = (Agent) facade.getClientInitialization().exportObject(this);
 	}
 
 	@Override
 	public void run() {
 		try {
-			environment.joinWorld(remoteThis, PlayerTeam.TEAM_A);
-		} catch (RemoteException e1) {
-			e1.printStackTrace();
-		}
-		
-		while(agentID == -1) {
-			synchronized (this) {
-				try {
-					this.wait();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+			facade.getAgentEffector().doAction(
+					new JoinGameAction(remoteThis, PlayerTeam.TEAM_A));
+
+			while (!gameStarted) {
+				Set<Message> actions = facade.getAgentSensor().getActions();
+
+				if (!actions.isEmpty()) {
+					for (Message message : actions) {
+						if (message instanceof GameStartedPerception) {
+							gameStarted = true;
+						}
+					}
+				} else {
+					Thread.sleep(1000);
 				}
 			}
-		}
 
-		try {
-			environment.dash(agentID, 900, 500);
-		} catch (RemoteException e) {
+			facade.getAgentEffector().doAction(
+					new DashAction(remoteThis, 900, 500));
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	public static void main(String[] args) throws Exception {
-		ClientFacade facade = ClientFacadeImpl.getInstance();
-		facade.init(args[0]);		
-
-		RollerslamDummyAgent realAgent = new RollerslamDummyAgent((RollerslamEnvironment) facade
-				.getProxiedEnvironment(RollerslamEnvironment.class));
-						
-		new Thread(realAgent).run();		
+		ClientFacadeImpl.getInstance().getClientInitialization().init("localhost");		
+		new Thread(new RollerslamDummyAgent()).run();		
 	}
 }
