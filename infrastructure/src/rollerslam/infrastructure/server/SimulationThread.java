@@ -33,7 +33,7 @@ import rollerslam.infrastructure.display.Display;
  */
 public class SimulationThread extends Thread {
 	private boolean running = false;
-	private long THINKING_INTERVAL = 500;
+	private long THINKING_INTERVAL = 100;
 	private EnvironmentAgent environment = new EnvironmentAgentImpl();
 	private DisplayRegistryExtended displayRegistry = null;
 	
