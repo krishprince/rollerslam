@@ -9,10 +9,10 @@ import rollerslam.display.gui.mvc.Controller;
 import rollerslam.display.gui.mvc.Model;
 import rollerslam.display.gui.mvc.View;
 import rollerslam.environment.StateMessage;
+import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.client.ClientFacade;
 import rollerslam.infrastructure.client.ClientFacadeImpl;
 import rollerslam.infrastructure.display.Display;
-import rollerslam.infrastructure.server.Message;
 
 /**
  * @author Marcos Aurélio
@@ -32,16 +32,20 @@ public class ControllerImpl implements Controller {
 	 * @see rollerslam.display.gui.mvc.Controller#connect(java.lang.String)
 	 */
 	public void connect(String host) throws Exception {
-		facade.init(host);
-		facade.getDisplayRegistry().register((Display) facade.exportObject(new Display() {
+		facade.getClientInitialization().init(host);
+		facade.getDisplayRegistry().register(
+				(Display) facade.getClientInitialization().exportObject(
+						new Display() {
 
-			public void update(Message m) throws RemoteException {
-				if (m instanceof StateMessage) {
-					ControllerImpl.this.model.setModel(((StateMessage)m).model);
-				}
-			}
-			
-		}));		
+							public void update(Message m)
+									throws RemoteException {
+								if (m instanceof StateMessage) {
+									ControllerImpl.this.model
+											.setModel(((StateMessage) m).model);
+								}
+							}
+
+						}));		
 	}
 
 	/**
