@@ -1,67 +1,99 @@
 package rollerslam.environment;
 
 import java.rmi.RemoteException;
-import java.util.Hashtable;
+import java.util.Set;
 
-import rollerslam.environment.model.Player;
-import rollerslam.environment.model.PlayerTeam;
 import rollerslam.environment.model.World;
-import rollerslam.infrastructure.agent.Agent;
-import rollerslam.infrastructure.server.Message;
+import rollerslam.infrastructure.agent.EnvironmentAgent;
+import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.server.ServerFacade;
 import rollerslam.infrastructure.server.ServerFacadeImpl;
+import rollerslam.infrastructure.server.SimulationState;
+import rollerslam.infrastructure.server.SimulationStateProvider;
 
 @SuppressWarnings("serial")
-public class RollerslamEnvironmentAgent implements RollerslamEnvironment {
+public class RollerslamEnvironmentAgent implements EnvironmentAgent, SimulationStateProvider {
+	protected static final long WAITING_TIME = 100;
 	public ServerFacade               facade                        = ServerFacadeImpl.getInstance();
 	public World 		              worldModel                    = new World();
 	public RamificationComponent      ramificationsHandler          = new RamificationWorldVisitor();
 	public ActionInterpretationComponent          actionInterpretationComponent = new JavaActionInterpretationComponent();
 	
-	public Hashtable<Integer, Player> playersMap                  = new Hashtable<Integer, Player>();
-	public Hashtable<Player, Integer> idsMap                      = new Hashtable<Player, Integer>();
-	public int 						  nextAgentID 				  = 0;
-	
-	public void dash(int agentID, int ax, int ay) throws RemoteException {
-		Player p = playersMap.get(agentID);
-		if (p != null) {
-			actionInterpretationComponent.dash(worldModel, p, ax, ay);
-		}
-	}
+	private SimulationState state = SimulationState.CREATED;
+	private boolean 	    running = false;
 
-	public void joinWorld(Agent agent, PlayerTeam playerTeam)
-			throws RemoteException {							
-		Player body = null;
-		if (playerTeam == PlayerTeam.TEAM_A) {
-			body = getBodyForAgent(worldModel.playersA);
-		} else {
-			body = getBodyForAgent(worldModel.playersB);
-		}
-		
-		if (body != null) {
-			int id = nextAgentID++;
-			playersMap.put(id, body);
+	private class SimulationThread extends Thread {
+		public void run() {
+			while (true) {
+				while(!running) {
+					synchronized (RollerslamEnvironmentAgent.this) {
+						try {
+							RollerslamEnvironmentAgent.this.wait();
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+				
+				System.out.println("ALOHA PROCESSING CYCLE: " + running);
+				try {
+					RollerslamEnvironmentAgent.this.processCycle();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 
-			actionInterpretationComponent.joinWorld(agent, playerTeam, id);
-		}
-	}
-	
-	private Player getBodyForAgent(Player[] players) {
-		for (int i=0;i<players.length;++i) {
-			Integer id = idsMap.get(players[i]);
-			if (id == null) {
-				return players[i];
+				try {
+					Thread.sleep(WAITING_TIME);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 		}
-		return null;
+	};
+	
+	public RollerslamEnvironmentAgent(int a) {
+		new SimulationThread().start();
+	}
+	
+	protected void processCycle() throws Exception {
+		Set<Message> actions = facade.getEnvironmentSensor().getActions();
+		
+		for (Message message : actions) {
+			actionInterpretationComponent.processAction(worldModel, message);			
+		}
+		
+		ramificationsHandler.processRamifications(worldModel);		
+		worldModel.accept(new DumpWorldVisitor());
 	}
 
-	public void think() throws RemoteException {
-		ramificationsHandler.processRamifications(worldModel);
+	public SimulationStateProvider getSimulationStateProvider()
+			throws RemoteException {
+		return this;
 	}
 
-	public Message getEnvironmentState() throws RemoteException {
+	public rollerslam.infrastructure.agent.Message getEnvironmentState()
+			throws RemoteException {
 		return new StateMessage(worldModel);
+	}
+
+	public SimulationState getState() throws RemoteException {
+		return state;
+	}
+
+	public void run() throws RemoteException {
+		state = SimulationState.RUNNING;
+		running = true;
+		synchronized (this) {
+			this.notifyAll();			
+		}
+	}
+
+	public void stop() throws RemoteException {
+		state = SimulationState.STOPPED;
+		running = false;
+		synchronized (this) {
+			this.notifyAll();			
+		}
 	}
 	
 	/**
@@ -69,6 +101,6 @@ public class RollerslamEnvironmentAgent implements RollerslamEnvironment {
 	 * @throws Exception 
 	 */
 	public static void main(String[] args) throws Exception {
-		ServerFacadeImpl.getInstance().initProxiedEnvironment(1099, new RollerslamEnvironmentAgent());		
-	}
+		ServerFacadeImpl.getInstance().getServerInitialization().init(1099, new RollerslamEnvironmentAgent(2));		
+	}	
 }
