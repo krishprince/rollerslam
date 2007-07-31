@@ -4,6 +4,6 @@
 	<classpathentry kind="lib" path="/interfaces/dist/interfaces.jar" sourcepath="/interfaces"/>
 	<classpathentry kind="lib" path="/infrastructure/dist/infrastructure.jar"/>
 	<classpathentry kind="lib" path="lib/upechr.jar" sourcepath="/CHRCompiler"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JDK1.6"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="build"/>
 </classpath>
