@@ -20,12 +20,14 @@
  */
 package rollerslam.infrastructure.client;
 
-import java.rmi.AlreadyBoundException;
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-import rollerslam.infrastructure.agent.Agent;
-import rollerslam.infrastructure.server.Server;
+import rollerslam.infrastructure.agent.Effector;
+import rollerslam.infrastructure.agent.Sensor;
+import rollerslam.infrastructure.server.AgentRegistry;
+import rollerslam.infrastructure.server.DisplayRegistry;
+import rollerslam.infrastructure.server.SimulationAdmin;
+
 
 /**
  * Main access point for most of the clients. This class locates the
@@ -33,44 +35,27 @@ import rollerslam.infrastructure.server.Server;
  * 
  * @author maas
  */
-public interface ClientFacade extends Server {
-
+public interface ClientFacade {
 	/**
-	 * Call this method before any other method.
-	 * 
-	 * @param nameserver the name service host
-	 */
-	void init(String nameserver);
-
-	/**
-	 * Helps clients on registering remote objects. Every object that is supposed to be
-	 * accessed remotely should be exported first. 
-	 * 
-	 * @param obj the object to be exported 
-	 * @return the Stub for the object. Pass this object to remote objects.
+	 * @return the DisplayRegistry port.
 	 * @throws RemoteException
-	 * @throws AlreadyBoundException
 	 */
-	Remote exportObject(Remote obj) throws RemoteException,
-			AlreadyBoundException;
+	DisplayRegistry getDisplayRegistry() throws RemoteException;
+	/**
+	 * @return the AgentRegistry port.
+	 * @throws RemoteException
+	 */
+	AgentRegistry   getAgentRegistry() throws RemoteException;
+	/**
+	 * @return the SimulationAdmin port.
+	 * @throws RemoteException
+	 */
+	SimulationAdmin getSimulationAdmin() throws RemoteException;
 	
-	/**
-	 * Creates a proxy for the agent and exports it
-	 * 
-	 * @param realAgent the agent to be exported
-	 * @param agentInterface the interface implemented by the agent
-	 * @throws Exception
-	 */
-	@SuppressWarnings("unchecked")
-	Agent exportAgent(Object realAgent, Class agentInterface) throws Exception;
-
-	/**
-	 * Creates a proxy for the environment and returns it
-	 * 
-	 * @param environmentInterface the interface implemented by the environment
-	 * @throws RemoteException
-	 */
-	@SuppressWarnings("unchecked")
-	Object getProxiedEnvironment(Class environmentInterface) throws RemoteException;
+	Effector getAgentEffector() throws RemoteException;
+	
+	Sensor   getAgentSensor() throws RemoteException;
+	
+	ClientInitialization getClientInitialization() throws RemoteException;
 	
 }

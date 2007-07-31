@@ -23,6 +23,7 @@ package rollerslam.infrastructure.server;
 
 import java.rmi.RemoteException;
 
+import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.display.Display;
 
 /**
@@ -31,10 +32,8 @@ import rollerslam.infrastructure.display.Display;
  * 
  * @author maas
  */
-public class SimulationThread extends Thread {
-	private boolean running = false;
-	private long THINKING_INTERVAL = 100;
-	private EnvironmentAgent environment = new EnvironmentAgentImpl();
+public class DisplayUpdateThread extends Thread {
+	private long DISPLAY_UPDATE_INTERVAL = 100;
 	private DisplayRegistryExtended displayRegistry = null;
 	
 	/**
@@ -43,26 +42,8 @@ public class SimulationThread extends Thread {
 	 * @param environment the environment Agent
 	 * @param dri 
 	 */
-	public SimulationThread(EnvironmentAgent environment, DisplayRegistryExtended dri) {
-		this.environment = environment;
+	public DisplayUpdateThread(DisplayRegistryExtended dri) {
 		this.displayRegistry = dri;
-	}
-
-	/**
-	 * @param b if the simulation should run or be paused
-	 */
-	public void setRunning(boolean b) {
-		this.running = b;
-		synchronized (this) {
-			notifyAll();
-		}
-	}
-
-	/**
-	 * @return if the simulation is currently running
-	 */
-	public boolean isRunning() {
-		return running;
 	}
 
 	/**
@@ -73,32 +54,14 @@ public class SimulationThread extends Thread {
 	public void run() {
 		
 		while(true) {
-			if (!running) {
-				synchronized (this) {
-					try {
-						System.out.println("WAITING...");
-						wait();
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-
-			System.out.println("THINKING... " + environment);
-			try {
-				environment.think();
-			} catch (RemoteException e1) {
-				e1.printStackTrace();
-			}
-
 			Message state = null;			
 			try {
-				state = environment.getEnvironmentState();
+				state = ServerFacadeImpl.getInstance().getSimulationStateProvider().getEnvironmentState();
 			} catch (RemoteException e1) {
 				e1.printStackTrace();
 			}
 			
-			System.out.println("SENDING STATUS...");
+//			System.out.println("SENDING STATUS...");
 			if (state != null) {
 				try {
 					for (Display d : displayRegistry.getRegisteredDisplays()) {
@@ -113,9 +76,9 @@ public class SimulationThread extends Thread {
 				}
 			}
 			
-			System.out.println("SLEEPING...");
+//			System.out.println("SLEEPING...");
 			try {
-				Thread.sleep(THINKING_INTERVAL);
+				Thread.sleep(DISPLAY_UPDATE_INTERVAL);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

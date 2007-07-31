@@ -18,21 +18,15 @@
  *  http://code.google.com/p/rollerslam
  *  
  */
+package rollerslam.infrastructure.agent;
 
-package rollerslam.infrastructure.annotations;
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.io.Serializable;
 
 /**
- * Marks agent methods
+ * Represents a message
  * 
  * @author maas
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface message {
+public interface Message extends Serializable {
 
 }

@@ -26,21 +26,37 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Vector;
 
-import rollerslam.infrastructure.ProxyHelperImpl;
-import rollerslam.infrastructure.agent.Agent;
+import rollerslam.infrastructure.agent.Effector;
+import rollerslam.infrastructure.agent.EffectorSensorImpl;
+import rollerslam.infrastructure.agent.EnvironmentAgent;
+import rollerslam.infrastructure.agent.Sensor;
 
 /**
  * Default implementation for the server facade
  * 
  * @author maas
  */
-public class ServerFacadeImpl implements Server, ServerFacade {
+public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
 	
 	private static ServerFacade instance = null;
-	private static AgentRegistryServer ari;
-	private static DisplayRegistryServer dri;
-	private static SimulationAdmin sai;
 	
+	// exported objects
+	private static SimulationAdmin sai;
+	private static DisplayRegistryImpl dri;
+	private static AgentRegistryImpl ari;
+	private static Sensor agSensor;
+	private static Effector agEffector;
+	
+	// local objects
+	private static Sensor envSensor;
+	private static Effector envEffector;	
+	
+	// required interfaces
+	private SimulationStateProvider envStateProvider;
+	
+	// display updating thread
+	private DisplayUpdateThread displayUpdateThread;
+
 	//stores a reference to all exported object so they will not ever be available to garbage collection
 	static private Vector<Object> exportedObjects = new Vector<Object>();
 	
@@ -64,34 +80,47 @@ public class ServerFacadeImpl implements Server, ServerFacade {
 	public void init(int port, EnvironmentAgent environmentAgent) throws Exception {
 		Registry registry = LocateRegistry.createRegistry(1099);
 
-		EnvironmentAgent eas = (EnvironmentAgent) UnicastRemoteObject
-				.exportObject(environmentAgent, 0);
-
-		exportedObjects.add(environmentAgent);
-		exportedObjects.add(eas);
-		
 		dri = new DisplayRegistryImpl();
-		sai = new SimulationAdminImpl(eas, dri);
+		sai = environmentAgent.getSimulationStateProvider();
+		envStateProvider = environmentAgent.getSimulationStateProvider();
 		ari = new AgentRegistryImpl(sai);
-		
+				
+		agSensor    = new EffectorSensorImpl(false, true);
+		agEffector  = new EffectorSensorImpl(true, false);
+		envSensor   = (Sensor) agEffector;
+		envEffector = (Effector) agSensor;
+				
 		SimulationAdmin sas = (SimulationAdmin) UnicastRemoteObject
 				.exportObject(sai, 0);
 		AgentRegistry ars = (AgentRegistry) UnicastRemoteObject
 				.exportObject((AgentRegistry)ari, 0);
 		DisplayRegistry drs = (DisplayRegistry) UnicastRemoteObject
 				.exportObject(dri, 0);
-
+		Sensor agSensors = (Sensor) UnicastRemoteObject.exportObject(agSensor,
+				0);
+		Effector agEffectors = (Effector) UnicastRemoteObject.exportObject(agEffector,
+				0);
+				
 		exportedObjects.add(sai);
 		exportedObjects.add(ari);
 		exportedObjects.add(dri);
+		exportedObjects.add(agSensor);
+		exportedObjects.add(agEffector);
+		
 		exportedObjects.add(sas);
 		exportedObjects.add(ars);
 		exportedObjects.add(drs);
+		exportedObjects.add(agSensors);
+		exportedObjects.add(agEffectors);
 
 		registry.bind(AgentRegistry.class.getSimpleName(),   ars);
 		registry.bind(DisplayRegistry.class.getSimpleName(), drs);
 		registry.bind(SimulationAdmin.class.getSimpleName(), sas);
-		registry.bind(EnvironmentAgent.class.getSimpleName(), eas);
+		registry.bind(Sensor.class.getSimpleName()+"_agent", agSensors);
+		registry.bind(Effector.class.getSimpleName()+"_agent", agEffectors);
+		
+		displayUpdateThread = new DisplayUpdateThread(dri);
+		displayUpdateThread.start();
 		
 		//http://forum.java.sun.com/thread.jspa?threadID=5161052&tstart=180
 		Object o = new Object();
@@ -99,29 +128,6 @@ public class ServerFacadeImpl implements Server, ServerFacade {
 		synchronized (o) {
 			o.wait();			
 		}
-	}
-
-	/**
-	 * @see rollerslam.infrastructure.server.ServerFacade#initProxiedEnvironment(int, rollerslam.infrastructure.server.EnvironmentAgent)
-	 */
-	public void initProxiedEnvironment(int port,
-			EnvironmentCycleProcessor environmentAgent) throws Exception {
-		init(port, new ProxiedEnvironmentAgent(environmentAgent));		
-	}
-	
-	/**
-	 * @see rollerslam.infrastructure.server.ServerFacade#init(int)
-	 */
-	public void init(int port) throws Exception {
-		init(port, new EnvironmentAgentImpl());
-	}
-
-	/**
-	 * @see rollerslam.infrastructure.server.ServerFacade#getProxyForRemoteAgent(java.lang.Class, rollerslam.infrastructure.agent.Agent)
-	 */
-	@SuppressWarnings("unchecked")
-	public Object getProxyForRemoteAgent(Class proxyInterface,	Agent remoteAgent) {
-		return ProxyHelperImpl.getInstance().getProxyForRemoteAgent(proxyInterface, remoteAgent);
 	}
 	
 	/**
@@ -143,6 +149,29 @@ public class ServerFacadeImpl implements Server, ServerFacade {
 	 */
 	public SimulationAdmin getSimulationAdmin() throws RemoteException {
 		return sai;
+	}
+
+	public Effector getEnvironmentEffector() throws RemoteException {
+		return envEffector;
+	}
+
+	public Sensor getEnvironmentSensor() throws RemoteException {
+		return envSensor;
+	}
+
+	public ServerInitialization getServerInitialization()
+			throws RemoteException {
+		return this;
+	}
+
+	public SimulationStateProvider getSimulationStateProvider()
+			throws RemoteException {
+		return envStateProvider;
+	}
+
+	public void setSimulationStateProvider(SimulationStateProvider e)
+			throws RemoteException {
+		this.envStateProvider = e;
 	}
 		
 }
