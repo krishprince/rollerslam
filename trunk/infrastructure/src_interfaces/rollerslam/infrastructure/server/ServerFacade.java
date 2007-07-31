@@ -20,7 +20,10 @@
  */
 package rollerslam.infrastructure.server;
 
-import rollerslam.infrastructure.agent.Agent;
+import java.rmi.RemoteException;
+
+import rollerslam.infrastructure.agent.Effector;
+import rollerslam.infrastructure.agent.Sensor;
 
 /**
  * Server facade.
@@ -28,36 +31,30 @@ import rollerslam.infrastructure.agent.Agent;
  * 
  * @author maas
  */
-public interface ServerFacade extends Server {
-
+public interface ServerFacade {
 	/**
-	 * Initializes the server using the passed agent as the environment agent.
-	 * The passed agent will never be available to garbage collection.
-	 * This method does not return.
-	 * 
-	 * @param port the name server port
-	 * @param environmentAgent the environment agent
-	 * @throws Exception
+	 * @return the DisplayRegistry port.
+	 * @throws RemoteException
 	 */
-	void init(int port, EnvironmentAgent environmentAgent) throws Exception;
-
+	DisplayRegistry getDisplayRegistry() throws RemoteException;
 	/**
-	 * Initializes the server using the passed agent as the environment agent.
-	 * The passed agent will never be available to garbage collection.
-	 * Assumes that the environment needs to be proxied.
-	 * This method does not return.
-	 * 
-	 * @param port the name server port
-	 * @param environmentAgent the environment agent
-	 * @throws Exception
+	 * @return the AgentRegistry port.
+	 * @throws RemoteException
 	 */
-	void initProxiedEnvironment(int port, EnvironmentCycleProcessor environmentAgent) throws Exception;
-
+	AgentRegistry   getAgentRegistry() throws RemoteException;
 	/**
-	 * @param proxyInterface the interface implemented by the proxy
-	 * @param remoteAgent the remote agent
-	 * @return a proxy for the remote agent
+	 * @return the SimulationAdmin port.
+	 * @throws RemoteException
 	 */
-	@SuppressWarnings("unchecked")
-	Object getProxyForRemoteAgent(Class proxyInterface,	Agent remoteAgent);
+	SimulationAdmin getSimulationAdmin() throws RemoteException;
+		
+	Effector getEnvironmentEffector() throws RemoteException;
+	
+	Sensor getEnvironmentSensor() throws RemoteException;
+	
+	ServerInitialization getServerInitialization() throws RemoteException;
+
+	SimulationStateProvider getSimulationStateProvider() throws RemoteException;
+	
+	void setSimulationStateProvider(SimulationStateProvider e) throws RemoteException;
 }

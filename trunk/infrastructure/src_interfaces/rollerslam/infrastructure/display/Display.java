@@ -23,7 +23,7 @@ package rollerslam.infrastructure.display;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-import rollerslam.infrastructure.server.Message;
+import rollerslam.infrastructure.agent.Message;
 
 /**
  * Represents a display. The simulation sends messages containing 

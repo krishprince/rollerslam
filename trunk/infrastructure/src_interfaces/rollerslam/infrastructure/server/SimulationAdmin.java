@@ -23,8 +23,6 @@ package rollerslam.infrastructure.server;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-import rollerslam.infrastructure.agent.Agent;
-
 /**
  * Allows the control of the simulation
  * 
@@ -65,10 +63,4 @@ public interface SimulationAdmin extends Remote {
 	 * @throws RemoteException
 	 */
 	SimulationState getState() throws RemoteException;	
-
-	/**
-	 * @return the current simulation environment agent 
-	 * @throws RemoteException
-	 */
-	Agent getEnvironmentAgent() throws RemoteException;	
 }
