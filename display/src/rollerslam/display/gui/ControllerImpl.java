@@ -8,8 +8,9 @@ import java.rmi.RemoteException;
 import rollerslam.display.gui.mvc.Controller;
 import rollerslam.display.gui.mvc.Model;
 import rollerslam.display.gui.mvc.View;
-import rollerslam.environment.StateMessage;
+import rollerslam.environment.model.World;
 import rollerslam.infrastructure.agent.Message;
+import rollerslam.infrastructure.agent.StateMessage;
 import rollerslam.infrastructure.client.ClientFacade;
 import rollerslam.infrastructure.client.ClientFacadeImpl;
 import rollerslam.infrastructure.display.Display;
@@ -41,7 +42,7 @@ public class ControllerImpl implements Controller {
 									throws RemoteException {
 								if (m instanceof StateMessage) {
 									ControllerImpl.this.model
-											.setModel(((StateMessage) m).model);
+											.setModel((World)((StateMessage) m).model);
 								}
 							}
 
