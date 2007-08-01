@@ -16,21 +16,22 @@ public class EffectorSensorImpl implements Effector, Sensor {
 		this.clearOnWrite = clearOnWrite;
 	}
 
-	public void clear() {
+	public synchronized void clear() {
 		messages.clear();
 	}
 	
-	public Set<Message> getActions() throws RemoteException {
+	public synchronized Set<Message> getActions() throws RemoteException {
 		Set<Message> ret = new HashSet<Message>();
 		ret.addAll(messages);
 		
 		if (clearOnRead) {
 			clear();
 		}
+		
 		return ret;
 	}
 
-	public void doAction(Message m) throws RemoteException {
+	public synchronized void doAction(Message m) throws RemoteException {
 		if (clearOnWrite) {
 			clear();
 		}
