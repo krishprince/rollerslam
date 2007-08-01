@@ -9,7 +9,9 @@ import rollerslam.environment.model.World;
 import rollerslam.environment.model.actions.DashAction;
 import rollerslam.environment.model.actions.JoinGameAction;
 import rollerslam.environment.model.perceptions.GameStartedPerception;
+import rollerslam.infrastructure.agent.ActionInterpretationComponent;
 import rollerslam.infrastructure.agent.Agent;
+import rollerslam.infrastructure.agent.EnvironmentStateModel;
 import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.server.ServerFacade;
 import rollerslam.infrastructure.server.ServerFacadeImpl;
@@ -31,13 +33,13 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 		p.ay = Math.min(ay, MAX_ACCELERATION);
 	}
 
-	public void processAction(World w, Message m) {
+	public void processAction(EnvironmentStateModel w, Message m) {
 		if (m instanceof DashAction) {
 			DashAction mt = (DashAction) m;
-			this.dash(w, playersMap.get(mt.agent), mt.ax, mt.ay);
+			this.dash((World)w, playersMap.get(mt.agent), mt.ax, mt.ay);
 		} else if (m instanceof JoinGameAction) {
 			JoinGameAction mt = (JoinGameAction) m;
-			this.joinWorld(w, mt.agent, mt.team);			
+			this.joinWorld((World)w, mt.agent, mt.team);			
 		}
 	}
 
