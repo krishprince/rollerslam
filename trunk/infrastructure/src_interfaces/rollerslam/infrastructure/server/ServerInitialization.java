@@ -1,6 +1,6 @@
 package rollerslam.infrastructure.server;
 
-import rollerslam.infrastructure.agent.EnvironmentAgent;
+import rollerslam.infrastructure.agent.AutomataAgent;
 
 
 public interface ServerInitialization {
@@ -14,5 +14,5 @@ public interface ServerInitialization {
 	 * @param environmentAgent the environment agent
 	 * @throws Exception
 	 */
-	void init(int port, EnvironmentAgent environmentAgent) throws Exception;
+	void init(int port, AutomataAgent environmentAgent) throws Exception;
 }

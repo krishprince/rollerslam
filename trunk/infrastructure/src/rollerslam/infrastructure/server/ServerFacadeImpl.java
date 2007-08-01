@@ -28,7 +28,7 @@ import java.util.Vector;
 
 import rollerslam.infrastructure.agent.Effector;
 import rollerslam.infrastructure.agent.EffectorSensorImpl;
-import rollerslam.infrastructure.agent.EnvironmentAgent;
+import rollerslam.infrastructure.agent.AutomataAgent;
 import rollerslam.infrastructure.agent.Sensor;
 
 /**
@@ -71,25 +71,24 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
 	}
 	
 	private ServerFacadeImpl() {
-		
+		dri = new DisplayRegistryImpl();
+		ari = new AgentRegistryImpl(sai);
+				
+		agSensor    = new EffectorSensorImpl(true, false);
+		agEffector  = new EffectorSensorImpl(true, false);
+		envSensor   = (Sensor) agEffector;
+		envEffector = (Effector) agSensor;		
 	}
 	
 	/**
-	 * @see rollerslam.infrastructure.server.ServerFacade#init(int, rollerslam.infrastructure.server.EnvironmentAgent)
+	 * @see rollerslam.infrastructure.server.ServerFacade#init(int, rollerslam.infrastructure.server.AutomataAgent)
 	 */
-	public void init(int port, EnvironmentAgent environmentAgent) throws Exception {
+	public void init(int port, AutomataAgent environmentAgent) throws Exception {
 		Registry registry = LocateRegistry.createRegistry(1099);
 
-		dri = new DisplayRegistryImpl();
 		sai = environmentAgent.getSimulationStateProvider();
 		envStateProvider = environmentAgent.getSimulationStateProvider();
-		ari = new AgentRegistryImpl(sai);
-				
-		agSensor    = new EffectorSensorImpl(false, true);
-		agEffector  = new EffectorSensorImpl(true, false);
-		envSensor   = (Sensor) agEffector;
-		envEffector = (Effector) agSensor;
-				
+
 		SimulationAdmin sas = (SimulationAdmin) UnicastRemoteObject
 				.exportObject(sai, 0);
 		AgentRegistry ars = (AgentRegistry) UnicastRemoteObject

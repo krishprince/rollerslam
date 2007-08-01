@@ -53,9 +53,7 @@ public class AgentRegistryImpl implements AgentRegistryServer {
 	 */
 	public void register(Agent a) throws RemoteException {
 		if (simulation.getState() == SimulationState.CREATED) {
-			agents.add(a);
-			
-			System.out.println(this + "@AGENT ADDED! " + agents);
+			agents.add(a);			
 		}
 	}
 

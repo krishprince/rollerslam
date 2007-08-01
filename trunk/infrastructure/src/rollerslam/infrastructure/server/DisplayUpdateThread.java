@@ -28,7 +28,7 @@ import rollerslam.infrastructure.display.Display;
 
 /**
  * Thread that runs the simulation. Controls the cycles. 
- * Calls the environment {@link EnvironmentAgent#think()} method each cycle. 
+ * Calls the environment {@link AutomataAgent#think()} method each cycle. 
  * 
  * @author maas
  */
