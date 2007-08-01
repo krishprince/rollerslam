@@ -8,6 +8,8 @@ import rollerslam.environment.model.Player;
 import rollerslam.environment.model.World;
 import rollerslam.environment.model.WorldObject;
 import rollerslam.environment.model.visitor.Visitor;
+import rollerslam.infrastructure.agent.EnvironmentStateModel;
+import rollerslam.infrastructure.agent.RamificationComponent;
 
 /**
  * @author Marcos Aurélio
@@ -43,7 +45,8 @@ public class RamificationWorldVisitor implements Visitor, RamificationComponent 
 		this.visit((AnimatedObject)obj);
 	}
 
-	public void processRamifications(World world) {
-		world.accept(this);
+	public void processRamifications(EnvironmentStateModel world) {
+		((World)world).accept(this);
 	}
+
 }
