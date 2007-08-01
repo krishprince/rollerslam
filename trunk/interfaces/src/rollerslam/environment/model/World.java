@@ -5,9 +5,10 @@ import java.util.Random;
 
 import rollerslam.environment.model.visitor.Visitable;
 import rollerslam.environment.model.visitor.Visitor;
+import rollerslam.infrastructure.agent.EnvironmentStateModel;
 
 @SuppressWarnings("serial")
-public class World implements Serializable, Visitable {
+public class World extends EnvironmentStateModel implements Serializable, Visitable  {
 	public OutTrack outTrack     = new OutTrack();
 	public Ball ball      		 = new Ball(0, 0);
 	public Player playersA[] 	 = new Player[2];
