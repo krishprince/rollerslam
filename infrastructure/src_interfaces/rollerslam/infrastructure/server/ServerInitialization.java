@@ -1,6 +1,6 @@
 package rollerslam.infrastructure.server;
 
-import rollerslam.infrastructure.agent.AutomataAgent;
+import rollerslam.infrastructure.agent.automata.AutomataAgent;
 
 
 public interface ServerInitialization {

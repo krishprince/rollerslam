@@ -1,4 +1,4 @@
-package rollerslam.infrastructure.agent;
+package rollerslam.infrastructure.agent.automata;
 
 
 public interface RamificationComponent {

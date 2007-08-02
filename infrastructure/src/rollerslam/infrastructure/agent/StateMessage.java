@@ -1,5 +1,7 @@
 package rollerslam.infrastructure.agent;
 
+import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
+
 
 @SuppressWarnings("serial")
 public class StateMessage extends Message {
