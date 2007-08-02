@@ -34,8 +34,8 @@ public class SpriteStore {
     }
 
     /** The cached sprite map, from reference to sprite instance */
-    @SuppressWarnings("unchecked")
-	private HashMap sprites = new HashMap();
+    @SuppressWarnings(value = "unchecked")
+    private HashMap sprites = new HashMap();
 
     /**
      * Retrieve a sprite from the store
@@ -43,8 +43,8 @@ public class SpriteStore {
      * @param ref The reference to the image to use for the sprite
      * @return A sprite instance containing an accelerate image of the request reference
      */
-    @SuppressWarnings("unchecked")
-	public Sprite getSprite(String ref) {
+    @SuppressWarnings(value = "unchecked")
+    public Sprite getSprite(String ref) {
         // if we've already got the sprite in the cache
         // then just return the existing version
         if (sprites.get(ref) != null) {

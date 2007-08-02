@@ -5,14 +5,13 @@ import rollerslam.environment.model.World;
 
 public class ModelImpl implements Model {
 
-	public World model;
-	
-	public World getModel() {
-		return model;
-	}
+    public World model;
 
-	public void setModel(World w) {
-		this.model = w;
-	}
+    public World getModel() {
+        return model;
+    }
 
+    public void setModel(World w) {
+        this.model = w;
+    }
 }
