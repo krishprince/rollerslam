@@ -13,7 +13,7 @@ import rollerslam.infrastructure.server.ServerFacadeImpl;
 import rollerslam.infrastructure.server.SimulationState;
 import rollerslam.infrastructure.server.SimulationStateProvider;
 
-public class AutomataAgent implements Agent, SimulationStateProvider {
+public abstract class AutomataAgent implements Agent, SimulationStateProvider {
 	protected static long cycleDuration = 100;
 
 	public ServerFacade                           facade = ServerFacadeImpl.getInstance();
@@ -28,9 +28,9 @@ public class AutomataAgent implements Agent, SimulationStateProvider {
 	protected Effector							  effector;
 	
 	private SimulationState state = SimulationState.CREATED;
-		
-	public AutomataAgent() {
-		new SimulationThread().start();	
+			
+	protected void startSimulation() {
+		new SimulationThread().start();			
 	}
 	
 	private class SimulationThread extends Thread {
@@ -76,11 +76,13 @@ public class AutomataAgent implements Agent, SimulationStateProvider {
 	protected void generateActions() {
 		Message action = strategyComponent.computeAction(worldModel);
 		
-		try {
-			effector.doAction(action);
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}		
+		if (action != null) {
+			try {
+				effector.doAction(action);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	protected void think() {
