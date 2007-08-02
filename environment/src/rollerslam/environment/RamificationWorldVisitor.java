@@ -3,8 +3,12 @@ package rollerslam.environment;
 
 import rollerslam.environment.model.AnimatedObject;
 import rollerslam.environment.model.Ball;
+import rollerslam.environment.model.Basket;
+import rollerslam.environment.model.Goal;
 import rollerslam.environment.model.OutTrack;
 import rollerslam.environment.model.Player;
+import rollerslam.environment.model.Ramp;
+import rollerslam.environment.model.Trampoline;
 import rollerslam.environment.model.World;
 import rollerslam.environment.model.WorldObject;
 import rollerslam.environment.model.visitor.Visitor;
@@ -47,6 +51,22 @@ public class RamificationWorldVisitor implements Visitor, RamificationComponent 
 
 	public void processRamifications(EnvironmentStateModel world) {
 		((World)world).accept(this);
+	}
+
+	public void visit(Basket obj) {
+		
+	}
+
+	public void visit(Goal obj) {
+		
+	}
+
+	public void visit(Ramp obj) {
+		
+	}
+
+	public void visit(Trampoline obj) {
+		
 	}
 
 }
