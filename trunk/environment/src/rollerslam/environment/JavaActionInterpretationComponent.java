@@ -9,10 +9,10 @@ import rollerslam.environment.model.World;
 import rollerslam.environment.model.actions.DashAction;
 import rollerslam.environment.model.actions.JoinGameAction;
 import rollerslam.environment.model.perceptions.GameStartedPerception;
-import rollerslam.infrastructure.agent.ActionInterpretationComponent;
 import rollerslam.infrastructure.agent.Agent;
-import rollerslam.infrastructure.agent.EnvironmentStateModel;
 import rollerslam.infrastructure.agent.Message;
+import rollerslam.infrastructure.agent.automata.ActionInterpretationComponent;
+import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
 import rollerslam.infrastructure.server.ServerFacade;
 import rollerslam.infrastructure.server.ServerFacadeImpl;
 

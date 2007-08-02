@@ -8,8 +8,8 @@ import rollerslam.environment.model.Player;
 import rollerslam.environment.model.World;
 import rollerslam.environment.model.WorldObject;
 import rollerslam.environment.model.visitor.Visitor;
-import rollerslam.infrastructure.agent.EnvironmentStateModel;
-import rollerslam.infrastructure.agent.RamificationComponent;
+import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
+import rollerslam.infrastructure.agent.automata.RamificationComponent;
 
 /**
  * @author Marcos Aurélio
