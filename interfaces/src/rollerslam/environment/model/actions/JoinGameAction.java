@@ -4,12 +4,12 @@ import rollerslam.environment.model.PlayerTeam;
 import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.Message;
 
-public class JoinGameAction implements Message {	
-	public Agent agent;
+@SuppressWarnings("serial")
+public class JoinGameAction extends Message {	
 	public PlayerTeam team;
 	
 	public JoinGameAction(Agent a, PlayerTeam team) {
-		this.agent = a;
+		super(a);
 		this.team = team;
 	}
 }
