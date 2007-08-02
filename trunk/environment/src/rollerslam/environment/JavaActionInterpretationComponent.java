@@ -36,10 +36,10 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 	public void processAction(EnvironmentStateModel w, Message m) {
 		if (m instanceof DashAction) {
 			DashAction mt = (DashAction) m;
-			this.dash((World)w, playersMap.get(mt.agent), mt.ax, mt.ay);
+			this.dash((World)w, playersMap.get(mt.sender), mt.ax, mt.ay);
 		} else if (m instanceof JoinGameAction) {
 			JoinGameAction mt = (JoinGameAction) m;
-			this.joinWorld((World)w, mt.agent, mt.team);			
+			this.joinWorld((World)w, mt.sender, mt.team);			
 		}
 	}
 
@@ -57,7 +57,7 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 			idsMap.put(body, agent);
 			
 			try {
-				facade.getEnvironmentEffector().doAction(new GameStartedPerception());
+				facade.getEnvironmentEffector().doAction(new GameStartedPerception(null));
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
