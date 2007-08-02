@@ -13,6 +13,15 @@ public class World extends EnvironmentStateModel implements Serializable, Visita
 	public Ball ball      		 = new Ball(0, 0);
 	public Player playersA[] 	 = new Player[2];
 	public Player playersB[] 	 = new Player[2];
+	public Goal goalA;
+	public Goal goalB;
+	public Ramp rampA;
+	public Ramp rampB;
+	public Trampoline trampolineA;
+	public Trampoline trampolineB;
+	
+	public static final int WIDTH  = 188000;
+	public static final int HEIGHT = 138000;
 	
 	private Random random 		 = new Random();
 	
@@ -31,6 +40,16 @@ public class World extends EnvironmentStateModel implements Serializable, Visita
 								     (random.nextInt(hei) + Player.HEIGHT),
 								      PlayerTeam.TEAM_B);
 		}
+		
+		goalA = new Goal(65500, 297500);
+		goalB = new Goal(65500, 1422500);
+		
+		rampA = new Ramp(70000, 302000);
+		rampB = new Ramp(70000, 1427000);
+		
+		trampolineA = new Trampoline(65500, 297500);;
+		trampolineB = new Trampoline(65500, 1422500);
+		
 	}
 
 	public void accept(Visitor visitor) {
