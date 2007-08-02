@@ -4,6 +4,7 @@
 package rollerslam.display.gui;
 
 import java.rmi.RemoteException;
+
 import rollerslam.display.gui.mvc.Controller;
 import rollerslam.display.gui.mvc.Model;
 import rollerslam.display.gui.mvc.View;
