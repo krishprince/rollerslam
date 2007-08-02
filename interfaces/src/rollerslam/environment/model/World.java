@@ -5,7 +5,7 @@ import java.util.Random;
 
 import rollerslam.environment.model.visitor.Visitable;
 import rollerslam.environment.model.visitor.Visitor;
-import rollerslam.infrastructure.agent.EnvironmentStateModel;
+import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
 
 @SuppressWarnings("serial")
 public class World extends EnvironmentStateModel implements Serializable, Visitable  {
