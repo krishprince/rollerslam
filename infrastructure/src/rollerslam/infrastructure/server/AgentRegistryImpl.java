@@ -53,7 +53,8 @@ public class AgentRegistryImpl implements AgentRegistryServer {
 	 */
 	public void register(Agent a) throws RemoteException {
 		if (simulation.getState() == SimulationState.CREATED) {
-			agents.add(a);			
+			agents.add(a);
+			ServerFacadeImpl.getInstance().getSensorEffectorManager().registerAgent(a);
 		}
 	}
 
@@ -62,6 +63,11 @@ public class AgentRegistryImpl implements AgentRegistryServer {
 	 */
 	public void unregister(Agent a) {
 		agents.remove(a);
+		try {
+			ServerFacadeImpl.getInstance().getSensorEffectorManager().unregisterAgent(a);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**

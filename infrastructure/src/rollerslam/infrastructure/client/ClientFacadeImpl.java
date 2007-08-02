@@ -29,8 +29,10 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Vector;
 
+import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.Effector;
 import rollerslam.infrastructure.agent.Sensor;
+import rollerslam.infrastructure.agent.SensorEffectorManager;
 import rollerslam.infrastructure.server.AgentRegistry;
 import rollerslam.infrastructure.server.DisplayRegistry;
 import rollerslam.infrastructure.server.SimulationAdmin;
@@ -48,9 +50,8 @@ public final class ClientFacadeImpl implements ClientFacade, ClientInitializatio
 	private DisplayRegistry dr;
 	private SimulationAdmin sa;
 	
-	private Effector agEff;
-	private Sensor   agSensor;
-
+	private SensorEffectorManager sem;
+	
 	private Registry registry;
 	
 	//stores a reference to all exported object so they will not ever be available to garbage collection
@@ -74,8 +75,7 @@ public final class ClientFacadeImpl implements ClientFacade, ClientInitializatio
 			dr = (DisplayRegistry) registry.lookup(DisplayRegistry.class.getSimpleName());
 			sa = (SimulationAdmin) registry.lookup(SimulationAdmin.class.getSimpleName());
 			
-			agEff    = (Effector) registry.lookup(Effector.class.getSimpleName()+"_agent");
-			agSensor = (Sensor)   registry.lookup(Sensor.class.getSimpleName()+"_agent");						
+			sem = (SensorEffectorManager) registry.lookup(SensorEffectorManager.class.getSimpleName());
 		} catch (Exception e) {
 			e.printStackTrace();
 			
@@ -83,8 +83,7 @@ public final class ClientFacadeImpl implements ClientFacade, ClientInitializatio
 			dr = null;
 			sa = null;
 			
-			agEff = null;
-			agSensor = null;
+			sem = null;
 		}		
 	}
 	
@@ -109,7 +108,8 @@ public final class ClientFacadeImpl implements ClientFacade, ClientInitializatio
 		exportedObjects.add(ret);
 		
 		return ret;
-	}		
+	}
+	
 	/**
 	 * @see rollerslam.infrastructure.client.ClientFacade#getAgentRegistry()
 	 */
@@ -131,17 +131,26 @@ public final class ClientFacadeImpl implements ClientFacade, ClientInitializatio
 		return sa;
 	}
 
-	public Effector getAgentEffector() throws RemoteException {
-		return agEff;
-	}
-
-	public Sensor getAgentSensor() throws RemoteException {
-		return agSensor;
-	}
-
+	/**
+	 * @see rollerslam.infrastructure.client.ClientFacade#getClientInitialization()
+	 */
 	public ClientInitialization getClientInitialization()
 			throws RemoteException {
 		return this;
+	}
+
+	/**
+	 * @see rollerslam.infrastructure.client.ClientFacade#getAgentEffector(rollerslam.infrastructure.agent.Agent)
+	 */
+	public Effector getAgentEffector(Agent ag) throws RemoteException {
+		return sem.getAgentEffector(ag);
+	}
+
+	/**
+	 * @see rollerslam.infrastructure.client.ClientFacade#getAgentSensor(rollerslam.infrastructure.agent.Agent)
+	 */
+	public Sensor getAgentSensor(Agent ag) throws RemoteException {
+		return sem.getAgentSensor(ag);
 	}
 
 	

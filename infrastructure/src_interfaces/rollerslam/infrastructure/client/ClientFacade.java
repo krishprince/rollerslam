@@ -22,6 +22,7 @@ package rollerslam.infrastructure.client;
 
 import java.rmi.RemoteException;
 
+import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.Effector;
 import rollerslam.infrastructure.agent.Sensor;
 import rollerslam.infrastructure.server.AgentRegistry;
@@ -52,10 +53,24 @@ public interface ClientFacade {
 	 */
 	SimulationAdmin getSimulationAdmin() throws RemoteException;
 	
-	Effector getAgentEffector() throws RemoteException;
+	/**
+	 * @param ag the agent
+	 * @return the Effector associated to the given agent
+	 * @throws RemoteException
+	 */
+	Effector getAgentEffector(Agent ag) throws RemoteException;
 	
-	Sensor   getAgentSensor() throws RemoteException;
+	/**
+	 * @param ag the agent
+	 * @return the Sensor associated to the given agent
+	 * @throws RemoteException
+	 */
+	Sensor   getAgentSensor(Agent ag) throws RemoteException;
 	
+	/**
+	 * @return the client initialization interface
+	 * @throws RemoteException
+	 */
 	ClientInitialization getClientInitialization() throws RemoteException;
 	
 }

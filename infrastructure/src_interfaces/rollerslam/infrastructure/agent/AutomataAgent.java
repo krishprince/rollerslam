@@ -93,7 +93,7 @@ public abstract class AutomataAgent implements Agent, SimulationStateProvider {
 
 	public rollerslam.infrastructure.agent.Message getEnvironmentState()
 			throws RemoteException {
-		return new StateMessage(worldModel);
+		return new StateMessage(null, worldModel);
 	}
 
 	public SimulationState getState() throws RemoteException {
