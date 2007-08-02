@@ -1,5 +1,6 @@
 package rollerslam.agents.goalbased;
 
+import rollerslam.environment.model.perceptions.GameStartedPerception;
 import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.agent.StateMessage;
@@ -46,16 +47,23 @@ public class RollerslamGoalBasedAgent extends GoalBasedAgent {
 			public void processAction(EnvironmentStateModel w, Message m) {			
 				if (m instanceof StateMessage) {
 					((AgentWorldModel)w).environmentStateModel = ((StateMessage)m).model;
+				} else if (m instanceof GameStartedPerception) {
+					((AgentWorldModel)w).gameStarted = true;
+					((AgentWorldModel)w).myID = ((GameStartedPerception)m).playerID;
 				}
 			}			
 		};
 		
 		this.ramificationComponent = new AgentRamificator();
 		
-		this.strategyComponent = new AgentActionGenerator();
+		this.strategyComponent = new AgentActionGenerator(remoteThis);
+		
+		this.run();
+		startSimulation();
 	}
 
 	public static void main(String[] args) throws Exception {
-		ClientFacadeImpl.getInstance().getClientInitialization().init("localhost");		
+		ClientFacadeImpl.getInstance().getClientInitialization().init("localhost");
+		new RollerslamGoalBasedAgent();
 	}
 }
