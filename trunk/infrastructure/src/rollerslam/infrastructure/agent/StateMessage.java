@@ -2,14 +2,16 @@ package rollerslam.infrastructure.agent;
 
 
 @SuppressWarnings("serial")
-public class StateMessage implements Message {
+public class StateMessage extends Message {
 
 	public EnvironmentStateModel model;
 	
-	public StateMessage() {
+	public StateMessage(Agent sender) {
+		super(sender);
 	}
 
-	public StateMessage(EnvironmentStateModel m) {
+	public StateMessage(Agent sender, EnvironmentStateModel m) {
+		super(sender);
 		this.model = m;
 	}
 }

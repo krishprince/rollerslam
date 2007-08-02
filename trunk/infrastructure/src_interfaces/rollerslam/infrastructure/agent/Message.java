@@ -27,6 +27,10 @@ import java.io.Serializable;
  * 
  * @author maas
  */
-public interface Message extends Serializable {
-
+public abstract class Message implements Serializable {
+	public Agent sender;
+	
+	public Message(Agent sender) {
+		this.sender = sender;
+	}
 }

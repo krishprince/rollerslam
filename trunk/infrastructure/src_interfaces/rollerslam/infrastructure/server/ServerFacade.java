@@ -20,10 +20,13 @@
  */
 package rollerslam.infrastructure.server;
 
+import java.rmi.AlreadyBoundException;
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import rollerslam.infrastructure.agent.Effector;
 import rollerslam.infrastructure.agent.Sensor;
+import rollerslam.infrastructure.agent.SensorEffectorManager;
 
 /**
  * Server facade.
@@ -57,4 +60,10 @@ public interface ServerFacade {
 	SimulationStateProvider getSimulationStateProvider() throws RemoteException;
 	
 	void setSimulationStateProvider(SimulationStateProvider e) throws RemoteException;
+	
+	// this should be visible only IN the server component...
+	SensorEffectorManager getSensorEffectorManager() throws RemoteException;
+
+	// this should be visible only IN the server component...
+	Remote exportObject(Remote obj) throws RemoteException, AlreadyBoundException;
 }

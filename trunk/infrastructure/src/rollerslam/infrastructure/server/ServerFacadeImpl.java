@@ -20,16 +20,18 @@
  */
 package rollerslam.infrastructure.server;
 
+import java.rmi.AlreadyBoundException;
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Vector;
 
-import rollerslam.infrastructure.agent.Effector;
-import rollerslam.infrastructure.agent.EffectorSensorImpl;
 import rollerslam.infrastructure.agent.AutomataAgent;
+import rollerslam.infrastructure.agent.Effector;
 import rollerslam.infrastructure.agent.Sensor;
+import rollerslam.infrastructure.agent.SensorEffectorManager;
 
 /**
  * Default implementation for the server facade
@@ -41,24 +43,26 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
 	private static ServerFacade instance = null;
 	
 	// exported objects
-	private static SimulationAdmin sai;
-	private static DisplayRegistryImpl dri;
-	private static AgentRegistryImpl ari;
-	private static Sensor agSensor;
-	private static Effector agEffector;
+	private SimulationAdmin sai;
+	private DisplayRegistryImpl dri;
+	private AgentRegistryImpl ari;
+	private Sensor envSensor;
+	private Effector envEffector;
 	
-	// local objects
-	private static Sensor envSensor;
-	private static Effector envEffector;	
-	
+	// local exported objects
+	private SensorEffectorManager sem; 
+		
 	// required interfaces
 	private SimulationStateProvider envStateProvider;
 	
 	// display updating thread
 	private DisplayUpdateThread displayUpdateThread;
 
+
 	//stores a reference to all exported object so they will not ever be available to garbage collection
 	static private Vector<Object> exportedObjects = new Vector<Object>();
+
+	private Registry registry;
 	
 	/**
 	 * @return the unique instance for the server facade
@@ -72,21 +76,24 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
 	
 	private ServerFacadeImpl() {
 		dri = new DisplayRegistryImpl();
-		ari = new AgentRegistryImpl(sai);
+		sem = new SensorEffectorManagerImpl();
 				
-		agSensor    = new EffectorSensorImpl(true, false);
-		agEffector  = new EffectorSensorImpl(true, false);
-		envSensor   = (Sensor) agEffector;
-		envEffector = (Effector) agSensor;		
+		try {
+			envSensor   = sem.getEnvironmentSensor();
+			envEffector = sem.getEnvironmentEffector();		
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
 	 * @see rollerslam.infrastructure.server.ServerFacade#init(int, rollerslam.infrastructure.server.AutomataAgent)
 	 */
 	public void init(int port, AutomataAgent environmentAgent) throws Exception {
-		Registry registry = LocateRegistry.createRegistry(1099);
-
+		registry = LocateRegistry.createRegistry(1099);
+		
 		sai = environmentAgent.getSimulationStateProvider();
+		ari = new AgentRegistryImpl(sai);
 		envStateProvider = environmentAgent.getSimulationStateProvider();
 
 		SimulationAdmin sas = (SimulationAdmin) UnicastRemoteObject
@@ -95,28 +102,23 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
 				.exportObject((AgentRegistry)ari, 0);
 		DisplayRegistry drs = (DisplayRegistry) UnicastRemoteObject
 				.exportObject(dri, 0);
-		Sensor agSensors = (Sensor) UnicastRemoteObject.exportObject(agSensor,
-				0);
-		Effector agEffectors = (Effector) UnicastRemoteObject.exportObject(agEffector,
-				0);
+		SensorEffectorManager sems = (SensorEffectorManager) UnicastRemoteObject
+				.exportObject(sem, 0);
 				
 		exportedObjects.add(sai);
 		exportedObjects.add(ari);
 		exportedObjects.add(dri);
-		exportedObjects.add(agSensor);
-		exportedObjects.add(agEffector);
+		exportedObjects.add(sem);
 		
 		exportedObjects.add(sas);
 		exportedObjects.add(ars);
 		exportedObjects.add(drs);
-		exportedObjects.add(agSensors);
-		exportedObjects.add(agEffectors);
-
+		exportedObjects.add(sems);
+		
 		registry.bind(AgentRegistry.class.getSimpleName(),   ars);
 		registry.bind(DisplayRegistry.class.getSimpleName(), drs);
 		registry.bind(SimulationAdmin.class.getSimpleName(), sas);
-		registry.bind(Sensor.class.getSimpleName()+"_agent", agSensors);
-		registry.bind(Effector.class.getSimpleName()+"_agent", agEffectors);
+		registry.bind(SensorEffectorManager.class.getSimpleName(), sems);
 		
 		displayUpdateThread = new DisplayUpdateThread(dri);
 		displayUpdateThread.start();
@@ -128,6 +130,19 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
 			o.wait();			
 		}
 	}
+	
+	/**
+	 * @see rollerslam.infrastructure.client.ClientFacade#exportObject(java.rmi.Remote)
+	 */
+	public Remote exportObject(Remote obj) throws RemoteException, AlreadyBoundException {
+		Remote ret = UnicastRemoteObject.exportObject(obj, 0);		
+		registry.bind(obj.getClass().getSimpleName()+"_" + obj.hashCode()+"_"+(System.currentTimeMillis()), ret);
+		
+		exportedObjects.add(obj);
+		exportedObjects.add(ret);
+		
+		return ret;
+	}		
 	
 	/**
 	 * @see rollerslam.infrastructure.server.ServerFacade#getAgentRegistry()
@@ -150,27 +165,50 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
 		return sai;
 	}
 
+	/**
+	 * @see rollerslam.infrastructure.server.ServerFacade#getEnvironmentEffector()
+	 */
 	public Effector getEnvironmentEffector() throws RemoteException {
 		return envEffector;
 	}
 
+	/**
+	 * @see rollerslam.infrastructure.server.ServerFacade#getEnvironmentSensor()
+	 */
 	public Sensor getEnvironmentSensor() throws RemoteException {
 		return envSensor;
 	}
 
+	/**
+	 * @see rollerslam.infrastructure.server.ServerFacade#getServerInitialization()
+	 */
 	public ServerInitialization getServerInitialization()
 			throws RemoteException {
 		return this;
 	}
 
+	/**
+	 * @see rollerslam.infrastructure.server.ServerFacade#getSimulationStateProvider()
+	 */
 	public SimulationStateProvider getSimulationStateProvider()
 			throws RemoteException {
 		return envStateProvider;
 	}
 
+	/**
+	 * @see rollerslam.infrastructure.server.ServerFacade#setSimulationStateProvider(rollerslam.infrastructure.server.SimulationStateProvider)
+	 */
 	public void setSimulationStateProvider(SimulationStateProvider e)
 			throws RemoteException {
 		this.envStateProvider = e;
+	}
+
+	/**
+	 * @see rollerslam.infrastructure.server.ServerFacade#getSensorEffectorManager()
+	 */
+	public SensorEffectorManager getSensorEffectorManager()
+			throws RemoteException {
+		return sem;
 	}
 		
 }
