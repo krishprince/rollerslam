@@ -12,8 +12,7 @@ import rollerslam.infrastructure.server.ServerFacadeImpl;
 
 @SuppressWarnings("serial")
 public class RollerslamEnvironmentAgent extends AutomataAgent {
-	public RollerslamEnvironmentAgent() throws Exception {
-
+	public RollerslamEnvironmentAgent() throws Exception {		
 		this.worldModel = new World();
 		this.sensor = ServerFacadeImpl.getInstance().getEnvironmentSensor();
 		this.effector = ServerFacadeImpl.getInstance().getEnvironmentEffector();
@@ -37,6 +36,8 @@ public class RollerslamEnvironmentAgent extends AutomataAgent {
 				return null;
 			}
 		};
+		
+		startSimulation();
 	}
 	
 	/**

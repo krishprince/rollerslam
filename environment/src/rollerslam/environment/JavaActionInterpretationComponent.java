@@ -44,12 +44,15 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 	}
 
 	public void joinWorld(World worldModel, Agent agent, PlayerTeam playerTeam){
-
-		Player body = null;
-		if (playerTeam == PlayerTeam.TEAM_A) {
-			body = getBodyForAgent(worldModel.playersA);
-		} else {
-			body = getBodyForAgent(worldModel.playersB);
+		
+		Player body = playersMap.get(agent);
+		
+		if (body == null) {
+			if (playerTeam == PlayerTeam.TEAM_A) {
+				body = getBodyForAgent(worldModel.playersA);
+			} else {
+				body = getBodyForAgent(worldModel.playersB);
+			}
 		}
 
 		if (body != null) {
@@ -57,7 +60,7 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 			idsMap.put(body, agent);
 			
 			try {
-				facade.getEnvironmentEffector().doAction(new GameStartedPerception(null));
+				facade.getEnvironmentEffector().doAction(new GameStartedPerception(null, body.id));
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
