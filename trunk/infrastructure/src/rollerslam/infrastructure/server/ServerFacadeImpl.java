@@ -28,10 +28,10 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Vector;
 
-import rollerslam.infrastructure.agent.AutomataAgent;
 import rollerslam.infrastructure.agent.Effector;
 import rollerslam.infrastructure.agent.Sensor;
 import rollerslam.infrastructure.agent.SensorEffectorManager;
+import rollerslam.infrastructure.agent.automata.AutomataAgent;
 
 /**
  * Default implementation for the server facade

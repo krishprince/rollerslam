@@ -1,14 +1,19 @@
-package rollerslam.infrastructure.agent;
+package rollerslam.infrastructure.agent.automata;
 
 import java.rmi.RemoteException;
 import java.util.Set;
 
+import rollerslam.infrastructure.agent.Agent;
+import rollerslam.infrastructure.agent.Effector;
+import rollerslam.infrastructure.agent.Message;
+import rollerslam.infrastructure.agent.Sensor;
+import rollerslam.infrastructure.agent.StateMessage;
 import rollerslam.infrastructure.server.ServerFacade;
 import rollerslam.infrastructure.server.ServerFacadeImpl;
 import rollerslam.infrastructure.server.SimulationState;
 import rollerslam.infrastructure.server.SimulationStateProvider;
 
-public abstract class AutomataAgent implements Agent, SimulationStateProvider {
+public class AutomataAgent implements Agent, SimulationStateProvider {
 	protected static long cycleDuration = 100;
 
 	public ServerFacade                           facade = ServerFacadeImpl.getInstance();
@@ -24,28 +29,14 @@ public abstract class AutomataAgent implements Agent, SimulationStateProvider {
 	
 	private SimulationState state = SimulationState.CREATED;
 		
-	public AutomataAgent(EnvironmentStateModel worldModel,
-							Sensor sensor,
-							Effector effector,
-							ModelInitializationComponent initializationComponent,
-							ActionInterpretationComponent interpretationComponent,
-							RamificationComponent         ramificationComponent,
-							ModelBasedBehaviorStrategyComponent strategyComponent) {
-		this.worldModel              = worldModel;
-		this.sensor				     = sensor;
-		this.effector 				 = effector;
-		this.initializationComponent = initializationComponent;
-		this.interpretationComponent = interpretationComponent;
-		this.ramificationComponent   = ramificationComponent;
-		this.strategyComponent       = strategyComponent;
-
+	public AutomataAgent() {
 		new SimulationThread().start();	
 	}
 	
 	private class SimulationThread extends Thread {
 		public void run() {
-			AutomataAgent.this.initializationComponent.initialize(worldModel);
-
+			AutomataAgent.this.initialize();
+			
 			while (true) {
 				while(state != SimulationState.RUNNING) {
 					synchronized (AutomataAgent.this) {
@@ -72,18 +63,42 @@ public abstract class AutomataAgent implements Agent, SimulationStateProvider {
 		}
 	};
 	
+	protected void initialize() {
+		AutomataAgent.this.initializationComponent.initialize(worldModel);		
+	}
+
 	protected void processCycle() throws Exception {
-		Set<Message> actions = sensor.getActions();
-		
-		for (Message message : actions) {
-			interpretationComponent.processAction(worldModel, message);			
-		}
-		
-		ramificationComponent.processRamifications(worldModel);
-		
+		interpretPerceptions();		
+		think();
+		generateActions();
+	}
+
+	protected void generateActions() {
 		Message action = strategyComponent.computeAction(worldModel);
 		
-		effector.doAction(action);
+		try {
+			effector.doAction(action);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}		
+	}
+
+	protected void think() {
+		ramificationComponent.processRamifications(worldModel);		
+	}
+
+	protected void interpretPerceptions() {
+		Set<Message> actions;
+		try {
+			actions = sensor.getActions();
+
+			for (Message message : actions) {
+				interpretationComponent.processAction(worldModel, message);			
+			}			
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	public SimulationStateProvider getSimulationStateProvider()
