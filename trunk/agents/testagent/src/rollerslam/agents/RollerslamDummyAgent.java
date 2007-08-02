@@ -21,16 +21,17 @@ public class RollerslamDummyAgent implements Agent, Runnable {
 	public RollerslamDummyAgent() throws Exception {
 		facade = ClientFacadeImpl.getInstance();
 		remoteThis = (Agent) facade.getClientInitialization().exportObject(this);
+		facade.getAgentRegistry().register(remoteThis);
 	}
 
 	@Override
 	public void run() {
 		try {
-			facade.getAgentEffector().doAction(
+			facade.getAgentEffector(remoteThis).doAction(
 					new JoinGameAction(remoteThis, PlayerTeam.TEAM_A));
 
 			while (!gameStarted) {
-				Set<Message> actions = facade.getAgentSensor().getActions();
+				Set<Message> actions = facade.getAgentSensor(remoteThis).getActions();
 
 				if (!actions.isEmpty()) {
 					for (Message message : actions) {
@@ -43,7 +44,7 @@ public class RollerslamDummyAgent implements Agent, Runnable {
 				}
 			}
 
-			facade.getAgentEffector().doAction(
+			facade.getAgentEffector(remoteThis).doAction(
 					new DashAction(remoteThis, 900, 500));
 		} catch (Exception e) {
 			e.printStackTrace();
