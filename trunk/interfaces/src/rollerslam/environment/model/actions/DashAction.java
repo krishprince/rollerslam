@@ -3,13 +3,13 @@ package rollerslam.environment.model.actions;
 import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.Message;
 
-public class DashAction implements Message {
-	public Agent agent;
+@SuppressWarnings("serial")
+public class DashAction extends Message {
 	public int ax;
 	public int ay;
 	
 	public DashAction(Agent a, int ax, int ay) {
-		this.agent = a;
+		super(a);
 		this.ax = ax;
 		this.ay = ay;
 	}
