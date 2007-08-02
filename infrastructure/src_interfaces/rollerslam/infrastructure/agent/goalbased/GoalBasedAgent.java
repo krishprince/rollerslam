@@ -2,7 +2,7 @@ package rollerslam.infrastructure.agent.goalbased;
 
 import rollerslam.infrastructure.agent.automata.AutomataAgent;
 
-public class GoalBasedAgent extends AutomataAgent {
+public abstract class GoalBasedAgent extends AutomataAgent {
 
 	protected GoalInitializationComponent goalInitializationComponent;
 	protected GoalUpdateComponent		  goalUpdateComponent;
