@@ -26,10 +26,7 @@ public class GameCanvas extends Canvas {
     private BufferStrategy strategy;
 
     private World world;
-    private Sprite background;
-    private Sprite pwb;
-    private Sprite pnb;
-    private Sprite b;
+ 
     private Model model;
     private SpriteStore ss;
 
@@ -58,7 +55,7 @@ public class GameCanvas extends Canvas {
 
                     g.setColor(Color.GREEN);
                     g.fillRect(0, 0, 800, 600);
-                    background.draw(g, 0, 0);
+                    ss.getSprite(SpriteKind.FIELD_BACKGROUND).draw(g, 0, 0);
 
                     world = model.getModel();
                     if (world != null) {
