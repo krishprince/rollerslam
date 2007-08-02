@@ -24,7 +24,6 @@ public class RollerslamDummyAgent implements Agent, Runnable {
 		facade.getAgentRegistry().register(remoteThis);
 	}
 
-	@Override
 	public void run() {
 		try {
 			facade.getAgentEffector(remoteThis).doAction(
