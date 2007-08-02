@@ -35,20 +35,21 @@ public class SpriteStore {
 
     /** The cached sprite map, from reference to sprite instance */
     @SuppressWarnings(value = "unchecked")
-    private HashMap sprites = new HashMap();
+    private HashMap sprites = new HashMap(10);
 
     /**
      * Retrieve a sprite from the store
-     *
-     * @param ref The reference to the image to use for the sprite
+     * @see SpriteKind
+     * @param spriteKind The SpriteKind
      * @return A sprite instance containing an accelerate image of the request reference
      */
     @SuppressWarnings(value = "unchecked")
-    public Sprite getSprite(String ref) {
+    public Sprite getSprite(SpriteKind spriteKind) {
+        String ref = spriteKind.getValue();
         // if we've already got the sprite in the cache
         // then just return the existing version
-        if (sprites.get(ref) != null) {
-            return (Sprite) sprites.get(ref);
+        if (sprites.get(spriteKind) != null) {
+            return (Sprite) sprites.get(spriteKind);
         }
 
         // otherwise, go away and grab the sprite from the resource
@@ -81,7 +82,7 @@ public class SpriteStore {
 
         // create a sprite, add it the cache then return it
         Sprite sprite = new Sprite(image);
-        sprites.put(ref, sprite);
+        sprites.put(spriteKind, sprite);
 
         return sprite;
     }
@@ -96,5 +97,9 @@ public class SpriteStore {
         // we dump the message and exit the game
         System.err.println(message);
         System.exit(0);
+    }
+    
+    public static void main(String args[]) {
+        System.out.println(SpriteKind.BLUE_PLAYER.getValue());
     }
 }
