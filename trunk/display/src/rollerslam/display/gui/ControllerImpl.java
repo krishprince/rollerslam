@@ -35,18 +35,17 @@ public class ControllerImpl implements Controller {
      */
     public void connect(String host) throws Exception {
         facade.getClientInitialization().init(host);
-        facade.getDisplayRegistry().register((Display) facade.getClientInitialization().exportObject(
-						new Display() {
-
-							public void update(Message m)
-									throws RemoteException {
-								if (m instanceof StateMessage) {
-									ControllerImpl.this.model
-											.setModel((World)((StateMessage) m).model);
-								}
-							}
-
-						}));
+        facade.getDisplayRegistry().register(
+                (Display) facade.getClientInitialization().exportObject(
+                     new Display() {
+                         public void update(Message m) throws RemoteException {
+                             if (m instanceof StateMessage) {
+                                 ControllerImpl.this.model.setModel((World) ((StateMessage) m).model);
+                             }
+                         }
+                     }
+                )
+        );
     }
 
     /**

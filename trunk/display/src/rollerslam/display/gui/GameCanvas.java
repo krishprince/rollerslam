@@ -46,6 +46,10 @@ public class GameCanvas extends Canvas {
 
         strategy = getBufferStrategy();
 
+        updateGraphics();
+    }
+    
+    private void updateGraphics() {
         new Thread() {
 
             public void run() {
