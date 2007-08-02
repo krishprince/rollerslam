@@ -10,6 +10,7 @@ import java.awt.image.BufferStrategy;
 import rollerslam.display.gui.mvc.Model;
 import rollerslam.display.gui.sprite.Sprite;
 import rollerslam.display.gui.sprite.SpriteStore;
+import rollerslam.display.gui.sprite.SpriteKind;
 import rollerslam.environment.model.OutTrack;
 import rollerslam.environment.model.Player;
 import rollerslam.environment.model.World;
@@ -30,6 +31,7 @@ public class GameCanvas extends Canvas {
     private Sprite pnb;
     private Sprite b;
     private Model model;
+    private SpriteStore ss;
 
     public GameCanvas() {
         setBounds(0, 0, 800, 600);
@@ -37,11 +39,7 @@ public class GameCanvas extends Canvas {
         // Tell AWT not to bother repainting our canvas since we're
         // going to do that our self in accelerated mode
         setIgnoreRepaint(true);
-
-        background = SpriteStore.get().getSprite("rollerslam/display/gui/resources/field.png");
-        pwb = SpriteStore.get().getSprite("rollerslam/display/gui/resources/pwb.png");
-        pnb = SpriteStore.get().getSprite("rollerslam/display/gui/resources/pnb.png");
-        b = SpriteStore.get().getSprite("rollerslam/display/gui/resources/ball.png");
+        ss = SpriteStore.get();
     }
 
     public void init() {
@@ -65,14 +63,14 @@ public class GameCanvas extends Canvas {
                     world = model.getModel();
                     if (world != null) {
                         for (Player player : world.playersA) {
-                            pwb.draw(g, translatex(player.sx), translatey(player.sy));
+                            ss.getSprite(SpriteKind.RED_PLAYER).draw(g, translatex(player.sx), translatey(player.sy));
                         }
 
                         for (Player player : world.playersB) {
-                            pnb.draw(g, translatex(player.sx), translatey(player.sy));
+                            ss.getSprite(SpriteKind.BLUE_PLAYER).draw(g, translatex(player.sx), translatey(player.sy));
                         }
 
-                        b.draw(g, translatex(world.ball.sx), translatey(world.ball.sy));
+                        ss.getSprite(SpriteKind.BALL).draw(g, translatex(world.ball.sx), translatey(world.ball.sy));
                     }
 
                     g.dispose();
