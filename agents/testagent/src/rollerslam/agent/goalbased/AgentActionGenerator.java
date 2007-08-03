@@ -30,6 +30,11 @@ public class AgentActionGenerator implements
 			Player me = getMeFromModel(model);
 			
 			return new DashAction(remoteThis, 0 - me.sx, 0 - me.sy);
+		} else if (model.currentGoal == AgentGoal.GO_TO_GOAL) {
+			Player me = getMeFromModel(model);
+			World world = (World)model.environmentStateModel;
+									
+			return new DashAction(remoteThis, -50000 - me.sx, 0 - me.sy);
 		}
 		return null;
 	}
