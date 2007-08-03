@@ -9,8 +9,8 @@ import rollerslam.environment.model.Basket;
 import rollerslam.environment.model.Goal;
 import rollerslam.environment.model.OutTrack;
 import rollerslam.environment.model.Player;
-import rollerslam.environment.model.Ramp;
 import rollerslam.environment.model.Trampoline;
+import rollerslam.environment.model.Ramp;
 import rollerslam.environment.model.World;
 import rollerslam.environment.model.WorldObject;
 import rollerslam.environment.model.visitor.Visitor;
@@ -70,24 +70,35 @@ public class DumpWorldVisitor implements Visitor {
 		this.visit((AnimatedObject)obj);
 	}
 
-	public void visit(Basket obj) {
-		System.out.println("BASKET");
+	/* (non-Javadoc)
+	 * @see rollerslam.environment.model.visitor.Visitor#visit(rollerslam.environment.model.Goal)
+	 */
+	public void visit(Goal obj) {
+		System.out.println("GOAL");
 		this.visit((WorldObject)obj);
 	}
 
-	public void visit(Goal obj) {
-		System.out.println("GOAL");
-		this.visit((WorldObject)obj);		
-	}
-
+	/* (non-Javadoc)
+	 * @see rollerslam.environment.model.visitor.Visitor#visit(rollerslam.environment.model.RAMP)
+	 */
 	public void visit(Ramp obj) {
 		System.out.println("RAMP");
 		this.visit((WorldObject)obj);
 	}
 
+	/* (non-Javadoc)
+	 * @see rollerslam.environment.model.visitor.Visitor#visit(rollerslam.environment.model.Trampoline)
+	 */
 	public void visit(Trampoline obj) {
 		System.out.println("TRAMPOLINE");
-		this.visit((WorldObject)obj);		
+		this.visit((WorldObject)obj);
 	}
 
+	/* (non-Javadoc)
+	 * @see rollerslam.environment.model.visitor.Visitor#visit(rollerslam.environment.model.OutTrack)
+	 */
+	public void visit(Basket obj) {
+		System.out.println("BASKET");
+		this.visit((WorldObject)obj);
+	}
 }
