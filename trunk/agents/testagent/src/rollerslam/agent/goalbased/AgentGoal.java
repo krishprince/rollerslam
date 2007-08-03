@@ -1,4 +1,4 @@
-package rollerslam.agents.goalbased;
+package rollerslam.agent.goalbased;
 
 public enum AgentGoal {
 	JOIN_GAME,

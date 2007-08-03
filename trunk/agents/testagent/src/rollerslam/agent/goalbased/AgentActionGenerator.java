@@ -1,4 +1,4 @@
-package rollerslam.agents.goalbased;
+package rollerslam.agent.goalbased;
 
 import rollerslam.environment.model.Player;
 import rollerslam.environment.model.PlayerTeam;
