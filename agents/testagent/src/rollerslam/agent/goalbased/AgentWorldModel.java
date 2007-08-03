@@ -1,4 +1,4 @@
-package rollerslam.agents.goalbased;
+package rollerslam.agent.goalbased;
 
 import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
 import rollerslam.infrastructure.agent.goalbased.GoalBasedEnvironmentStateModel;

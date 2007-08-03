@@ -1,4 +1,4 @@
-package rollerslam.agents.dummy;
+package rollerslam.agent.dummy;
 
 import java.util.Set;
 
