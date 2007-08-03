@@ -14,7 +14,6 @@ public class Basket extends WorldObject implements Serializable, Visitable {
 		super(psx, psy, WIDTH, HEIGHT);
 	}
 
-	@Override
 	public void accept(Visitor visitor) {
 		visitor.visit((Basket)this);
 	}	
