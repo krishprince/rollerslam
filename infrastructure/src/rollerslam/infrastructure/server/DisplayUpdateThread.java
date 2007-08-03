@@ -22,8 +22,10 @@
 package rollerslam.infrastructure.server;
 
 import java.rmi.RemoteException;
+import java.util.Vector;
 
 import rollerslam.infrastructure.agent.Message;
+import rollerslam.infrastructure.agent.automata.AutomataAgent;
 import rollerslam.infrastructure.display.Display;
 
 /**
@@ -64,12 +66,19 @@ public class DisplayUpdateThread extends Thread {
 //			System.out.println("SENDING STATUS...");
 			if (state != null) {
 				try {
+					Vector<Display> errorDisplay = new Vector<Display>();
+					
 					for (Display d : displayRegistry.getRegisteredDisplays()) {
 						try {
 							d.update(state);
 						} catch (RemoteException e) {
-							e.printStackTrace();
+							errorDisplay.add(d);
+//							e.printStackTrace();
 						}
+					}
+					
+					for (Display display : errorDisplay) {
+						((DisplayRegistry)displayRegistry).unregister(display);
 					}
 				} catch (RemoteException e) {
 					e.printStackTrace();
