@@ -28,9 +28,18 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 	
 	private void dash(World w, Player p, int ax, int ay) {
 		//TODO test if p is in w
+		double oax = ax / 1000.0;
+		double oay = ay / 1000.0;
 		
-		p.ax = Math.min(ax, MAX_ACCELERATION);
-		p.ay = Math.min(ay, MAX_ACCELERATION);
+		double modulo = Math.sqrt(oax*oax + oay*oay);
+		
+		if (modulo > MAX_ACCELERATION) modulo = MAX_ACCELERATION;
+		
+		double nax = (ax/modulo);
+		double nay = (ay/modulo);
+		
+		p.ax = (int) nax;
+		p.ay = (int) nay;
 	}
 
 	public void processAction(EnvironmentStateModel w, Message m) {
