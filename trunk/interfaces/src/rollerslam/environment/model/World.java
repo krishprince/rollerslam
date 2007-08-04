@@ -19,7 +19,7 @@ public class World extends EnvironmentStateModel implements Serializable, Visita
 	public Ramp rampB;
 	public Trampoline trampolineA;
 	public Trampoline trampolineB;
-	
+
 	public static final int WIDTH  = 188000;
 	public static final int HEIGHT = 138000;
 	
@@ -41,14 +41,14 @@ public class World extends EnvironmentStateModel implements Serializable, Visita
 								      PlayerTeam.TEAM_B);
 		}
 		
-		goalA = new Goal(65500, 297500);
-		goalB = new Goal(65500, 1422500);
+		goalA = new Goal(-64350, 0);
+		goalB = new Goal(64350, 0);
 		
-		rampA = new Ramp(70000, 302000);
-		rampB = new Ramp(70000, 1427000);
+		rampA = new Ramp(-64350, 0);
+		rampB = new Ramp(64350, 0);
 		
-		trampolineA = new Trampoline(65500, 297500);;
-		trampolineB = new Trampoline(65500, 1422500);
+		trampolineA = new Trampoline(-64350, 0);
+		trampolineB = new Trampoline(64350, 0);
 		
 	}
 
