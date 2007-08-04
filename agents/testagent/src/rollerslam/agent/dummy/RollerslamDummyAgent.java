@@ -5,6 +5,7 @@ import java.util.Set;
 import rollerslam.environment.model.PlayerTeam;
 import rollerslam.environment.model.actions.DashAction;
 import rollerslam.environment.model.actions.JoinGameAction;
+import rollerslam.environment.model.utils.Vector;
 import rollerslam.environment.model.perceptions.GameStartedPerception;
 import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.Message;
@@ -44,7 +45,7 @@ public class RollerslamDummyAgent implements Agent, Runnable {
 			}
 
 			facade.getAgentEffector(remoteThis).doAction(
-					new DashAction(remoteThis, 900, 500));
+					new DashAction(remoteThis, new Vector(900, 500)));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
