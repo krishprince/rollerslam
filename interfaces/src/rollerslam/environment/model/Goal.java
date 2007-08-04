@@ -14,8 +14,10 @@ public class Goal extends WorldObject implements Serializable, Visitable {
 	
 	public Goal(int psx, int psy) {
 		super(psx, psy, WIDTH, HEIGHT);
-		for(int i = 0; i < 3; ++i)
-			baskets[i] = new Basket(this.sx, this.sy + (i * 3500));
+		
+		baskets[0] = new Basket(this.sx, this.sy);
+		baskets[1] = new Basket(this.sx, this.sy + (-3500));
+		baskets[2] = new Basket(this.sx, this.sy + (3500));
 	}
 
 	public void accept(Visitor visitor) {
