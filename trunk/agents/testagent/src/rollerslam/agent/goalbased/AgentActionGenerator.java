@@ -5,6 +5,7 @@ import rollerslam.environment.model.PlayerTeam;
 import rollerslam.environment.model.World;
 import rollerslam.environment.model.actions.DashAction;
 import rollerslam.environment.model.actions.JoinGameAction;
+import rollerslam.environment.model.utils.Vector;
 import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
@@ -29,12 +30,12 @@ public class AgentActionGenerator implements
 		} else if (model.currentGoal == AgentGoal.GO_TO_CENTER) {
 			Player me = getMeFromModel(model);
 			
-			return new DashAction(remoteThis, 0 - me.sx, 0 - me.sy);
+			return new DashAction(remoteThis, new Vector(0 - me.sx, 0 - me.sy));
 		} else if (model.currentGoal == AgentGoal.GO_TO_GOAL) {
 			Player me = getMeFromModel(model);
 			World world = (World)model.environmentStateModel;
 									
-			return new DashAction(remoteThis, -50000 - me.sx, 0 - me.sy);
+			return new DashAction(remoteThis, new Vector(world.goalA.sx - me.sx, world.goalA.sy - me.sy));
 		}
 		return null;
 	}
