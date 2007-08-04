@@ -9,6 +9,7 @@ import rollerslam.environment.model.World;
 import rollerslam.environment.model.actions.DashAction;
 import rollerslam.environment.model.actions.JoinGameAction;
 import rollerslam.environment.model.perceptions.GameStartedPerception;
+import rollerslam.environment.model.utils.Vector;
 import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.agent.automata.ActionInterpretationComponent;
@@ -26,17 +27,17 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 	public int 						  nextAgentID 				  = 0;
 
 	
-	private void dash(World w, Player p, int ax, int ay) {
+	private void dash(World w, Player p, Vector vet) {
 		//TODO test if p is in w
-		double oax = ax / 1000.0;
-		double oay = ay / 1000.0;
+		double oax = vet.x / 1000.0;
+		double oay = vet.y / 1000.0;
 		
 		double modulo = Math.sqrt(oax*oax + oay*oay);
 		
 		if (modulo > MAX_ACCELERATION) modulo = MAX_ACCELERATION;
 		
-		double nax = (ax/modulo);
-		double nay = (ay/modulo);
+		double nax = (vet.x/modulo);
+		double nay = (vet.y/modulo);
 		
 		p.ax = (int) nax;
 		p.ay = (int) nay;
@@ -45,7 +46,7 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 	public void processAction(EnvironmentStateModel w, Message m) {
 		if (m instanceof DashAction) {
 			DashAction mt = (DashAction) m;
-			this.dash((World)w, playersMap.get(mt.sender), mt.ax, mt.ay);
+			this.dash((World)w, playersMap.get(mt.sender), mt.acceleration);
 		} else if (m instanceof JoinGameAction) {
 			JoinGameAction mt = (JoinGameAction) m;
 			this.joinWorld((World)w, mt.sender, mt.team);			
