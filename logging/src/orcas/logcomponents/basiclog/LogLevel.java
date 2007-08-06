@@ -15,7 +15,10 @@ package orcas.logcomponents.basiclog;
  */
 public enum LogLevel {
 
-    DEBUG(0);
+    DEBUG(0),
+	AGENT_ACTION(100),
+	AGENT_DECISION(200),
+	WORLD_STATE(300);
 
     int level;
 
