@@ -3,14 +3,16 @@ package rollerslam.test.general;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Method;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
 import rollerslam.display.gui.RollerslamDisplay;
-import rollerslam.infrastructure.server.gui.ServerDisplay;
+import rollerslam.environment.gui.ServerDisplay;
 
 /**
  *
