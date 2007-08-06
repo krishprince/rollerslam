@@ -31,11 +31,24 @@ public class RamificationWorldVisitor implements Visitor, RamificationComponent 
 	}
 
 	public void visit(AnimatedObject obj) {
-		obj.sx = obj.sx + obj.vx;
-		obj.sy = obj.sy + obj.vy;
-
-		obj.vx = Math.min(obj.vx + obj.ax, MAX_SPEED);
-		obj.vy = Math.min(obj.vy + obj.ay, MAX_SPEED);		
+		int sx = obj.sx + obj.vx;
+		int sy = obj.sy + obj.vy;
+		
+		int vx = Math.min(obj.vx + obj.ax, MAX_SPEED);
+		int vy = Math.min(obj.vy + obj.ay, MAX_SPEED);
+System.out.println("Dentro? => " + obj.world.calculePointIntoEllipse(sx, sy));		
+		if(obj.world.calculePointIntoEllipse(sx, sy)){
+			obj.sx = obj.sx + obj.vx;
+			obj.sy = obj.sy + obj.vy;
+	
+			obj.vx = Math.min(obj.vx + obj.ax, MAX_SPEED);
+			obj.vy = Math.min(obj.vy + obj.ay, MAX_SPEED);
+System.out.println("Valores? " + obj.sx + ", " + obj.sy + ", " + obj.vx + ", " + obj.vy);
+		}else{
+			obj.vx = 0;
+			obj.vy = 0;
+System.out.println("Valores? " + obj.sx + ", " + obj.sy + ", " + obj.vx + ", " + obj.vy);
+		}
 	}
 
 	public void visit(Ball obj) {
