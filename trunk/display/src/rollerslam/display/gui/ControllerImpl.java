@@ -32,13 +32,11 @@ public class ControllerImpl implements Controller {
     /**
      * @see rollerslam.display.gui.mvc.Controller#connect(java.lang.String)
      */
-    @Override
     public void connect(String host) throws Exception {
         facade.getClientInitialization().init(host);
         facade.getDisplayRegistry().register(
                 (Display) facade.getClientInitialization().exportObject(
                      new Display() {
-                         @Override
                          public void update(Message m) throws RemoteException {
                              if (m instanceof StateMessage) {
                                  ControllerImpl.this.model.setModel((World) ((StateMessage) m).model);
