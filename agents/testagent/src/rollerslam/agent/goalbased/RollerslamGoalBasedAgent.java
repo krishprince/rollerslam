@@ -62,7 +62,7 @@ public class RollerslamGoalBasedAgent extends GoalBasedAgent {
 		startSimulation();
 	}
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String... args) throws Exception {
 		ClientFacadeImpl.getInstance().getClientInitialization().init("localhost");
 		new RollerslamGoalBasedAgent();
 	}

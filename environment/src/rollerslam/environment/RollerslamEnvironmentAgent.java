@@ -46,5 +46,5 @@ public class RollerslamEnvironmentAgent extends AutomataAgent {
 	 */
 	public static void main(String[] args) throws Exception {
 		ServerFacadeImpl.getInstance().getServerInitialization().init(1099, new RollerslamEnvironmentAgent());		
-	}	
+        }
 }
