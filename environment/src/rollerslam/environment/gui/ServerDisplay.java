@@ -26,6 +26,7 @@ import rollerslam.infrastructure.server.SimulationState;
  *
  * @author Weslei
  */
+@SuppressWarnings("serial")
 public class ServerDisplay extends JPanel implements ActionListener {
 
     private JButton startSimulationButton = new JButton("Start");
