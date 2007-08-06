@@ -8,8 +8,8 @@ public class Ball extends AnimatedObject implements Visitable {
 
 	public Ball() {}
 	
-	public Ball(int psx, int psy) {
-		super(0, 0, 500, 500);
+	public Ball(World w, int psx, int psy) {
+		super(w, 0, 0, 500, 500);
 	}
 	
 	@Override

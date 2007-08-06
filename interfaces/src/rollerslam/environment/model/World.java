@@ -9,8 +9,8 @@ import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
 
 @SuppressWarnings("serial")
 public class World extends EnvironmentStateModel implements Serializable, Visitable  {
-	public OutTrack outTrack     = new OutTrack();
-	public Ball ball      		 = new Ball(0, 0);
+	public OutTrack outTrack     = new OutTrack(this);
+	public Ball ball      		 = new Ball(this, 0, 0);
 	public Player playersA[] 	 = new Player[2];
 	public Player playersB[] 	 = new Player[2];
 	public Goal goalA;
@@ -30,26 +30,43 @@ public class World extends EnvironmentStateModel implements Serializable, Visita
 		int hei = outTrack.height/2 - 2*Player.HEIGHT; 
 	
 		for(int i=0;i<playersA.length;++i) {			
-			playersA[i] = new Player(-(random.nextInt(wid) + Player.WIDTH), 
+			playersA[i] = new Player(this, -(random.nextInt(wid) + Player.WIDTH), 
 								     -(random.nextInt(hei) + Player.HEIGHT),
 								     PlayerTeam.TEAM_A);
 		}
 
 		for(int i=0;i<playersB.length;++i) {			
-			playersB[i] = new Player((random.nextInt(wid) + Player.WIDTH), 
+			playersB[i] = new Player(this, (random.nextInt(wid) + Player.WIDTH), 
 								     (random.nextInt(hei) + Player.HEIGHT),
 								      PlayerTeam.TEAM_B);
 		}
 		
-		goalA = new Goal(-64350, 0);
-		goalB = new Goal(64350, 0);
+		goalA = new Goal(this, -64350, 0);
+		goalB = new Goal(this, 64350, 0);
 		
-		rampA = new Ramp(-64350, 0);
-		rampB = new Ramp(64350, 0);
+		rampA = new Ramp(this, -64350, 0);
+		rampB = new Ramp(this, 64350, 0);
 		
-		trampolineA = new Trampoline(-64350, 0);
-		trampolineB = new Trampoline(64350, 0);
+		trampolineA = new Trampoline(this, -64350, 0);
+		trampolineB = new Trampoline(this, 64350, 0);
 		
+	}
+	
+	public boolean calculePointIntoEllipse(int px, int py){
+		int dist1 = calculeDistancePoints(-64350, px, 0, py);
+		int dist2 = calculeDistancePoints(64350, px, 0, py);
+		
+		if(dist1 + dist2 > 188700)
+			return false;
+		else
+			return true;
+		
+	}
+	
+	public int calculeDistancePoints(int px1, int px2, int py1, int py2){
+		int dx = px1 - px2;
+		int dy = py1 - py2;
+		return (int)Math.abs(Math.sqrt(dx*dx + dy*dy));
 	}
 
 	public void accept(Visitor visitor) {

@@ -14,16 +14,20 @@ public class WorldObject implements Serializable, Visitable {
 	public int width = 0;
 	public int height = 0;
 	
+	public World world = null;
+	
 	public WorldObject() {
 		
 	}
 	
-	public WorldObject(int psx, int psy, int pwidth, int pheight) {
+	public WorldObject(World w, int psx, int psy, int pwidth, int pheight) {
 		sx = psx;
 		sy = psy;
 		
 		width = pwidth;
 		height = pheight;
+		
+		world = w;
 	}
 
 	public boolean collidesWith(WorldObject obj) {
