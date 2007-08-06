@@ -1,22 +1,23 @@
-package rollerslam.environment.model.actions;
+package rollerslam.environment.model.actions.arm;
 
 import rollerslam.infrastructure.agent.Agent;
+import rollerslam.environment.model.actions.ArmAction;
 import rollerslam.environment.model.utils.Vector;
 
 @SuppressWarnings("serial")
-public class KickAction extends LegAction {
+public class ThrowAction extends ArmAction {
 	public int ax;
 	public int ay;
 	
 	public Vector acceleration;
 	
-	public KickAction(Agent a, int ax, int ay) {
+	public ThrowAction(Agent a, int ax, int ay) {
 		super(a);
 		this.ax = ax;
 		this.ay = ay;
 	}
 	
-	public KickAction(Agent a, Vector acceleration){
+	public ThrowAction(Agent a, Vector acceleration){
 		super(a);
 		this.acceleration = acceleration;
 	}
