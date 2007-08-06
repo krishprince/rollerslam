@@ -1,4 +1,4 @@
-package rollerslam.environment.model.actions;
+package rollerslam.environment.model.actions.leg;
 
 import rollerslam.environment.model.utils.Vector;
 import rollerslam.infrastructure.agent.Agent;

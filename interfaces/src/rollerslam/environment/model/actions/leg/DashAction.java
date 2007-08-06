@@ -1,6 +1,7 @@
-package rollerslam.environment.model.actions;
+package rollerslam.environment.model.actions.leg;
 
 import rollerslam.infrastructure.agent.Agent;
+import rollerslam.environment.model.actions.LegAction;
 import rollerslam.environment.model.utils.Vector;
 
 @SuppressWarnings("serial")

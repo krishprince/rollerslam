@@ -1,6 +1,5 @@
-package rollerslam.environment.model.actions;
+package rollerslam.environment.model.perceptions;
 
-import rollerslam.environment.model.perceptions.EarPercept;
 import rollerslam.infrastructure.agent.Agent;
 import rollerslam.environment.model.utils.Fact;
 
