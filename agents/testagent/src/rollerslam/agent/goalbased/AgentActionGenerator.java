@@ -3,7 +3,7 @@ package rollerslam.agent.goalbased;
 import rollerslam.environment.model.Player;
 import rollerslam.environment.model.PlayerTeam;
 import rollerslam.environment.model.World;
-import rollerslam.environment.model.actions.DashAction;
+import rollerslam.environment.model.actions.leg.DashAction;
 import rollerslam.environment.model.actions.JoinGameAction;
 import rollerslam.environment.model.utils.Vector;
 import rollerslam.infrastructure.agent.Agent;

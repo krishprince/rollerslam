@@ -2,7 +2,7 @@ package rollerslam.agent.goalbased;
 
 import rollerslam.environment.model.Player;
 import rollerslam.environment.model.World;
-import rollerslam.environment.model.actions.DashAction;
+import rollerslam.environment.model.actions.leg.DashAction;
 import rollerslam.infrastructure.agent.goalbased.GoalBasedEnvironmentStateModel;
 import rollerslam.infrastructure.agent.goalbased.GoalUpdateComponent;
 

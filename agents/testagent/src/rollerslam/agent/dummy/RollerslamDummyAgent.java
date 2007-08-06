@@ -3,7 +3,7 @@ package rollerslam.agent.dummy;
 import java.util.Set;
 
 import rollerslam.environment.model.PlayerTeam;
-import rollerslam.environment.model.actions.DashAction;
+import rollerslam.environment.model.actions.leg.DashAction;
 import rollerslam.environment.model.actions.JoinGameAction;
 import rollerslam.environment.model.utils.Vector;
 import rollerslam.environment.model.perceptions.GameStartedPerception;
