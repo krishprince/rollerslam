@@ -16,7 +16,7 @@ import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
 import rollerslam.infrastructure.agent.automata.RamificationComponent;
 
 /**
- * @author Marcos Aurélio
+ * @author Marcos AurÃ©lio
  *
  */
 public class RamificationWorldVisitor implements Visitor, RamificationComponent {
