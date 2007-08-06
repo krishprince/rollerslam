@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import orcas.logcomponents.basiclog.LogFactory;
 import rollerslam.display.gui.mvc.Controller;
 import rollerslam.display.gui.mvc.Model;
 import rollerslam.display.gui.mvc.View;
@@ -92,7 +93,9 @@ public class RollerslamDisplay extends JFrame implements View, ActionListener {
     }
 
     public static void main(String[] args) {
+        LogFactory.getInstance().getLog().log("Client display initializing...");
         new RollerslamDisplay();
+        LogFactory.getInstance().getLog().log("Client initialized...");
     }
 
     private void connectButtonClick(ActionEvent e) {

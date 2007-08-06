@@ -16,7 +16,7 @@ import rollerslam.environment.model.WorldObject;
 import rollerslam.environment.model.visitor.Visitor;
 
 /**
- * @author Marcos Aurélio
+ * @author Marcos AurÃ©lio
  *
  */
 public class DumpWorldVisitor implements Visitor {
