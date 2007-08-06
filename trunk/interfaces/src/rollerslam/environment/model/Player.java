@@ -15,8 +15,8 @@ public class Player extends AnimatedObject {
 		
 	public Player() {}
 	
-	public Player(int psx, int psy, PlayerTeam t) {
-		super(psx, psy, WIDTH, HEIGHT);
+	public Player(World w, int psx, int psy, PlayerTeam t) {
+		super(w, psx, psy, WIDTH, HEIGHT);
 		this.team = t;
 	}	
 	

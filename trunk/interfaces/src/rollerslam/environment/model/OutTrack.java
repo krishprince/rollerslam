@@ -7,8 +7,8 @@ public class OutTrack extends WorldObject {
 	public static final int WIDTH  = 188000;
 	public static final int HEIGHT = 138000;
 
-	public OutTrack() {
-		super(0, 0, WIDTH, HEIGHT);
+	public OutTrack(World w) {
+		super(w, 0, 0, WIDTH, HEIGHT);
 	}
 
 	@Override

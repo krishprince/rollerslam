@@ -10,8 +10,8 @@ public class Trampoline extends WorldObject implements Serializable, Visitable {
 	public static final int WIDTH  = 23000;
 	public static final int HEIGHT = 23000;
 
-	public Trampoline(int psx, int psy) {
-		super(psx, psy, WIDTH, HEIGHT);
+	public Trampoline(World w, int psx, int psy) {
+		super(w, psx, psy, WIDTH, HEIGHT);
 	}
 
 	@Override

@@ -15,8 +15,8 @@ public class AnimatedObject extends WorldObject {
 		
 	}
 	
-	public AnimatedObject(int psx, int psy, int pwidth, int pheight) {
-		super(psx, psy, pwidth, pheight);
+	public AnimatedObject(World w, int psx, int psy, int pwidth, int pheight) {
+		super(w, psx, psy, pwidth, pheight);
 	}
 	
 	@Override

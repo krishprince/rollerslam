@@ -10,8 +10,8 @@ public class Ramp extends WorldObject implements Serializable, Visitable {
 	public static final int WIDTH  = 30000;
 	public static final int HEIGHT = 30000;
 
-	public Ramp(int psx, int psy) {
-		super(psx, psy, WIDTH, HEIGHT);
+	public Ramp(World w, int psx, int psy) {
+		super(w, psx, psy, WIDTH, HEIGHT);
 	}
 
 	@Override
