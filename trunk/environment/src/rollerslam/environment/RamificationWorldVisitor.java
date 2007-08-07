@@ -14,6 +14,7 @@ import rollerslam.environment.model.WorldObject;
 import rollerslam.environment.model.visitor.Visitor;
 import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
 import rollerslam.infrastructure.agent.automata.RamificationComponent;
+import rollerslam.environment.model.utils.MathGeometry;
 
 /**
  * @author Marcos Aurélio
@@ -36,19 +37,22 @@ public class RamificationWorldVisitor implements Visitor, RamificationComponent 
 		
 		int vx = Math.min(obj.vx + obj.ax, MAX_SPEED);
 		int vy = Math.min(obj.vy + obj.ay, MAX_SPEED);
-System.out.println("Dentro? => " + obj.world.calculePointIntoEllipse(sx, sy));		
-		if(obj.world.calculePointIntoEllipse(sx, sy)){
-			obj.sx = obj.sx + obj.vx;
-			obj.sy = obj.sy + obj.vy;
-	
-			obj.vx = Math.min(obj.vx + obj.ax, MAX_SPEED);
-			obj.vy = Math.min(obj.vy + obj.ay, MAX_SPEED);
-System.out.println("Valores? " + obj.sx + ", " + obj.sy + ", " + obj.vx + ", " + obj.vy);
+
+		if(MathGeometry.calculePointIntoEllipse(World.WIDTH, World.FOCUS1X, World.FOCUS1Y,
+				World.FOCUS2X, World.FOCUS2Y, sx, sy)){
+			obj.sx = sx;
+			obj.sy = sy;
+
+			obj.vx = vx;
+			obj.vy = vy;
 		}else{
+			obj.ax = 0;
+			obj.ay = 0;
+
 			obj.vx = 0;
 			obj.vy = 0;
-System.out.println("Valores? " + obj.sx + ", " + obj.sy + ", " + obj.vx + ", " + obj.vy);
 		}
+		
 	}
 
 	public void visit(Ball obj) {
@@ -60,6 +64,19 @@ System.out.println("Valores? " + obj.sx + ", " + obj.sy + ", " + obj.vx + ", " +
 
 	public void visit(Player obj) {
 		this.visit((AnimatedObject)obj);
+                
+		if(obj.hasBall){
+			obj.world.ball.sx = obj.sx;
+			obj.world.ball.sy = obj.sy;
+		}
+                
+                if(obj.isGround){
+                        obj.ax = 0;
+                        obj.ay = 0;
+                        
+                        obj.vx = 0;
+                        obj.vy = 0;
+                }
 	}
 
 	public void processRamifications(EnvironmentStateModel world) {
