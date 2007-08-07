@@ -69,6 +69,9 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 	
 	private void catchA(World w, Player p){
 		//Body
+		p.hasBall = true;
+		p.world.ball.withPlayer = true;
+		p.world.playerWithBall = p;
 	}
 	
 	private void release(World w, Player p){
@@ -77,6 +80,12 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 	
 	private void tackle(World w, Player p){
 		//Body
+		if(p.world.playerWithBall != null){
+			p.world.playerWithBall.isGround = true;
+			p.world.playerWithBall.hasBall = false;
+			p.world.ball.withPlayer = false;
+			p.world.playerWithBall = null;
+		}
 	}
 	
 	private void throwA(World w, Player p, Vector a){
