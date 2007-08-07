@@ -5,6 +5,8 @@ import java.util.Random;
 
 import rollerslam.environment.model.visitor.Visitable;
 import rollerslam.environment.model.visitor.Visitor;
+import rollerslam.environment.model.utils.MathGeometry;
+
 import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
 
 @SuppressWarnings("serial")
@@ -36,17 +38,31 @@ public class World extends EnvironmentStateModel implements Serializable, Visita
 	public World() {
 		int wid = outTrack.width/2  - 2*Player.WIDTH; 
 		int hei = outTrack.height/2 - 2*Player.HEIGHT; 
-	
+                
+                int x;
+                int y;
+                
 		for(int i=0;i<playersA.length;++i) {			
-			playersA[i] = new Player(this, -(random.nextInt(wid) + Player.WIDTH), 
-								     -(random.nextInt(hei) + Player.HEIGHT),
-								     PlayerTeam.TEAM_A);
+                    
+                    do{
+                        x = -(random.nextInt(wid) + Player.WIDTH);
+                        y = -(random.nextInt(hei) + Player.HEIGHT);
+                    }while(!MathGeometry.calculePointIntoEllipse(this.WIDTH, 
+                            this.FOCUS1X, this.FOCUS1Y, 
+                            this.FOCUS2X, this.FOCUS2Y, x, y));
+                        
+                    playersA[i] = new Player(this, x, y, PlayerTeam.TEAM_A);
 		}
 
-		for(int i=0;i<playersB.length;++i) {			
-			playersB[i] = new Player(this, (random.nextInt(wid) + Player.WIDTH), 
-								     (random.nextInt(hei) + Player.HEIGHT),
-								      PlayerTeam.TEAM_B);
+		for(int i=0;i<playersB.length;++i) {	
+                    do{
+                        x = (random.nextInt(wid) + Player.WIDTH);
+                        y = (random.nextInt(hei) + Player.HEIGHT);
+                    }while(!MathGeometry.calculePointIntoEllipse(this.WIDTH, 
+                            this.FOCUS1X, this.FOCUS1Y, 
+                            this.FOCUS2X, this.FOCUS2Y, x, y));
+
+                    playersB[i] = new Player(this, x, y, PlayerTeam.TEAM_B);
 		}
 		
 		goalA = new Goal(this, -64350, 0);
