@@ -2,7 +2,7 @@ package rollerslam.agent.goalbased;
 
 import rollerslam.environment.model.Player;
 import rollerslam.environment.model.World;
-import rollerslam.environment.model.actions.leg.DashAction;
+import rollerslam.environment.model.utils.MathGeometry;
 import rollerslam.infrastructure.agent.goalbased.GoalBasedEnvironmentStateModel;
 import rollerslam.infrastructure.agent.goalbased.GoalUpdateComponent;
 
@@ -17,24 +17,34 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 			}
 		} else if (model.currentGoal == AgentGoal.WAIT_JOIN_GAME) {
 			if (model.gameStarted) {
-				System.out.println("GOING TO CENTER");
-				model.currentGoal = AgentGoal.GO_TO_CENTER;
+				System.out.println("GOING TO BALL");
+				model.currentGoal = AgentGoal.GO_TO_BALL;
 			}			
-		} else if (model.currentGoal == AgentGoal.GO_TO_CENTER) { 
+		} else if (model.currentGoal == AgentGoal.GO_TO_BALL) { 
 			Player me = getMeFromModel(model);
 			
-			double mex = me.sx / 1000.0;
-			double mey = me.sy / 1000.0;
-			
-			double d = Math.sqrt(mex*mex + mey*mey);
-			
-			System.out.println("DISTANCE TO CENTER: " + d);
-			
-			if (d < 10.0) {
-				System.out.println("GOING TO GOAL");
-				model.currentGoal = AgentGoal.GO_TO_GOAL;				
-			}
-		}
+                        if(!me.isGround){
+                            if (MathGeometry.calculeDistancePoints(me.sx, me.world.ball.sx, me.sy, me.world.ball.sy) < 5000) {
+                                if(!me.world.ball.withPlayer){
+                                    System.out.println("CATCH THE BALL");
+                                    model.currentGoal = AgentGoal.CATCH_BALL;				
+                                }else if(me.world.playerWithBall != null){
+                                    System.out.println("TACKLE THE PLAYER");
+                                    model.currentGoal = AgentGoal.TACKLE_PLAYER;
+                                }
+                            }
+                        }
+                } else if(model.currentGoal == AgentGoal.CATCH_BALL){
+                    Player me = getMeFromModel(model);
+
+                    if(me.hasBall){
+                        System.out.println("GO TO GOAL");
+                        model.currentGoal = AgentGoal.GO_TO_GOAL;
+                    }
+                } else if(model.currentGoal == AgentGoal.TACKLE_PLAYER) {
+                    System.out.println("GOING TO BALL");
+                    model.currentGoal = AgentGoal.GO_TO_BALL;
+                }
 	}
 
 	private Player getMeFromModel(AgentWorldModel model) {
