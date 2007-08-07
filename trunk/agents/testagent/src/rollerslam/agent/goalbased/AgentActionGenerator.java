@@ -1,5 +1,7 @@
 package rollerslam.agent.goalbased;
 
+import java.rmi.RemoteException;
+
 import rollerslam.environment.model.Player;
 import rollerslam.environment.model.PlayerTeam;
 import rollerslam.environment.model.World;
@@ -48,15 +50,25 @@ public class AgentActionGenerator implements
 
 	private Player getMeFromModel(AgentWorldModel model) {
 		for (Player player : ((World)model.environmentStateModel).playersA) {
-			if (player.id == model.myID) {
+			//if (player.id == model.myID) {
+                    try{
+                        if(player.id == remoteThis.getID()){
 				return player;
 			}
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
 		}
 
 		for (Player player : ((World)model.environmentStateModel).playersB) {
-			if (player.id == model.myID) {
+			//if (player.id == model.myID) {
+                    try{
+                        if(player.id == remoteThis.getID()){
 				return player;
 			}
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
 		}
 
 		return null;
