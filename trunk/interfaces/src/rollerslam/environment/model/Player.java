@@ -10,6 +10,10 @@ public class Player extends AnimatedObject {
 	public PlayerTeam team;	
 	public int id = id_gen ++;
 	
+	public boolean hasBall = false;
+        
+        public boolean isGround = false;
+	
 	public static final int WIDTH  = 1000;
 	public static final int HEIGHT = 1000;
 		

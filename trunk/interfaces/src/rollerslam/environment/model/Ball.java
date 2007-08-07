@@ -5,7 +5,9 @@ import rollerslam.environment.model.visitor.Visitor;
 
 @SuppressWarnings("serial")
 public class Ball extends AnimatedObject implements Visitable {
-
+        
+        public boolean withPlayer = false;
+        
 	public Ball() {}
 	
 	public Ball(World w, int psx, int psy) {
