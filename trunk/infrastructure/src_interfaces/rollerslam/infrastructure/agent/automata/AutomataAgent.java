@@ -28,7 +28,17 @@ public abstract class AutomataAgent implements Agent, SimulationStateProvider {
 	protected Effector							  effector;
 	
 	private SimulationState state = SimulationState.CREATED;
-			
+        
+        private int id = -1;
+        
+        public int getID() throws RemoteException{
+            return id;
+        }
+        
+        public void setID(int id) throws RemoteException{
+            this.id = id;
+        }
+        
 	protected void startSimulation() {
 		new SimulationThread().start();			
 	}
