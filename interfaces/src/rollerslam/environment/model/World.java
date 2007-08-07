@@ -19,9 +19,17 @@ public class World extends EnvironmentStateModel implements Serializable, Visita
 	public Ramp rampB;
 	public Trampoline trampolineA;
 	public Trampoline trampolineB;
+        
+        public Player playerWithBall = null;
 
 	public static final int WIDTH  = 188000;
 	public static final int HEIGHT = 138000;
+	
+	public static final int FOCUS1X = -63835;
+	public static final int FOCUS1Y = 0;
+	
+	public static final int FOCUS2X = 63835;
+	public static final int FOCUS2Y = 0;
 	
 	private Random random 		 = new Random();
 	
@@ -52,23 +60,6 @@ public class World extends EnvironmentStateModel implements Serializable, Visita
 		
 	}
 	
-	public boolean calculePointIntoEllipse(int px, int py){
-		int dist1 = calculeDistancePoints(-64350, px, 0, py);
-		int dist2 = calculeDistancePoints(64350, px, 0, py);
-		
-		if(dist1 + dist2 > 188700)
-			return false;
-		else
-			return true;
-		
-	}
-	
-	public int calculeDistancePoints(int px1, int px2, int py1, int py2){
-		int dx = px1 - px2;
-		int dy = py1 - py2;
-		return (int)Math.abs(Math.sqrt(dx*dx + dy*dy));
-	}
-
 	public void accept(Visitor visitor) {
 		visitor.visit((World)this);
 
