@@ -34,7 +34,7 @@ public class RollerslamGoalBasedAgent extends GoalBasedAgent {
 			}			
 		};
 		
-		this.goalUpdateComponent = new AgentGoalUpdater();
+		this.goalUpdateComponent = new AgentGoalUpdater(remoteThis);
 		
 		this.initializationComponent = new ModelInitializationComponent() {
 			public void initialize(EnvironmentStateModel model) {

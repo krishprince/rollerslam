@@ -18,6 +18,16 @@ public class RollerslamDummyAgent implements Agent, Runnable {
 	public Agent                 remoteThis  = null;
 
 	public boolean gameStarted = false;
+        
+        private int id = -1;
+        
+        public int getID(){
+            return id;
+        }
+        
+        public void setID(int id){
+            this.id = id;
+        }
 	
 	public RollerslamDummyAgent() throws Exception {
 		facade = ClientFacadeImpl.getInstance();
