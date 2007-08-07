@@ -166,9 +166,10 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 		if (body != null) {
 			playersMap.put(agent, body);
 			idsMap.put(body, agent);
-			
+                        
 			try {
-				facade.getEnvironmentEffector().doAction(new GameStartedPerception(null, body.id));
+                            agent.setID(body.id);
+                            facade.getEnvironmentEffector().doAction(new GameStartedPerception(null, body.id));
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
