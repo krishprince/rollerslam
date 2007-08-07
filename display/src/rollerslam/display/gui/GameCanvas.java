@@ -88,11 +88,13 @@ public class GameCanvas extends Canvas {
     }
 
     private int translatex(int sx) {
-        return ((sx + OutTrack.WIDTH / 2) * 800) / OutTrack.WIDTH;
+        return ((sx + OutTrack.WIDTH / 2) * 782) / OutTrack.WIDTH;
+    	//return (sx * 764) / World.WIDTH / 2;
     }
 
     private int translatey(int sy) {
-        return ((sy + OutTrack.HEIGHT / 2) * 600) / OutTrack.HEIGHT;
+        return ((sy + OutTrack.HEIGHT / 2) * 582) / OutTrack.HEIGHT;
+    	//return (sy * 564) / World.HEIGHT / 2; 
     }
 
     public void setModel(Model model) {
