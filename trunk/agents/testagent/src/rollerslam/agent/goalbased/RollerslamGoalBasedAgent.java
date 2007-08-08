@@ -1,6 +1,7 @@
 package rollerslam.agent.goalbased;
 
 import rollerslam.environment.model.perceptions.GameStartedPerception;
+import rollerslam.environment.model.PlayerTeam;
 import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.agent.StateMessage;
@@ -18,7 +19,7 @@ public class RollerslamGoalBasedAgent extends GoalBasedAgent {
 	public ClientFacade          facade      = null;	
 	public Agent                 remoteThis  = null;
 	
-	public RollerslamGoalBasedAgent() throws Exception {
+	public RollerslamGoalBasedAgent(final PlayerTeam team) throws Exception {
 		facade = ClientFacadeImpl.getInstance();
 		remoteThis = (Agent) facade.getClientInitialization().exportObject(this);
 		facade.getAgentRegistry().register(remoteThis);
@@ -31,6 +32,7 @@ public class RollerslamGoalBasedAgent extends GoalBasedAgent {
 		this.goalInitializationComponent = new GoalInitializationComponent() {
 			public void initialize(GoalBasedEnvironmentStateModel goal) {
 				((AgentWorldModel)goal).currentGoal = AgentGoal.JOIN_GAME;
+				((AgentWorldModel)goal).myTeam = team;
 			}			
 		};
 		
@@ -64,6 +66,16 @@ public class RollerslamGoalBasedAgent extends GoalBasedAgent {
 
 	public static void main(String... args) throws Exception {
 		ClientFacadeImpl.getInstance().getClientInitialization().init("localhost");
-		new RollerslamGoalBasedAgent();
+		
+		PlayerTeam team = PlayerTeam.TEAM_A;
+		
+		if(args.length > 0){
+			if(args[0].equals("A"))
+				team = PlayerTeam.TEAM_A;
+			else if(args[0].equals("B"))
+				team = PlayerTeam.TEAM_B;
+		}
+		
+		new RollerslamGoalBasedAgent(team);
 	}
 }

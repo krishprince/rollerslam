@@ -50,6 +50,9 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
             if(me.hasBall){
                 System.out.println("GO TO GOAL - " + me.id);
                 model.currentGoal = AgentGoal.GO_TO_GOAL;
+            }else{
+                System.out.println("GO TO BALL - " + me.id);
+                model.currentGoal = AgentGoal.GO_TO_BALL;
             }
         } else if(model.currentGoal == AgentGoal.TACKLE_PLAYER) {
             Player me = getMeFromModel(model);
