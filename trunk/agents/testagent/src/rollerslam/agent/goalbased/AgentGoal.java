@@ -6,6 +6,7 @@ public enum AgentGoal {
 	GO_TO_BALL,
 	GO_TO_GOAL,
 	CATCH_BALL,
-        TACKLE_PLAYER
+    TACKLE_PLAYER,
+    STAND_UP
 	;
 }

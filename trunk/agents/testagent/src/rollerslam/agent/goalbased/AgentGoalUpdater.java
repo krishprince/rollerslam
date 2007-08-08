@@ -21,38 +21,52 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 		
 		if (model.currentGoal == AgentGoal.JOIN_GAME) {
 			if (model.joinMessageSent) {
-                            model.currentGoal = AgentGoal.WAIT_JOIN_GAME;
+                model.currentGoal = AgentGoal.WAIT_JOIN_GAME;
 			}
 		} else if (model.currentGoal == AgentGoal.WAIT_JOIN_GAME) {
-                    if (model.gameStarted) {
-                        Player me = getMeFromModel(model);
-                        System.out.println("GOING TO BALL - " + me.id);
-                        model.currentGoal = AgentGoal.GO_TO_BALL;
-                    }			
+            if (model.gameStarted) {
+                Player me = getMeFromModel(model);
+                System.out.println("GO TO BALL - " + me.id);
+                model.currentGoal = AgentGoal.GO_TO_BALL;
+            }			
 		} else if (model.currentGoal == AgentGoal.GO_TO_BALL) { 
-                    Player me = getMeFromModel(model);
-                    if(!me.isGround){
-                        if (MathGeometry.calculeDistancePoints(me.sx, me.world.ball.sx, me.sy, me.world.ball.sy) < 5000) {
-                            if(!me.world.ball.withPlayer){
-                                System.out.println("CATCH THE BALL - " + me.id);
-                                model.currentGoal = AgentGoal.CATCH_BALL;				
-                            }else if(me.world.playerWithBall != null){
-                                System.out.println("TACKLE THE PLAYER - " + me.id);
-                                model.currentGoal = AgentGoal.TACKLE_PLAYER;
-                            }
-                        }
+            Player me = getMeFromModel(model);
+            if(!me.inGround){
+                if (MathGeometry.calculeDistancePoints(me.sx, me.world.ball.sx, me.sy, me.world.ball.sy) < 5000) {
+                    if(!me.world.ball.withPlayer){
+                        System.out.println("CATCH THE BALL - " + me.id);
+                        model.currentGoal = AgentGoal.CATCH_BALL;				
+                    }else if(me.world.playerWithBall != null){
+                        System.out.println("TACKLE THE PLAYER - " + me.id);
+                        model.currentGoal = AgentGoal.TACKLE_PLAYER;
                     }
-                } else if(model.currentGoal == AgentGoal.CATCH_BALL){
-                    Player me = getMeFromModel(model);
-                    if(me.hasBall){
-                        System.out.println("GO TO GOAL - " + me.id);
-                        model.currentGoal = AgentGoal.GO_TO_GOAL;
-                    }
-                } else if(model.currentGoal == AgentGoal.TACKLE_PLAYER) {
-                    Player me = getMeFromModel(model);
-                    System.out.println("GOING TO BALL - " + me.id);
-                    model.currentGoal = AgentGoal.GO_TO_BALL;
                 }
+            } else {
+            	System.out.println("STAND UP - " + me.id);
+            	model.currentGoal = AgentGoal.STAND_UP;
+            }
+        } else if(model.currentGoal == AgentGoal.CATCH_BALL){
+            Player me = getMeFromModel(model);
+            if(me.hasBall){
+                System.out.println("GO TO GOAL - " + me.id);
+                model.currentGoal = AgentGoal.GO_TO_GOAL;
+            }
+        } else if(model.currentGoal == AgentGoal.TACKLE_PLAYER) {
+            Player me = getMeFromModel(model);
+            System.out.println("GO TO BALL - " + me.id);
+            model.currentGoal = AgentGoal.GO_TO_BALL;
+        } else if(model.currentGoal == AgentGoal.STAND_UP) {
+        	Player me = getMeFromModel(model);
+        	
+        	System.out.println("GO TO BALL - " + me.id);
+        	model.currentGoal = AgentGoal.GO_TO_BALL;
+        } else if(model.currentGoal == AgentGoal.GO_TO_GOAL){
+        	Player me = getMeFromModel(model);
+        	if(me.inGround){
+        		System.out.println("STAND UP - " + me.id);
+        		model.currentGoal = AgentGoal.STAND_UP;
+        	}
+        }
 	}
 
 	private Player getMeFromModel(AgentWorldModel model) {
