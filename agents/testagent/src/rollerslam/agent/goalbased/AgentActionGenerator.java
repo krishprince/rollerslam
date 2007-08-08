@@ -35,12 +35,12 @@ public class AgentActionGenerator implements
 		} else if (model.currentGoal == AgentGoal.GO_TO_BALL) {
 			Player me = getMeFromModel(model);
 			
-			return new DashAction(remoteThis, new Vector(me.world.ball.sx - me.sx, me.world.ball.sy - me.sy));
+			return new DashAction(remoteThis, me.world.ball.s.subtract(me.s));
 		} else if (model.currentGoal == AgentGoal.GO_TO_GOAL) {
 			Player me = getMeFromModel(model);
 			World world = (World)model.environmentStateModel;
 									
-			return new DashAction(remoteThis, new Vector(world.goalA.sx - me.sx, world.goalA.sy - me.sy));
+			return new DashAction(remoteThis, world.goalA.s.subtract(me.s));
 		} else if(model.currentGoal == AgentGoal.CATCH_BALL) {
 			return new CatchAction(remoteThis);
 		} else if(model.currentGoal == AgentGoal.TACKLE_PLAYER){
