@@ -22,6 +22,7 @@ import rollerslam.environment.model.actions.arm.TackleAction;
 import rollerslam.environment.model.actions.arm.ThrowAction;
 import rollerslam.environment.model.actions.VoiceAction;
 import rollerslam.environment.model.perceptions.GameStartedPerception;
+import rollerslam.environment.model.utils.MathGeometry;
 import rollerslam.environment.model.utils.Vector;
 import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.Message;
@@ -33,6 +34,8 @@ import rollerslam.infrastructure.server.ServerFacadeImpl;
 public class JavaActionInterpretationComponent implements ActionInterpretationComponent {
 	private static final int MAX_ACCELERATION = 500;
 
+	private static final int MAX_DISTANCE = 5000;
+	
 	public ServerFacade facade = ServerFacadeImpl.getInstance();
 
 	public Hashtable<Agent, Player> playersMap                  = new Hashtable<Agent, Player>();
@@ -62,28 +65,43 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 	private void catchA(World w, Player p){
 		//Body
 		if(!w.ball.withPlayer){
-			p.hasBall = true;
-			p.world.ball.withPlayer = true;
-			p.world.playerWithBall = p;
+			if(MathGeometry.calculeDistancePoints(w.ball.s.x, p.s.x, w.ball.s.y, p.s.y) < MAX_DISTANCE){
+				p.hasBall = true;
+				p.world.ball.withPlayer = true;
+				p.world.playerWithBall = p;
+			}
 		}
 	}
 	
 	private void release(World w, Player p){
 		//Body
+		if(p.hasBall){
+			p.hasBall = false;
+			w.playerWithBall = null;
+			w.ball.withPlayer = false;
+		}
 	}
 	
 	private void tackle(World w, Player p){
 		//Body
-		if(w.playerWithBall != null){
-			w.playerWithBall.inGround = true;
-			w.playerWithBall.hasBall = false;
-			w.ball.withPlayer = false;
-			w.playerWithBall = null;
+		if(w.ball.withPlayer){
+			if(MathGeometry.calculeDistancePoints(w.playerWithBall.s.x, p.s.x, w.playerWithBall.s.y, p.s.y) < MAX_DISTANCE){
+				w.playerWithBall.inGround = true;
+				w.playerWithBall.hasBall = false;
+				w.ball.withPlayer = false;
+				w.playerWithBall = null;
+			}
 		}
 	}
 	
 	private void throwA(World w, Player p, Vector a){
 		//Body
+		if(p.hasBall){
+			p.hasBall = false;
+			w.playerWithBall = null;
+			w.ball.withPlayer = false;
+			w.ball.a = a;
+		}
 	}
 	
 	private void sendMsg(World w, Agent agent, Fact f){
