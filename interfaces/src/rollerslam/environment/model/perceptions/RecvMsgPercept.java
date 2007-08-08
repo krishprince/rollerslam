@@ -1,7 +1,7 @@
 package rollerslam.environment.model.perceptions;
 
 import rollerslam.infrastructure.agent.Agent;
-import rollerslam.environment.model.utils.Fact;
+import rollerslam.environment.model.Fact;
 
 @SuppressWarnings("serial")
 public class RecvMsgPercept extends EarPercept {

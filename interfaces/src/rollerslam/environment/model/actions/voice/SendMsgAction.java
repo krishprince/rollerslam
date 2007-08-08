@@ -1,7 +1,7 @@
 package rollerslam.environment.model.actions.voice;
 
+import rollerslam.environment.model.Fact;
 import rollerslam.environment.model.actions.VoiceAction;
-import rollerslam.environment.model.utils.Fact;
 import rollerslam.infrastructure.agent.Agent;
 
 @SuppressWarnings("serial")
