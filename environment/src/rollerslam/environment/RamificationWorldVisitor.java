@@ -15,6 +15,7 @@ import rollerslam.environment.model.visitor.Visitor;
 import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
 import rollerslam.infrastructure.agent.automata.RamificationComponent;
 import rollerslam.environment.model.utils.MathGeometry;
+import rollerslam.environment.model.utils.Vector;
 
 /**
  * @author Marcos Aurélio
@@ -22,7 +23,7 @@ import rollerslam.environment.model.utils.MathGeometry;
  */
 public class RamificationWorldVisitor implements Visitor, RamificationComponent {
 
-	private static final int MAX_SPEED = 1000;
+	private static final int MAX_SPEED = 2000;
 	
 	public void visit(World obj) {
 	}
@@ -31,52 +32,42 @@ public class RamificationWorldVisitor implements Visitor, RamificationComponent 
 
 	}
 
-	public void visit(AnimatedObject obj) {
-		int sx = obj.sx + obj.vx;
-		int sy = obj.sy + obj.vy;
+	public void visit(AnimatedObject obj) {		
+		Vector new_s = obj.s.sumVector(obj.v);
+		Vector new_v = obj.v.sumVector(obj.a).limitModuloTo(MAX_SPEED);
 		
-		int vx = Math.min(obj.vx + obj.ax, MAX_SPEED);
-		int vy = Math.min(obj.vy + obj.ay, MAX_SPEED);
-
 		if(MathGeometry.calculePointIntoEllipse(World.WIDTH, World.FOCUS1X, World.FOCUS1Y,
-				World.FOCUS2X, World.FOCUS2Y, sx, sy)){
-			obj.sx = sx;
-			obj.sy = sy;
-
-			obj.vx = vx;
-			obj.vy = vy;
+				World.FOCUS2X, World.FOCUS2Y, new_s.x, new_s.y)){
+			obj.s = new_s;
+			obj.v = new_v;
 		}else{
-			obj.ax = 0;
-			obj.ay = 0;
-
-			obj.vx = 0;
-			obj.vy = 0;
-		}
-		
+			obj.a = new Vector(0,0);
+			obj.v = new Vector(0,0);
+		}		
 	}
 
 	public void visit(Ball obj) {
 		this.visit((AnimatedObject)obj);
+		
+		if (!obj.withPlayer && obj.v.getModule() > 0) {
+			obj.a = new Vector(0,0).subtract(obj.v).setModulo(obj.v.getModule() / 10);			
+		}
 	}
 
 	public void visit(OutTrack obj) {
 	}
 
 	public void visit(Player obj) {
-		this.visit((AnimatedObject)obj);
-                
-		if(obj.hasBall){
-			obj.world.ball.sx = obj.sx;
-			obj.world.ball.sy = obj.sy;
+		this.visit((AnimatedObject) obj);
+
+		if (obj.hasBall) {
+			obj.world.ball.s = obj.s;
 		}
-                
-                if(obj.inGround){
-                        obj.ax = 0;
-                        obj.ay = 0;
-                        
-                        obj.vx = 0;
-                        obj.vy = 0;
-                }
+
+		if (obj.inGround) {
+			obj.a = new Vector(0, 0);
+			obj.v = new Vector(0, 0);
+		}
 	}
 
 	public void processRamifications(EnvironmentStateModel world) {

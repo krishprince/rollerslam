@@ -42,19 +42,8 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 	
 	private void dash(World w, Player p, Vector vet) {
 		//TODO test if p is in w
-		if(!p.inGround){
-			double oax = vet.x / 1000.0;
-			double oay = vet.y / 1000.0;
-			
-			double modulo = Math.sqrt(oax*oax + oay*oay);
-			
-			if (modulo > MAX_ACCELERATION) modulo = MAX_ACCELERATION;
-			
-			double nax = (vet.x/modulo);
-			double nay = (vet.y/modulo);
-			
-			p.ax = (int) nax;
-			p.ay = (int) nay;
+		if(!p.inGround){					
+			p.a = vet.limitModuloTo(MAX_ACCELERATION);
 		}
 	}
 	
