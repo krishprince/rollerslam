@@ -5,12 +5,16 @@ package rollerslam.display.gui;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
+
+import javax.swing.JLabel;
+
 import rollerslam.display.gui.mvc.Model;
-import rollerslam.display.gui.sprite.Sprite;
-import rollerslam.display.gui.sprite.SpriteStore;
 import rollerslam.display.gui.sprite.SpriteKind;
+import rollerslam.display.gui.sprite.SpriteStore;
+import rollerslam.environment.model.Fact;
 import rollerslam.environment.model.OutTrack;
 import rollerslam.environment.model.Player;
 import rollerslam.environment.model.World;
@@ -30,16 +34,20 @@ public class GameCanvas extends Canvas {
     private Model model;
     private SpriteStore ss;
 
-    public GameCanvas() {
+    private JLabel messagesLabel;
+    
+    public GameCanvas(JLabel messages) {
         setBounds(0, 0, 800, 600);
 
+        this.messagesLabel = messages;
+        
         // Tell AWT not to bother repainting our canvas since we're
         // going to do that our self in accelerated mode
         setIgnoreRepaint(true);
         ss = SpriteStore.get();
     }
 
-    public void init() {
+	public void init() {
         // create the buffering strategy which will allow AWT
         // to manage our accelerated graphics
         createBufferStrategy(2);
@@ -72,6 +80,12 @@ public class GameCanvas extends Canvas {
                         }
 
                         ss.getSprite(SpriteKind.BALL).draw(g, translatex(world.ball.s.x), translatey(world.ball.s.y));
+                        
+                        for (Fact fact : world.saidMessages) {
+							MessageHandler.scheduleForExhibition(fact);
+						}
+                        
+                        messagesLabel.setText(MessageHandler.getCurrentMessage());
                     }
 
                     g.dispose();

@@ -3,11 +3,14 @@ package rollerslam.display.gui;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
 import orcas.logcomponents.basiclog.LogFactory;
 import rollerslam.display.gui.mvc.Controller;
 import rollerslam.display.gui.mvc.Model;
@@ -23,8 +26,9 @@ public class RollerslamDisplay extends JPanel implements View, ActionListener {
     private Controller controller = null;
 
     private JButton connectButton = new JButton("Connect to Simulation");
+    private JLabel  messages      = new JLabel("");
     
-    private GameCanvas game = new GameCanvas();
+    private GameCanvas game = new GameCanvas(messages);
 
     public RollerslamDisplay() {
         Model model = new ModelImpl();
@@ -55,6 +59,7 @@ public class RollerslamDisplay extends JPanel implements View, ActionListener {
 
         JPanel down = new JPanel();
         down.setLayout(new FlowLayout());
+        down.add(messages);
         down.add(connectButton);
 
         connectButton.addActionListener(this);
