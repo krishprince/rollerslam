@@ -15,9 +15,9 @@ public class Goal extends WorldObject implements Serializable, Visitable {
 	public Goal(World w, int psx, int psy) {
 		super(w, psx, psy, WIDTH, HEIGHT);
 		
-		baskets[0] = new Basket(w, this.sx, this.sy);
-		baskets[1] = new Basket(w, this.sx, this.sy + (-3500));
-		baskets[2] = new Basket(w, this.sx, this.sy + (3500));
+		baskets[0] = new Basket(w, this.s.x, this.s.y);
+		baskets[1] = new Basket(w, this.s.x, this.s.y + (-3500));
+		baskets[2] = new Basket(w, this.s.x, this.s.y + (3500));
 	}
 
 	public void accept(Visitor visitor) {
