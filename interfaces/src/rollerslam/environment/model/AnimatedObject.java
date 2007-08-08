@@ -1,15 +1,13 @@
 package rollerslam.environment.model;
 
+import rollerslam.environment.model.utils.Vector;
 import rollerslam.environment.model.visitor.Visitor;
 
 @SuppressWarnings("serial")
 public class AnimatedObject extends WorldObject {
 	
-	public int vx = 0;
-	public int vy = 0;
-	
-	public int ax = 0;
-	public int ay = 0;
+	public Vector v = new Vector(0, 0);
+	public Vector a = new Vector(0, 0);
 	
 	public AnimatedObject() {
 		
