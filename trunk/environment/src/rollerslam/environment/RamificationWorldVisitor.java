@@ -1,9 +1,12 @@
 package rollerslam.environment;
 
 
+import java.util.ArrayList;
+
 import rollerslam.environment.model.AnimatedObject;
 import rollerslam.environment.model.Ball;
 import rollerslam.environment.model.Basket;
+import rollerslam.environment.model.Fact;
 import rollerslam.environment.model.Goal;
 import rollerslam.environment.model.OutTrack;
 import rollerslam.environment.model.Player;
@@ -11,11 +14,11 @@ import rollerslam.environment.model.Ramp;
 import rollerslam.environment.model.Trampoline;
 import rollerslam.environment.model.World;
 import rollerslam.environment.model.WorldObject;
+import rollerslam.environment.model.utils.MathGeometry;
+import rollerslam.environment.model.utils.Vector;
 import rollerslam.environment.model.visitor.Visitor;
 import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
 import rollerslam.infrastructure.agent.automata.RamificationComponent;
-import rollerslam.environment.model.utils.MathGeometry;
-import rollerslam.environment.model.utils.Vector;
 
 /**
  * @author Marcos Aurélio
@@ -26,6 +29,15 @@ public class RamificationWorldVisitor implements Visitor, RamificationComponent 
 	private static final int MAX_SPEED = 2000;
 	
 	public void visit(World obj) {
+		ArrayList<Fact> factsToRemove = new ArrayList<Fact>();
+		for (Fact fact : obj.saidMessages) {
+			if (fact.cycle < obj.currentCycle) {
+				factsToRemove.add(fact);
+			}
+		}
+		
+		obj.saidMessages.removeAll(factsToRemove);
+		obj.currentCycle++;		
 	}
 
 	public void visit(WorldObject obj) {
