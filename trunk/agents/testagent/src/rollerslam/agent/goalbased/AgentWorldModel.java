@@ -12,6 +12,8 @@ public class AgentWorldModel extends GoalBasedEnvironmentStateModel {
 	public int myID = -1;
 	public PlayerTeam myTeam;
 	
+	public boolean messageSent = false;
+	
 	public AgentWorldModel(EnvironmentStateModel model) {
 		super(model);
 	}
