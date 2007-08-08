@@ -2,6 +2,7 @@ package rollerslam.environment.model;
 
 import java.io.Serializable;
 import java.util.Random;
+import java.util.Vector;
 
 import rollerslam.environment.model.visitor.Visitable;
 import rollerslam.environment.model.visitor.Visitor;
@@ -11,6 +12,10 @@ import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
 
 @SuppressWarnings("serial")
 public class World extends EnvironmentStateModel implements Serializable, Visitable  {
+
+	public int currentCycle 	     = 0;
+	public Vector<Fact> saidMessages = new Vector<Fact>();
+	
 	public OutTrack outTrack     = new OutTrack(this);
 	public Ball ball      		 = new Ball(this, 0, 0);
 	public Player playersA[] 	 = new Player[2];
@@ -22,7 +27,7 @@ public class World extends EnvironmentStateModel implements Serializable, Visita
 	public Trampoline trampolineA;
 	public Trampoline trampolineB;
         
-        public Player playerWithBall = null;
+    public Player playerWithBall = null;
 
 	public static final int WIDTH  = 188000;
 	public static final int HEIGHT = 138000;
