@@ -12,7 +12,7 @@ public class Player extends AnimatedObject {
 	
 	public boolean hasBall = false;
         
-        public boolean isGround = false;
+    public boolean inGround = false;
 	
 	public static final int WIDTH  = 1000;
 	public static final int HEIGHT = 1000;
