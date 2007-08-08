@@ -6,6 +6,7 @@ import rollerslam.environment.model.Player;
 import rollerslam.environment.model.PlayerTeam;
 import rollerslam.environment.model.World;
 import rollerslam.environment.model.actions.leg.DashAction;
+import rollerslam.environment.model.actions.leg.StandUpAction;
 import rollerslam.environment.model.actions.arm.CatchAction;
 import rollerslam.environment.model.actions.arm.TackleAction;
 import rollerslam.environment.model.actions.JoinGameAction;
@@ -43,32 +44,34 @@ public class AgentActionGenerator implements
 		} else if(model.currentGoal == AgentGoal.CATCH_BALL) {
 			return new CatchAction(remoteThis);
 		} else if(model.currentGoal == AgentGoal.TACKLE_PLAYER){
-                        return new TackleAction(remoteThis);
-                }
+            return new TackleAction(remoteThis);
+        } else if(model.currentGoal == AgentGoal.STAND_UP){
+        	return new StandUpAction(remoteThis);
+        }
 		return null;
 	}
 
 	private Player getMeFromModel(AgentWorldModel model) {
 		for (Player player : ((World)model.environmentStateModel).playersA) {
 			//if (player.id == model.myID) {
-                    try{
-                        if(player.id == remoteThis.getID()){
-				return player;
-			}
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
+            try{
+                if(player.id == remoteThis.getID()){
+                	return player;
+                }
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
 		}
 
 		for (Player player : ((World)model.environmentStateModel).playersB) {
 			//if (player.id == model.myID) {
-                    try{
-                        if(player.id == remoteThis.getID()){
+            try{
+                if(player.id == remoteThis.getID()){
 				return player;
-			}
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
+                }
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
 		}
 
 		return null;
