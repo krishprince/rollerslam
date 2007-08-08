@@ -3,6 +3,7 @@ package rollerslam.environment;
 import java.rmi.RemoteException;
 import java.util.Hashtable;
 
+import rollerslam.environment.model.Fact;
 import rollerslam.environment.model.Player;
 import rollerslam.environment.model.PlayerTeam;
 import rollerslam.environment.model.World;
@@ -22,7 +23,6 @@ import rollerslam.environment.model.actions.arm.ThrowAction;
 import rollerslam.environment.model.actions.VoiceAction;
 import rollerslam.environment.model.perceptions.GameStartedPerception;
 import rollerslam.environment.model.utils.Vector;
-import rollerslam.environment.model.utils.Fact;
 import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.agent.automata.ActionInterpretationComponent;
@@ -86,8 +86,10 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 		//Body
 	}
 	
-	private void sendMsg(World w, Player p, Fact f){
+	private void sendMsg(World w, Agent agent, Fact f){
 		//Body
+		f.cycle = w.currentCycle;
+		w.saidMessages.add(f);
 	}	
 	
 	private void standUp(World w, Player p){
@@ -146,12 +148,12 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 			if(m instanceof SendMsgAction){
 				//Send the message ("Say")
 				SendMsgAction mt = (SendMsgAction) m;
-				this.sendMsg((World)w, playersMap.get(mt.sender), mt.subject);
+				this.sendMsg((World)w, mt.sender, mt.subject);
 			}
 		//Player Join to Game
 		} else if (m instanceof JoinGameAction) {
 			JoinGameAction mt = (JoinGameAction) m;
-			this.joinWorld((World)w, mt.sender, mt.team);			
+			this.joinWorld((World)w, mt.sender, mt.team);
 		}
 	}
 
