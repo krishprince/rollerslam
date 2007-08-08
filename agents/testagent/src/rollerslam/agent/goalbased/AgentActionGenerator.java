@@ -10,7 +10,6 @@ import rollerslam.environment.model.actions.leg.StandUpAction;
 import rollerslam.environment.model.actions.arm.CatchAction;
 import rollerslam.environment.model.actions.arm.TackleAction;
 import rollerslam.environment.model.actions.JoinGameAction;
-import rollerslam.environment.model.utils.Vector;
 import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
@@ -29,7 +28,7 @@ public class AgentActionGenerator implements
 		AgentWorldModel model = (AgentWorldModel) w;
 		if (model.currentGoal == AgentGoal.JOIN_GAME) {
 			model.joinMessageSent = true;
-			return new JoinGameAction(remoteThis, PlayerTeam.TEAM_A);			
+			return new JoinGameAction(remoteThis, model.myTeam);			
 		} else if (model.currentGoal == AgentGoal.WAIT_JOIN_GAME) {
 			
 		} else if (model.currentGoal == AgentGoal.GO_TO_BALL) {
@@ -38,9 +37,16 @@ public class AgentActionGenerator implements
 			return new DashAction(remoteThis, me.world.ball.s.subtract(me.s));
 		} else if (model.currentGoal == AgentGoal.GO_TO_GOAL) {
 			Player me = getMeFromModel(model);
+			
 			World world = (World)model.environmentStateModel;
-									
-			return new DashAction(remoteThis, world.goalA.s.subtract(me.s));
+			
+			if(me.team == PlayerTeam.TEAM_A){
+				return new DashAction(remoteThis, world.goalB.s.subtract(me.s));
+			}else{
+				return new DashAction(remoteThis, world.goalA.s.subtract(me.s));
+			}
+			
+
 		} else if(model.currentGoal == AgentGoal.CATCH_BALL) {
 			return new CatchAction(remoteThis);
 		} else if(model.currentGoal == AgentGoal.TACKLE_PLAYER){
