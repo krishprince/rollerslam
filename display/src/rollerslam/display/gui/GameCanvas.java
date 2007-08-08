@@ -64,14 +64,14 @@ public class GameCanvas extends Canvas {
                     world = model.getModel();
                     if (world != null) {
                         for (Player player : world.playersA) {
-                            ss.getSprite(SpriteKind.RED_PLAYER).draw(g, translatex(player.sx), translatey(player.sy));
+                            ss.getSprite(SpriteKind.RED_PLAYER).draw(g, translatex(player.s.x), translatey(player.s.y));
                         }
 
                         for (Player player : world.playersB) {
-                            ss.getSprite(SpriteKind.BLUE_PLAYER).draw(g, translatex(player.sx), translatey(player.sy));
+                            ss.getSprite(SpriteKind.BLUE_PLAYER).draw(g, translatex(player.s.x), translatey(player.s.y));
                         }
 
-                        ss.getSprite(SpriteKind.BALL).draw(g, translatex(world.ball.sx), translatey(world.ball.sy));
+                        ss.getSprite(SpriteKind.BALL).draw(g, translatex(world.ball.s.x), translatey(world.ball.s.y));
                     }
 
                     g.dispose();
