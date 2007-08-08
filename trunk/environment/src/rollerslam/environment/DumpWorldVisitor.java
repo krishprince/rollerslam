@@ -32,7 +32,7 @@ public class DumpWorldVisitor implements Visitor {
 	 * @see rollerslam.environment.model.visitor.Visitor#visit(rollerslam.environment.model.WorldObject)
 	 */
 	public void visit(WorldObject obj) {
-		System.out.println("\tsx: " + obj.sx + " sy: " + obj.sy);
+		System.out.println("\tsx: " + obj.s.x + " sy: " + obj.s.y);
 		System.out.println("\twx: " + obj.width + " wy: " + obj.height);
 	}
 
@@ -41,8 +41,8 @@ public class DumpWorldVisitor implements Visitor {
 	 */
 	public void visit(AnimatedObject obj) {
 		this.visit((WorldObject)obj);
-		System.out.println("\tvx: " + obj.vx + " vy: " + obj.vy);
-		System.out.println("\tax: " + obj.ax + " ay: " + obj.ay);
+		System.out.println("\tvx: " + obj.v.x + " vy: " + obj.v.y);
+		System.out.println("\tax: " + obj.a.x + " ay: " + obj.a.y);
 	}
 
 	/* (non-Javadoc)
