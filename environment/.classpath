@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="/interfaces/dist/interfaces.jar" sourcepath="/interfaces"/>
-	<classpathentry kind="lib" path="/infrastructure/dist/infrastructure.jar"/>
-	<classpathentry kind="lib" path="lib/upechr.jar" sourcepath="/CHRCompiler"/>
+	<classpathentry sourcepath="/CHRCompiler" kind="lib" path="lib/upechr.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/infrastructure"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/interfaces"/>
 	<classpathentry kind="output" path="build"/>
 </classpath>

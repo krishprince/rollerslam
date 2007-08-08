@@ -70,7 +70,7 @@ public class RamificationWorldVisitor implements Visitor, RamificationComponent 
 			obj.world.ball.sy = obj.sy;
 		}
                 
-                if(obj.isGround){
+                if(obj.inGround){
                         obj.ax = 0;
                         obj.ay = 0;
                         

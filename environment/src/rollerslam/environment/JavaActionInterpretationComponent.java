@@ -13,6 +13,7 @@ import rollerslam.environment.model.actions.leg.DashAction;
 import rollerslam.environment.model.actions.leg.HitAction;
 import rollerslam.environment.model.actions.JoinGameAction;
 import rollerslam.environment.model.actions.leg.KickAction;
+import rollerslam.environment.model.actions.leg.StandUpAction;
 import rollerslam.environment.model.actions.LegAction;
 import rollerslam.environment.model.actions.arm.ReleaseAction;
 import rollerslam.environment.model.actions.voice.SendMsgAction;
@@ -41,18 +42,20 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 	
 	private void dash(World w, Player p, Vector vet) {
 		//TODO test if p is in w
-		double oax = vet.x / 1000.0;
-		double oay = vet.y / 1000.0;
-		
-		double modulo = Math.sqrt(oax*oax + oay*oay);
-		
-		if (modulo > MAX_ACCELERATION) modulo = MAX_ACCELERATION;
-		
-		double nax = (vet.x/modulo);
-		double nay = (vet.y/modulo);
-		
-		p.ax = (int) nax;
-		p.ay = (int) nay;
+		if(!p.inGround){
+			double oax = vet.x / 1000.0;
+			double oay = vet.y / 1000.0;
+			
+			double modulo = Math.sqrt(oax*oax + oay*oay);
+			
+			if (modulo > MAX_ACCELERATION) modulo = MAX_ACCELERATION;
+			
+			double nax = (vet.x/modulo);
+			double nay = (vet.y/modulo);
+			
+			p.ax = (int) nax;
+			p.ay = (int) nay;
+		}
 	}
 	
 	private void hit(World w, Player p, Vector vet){
@@ -69,9 +72,11 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 	
 	private void catchA(World w, Player p){
 		//Body
-		p.hasBall = true;
-		p.world.ball.withPlayer = true;
-		p.world.playerWithBall = p;
+		if(!w.ball.withPlayer){
+			p.hasBall = true;
+			p.world.ball.withPlayer = true;
+			p.world.playerWithBall = p;
+		}
 	}
 	
 	private void release(World w, Player p){
@@ -80,11 +85,11 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 	
 	private void tackle(World w, Player p){
 		//Body
-		if(p.world.playerWithBall != null){
-			p.world.playerWithBall.isGround = true;
-			p.world.playerWithBall.hasBall = false;
-			p.world.ball.withPlayer = false;
-			p.world.playerWithBall = null;
+		if(w.playerWithBall != null){
+			w.playerWithBall.inGround = true;
+			w.playerWithBall.hasBall = false;
+			w.ball.withPlayer = false;
+			w.playerWithBall = null;
 		}
 	}
 	
@@ -95,6 +100,13 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 	private void sendMsg(World w, Player p, Fact f){
 		//Body
 	}	
+	
+	private void standUp(World w, Player p){
+		//Body
+		if(p.inGround){
+			p.inGround = false;
+		}
+	}
 		
 	public void processAction(EnvironmentStateModel w, Message m) {
 		//Actions of Leg
@@ -113,6 +125,9 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 					KickAction mt = (KickAction) m;
 					this.kick((World)w, playersMap.get(mt.sender), mt.acceleration);
 				}
+			} else if (m instanceof StandUpAction) {
+				StandUpAction mt = (StandUpAction) m;
+				this.standUp((World)w, playersMap.get(mt.sender));
 			}
 		//Actions of Arm
 		} else if (m instanceof ArmAction) {
