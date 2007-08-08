@@ -32,7 +32,7 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 		} else if (model.currentGoal == AgentGoal.GO_TO_BALL) { 
             Player me = getMeFromModel(model);
             if(!me.inGround){
-                if (MathGeometry.calculeDistancePoints(me.sx, me.world.ball.sx, me.sy, me.world.ball.sy) < 5000) {
+                if (MathGeometry.calculeDistancePoints(me.s.x, me.world.ball.s.x, me.s.y, me.world.ball.s.y) < 5000) {
                     if(!me.world.ball.withPlayer){
                         System.out.println("CATCH THE BALL - " + me.id);
                         model.currentGoal = AgentGoal.CATCH_BALL;				
