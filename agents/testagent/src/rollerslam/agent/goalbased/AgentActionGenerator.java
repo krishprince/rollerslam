@@ -1,12 +1,15 @@
 package rollerslam.agent.goalbased;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 
+import rollerslam.environment.model.Fact;
 import rollerslam.environment.model.Player;
 import rollerslam.environment.model.PlayerTeam;
 import rollerslam.environment.model.World;
 import rollerslam.environment.model.actions.leg.DashAction;
 import rollerslam.environment.model.actions.leg.StandUpAction;
+import rollerslam.environment.model.actions.voice.SendMsgAction;
 import rollerslam.environment.model.actions.arm.CatchAction;
 import rollerslam.environment.model.actions.arm.TackleAction;
 import rollerslam.environment.model.actions.JoinGameAction;
@@ -26,6 +29,12 @@ public class AgentActionGenerator implements
 	
 	public Message computeAction(EnvironmentStateModel w) {
 		AgentWorldModel model = (AgentWorldModel) w;
+
+		if (!model.messageSent) {
+			model.messageSent = true;
+			return new SendMsgAction(remoteThis, new Fact("agent" + model.myID,
+					"all", "HA HA HU HU! " + System.currentTimeMillis()));			
+		} else {
 		if (model.currentGoal == AgentGoal.JOIN_GAME) {
 			model.joinMessageSent = true;
 			return new JoinGameAction(remoteThis, model.myTeam);			
@@ -54,6 +63,7 @@ public class AgentActionGenerator implements
         } else if(model.currentGoal == AgentGoal.STAND_UP){
         	return new StandUpAction(remoteThis);
         }
+		}
 		return null;
 	}
 
