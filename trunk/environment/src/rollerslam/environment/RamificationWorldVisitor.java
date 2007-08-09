@@ -19,13 +19,15 @@ import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
 import rollerslam.infrastructure.agent.automata.RamificationComponent;
 
 /**
+<<<<<<< .mine
+ * @author Marcos Aurélio
+=======
  * @author Marcos Aurelio
+>>>>>>> .r208
  *
  */
 public class RamificationWorldVisitor implements Visitor, RamificationComponent {
 
-	private static final int MAX_SPEED = 2000;
-	
 	public void visit(World obj) {
 		obj.actions.clear();
 		obj.actions.addAll(obj.newActions);
@@ -40,7 +42,9 @@ public class RamificationWorldVisitor implements Visitor, RamificationComponent 
 
 	public void visit(AnimatedObject obj) {		
 		Vector new_s = obj.s.sumVector(obj.v);
-		Vector new_v = obj.v.sumVector(obj.a).limitModuloTo(MAX_SPEED);
+		Vector new_v;
+		
+		new_v = obj.v.sumVector(obj.a).limitModuloTo(obj.maxV);
 		
 		if (MathGeometry.calculePointIntoEllipse(obj.world.outTrack.width,
 				SimulationSettings.FOCUS1X, SimulationSettings.FOCUS1Y,
