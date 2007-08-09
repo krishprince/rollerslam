@@ -1,5 +1,7 @@
 package rollerslam.agent.goalbased;
 
+import javax.swing.JOptionPane;
+
 import rollerslam.environment.model.perceptions.GameStartedPerception;
 import rollerslam.environment.model.PlayerTeam;
 import rollerslam.infrastructure.agent.Agent;
@@ -50,8 +52,10 @@ public class RollerslamGoalBasedAgent extends GoalBasedAgent {
 				if (m instanceof StateMessage) {
 					((AgentWorldModel)w).environmentStateModel = ((StateMessage)m).model;
 				} else if (m instanceof GameStartedPerception) {
-					((AgentWorldModel)w).gameStarted = true;
-					((AgentWorldModel)w).myID = ((GameStartedPerception)m).playerID;
+					if (((GameStartedPerception)m).receiver.equals(remoteThis)) {
+						((AgentWorldModel)w).gameStarted = true;
+						((AgentWorldModel)w).myID = ((GameStartedPerception)m).playerID;
+					}
 				}
 			}			
 		};
@@ -68,13 +72,13 @@ public class RollerslamGoalBasedAgent extends GoalBasedAgent {
 		ClientFacadeImpl.getInstance().getClientInitialization().init("localhost");
 		
 		PlayerTeam team = PlayerTeam.TEAM_A;
-		
-		if(args.length > 0){
-			if(args[0].equals("A"))
-				team = PlayerTeam.TEAM_A;
-			else if(args[0].equals("B"))
-				team = PlayerTeam.TEAM_B;
-		}
+
+		String teamStr = JOptionPane.showInputDialog("Which team? [A | B]").toUpperCase();
+				
+		if (teamStr.equals("A"))
+			team = PlayerTeam.TEAM_A;
+		else
+			team = PlayerTeam.TEAM_B;
 		
 		new RollerslamGoalBasedAgent(team);
 	}
