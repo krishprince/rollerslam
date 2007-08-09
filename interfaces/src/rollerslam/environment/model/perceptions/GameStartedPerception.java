@@ -6,9 +6,11 @@ import rollerslam.infrastructure.agent.Message;
 @SuppressWarnings("serial")
 public class GameStartedPerception extends Message {
 	
+	public Agent receiver;
 	public int playerID;
-	public GameStartedPerception(Agent sender, int playerID) {
+	public GameStartedPerception(Agent sender, Agent receiver, int playerID) {
 		super(sender);
+		this.receiver = receiver;
 		this.playerID = playerID;
 	}
 

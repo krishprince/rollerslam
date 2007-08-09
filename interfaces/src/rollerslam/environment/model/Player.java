@@ -14,13 +14,10 @@ public class Player extends AnimatedObject {
         
     public boolean inGround = false;
 	
-	public static final int WIDTH  = 1000;
-	public static final int HEIGHT = 1000;
-		
 	public Player() {}
 	
 	public Player(World w, int psx, int psy, PlayerTeam t) {
-		super(w, psx, psy, WIDTH, HEIGHT);
+		super(w, psx, psy, SimulationSettings.PLAYER_WIDTH, SimulationSettings.PLAYER_HEIGHT);
 		this.team = t;
 	}	
 	

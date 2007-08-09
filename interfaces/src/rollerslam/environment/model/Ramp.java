@@ -7,11 +7,8 @@ import rollerslam.environment.model.visitor.Visitor;
 
 @SuppressWarnings("serial")
 public class Ramp extends WorldObject implements Serializable, Visitable {
-	public static final int WIDTH  = 30000;
-	public static final int HEIGHT = 30000;
-
 	public Ramp(World w, int psx, int psy) {
-		super(w, psx, psy, WIDTH, HEIGHT);
+		super(w, psx, psy, SimulationSettings.RAMP_WIDTH, SimulationSettings.RAMP_HEIGHT);
 	}
 
 	@Override
