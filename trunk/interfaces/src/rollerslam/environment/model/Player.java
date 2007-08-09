@@ -2,7 +2,7 @@ package rollerslam.environment.model;
 
 import java.util.Random;
 import rollerslam.environment.model.visitor.Visitor;
-import rollerslam.environment.model.utils.Constants;
+import rollerslam.environment.model.SimulationSettings;
 
 @SuppressWarnings("serial")
 public class Player extends AnimatedObject {
@@ -17,6 +17,8 @@ public class Player extends AnimatedObject {
     public boolean inGround = false;
 	
 	public double strength = 0;
+	
+	public boolean counterTackle = false;
 
 	public Player() {}
 	
@@ -32,8 +34,8 @@ public class Player extends AnimatedObject {
 			strength = 1 - strength; 
 		}
 		
-		maxV = (int)Math.floor(Constants.MAX_VELOCITY * (1 + strength));
-		maxA = (int)Math.floor(Constants.MAX_ACCELERATION * (1 + strength));
+		maxV = (int)Math.floor(SimulationSettings.MAX_VELOCITY * (1 + strength));
+		maxA = (int)Math.floor(SimulationSettings.MAX_ACCELERATION * (1 + strength));
 		
 	}	
 	
