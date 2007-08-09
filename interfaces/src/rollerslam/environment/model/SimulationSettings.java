@@ -24,6 +24,6 @@ public class SimulationSettings {
 	public static final int FOCUS2X = 63835;
 	public static final int FOCUS2Y = 0;
 
-	public static final int PLAYERS_PER_TEAM = 3;
+	public static final int PLAYERS_PER_TEAM = 2;
 	
 }
