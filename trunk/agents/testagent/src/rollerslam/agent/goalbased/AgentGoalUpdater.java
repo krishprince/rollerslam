@@ -24,15 +24,8 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 			}
 		} else if (model.currentGoal == AgentGoal.WAIT_JOIN_GAME) {
             if (model.gameStarted) {
-    			Player me = model.getMe();
-
-                if(me.world.playerWithBall != null && me.world.playerWithBall.team == me.team){
-                	System.out.println("BALL WITH TEAM - DO NOTHING - " + me.id);
-                }else{
-                	System.out.println("GO TO BALL - " + me.id);
-                	model.currentGoal = AgentGoal.GO_TO_BALL;
-                }
-                	
+            	System.out.println("GO TO BALL ");
+            	model.currentGoal = AgentGoal.GO_TO_BALL;
             }			
 		} else if (model.currentGoal == AgentGoal.GO_TO_BALL) { 
 			Player me = model.getMe();
@@ -95,16 +88,33 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
     				if(MathGeometry.calculeDistancePoints(me.s.x, me.world.goalB.s.x, me.s.y, me.world.goalB.s.y) < 30000) {
     					System.out.println("THROW - " + me.id);
     	        		model.currentGoal = AgentGoal.THROW_BALL;
+    				}else if(MathGeometry.calculeDistancePoints(me.s.x, me.world.goalB.s.x, me.s.y, me.world.goalB.s.y) < 50000) {
+    					System.out.println("KICK - " + me.id);
+    	        		model.currentGoal = AgentGoal.KICK_BALL;
     				}
     			}else{
     				if(MathGeometry.calculeDistancePoints(me.s.x, me.world.goalA.s.x, me.s.y, me.world.goalA.s.y) < 30000) {
     					System.out.println("THROW - " + me.id);
     	        		model.currentGoal = AgentGoal.THROW_BALL;    					
+    				}if(MathGeometry.calculeDistancePoints(me.s.x, me.world.goalA.s.x, me.s.y, me.world.goalA.s.y) < 50000) {
+    					System.out.println("KICK - " + me.id);
+    	        		model.currentGoal = AgentGoal.KICK_BALL;
     				}
     			}        	
         	}
          } else if(model.currentGoal == AgentGoal.THROW_BALL){
  			Player me = model.getMe();
+        	 if(me.inGround){
+         		System.out.println("STAND UP - " + me.id);
+         		model.currentGoal = AgentGoal.STAND_UP;
+         	} else {
+         		if(me.world.ball.withPlayer && me.world.playerWithBall.team != me.team){
+         			System.out.println("GO TO BALL - " + me.id);
+                	model.currentGoal = AgentGoal.GO_TO_BALL;
+         		}
+         	}
+         } else if(model.currentGoal == AgentGoal.KICK_BALL){
+        	 Player me = model.getMe();
         	 if(me.inGround){
          		System.out.println("STAND UP - " + me.id);
          		model.currentGoal = AgentGoal.STAND_UP;

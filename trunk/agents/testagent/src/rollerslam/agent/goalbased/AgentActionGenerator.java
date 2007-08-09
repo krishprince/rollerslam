@@ -5,6 +5,10 @@ import java.rmi.RemoteException;
 import rollerslam.environment.model.Player;
 import rollerslam.environment.model.PlayerTeam;
 import rollerslam.environment.model.World;
+import rollerslam.environment.model.actions.leg.DashAction;
+import rollerslam.environment.model.actions.leg.StandUpAction;
+import rollerslam.environment.model.actions.leg.KickAction;
+import rollerslam.environment.model.actions.voice.SendMsgAction;
 import rollerslam.environment.model.actions.JoinGameAction;
 import rollerslam.environment.model.actions.arm.CatchAction;
 import rollerslam.environment.model.actions.arm.TackleAction;
@@ -63,7 +67,17 @@ public class AgentActionGenerator implements
 			} else {
 				return new ThrowAction(remoteThis, world.goalA.s.subtract(me.s));
 			}
-		}
+        } else if(model.currentGoal == AgentGoal.KICK_BALL){
+        	Player me = model.getMe();
+			World world = (World)model.environmentStateModel;
+				        	
+        	if(me.team == PlayerTeam.TEAM_A){
+				return new KickAction(remoteThis, world.goalB.s.subtract(me.s));
+			}else{
+				return new KickAction(remoteThis, world.goalA.s.subtract(me.s));
+			}
+        }
+
 		return null;
 	}
 
