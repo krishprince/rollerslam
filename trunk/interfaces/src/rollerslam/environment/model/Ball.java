@@ -11,7 +11,7 @@ public class Ball extends AnimatedObject implements Visitable {
 	public Ball() {}
 	
 	public Ball(World w, int psx, int psy) {
-		super(w, 0, 0, 500, 500);
+		super(w, 0, 0, SimulationSettings.BALL_WIDTH, SimulationSettings.BALL_HEIGHT);
 	}
 	
 	@Override
