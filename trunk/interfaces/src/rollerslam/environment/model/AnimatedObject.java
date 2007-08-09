@@ -9,6 +9,9 @@ public class AnimatedObject extends WorldObject {
 	public Vector v = new Vector(0, 0);
 	public Vector a = new Vector(0, 0);
 	
+	public int maxV = 0;
+	public int maxA = 0;
+	
 	public AnimatedObject() {
 		
 	}
