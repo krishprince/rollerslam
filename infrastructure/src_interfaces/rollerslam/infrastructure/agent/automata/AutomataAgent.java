@@ -45,15 +45,18 @@ public abstract class AutomataAgent implements Agent, SimulationStateProvider {
 	
 	private class SimulationThread extends Thread {
 		public void run() {
+			boolean onError = false;
+			
 			AutomataAgent.this.initialize();
 			
-			while (true) {
+			while (!onError) {
 				while(state != SimulationState.RUNNING) {
 					synchronized (AutomataAgent.this) {
 						try {
 							AutomataAgent.this.wait();
 						} catch (InterruptedException e) {
 							e.printStackTrace();
+							onError = true;
 						}
 					}
 				}
@@ -62,13 +65,20 @@ public abstract class AutomataAgent implements Agent, SimulationStateProvider {
 					AutomataAgent.this.processCycle();
 				} catch (Exception e) {
 					e.printStackTrace();
+					onError = true;
 				}
 
 				try {
 					Thread.sleep(cycleDuration);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
+					onError = true;
 				}
+			}
+			
+			if (onError) {
+				System.err.println("ERROR DETECTED! SIMULATION ABORTED");
+				System.exit(-1);
 			}
 		}
 	};
@@ -83,15 +93,11 @@ public abstract class AutomataAgent implements Agent, SimulationStateProvider {
 		generateActions();
 	}
 
-	protected void generateActions() {
+	protected void generateActions() throws RemoteException {
 		Message action = strategyComponent.computeAction(worldModel);
 		
 		if (action != null) {
-			try {
-				effector.doAction(action);
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
+			effector.doAction(action);
 		}
 	}
 
@@ -99,18 +105,13 @@ public abstract class AutomataAgent implements Agent, SimulationStateProvider {
 		ramificationComponent.processRamifications(worldModel);		
 	}
 
-	protected void interpretPerceptions() {
+	protected void interpretPerceptions() throws RemoteException {
 		Set<Message> actions;
-		try {
-			actions = sensor.getActions();
+		actions = sensor.getActions();
 
-			for (Message message : actions) {
-				interpretationComponent.processAction(worldModel, message);			
-			}			
-		} catch (RemoteException e) {
-			e.printStackTrace();
+		for (Message message : actions) {
+			interpretationComponent.processAction(worldModel, message);
 		}
-		
 	}
 
 	public SimulationStateProvider getSimulationStateProvider()
