@@ -50,8 +50,29 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
         } else if(model.currentGoal == AgentGoal.CATCH_BALL){
 			Player me = model.getMe();
             if(me.hasBall){
-                System.out.println("GO TO GOAL - " + me.id);
-                model.currentGoal = AgentGoal.GO_TO_GOAL;
+            	boolean nearOpponent = false;
+            	
+            	if(me.team == PlayerTeam.TEAM_A){
+            		for(Player p : me.world.playersB){
+            			if(MathGeometry.calculeDistancePoints(me.s.x, p.s.x, me.s.y, p.s.y) < 5000 && Math.random() > 0.5){
+            				nearOpponent = true;
+            			}
+            		}
+            	}else{
+            		for(Player p : me.world.playersA){
+            			if(MathGeometry.calculeDistancePoints(me.s.x, p.s.x, me.s.y, p.s.y) < 5000 && Math.random() > 0.5){
+            				nearOpponent = true;
+            			}
+            		}
+            	}
+            	
+            	if(nearOpponent){
+	                System.out.println("COUNTERTACKLE - " + me.id);
+	                model.currentGoal = AgentGoal.COUNTER_TACKLE;
+            	}else{
+	                System.out.println("GO TO GOAL - " + me.id);
+	                model.currentGoal = AgentGoal.GO_TO_GOAL;
+            	}
             }else{
             	if(me.world.playerWithBall != null && me.world.playerWithBall.team == me.team){
                 	System.out.println("BALL WITH TEAM - DO NOTHING - " + me.id);
@@ -123,6 +144,18 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
          			System.out.println("GO TO BALL - " + me.id);
                 	model.currentGoal = AgentGoal.GO_TO_BALL;
          		}
+         	}
+         } else if(model.currentGoal == AgentGoal.COUNTER_TACKLE){
+        	 Player me = model.getMe();
+        	 if(me.inGround){
+         		System.out.println("STAND UP - " + me.id);
+         		model.currentGoal = AgentGoal.STAND_UP;
+         	} else if(me.hasBall){
+         		System.out.println("GO TO GOAL - " + me.id);
+         		model.currentGoal = AgentGoal.GO_TO_GOAL;
+         	} else {
+         		System.out.println("GO TO BALL - " + me.id);
+         		model.currentGoal = AgentGoal.GO_TO_BALL;
          	}
          }
 	}
