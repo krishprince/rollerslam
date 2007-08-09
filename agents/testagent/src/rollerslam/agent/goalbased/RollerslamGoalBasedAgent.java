@@ -72,9 +72,14 @@ public class RollerslamGoalBasedAgent extends GoalBasedAgent {
 		ClientFacadeImpl.getInstance().getClientInitialization().init("localhost");
 		
 		PlayerTeam team = PlayerTeam.TEAM_A;
-
-		String teamStr = JOptionPane.showInputDialog("Which team? [A | B]").toUpperCase();
-				
+		
+		String teamStr = "";
+		
+		if(args.length == 0)
+			teamStr = JOptionPane.showInputDialog("Which team? [A | B]").toUpperCase();
+		else 
+			teamStr = args[0].toUpperCase();
+		
 		if (teamStr.equals("A"))
 			team = PlayerTeam.TEAM_A;
 		else
