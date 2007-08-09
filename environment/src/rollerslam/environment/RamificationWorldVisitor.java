@@ -19,11 +19,7 @@ import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
 import rollerslam.infrastructure.agent.automata.RamificationComponent;
 
 /**
-<<<<<<< .mine
- * @author Marcos Aurélio
-=======
  * @author Marcos Aurelio
->>>>>>> .r208
  *
  */
 public class RamificationWorldVisitor implements Visitor, RamificationComponent {
