@@ -24,6 +24,7 @@ import rollerslam.environment.model.actions.VoiceAction;
 import rollerslam.environment.model.perceptions.GameStartedPerception;
 import rollerslam.environment.model.utils.MathGeometry;
 import rollerslam.environment.model.utils.Vector;
+import rollerslam.environment.model.utils.Constants;
 import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.agent.automata.ActionInterpretationComponent;
@@ -32,10 +33,6 @@ import rollerslam.infrastructure.server.ServerFacade;
 import rollerslam.infrastructure.server.ServerFacadeImpl;
 
 public class JavaActionInterpretationComponent implements ActionInterpretationComponent {
-	private static final int MAX_ACCELERATION = 500;
-
-	private static final int MAX_DISTANCE = 5000;
-	
 	public ServerFacade facade = ServerFacadeImpl.getInstance();
 
 	public Hashtable<Agent, Player> playersMap                  = new Hashtable<Agent, Player>();
@@ -46,16 +43,39 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 	private void dash(World w, Player p, Vector vet) {
 		//TODO test if p is in w
 		if(!p.inGround){					
-			p.a = vet.limitModuloTo(MAX_ACCELERATION);
+			p.a = vet.limitModuloTo(p.maxA);
 		}
 	}
 	
 	private void hit(World w, Player p, Vector vet){
 		//Body
+		if(!w.ball.withPlayer){
+			if(MathGeometry.calculeDistancePoints(w.ball.s.x, p.s.x, w.ball.s.y, p.s.y) < Constants.MAX_DISTANCE){
+				w.ball.a = vet;
+			}
+		}
 	}
 
 	private void kick(World w, Player p, Vector vet){
 		//Body
+		if(p.hasBall){
+			double error = Math.random();
+			
+			if(error > 0.3){
+				error = 0.3;
+			}
+			
+			p.hasBall = false;
+			w.playerWithBall = null;
+			w.ball.withPlayer = false;
+			
+			w.ball.a = vet.multVector(1 + p.strength);
+			
+			if(error % 2 == 0)
+				w.ball.a.x = (int)Math.floor(w.ball.a.x * error);
+			else
+				w.ball.a.y = (int)Math.floor(w.ball.a.y * error);
+		}
 	}
 	
 	private void antitackle(World w, Player p){
@@ -65,7 +85,7 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 	private void catchA(World w, Player p){
 		//Body
 		if(!w.ball.withPlayer){
-			if(MathGeometry.calculeDistancePoints(w.ball.s.x, p.s.x, w.ball.s.y, p.s.y) < MAX_DISTANCE){
+			if(MathGeometry.calculeDistancePoints(w.ball.s.x, p.s.x, w.ball.s.y, p.s.y) < Constants.MAX_DISTANCE){
 				p.hasBall = true;
 				p.world.ball.withPlayer = true;
 				p.world.playerWithBall = p;
@@ -85,7 +105,7 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 	private void tackle(World w, Player p){
 		//Body
 		if(w.ball.withPlayer){
-			if(MathGeometry.calculeDistancePoints(w.playerWithBall.s.x, p.s.x, w.playerWithBall.s.y, p.s.y) < MAX_DISTANCE){
+			if(MathGeometry.calculeDistancePoints(w.playerWithBall.s.x, p.s.x, w.playerWithBall.s.y, p.s.y) < Constants.MAX_DISTANCE){
 				w.playerWithBall.inGround = true;
 				w.playerWithBall.hasBall = false;
 				w.ball.withPlayer = false;
@@ -100,7 +120,9 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 			p.hasBall = false;
 			w.playerWithBall = null;
 			w.ball.withPlayer = false;
-			w.ball.v = p.v.sumVector(a);
+
+			w.ball.a = a.multVector((1 + p.strength) * 0.5);
+			//w.ball.v = p.v.sumVector(a.multVector((1 + p.strength) * 0.5));
 		}
 	}
 	
