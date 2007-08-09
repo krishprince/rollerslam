@@ -9,6 +9,8 @@ public enum AgentGoal {
     TACKLE_PLAYER,
     STAND_UP,
     THROW_BALL,
-    KICK_BALL
+    KICK_BALL,
+    COUNTER_TACKLE,
+    MARK
 	;
 }

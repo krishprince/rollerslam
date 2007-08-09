@@ -13,8 +13,7 @@ import rollerslam.environment.model.actions.JoinGameAction;
 import rollerslam.environment.model.actions.arm.CatchAction;
 import rollerslam.environment.model.actions.arm.TackleAction;
 import rollerslam.environment.model.actions.arm.ThrowAction;
-import rollerslam.environment.model.actions.leg.DashAction;
-import rollerslam.environment.model.actions.leg.StandUpAction;
+import rollerslam.environment.model.actions.arm.CountertackleAction;
 import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
@@ -76,6 +75,8 @@ public class AgentActionGenerator implements
 			}else{
 				return new KickAction(remoteThis, world.goalA.s.subtract(me.s));
 			}
+        } else if(model.currentGoal == AgentGoal.COUNTER_TACKLE){
+        	return new CountertackleAction(remoteThis);			
         }
 
 		return null;
