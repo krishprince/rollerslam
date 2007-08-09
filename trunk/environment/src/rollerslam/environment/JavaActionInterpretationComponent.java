@@ -7,7 +7,7 @@ import rollerslam.environment.model.Fact;
 import rollerslam.environment.model.Player;
 import rollerslam.environment.model.PlayerTeam;
 import rollerslam.environment.model.World;
-import rollerslam.environment.model.actions.arm.Antitackle;
+import rollerslam.environment.model.actions.arm.CountertackleAction;
 import rollerslam.environment.model.actions.ArmAction;
 import rollerslam.environment.model.actions.arm.CatchAction;
 import rollerslam.environment.model.actions.leg.DashAction;
@@ -24,7 +24,7 @@ import rollerslam.environment.model.actions.VoiceAction;
 import rollerslam.environment.model.perceptions.GameStartedPerception;
 import rollerslam.environment.model.utils.MathGeometry;
 import rollerslam.environment.model.utils.Vector;
-import rollerslam.environment.model.utils.Constants;
+import rollerslam.environment.model.SimulationSettings;
 import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.agent.automata.ActionInterpretationComponent;
@@ -49,16 +49,27 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 	
 	private void hit(World w, Player p, Vector vet){
 		//Body
-		if(!w.ball.withPlayer){
-			if(MathGeometry.calculeDistancePoints(w.ball.s.x, p.s.x, w.ball.s.y, p.s.y) < Constants.MAX_DISTANCE){
+		if(!w.ball.withPlayer && !p.inGround){
+			if(MathGeometry.calculeDistancePoints(w.ball.s.x, p.s.x, w.ball.s.y, p.s.y) < SimulationSettings.MAX_DISTANCE){
+				double error = Math.random();
+				
+				if(error > 0.3){
+					error = 0.3;
+				}
+				
 				w.ball.a = vet;
+
+				if(error % 2 == 0)
+					w.ball.a.x = (int)Math.floor(w.ball.a.x * error);
+				else
+					w.ball.a.y = (int)Math.floor(w.ball.a.y * error);
 			}
 		}
 	}
 
 	private void kick(World w, Player p, Vector vet){
 		//Body
-		if(p.hasBall){
+		if(p.hasBall && !p.inGround){
 			double error = Math.random();
 			
 			if(error > 0.3){
@@ -69,7 +80,7 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 			w.playerWithBall = null;
 			w.ball.withPlayer = false;
 			
-			w.ball.a = vet.multVector(1 + p.strength);
+			w.ball.a = vet.multVector((1 + p.strength) * 1.25);
 			
 			if(error % 2 == 0)
 				w.ball.a.x = (int)Math.floor(w.ball.a.x * error);
@@ -78,14 +89,18 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 		}
 	}
 	
-	private void antitackle(World w, Player p){
+	private void countertackle(World w, Player p){
 		//Body
+		if(!p.inGround){
+			p.counterTackle = true;
+		}
 	}
 	
 	private void catchA(World w, Player p){
 		//Body
-		if(!w.ball.withPlayer){
-			if(MathGeometry.calculeDistancePoints(w.ball.s.x, p.s.x, w.ball.s.y, p.s.y) < Constants.MAX_DISTANCE){
+		if(!w.ball.withPlayer && !p.inGround){
+			if(MathGeometry.calculeDistancePoints(w.ball.s.x, p.s.x, w.ball.s.y, p.s.y) < SimulationSettings.MAX_DISTANCE){
+
 				p.hasBall = true;
 				p.world.ball.withPlayer = true;
 				p.world.playerWithBall = p;
@@ -95,7 +110,7 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 	
 	private void release(World w, Player p){
 		//Body
-		if(p.hasBall){
+		if(p.hasBall && !p.inGround){
 			p.hasBall = false;
 			w.playerWithBall = null;
 			w.ball.withPlayer = false;
@@ -104,25 +119,39 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 	
 	private void tackle(World w, Player p){
 		//Body
-		if(w.ball.withPlayer){
-			if(MathGeometry.calculeDistancePoints(w.playerWithBall.s.x, p.s.x, w.playerWithBall.s.y, p.s.y) < Constants.MAX_DISTANCE){
-				w.playerWithBall.inGround = true;
-				w.playerWithBall.hasBall = false;
-				w.ball.withPlayer = false;
-				w.playerWithBall = null;
+		if(w.ball.withPlayer && !p.inGround){
+			if(MathGeometry.calculeDistancePoints(w.playerWithBall.s.x, p.s.x, w.playerWithBall.s.y, p.s.y) < SimulationSettings.MAX_DISTANCE){
+				if(!w.playerWithBall.counterTackle){
+					w.playerWithBall.inGround = true;
+					w.playerWithBall.hasBall = false;
+					w.ball.withPlayer = false;
+					w.playerWithBall = null;
+				}else{
+				}
 			}
 		}
 	}
 	
 	private void throwA(World w, Player p, Vector a){
 		//Body
-		if(p.hasBall){
+		if(p.hasBall && !p.inGround){
 			p.hasBall = false;
 			w.playerWithBall = null;
 			w.ball.withPlayer = false;
 
-			w.ball.a = a.multVector((1 + p.strength) * 0.5);
+			double error = Math.random();
+			
+			if(error > 0.15){
+				error = 0.15;
+			}
+			
+			w.ball.a = a.multVector((1 + p.strength) * 0.75);
 			//w.ball.v = p.v.sumVector(a.multVector((1 + p.strength) * 0.5));
+			
+			if(error % 2 == 0)
+				w.ball.a.x = (int)Math.floor(w.ball.a.x * error);
+			else
+				w.ball.a.y = (int)Math.floor(w.ball.a.y * error);			
 		}
 	}
 	
@@ -161,10 +190,10 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 			}
 		//Actions of Arm
 		} else if (m instanceof ArmAction) {
-			if(m instanceof Antitackle){
-				//Antitackle Action
-				Antitackle mt = (Antitackle) m;
-				this.antitackle((World)w, playersMap.get(mt.sender));
+			if(m instanceof CountertackleAction){
+				//Countertackle Action
+				CountertackleAction mt = (CountertackleAction) m;
+				this.countertackle((World)w, playersMap.get(mt.sender));
 			}else if(m instanceof CatchAction){
 				//Catch the ball
 				CatchAction mt = (CatchAction) m;

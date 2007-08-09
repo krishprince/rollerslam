@@ -76,6 +76,8 @@ public class RamificationWorldVisitor implements Visitor, RamificationComponent 
 			obj.a = new Vector(0, 0);
 			obj.v = new Vector(0, 0);
 		}
+		
+		obj.counterTackle = false;
 	}
 
 	public void processRamifications(EnvironmentStateModel world) {
