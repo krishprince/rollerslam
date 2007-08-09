@@ -45,6 +45,7 @@ public class RollerslamAllInOne extends JFrame implements ActionListener {
 
         pinf.add(jtfClass);
         pinf.add(jbInstantiate);
+        
         getContentPane().add(pinf);
     }
 
@@ -77,4 +78,5 @@ public class RollerslamAllInOne extends JFrame implements ActionListener {
         Method main = c.getMethod("mainAllInOne", mainArgType);
         main.invoke(null, new Object[] {null});
     }
+
 }
