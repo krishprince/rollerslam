@@ -1,16 +1,14 @@
 package rollerslam.environment;
 
 
-import java.util.ArrayList;
-
 import rollerslam.environment.model.AnimatedObject;
 import rollerslam.environment.model.Ball;
 import rollerslam.environment.model.Basket;
-import rollerslam.environment.model.Fact;
 import rollerslam.environment.model.Goal;
 import rollerslam.environment.model.OutTrack;
 import rollerslam.environment.model.Player;
 import rollerslam.environment.model.Ramp;
+import rollerslam.environment.model.SimulationSettings;
 import rollerslam.environment.model.Trampoline;
 import rollerslam.environment.model.World;
 import rollerslam.environment.model.WorldObject;
@@ -21,7 +19,7 @@ import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
 import rollerslam.infrastructure.agent.automata.RamificationComponent;
 
 /**
- * @author Marcos Aurélio
+ * @author Marcos Aurelio
  *
  */
 public class RamificationWorldVisitor implements Visitor, RamificationComponent {
@@ -29,14 +27,10 @@ public class RamificationWorldVisitor implements Visitor, RamificationComponent 
 	private static final int MAX_SPEED = 2000;
 	
 	public void visit(World obj) {
-		ArrayList<Fact> factsToRemove = new ArrayList<Fact>();
-		for (Fact fact : obj.saidMessages) {
-			if (fact.cycle < obj.currentCycle) {
-				factsToRemove.add(fact);
-			}
-		}
+		obj.actions.clear();
+		obj.actions.addAll(obj.newActions);
+		obj.newActions.clear(); // TODO ajeitar essa gambiarra!
 		
-		obj.saidMessages.removeAll(factsToRemove);
 		obj.currentCycle++;		
 	}
 
@@ -48,13 +42,15 @@ public class RamificationWorldVisitor implements Visitor, RamificationComponent 
 		Vector new_s = obj.s.sumVector(obj.v);
 		Vector new_v = obj.v.sumVector(obj.a).limitModuloTo(MAX_SPEED);
 		
-		if(MathGeometry.calculePointIntoEllipse(World.WIDTH, World.FOCUS1X, World.FOCUS1Y,
-				World.FOCUS2X, World.FOCUS2Y, new_s.x, new_s.y)){
+		if (MathGeometry.calculePointIntoEllipse(obj.world.outTrack.width,
+				SimulationSettings.FOCUS1X, SimulationSettings.FOCUS1Y,
+				SimulationSettings.FOCUS2X, SimulationSettings.FOCUS2Y,
+				new_s.x, new_s.y)) {
 			obj.s = new_s;
 			obj.v = new_v;
-		}else{
-			obj.a = new Vector(0,0);
-			obj.v = new Vector(0,0);
+		} else {
+			obj.a = new Vector(0, 0);
+			obj.v = new Vector(0, 0);
 		}		
 	}
 

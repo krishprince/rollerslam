@@ -100,14 +100,13 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 			p.hasBall = false;
 			w.playerWithBall = null;
 			w.ball.withPlayer = false;
-			w.ball.a = a;
+			w.ball.v = p.v.sumVector(a);
 		}
 	}
 	
 	private void sendMsg(World w, Agent agent, Fact f){
 		//Body
 		f.cycle = w.currentCycle;
-		w.saidMessages.add(f);
 	}	
 	
 	private void standUp(World w, Player p){
@@ -173,6 +172,9 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 			JoinGameAction mt = (JoinGameAction) m;
 			this.joinWorld((World)w, mt.sender, mt.team);
 		}
+		
+		// adds all actions to the world
+		((World)w).newActions.add(m);
 	}
 
 	public void joinWorld(World worldModel, Agent agent, PlayerTeam playerTeam){
@@ -193,8 +195,8 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
                         
 			try {
 				//TODO As mensagens não estavam sincronizadas. Os Agentes tavam recebendo o mesmo id, ou trocado.  
-                agent.setID(body.id);
-                facade.getEnvironmentEffector().doAction(new GameStartedPerception(null, body.id));
+//                agent.setID(body.id);
+                facade.getEnvironmentEffector().doAction(new GameStartedPerception(null, agent, body.id));
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
