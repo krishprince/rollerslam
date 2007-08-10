@@ -9,6 +9,8 @@
 
 package orcas.logcomponents.basiclog;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Weslei
@@ -33,16 +35,16 @@ public abstract class AbstractLog implements Log {
         this.basicLevel = level;
     }
 
-    public void log(Object message) {
+    public void log(Serializable message) {
         log(message, LogLevel.DEBUG);
     }
 
-    public void log(Object message, LogLevel level) {
+    public void log(Serializable message, LogLevel level) {
         if (level.getLevel() >= basicLevel.level) {
             doLog(message);
         }
     }
 
-    protected abstract void doLog(Object message);
+    protected abstract void doLog(Serializable message);
 
 }

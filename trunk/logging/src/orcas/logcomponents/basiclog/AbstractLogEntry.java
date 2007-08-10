@@ -1,7 +1,7 @@
 /*
- * Log.java
+ * AbstractLogEntry.java
  * 
- * Created on 05/08/2007, 20:50:31
+ * Created on 10/08/2007, 17:41:11
  * 
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -15,9 +15,6 @@ import java.io.Serializable;
  *
  * @author Weslei
  */
-public interface Log {
-    
-    public void log(Serializable message);
-    public void log(Serializable message, LogLevel level);
+public interface AbstractLogEntry extends Serializable {
 
 }
