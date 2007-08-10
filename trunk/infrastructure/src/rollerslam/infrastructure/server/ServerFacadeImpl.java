@@ -221,4 +221,8 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
     public SensorEffectorManager getSensorEffectorManager() throws RemoteException {
         return sem;
     }
+
+    public LogRecordingService getLogRecordingService() throws RemoteException {
+        return logRecSrv;
+    }
 }
