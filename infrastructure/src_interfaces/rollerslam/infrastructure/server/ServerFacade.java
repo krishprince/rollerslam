@@ -27,6 +27,7 @@ import java.rmi.RemoteException;
 import rollerslam.infrastructure.agent.Effector;
 import rollerslam.infrastructure.agent.Sensor;
 import rollerslam.infrastructure.agent.SensorEffectorManager;
+import rollerslam.infrastructure.logging.LogRecordingService;
 
 /**
  * Server facade.
@@ -66,4 +67,12 @@ public interface ServerFacade {
 
 	// this should be visible only IN the server component...
 	Remote exportObject(Remote obj) throws RemoteException, AlreadyBoundException;
+        
+        
+        /**
+	 * @return the logging service interface
+	 * @throws RemoteException
+	 */
+        LogRecordingService getLogRecordingService() throws RemoteException;
+        
 }
