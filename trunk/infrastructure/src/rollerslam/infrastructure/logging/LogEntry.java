@@ -2,7 +2,7 @@ package rollerslam.infrastructure.logging;
 
 import java.io.Serializable;
 
-public class LogEntry implements Serializable {
+public abstract class LogEntry implements Serializable {
 
     private Integer cycle = -1;
     private Integer agentId = -1;
