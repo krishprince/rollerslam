@@ -3,24 +3,23 @@ package rollerslam.test.general;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Method;
-import java.rmi.RemoteException;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 import rollerslam.display.gui.RollerslamDisplay;
 import rollerslam.environment.gui.ServerDisplay;
+import rollerslam.infrastructure.client.ClientFacade;
 import rollerslam.infrastructure.client.ClientFacadeImpl;
+import rollerslam.infrastructure.logging.GoalUpdateLogEntry;
 
 /**
  *
  * @author Weslei
  */
-@SuppressWarnings("serial")
+@SuppressWarnings(value = "serial")
 public class RollerslamAllInOne extends JFrame implements ActionListener {
 
     private RollerslamDisplay rd = new RollerslamDisplay();
@@ -45,18 +44,19 @@ public class RollerslamAllInOne extends JFrame implements ActionListener {
 
         pinf.add(jtfClass);
         pinf.add(jbInstantiate);
-        
+
         getContentPane().add(pinf);
     }
 
-    public static void main(String... args) throws RemoteException {    	
+    public static void main(String... args) throws Exception {
         RollerslamAllInOne raio = new RollerslamAllInOne();
         raio.pack();
         raio.rd.main();
         raio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         raio.setVisible(true);
-        
-		ClientFacadeImpl.getInstance().getClientInitialization().init("localhost");
+
+        ClientFacade cli = ClientFacadeImpl.getInstance();
+        cli.getClientInitialization().init("localhost");
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -69,14 +69,13 @@ public class RollerslamAllInOne extends JFrame implements ActionListener {
         }
     }
 
-    @SuppressWarnings("unchecked")
-	private void jbInstantiateActionPerformed() throws Exception {
+    @SuppressWarnings(value = "unchecked")
+    private void jbInstantiateActionPerformed() throws Exception {
         Class c = Class.forName(jtfClass.getText());
         Class[] mainArgType = {(new String[0]).getClass()};
-        
-        @SuppressWarnings("unchecked")
-        Method main = c.getMethod("mainAllInOne", mainArgType);
-        main.invoke(null, new Object[] {null});
-    }
 
+        @SuppressWarnings(value = "unchecked")
+        Method main = c.getMethod("mainAllInOne", mainArgType);
+        main.invoke(null, new Object[]{null});
+    }
 }
