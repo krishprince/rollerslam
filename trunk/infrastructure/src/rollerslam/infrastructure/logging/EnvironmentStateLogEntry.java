@@ -35,4 +35,8 @@ public class EnvironmentStateLogEntry extends LogEntry {
     public World getWorld() {
         return world;
     }
+    
+    public String toString() {
+        return super.toString() + " world = " + world;
+    }
 }

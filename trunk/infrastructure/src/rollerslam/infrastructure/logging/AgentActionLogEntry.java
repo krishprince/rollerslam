@@ -37,5 +37,9 @@ public class AgentActionLogEntry extends LogEntry {
     public Message getMessage() {
         return message;
     }
+    
+    public String toString() {
+        return super.toString() + " message = " + message;
+    }
 
 }

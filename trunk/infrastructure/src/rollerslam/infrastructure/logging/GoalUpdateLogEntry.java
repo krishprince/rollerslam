@@ -29,4 +29,8 @@ public class GoalUpdateLogEntry extends LogEntry {
     public String getReason() {
         return reason;
     }
+    
+    public String toString() {
+        return super.toString() + " reason = " + reason;
+    }
 }
