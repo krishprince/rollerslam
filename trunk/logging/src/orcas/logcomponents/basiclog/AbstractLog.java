@@ -10,6 +10,7 @@
 package orcas.logcomponents.basiclog;
 
 import java.io.Serializable;
+import java.util.Properties;
 
 /**
  *
@@ -18,10 +19,12 @@ import java.io.Serializable;
 public abstract class AbstractLog implements Log {
     
     private LogLevel basicLevel;
-
+    
     public AbstractLog() {
         this(LogLevel.DEBUG);
     }
+    
+    abstract protected void init(Properties logProperties);
     
     public void setLogLevel(LogLevel newLevel) {
         basicLevel = newLevel;
@@ -44,7 +47,7 @@ public abstract class AbstractLog implements Log {
             doLog(message);
         }
     }
-
+    
     protected abstract void doLog(Serializable message);
 
 }
