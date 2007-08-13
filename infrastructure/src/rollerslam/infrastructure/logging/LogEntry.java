@@ -1,17 +1,20 @@
 package rollerslam.infrastructure.logging;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public abstract class LogEntry implements Serializable {
 
     private Integer cycle;
     private Integer agentId;
+    private Date timestamp;
     private Object additionalData;
     
     protected LogEntry(Integer cycle, Integer agentId, Object additionalData) {
         this.cycle = cycle;
         this.agentId = agentId;
         this.additionalData = additionalData;
+        timestamp = new Date();
     }
     
     protected LogEntry(Integer cycle, Integer agentId) {
@@ -19,19 +22,19 @@ public abstract class LogEntry implements Serializable {
     }
     
     
-    public void setCycle(int nCycle) {
+    public void setCycle(Integer nCycle) {
         cycle = nCycle;
     }
     
-    public int getCycle() {
+    public Integer getCycle() {
         return cycle;
     }
     
-    public void setAgentId(int nAgentId) {
+    public void setAgentId(Integer nAgentId) {
         agentId = nAgentId;
     }
     
-    public int getAgentId() {
+    public Integer getAgentId() {
         return agentId;
     }
     
@@ -41,6 +44,15 @@ public abstract class LogEntry implements Serializable {
     
     public Object getAdditionalData() {
         return additionalData;
+    }
+    
+    public Date getTimestamp() {
+        return this.timestamp;
+    }
+    
+    public String toString() {
+        return "LogEntry: cycle = " + cycle + " aid = " + agentId + " ts = " + timestamp
+                + "addData = " + additionalData;
     }
 
 }
