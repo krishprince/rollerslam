@@ -10,6 +10,7 @@
 package orcas.logcomponents.basiclog;
 
 import java.io.Serializable;
+import java.util.Properties;
 
 /**
  *
@@ -23,5 +24,7 @@ class SystemConsoleLog extends AbstractLog {
     public void doLog(Serializable message) {
         System.out.println(message);
     }
+
+    protected void init(Properties logProperties) {}
 
 }

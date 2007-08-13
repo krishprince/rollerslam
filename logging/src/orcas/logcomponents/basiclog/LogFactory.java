@@ -1,18 +1,9 @@
 /*
  * LogFactory.java
  * 
- * Created on 05/08/2007, 20:51:06
- * 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
  */
 
 package orcas.logcomponents.basiclog;
-
-import java.io.IOException;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -21,20 +12,27 @@ import java.util.logging.Logger;
 public class LogFactory {
     
     private static LogFactory instance;
-    private Log log;
+    private AbstractLog log;
 
     public LogFactory() {
         try {
             java.util.Properties p = new java.util.Properties();
             p.load(LogFactory.class.getResourceAsStream("basiclogproperties.properties"));
-            log = (Log) Class.forName(p.getProperty("concrete.log.class")).newInstance();
+            
+            String logClass = p.getProperty("concrete.log.class");
+            if (logClass == null || "".equals(logClass.trim())) {
+                logClass = "orcas.logcomponents.basiclog.SystemConsoleLog";
+            }
+            log = (AbstractLog) Class.forName(logClass).newInstance();
+            
+            log.init(p);
+            
             int logLevel = Integer.parseInt(p.getProperty("log.level"));
             
-            ((AbstractLog)log).setLogLevel(LogLevel.get(logLevel));
+            log.setLogLevel(LogLevel.get(logLevel));
         } catch (Exception ex) {
             throw new RuntimeException("Error to instantiate log system... \n\n" + ex);
         }
-        
     }
     
     public static LogFactory getInstance() {        
