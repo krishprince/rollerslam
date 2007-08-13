@@ -19,6 +19,17 @@ public class AgentActionLogEntry extends LogEntry {
 
     private Message message;
     
+    public AgentActionLogEntry(Integer cycle, Integer agentId, Message message) {
+        this(cycle, agentId, message, null);
+    }
+    
+    public AgentActionLogEntry(Integer cycle, Integer agentId, Message message, Object additionalInfo) {
+        super(cycle, agentId, additionalInfo);
+        this.message = message;
+    }
+    
+    
+    
     public void setMessage(Message nMessage) {
         message = nMessage;
     }

@@ -4,9 +4,20 @@ import java.io.Serializable;
 
 public abstract class LogEntry implements Serializable {
 
-    private Integer cycle = -1;
-    private Integer agentId = -1;
-    private Object additionalData = new Object();
+    private Integer cycle;
+    private Integer agentId;
+    private Object additionalData;
+    
+    protected LogEntry(Integer cycle, Integer agentId, Object additionalData) {
+        this.cycle = cycle;
+        this.agentId = agentId;
+        this.additionalData = additionalData;
+    }
+    
+    protected LogEntry(Integer cycle, Integer agentId) {
+        this(cycle, agentId, null);
+    }
+    
     
     public void setCycle(int nCycle) {
         cycle = nCycle;

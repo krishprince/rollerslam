@@ -1,10 +1,6 @@
 /*
  * GoalUpdateLogEntry.java
- * 
- * Created on 10/08/2007, 19:24:27
- * 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ *
  */
 
 package rollerslam.infrastructure.logging;
@@ -16,7 +12,16 @@ package rollerslam.infrastructure.logging;
 public class GoalUpdateLogEntry extends LogEntry {
 
     private String reason;
-    
+
+    public GoalUpdateLogEntry(Integer cycle, Integer agentId, String reason) {
+        this(cycle, agentId, reason, null);
+    }
+
+    public GoalUpdateLogEntry(Integer cycle, Integer agentId, String reason, Object additionalInfo) {
+        super(cycle, agentId, additionalInfo);
+        this.reason = reason;
+    }
+
     public void setReason(String nReason) {
         reason = nReason;
     }
@@ -24,5 +29,4 @@ public class GoalUpdateLogEntry extends LogEntry {
     public String getReason() {
         return reason;
     }
-    
 }
