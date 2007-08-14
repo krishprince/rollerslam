@@ -20,6 +20,7 @@ import java.util.List;
 import orcas.helpers.SerializationHelper;
 import rollerslam.environment.model.World;
 import rollerslam.infrastructure.agent.Message;
+import rollerslam.infrastructure.logging.LogEntry;
 
 /**
  *
@@ -34,9 +35,10 @@ public class LogPlayingImpl implements LogPlayingService {
     private String password = "";
 
 
-    private String readWorldInCycle = "SELECT winfo FROM t_log WHERE cycle = ? AND NOT winfo IS NULL";
-    private String readAdditionalDataInCycle = "SELECT ainfo FROM t_log WHERE cycle = ? AND NOT ainfo IS NULL";
-    private String readMessagesInCycle = "SELECT msg FROM t_log WHERE cycle = ? AND NOT msg IS NULL";
+    private String readWorldInCycleSQL = "SELECT winfo FROM t_log WHERE cycle = ? AND NOT winfo IS NULL";
+    private String readAdditionalDataInCycleSQL = "SELECT ainfo FROM t_log WHERE cycle = ? AND NOT ainfo IS NULL";
+    private String readMessagesInCycleSQL = "SELECT msg FROM t_log WHERE cycle = ? AND NOT msg IS NULL";
+    private String readLogForAgentSQL = "SELECT thelog FROM t_log WHERE aid = ?";
 
     public LogPlayingImpl() {
     }
@@ -92,7 +94,7 @@ public class LogPlayingImpl implements LogPlayingService {
     public World getWorld() {
         World w = null;
         try {
-            PreparedStatement ps = conn.prepareStatement(readWorldInCycle);
+            PreparedStatement ps = conn.prepareStatement(readWorldInCycleSQL);
             ps.setInt(1, this.currentCycle);
 
             ResultSet rs = ps.executeQuery();
@@ -100,6 +102,8 @@ public class LogPlayingImpl implements LogPlayingService {
                 throw new RuntimeException("No world info for the cycle " + currentCycle);
             }
             w = (World) SerializationHelper.string2Object(rs.getString(1));
+            
+            ps.close();
         } catch (Exception ex) {
             throw new RuntimeException("Error reading object. Details: " + ex);
         }
@@ -109,15 +113,16 @@ public class LogPlayingImpl implements LogPlayingService {
     public List<Message> getMessages() {
         List<Message> ms = new ArrayList<Message>();
         try {
-            PreparedStatement ps = conn.prepareStatement(readMessagesInCycle);
+            PreparedStatement ps = conn.prepareStatement(readMessagesInCycleSQL);
             ps.setInt(1, this.currentCycle);
 
             ResultSet rs = ps.executeQuery();
-            
+
             while (rs.next()) {
-                ms.add((Message)SerializationHelper.string2Object(rs.getString(1)));
+                ms.add((Message) SerializationHelper.string2Object(rs.getString(1)));
             }
             
+            ps.close();
         } catch (Exception ex) {
             throw new RuntimeException("Error reading object. Details: " + ex);
         }
@@ -127,7 +132,7 @@ public class LogPlayingImpl implements LogPlayingService {
     public Object getAdditionalData() {
         Object o = null;
         try {
-            PreparedStatement ps = conn.prepareStatement(readAdditionalDataInCycle);
+            PreparedStatement ps = conn.prepareStatement(readAdditionalDataInCycleSQL);
             ps.setInt(1, this.currentCycle);
 
             ResultSet rs = ps.executeQuery();
@@ -135,12 +140,32 @@ public class LogPlayingImpl implements LogPlayingService {
                 throw new RuntimeException("No additional data info for the cycle " + currentCycle);
             }
             o = SerializationHelper.string2Object(rs.getString(1));
+            
+            ps.close();
         } catch (Exception ex) {
             throw new RuntimeException("Error reading object. Details: " + ex);
         }
         return o;
     }
 
+    public List<LogEntry> getLogForAgent(Integer agId) {
+        List<LogEntry> les = new ArrayList<LogEntry>();
+        try {
+            PreparedStatement ps = conn.prepareStatement(readLogForAgentSQL);
+            ps.setInt(1, agId);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                les.add((LogEntry) SerializationHelper.string2Object(rs.getString(1)));
+            }
+            
+            ps.close();
+        } catch (Exception ex) {
+            throw new RuntimeException("Error reading object. Details: " + ex);
+        }
+        return les;
+    }
 
     public static void main(String[] args) {
         LogPlayingImpl lpi = new LogPlayingImpl();

@@ -33,9 +33,9 @@ public class HSQLDBLog extends AbstractLog {
     private String password = "";
 
     //create table string
-    private String ctStr = "CREATE TABLE t_log (lid INTEGER IDENTITY, cycle INTEGER, agent_id INTEGER, dt_hour TIMESTAMP, winfo VARCHAR, msg VARCHAR, reason VARCHAR, ainfo VARCHAR)";
+    private String ctStr = "CREATE TABLE t_log (lid INTEGER IDENTITY, cycle INTEGER, agent_id INTEGER, dt_hour TIMESTAMP, winfo VARCHAR, msg VARCHAR, reason VARCHAR, ainfo VARCHAR, thelog VARCHAR)";
 
-    private String insStr = "INSERT INTO t_log(cycle, agent_id, dt_hour, winfo, msg, reason, ainfo) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    private String insStr = "INSERT INTO t_log(cycle, agent_id, dt_hour, winfo, msg, reason, ainfo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
 
     private Connection conn = null;
@@ -113,6 +113,8 @@ public class HSQLDBLog extends AbstractLog {
             } else {
                 ps.setNull(7, Types.VARCHAR);
             }
+            
+            ps.setString(8, SerializationHelper.object2String(le));
 
             ps.executeUpdate();
             
