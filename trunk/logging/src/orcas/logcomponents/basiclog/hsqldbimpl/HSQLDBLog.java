@@ -16,6 +16,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
+import orcas.helpers.SerializationHelper;
 import orcas.logcomponents.basiclog.AbstractLog;
 import rollerslam.infrastructure.logging.AgentActionLogEntry;
 import rollerslam.infrastructure.logging.EnvironmentStateLogEntry;
@@ -90,13 +91,13 @@ public class HSQLDBLog extends AbstractLog {
             ps.setTimestamp(3, new java.sql.Timestamp(le.getTimestamp().getTime()));
 
             if (le instanceof EnvironmentStateLogEntry) {
-                ps.setString(4, ((EnvironmentStateLogEntry) le).getWorld().toString());
+                ps.setString(4, SerializationHelper.object2String(((EnvironmentStateLogEntry) le).getWorld()));
             } else {
                 ps.setNull(4, Types.VARCHAR);
             }
 
             if (le instanceof AgentActionLogEntry) {
-                ps.setString(5, ((AgentActionLogEntry) le).getMessage().toString());
+                ps.setString(5, SerializationHelper.object2String(((AgentActionLogEntry) le).getMessage()));
             } else {
                 ps.setNull(5, Types.VARCHAR);
             }
@@ -108,7 +109,7 @@ public class HSQLDBLog extends AbstractLog {
             }
             
             if (le.getAdditionalData() != null) {
-                ps.setString(7, le.getAdditionalData().toString());
+                ps.setString(7, SerializationHelper.object2String(le.getAdditionalData()));
             } else {
                 ps.setNull(7, Types.VARCHAR);
             }
