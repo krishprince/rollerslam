@@ -6,6 +6,7 @@
 package rollerslam.infrastructure.logplaying;
 
 import java.util.List;
+import rollerslam.environment.model.World;
 import rollerslam.infrastructure.logging.LogEntry;
 
 /**
@@ -23,5 +24,7 @@ public interface LogPlayingService {
     public void setCurrentCycle(Integer actualCycle);
     
     public List<LogEntry> getLogForAgent(Integer agId);
+    
+    public World getWorld();
 
 }

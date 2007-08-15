@@ -1,35 +1,38 @@
-package rollerslam.display.gui;
+package rollerslam.logplayer.gui;
 
+import rollerslam.display.gui.*;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
-import rollerslam.display.gui.mvc.Controller;
 import rollerslam.display.gui.mvc.Model;
 import rollerslam.display.gui.mvc.View;
+import rollerslam.logplayer.gui.mvc.Controller;
+
 
 /**
  *
  * @author Weslei
  */
 @SuppressWarnings(value = "serial")
-public class RollerslamDisplay extends JPanel implements View, ActionListener {
+public class LogPlayerDisplay extends JPanel implements View, ActionListener {
 
     private Controller controller = null;
 
-    private JButton connectButton = new JButton("Connect to Simulation");
+    private JButton loadSimButton = new JButton("Load Simulation");
     private JLabel  messages      = new JLabel("");
     
     private GameCanvas game = new GameCanvas(messages);
 
-    public RollerslamDisplay() {
+    public LogPlayerDisplay() {
         Model model = new ModelImpl();
         this.controller = new ControllerImpl(this, model);
 
@@ -59,9 +62,9 @@ public class RollerslamDisplay extends JPanel implements View, ActionListener {
         JPanel down = new JPanel();
         down.setLayout(new FlowLayout());
         down.add(messages);
-        down.add(connectButton);
+        down.add(loadSimButton);
 
-        connectButton.addActionListener(this);
+        loadSimButton.addActionListener(this);
 
         this.add(down);
     }
@@ -72,8 +75,8 @@ public class RollerslamDisplay extends JPanel implements View, ActionListener {
 
 
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == connectButton) {
-            connectButtonClick(e);
+        if (e.getSource() == loadSimButton) {
+            loadSimButtonClick(e);
             return;
         }
         throw new RuntimeException("Object " + e.getSource() + " doesn't have action defined!");
@@ -85,7 +88,7 @@ public class RollerslamDisplay extends JPanel implements View, ActionListener {
     }
 
     public static void main(String[] args) {
-        RollerslamDisplay panel = new RollerslamDisplay();
+        LogPlayerDisplay panel = new LogPlayerDisplay();
         
         JFrame jf = new JFrame();
         
@@ -102,10 +105,17 @@ public class RollerslamDisplay extends JPanel implements View, ActionListener {
         jf.setVisible(true);
     }
 
-    private void connectButtonClick(ActionEvent e) {
-        String addr = JOptionPane.showInputDialog("Simulation URL:", "localhost");
+    private void loadSimButtonClick(ActionEvent e) {
+        File f = null;
+        
+        JFileChooser jfc = new JFileChooser();
+        int opt = jfc.showOpenDialog(this);
+        if (opt != JFileChooser.APPROVE_OPTION) {
+            return;
+        }        
+        f = jfc.getSelectedFile();
         try {
-            controller.connect(addr);
+            controller.load(f);
         } catch (Exception e1) {
             showException(e1);
         }
