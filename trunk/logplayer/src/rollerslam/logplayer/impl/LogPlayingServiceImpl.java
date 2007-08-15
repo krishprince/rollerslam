@@ -7,8 +7,9 @@
  * and open the template in the editor.
  */
 
-package rollerslam.infrastructure.logplaying;
+package rollerslam.logplayer.impl;
 
+import rollerslam.infrastructure.logplaying.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -26,7 +27,7 @@ import rollerslam.infrastructure.logging.LogEntry;
  *
  * @author Weslei
  */
-public class LogPlayingImpl implements LogPlayingService {
+public class LogPlayingServiceImpl implements LogPlayingService {
 
     private Integer currentCycle;
     private Integer totalCycles;
@@ -40,7 +41,7 @@ public class LogPlayingImpl implements LogPlayingService {
     private String readMessagesInCycleSQL = "SELECT msg FROM t_log WHERE cycle = ? AND NOT msg IS NULL";
     private String readLogForAgentSQL = "SELECT thelog FROM t_log WHERE aid = ?";
 
-    public LogPlayingImpl() {
+    public LogPlayingServiceImpl() {
     }
 
     public void load(String simDescription) {
@@ -52,7 +53,7 @@ public class LogPlayingImpl implements LogPlayingService {
             Runtime.getRuntime().addShutdownHook(new Thread() {
 
                 public void run() {
-                    LogPlayingImpl.this.terminate();
+                    LogPlayingServiceImpl.this.terminate();
                 }
             });
 
@@ -168,7 +169,7 @@ public class LogPlayingImpl implements LogPlayingService {
     }
 
     public static void main(String[] args) {
-        LogPlayingImpl lpi = new LogPlayingImpl();
+        LogPlayingServiceImpl lpi = new LogPlayingServiceImpl();
         lpi.load("file:///c:/temp/testrollerslam_20070814_1613");
         lpi.setCurrentCycle(3);
         System.out.println(((String[]) lpi.getAdditionalData())[1]);
