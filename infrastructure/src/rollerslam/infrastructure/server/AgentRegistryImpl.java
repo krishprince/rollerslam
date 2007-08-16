@@ -34,28 +34,15 @@ import rollerslam.infrastructure.agent.Agent;
 public class AgentRegistryImpl implements AgentRegistryServer {
 
 	private Set<Agent> agents = new HashSet<Agent>();
-	private SimulationAdmin simulation = null;
-	
-	/**
-	 * Creates a new agent registry. The simulation admin is used
-	 * to check the simulation status. 
-	 * 
-	 * @see AgentRegistry
-	 * @param simulation
-	 */
-	public AgentRegistryImpl(SimulationAdmin simulation) {
-		this.simulation = simulation;
-	}
-	
+		
 	/**
 	 * @throws RemoteException 
 	 * @see rollerslam.infrastructure.server.AgentRegistry#register(rollerslam.agents.Agent)
 	 */
 	public void register(Agent a) throws RemoteException {
-		if (simulation.getState() == SimulationState.CREATED) {
 			agents.add(a);
-			ServerFacadeImpl.getInstance().getSensorEffectorManager().registerAgent(a);
-		}
+		ServerFacadeImpl.getInstance().getSensorEffectorManager()
+				.registerAgent(a);
 	}
 
 	/**
