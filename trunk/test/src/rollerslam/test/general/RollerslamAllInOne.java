@@ -3,17 +3,18 @@ package rollerslam.test.general;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Method;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
 import rollerslam.display.gui.RollerslamDisplay;
 import rollerslam.environment.gui.ServerDisplay;
 import rollerslam.infrastructure.client.ClientFacade;
 import rollerslam.infrastructure.client.ClientFacadeImpl;
-import rollerslam.infrastructure.logging.GoalUpdateLogEntry;
 
 /**
  *
@@ -55,6 +56,9 @@ public class RollerslamAllInOne extends JFrame implements ActionListener {
         raio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         raio.setVisible(true);
 
+        Thread.sleep(5000);
+
+        // this should be called only AFTER the server is completely initialized!!!                
         ClientFacade cli = ClientFacadeImpl.getInstance();
         cli.getClientInitialization().init("localhost");
     }
