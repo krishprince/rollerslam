@@ -21,12 +21,13 @@
 package rollerslam.infrastructure.server;
 
 import java.rmi.AlreadyBoundException;
+import java.rmi.Naming;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Vector;
+
 import rollerslam.infrastructure.agent.Effector;
 import rollerslam.infrastructure.agent.Sensor;
 import rollerslam.infrastructure.agent.SensorEffectorManager;
@@ -64,8 +65,6 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
     //stores a reference to all exported object so they will not ever be available to garbage collection
     private static Vector<Object> exportedObjects = new Vector<Object>();
 
-    private Registry registry;
-
     /**
      * @return the unique instance for the server facade
      */
@@ -81,6 +80,7 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
         logRecSrv = LogRecordingServiceImpl.init();
 
         dri = new DisplayRegistryImpl();
+        ari = new AgentRegistryImpl();
         sem = new SensorEffectorManagerImpl();
 
         try {
@@ -95,10 +95,14 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
      * @see rollerslam.infrastructure.server.ServerFacade#init(int, rollerslam.infrastructure.server.AutomataAgent)
      */
     public void init(int port, AutomataAgent environmentAgent) throws Exception {
-        registry = LocateRegistry.createRegistry(1099);
+
+    	try {
+        	LocateRegistry.createRegistry(1099);
+        } catch(Exception e) {
+        	
+        }
 
         sai = environmentAgent.getSimulationStateProvider();
-        ari = new AgentRegistryImpl(sai);
         envStateProvider = environmentAgent.getSimulationStateProvider();
 
         SimulationAdmin sas = (SimulationAdmin) UnicastRemoteObject
@@ -127,13 +131,13 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
         //adding log to exported objs
         exportedObjects.add(logRecSrv);
 
-        registry.bind(AgentRegistry.class.getSimpleName(), ars);
-        registry.bind(DisplayRegistry.class.getSimpleName(), drs);
-        registry.bind(SimulationAdmin.class.getSimpleName(), sas);
-        registry.bind(SensorEffectorManager.class.getSimpleName(), sems);
+        bind(AgentRegistry.class.getSimpleName(), ars);
+        bind(DisplayRegistry.class.getSimpleName(), drs);
+        bind(SimulationAdmin.class.getSimpleName(), sas);
+        bind(SensorEffectorManager.class.getSimpleName(), sems);
         
         //binding log service to registry
-        registry.bind(LogRecordingService.class.getSimpleName(), logRecSrv);
+        bind(LogRecordingService.class.getSimpleName(), logRecSrv);
 
         displayUpdateThread = new DisplayUpdateThread(dri);
         displayUpdateThread.start();
@@ -151,7 +155,7 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
      */
     public Remote exportObject(Remote obj) throws RemoteException, AlreadyBoundException {
         Remote ret = UnicastRemoteObject.exportObject(obj, 0);
-        registry.bind(obj.getClass().getSimpleName() + "_" + obj.hashCode() + "_" + (System.currentTimeMillis()), ret);
+        bind(obj.getClass().getSimpleName() + "_" + obj.hashCode() + "_" + (System.currentTimeMillis()), ret);
 
         exportedObjects.add(obj);
         exportedObjects.add(ret);
@@ -159,7 +163,16 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
         return ret;
     }
 
-    /**
+    private void bind(String string, Remote ret) throws RemoteException {
+    	try {
+			Naming.bind(string, ret);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RemoteException(e.toString());
+		}
+	}
+
+	/**
      * @see rollerslam.infrastructure.server.ServerFacade#getAgentRegistry()
      */
     public AgentRegistry getAgentRegistry() throws RemoteException {

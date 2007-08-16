@@ -22,12 +22,12 @@
 package rollerslam.infrastructure.client;
 
 import java.rmi.AlreadyBoundException;
+import java.rmi.Naming;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Vector;
+
 import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.Effector;
 import rollerslam.infrastructure.agent.Sensor;
@@ -53,8 +53,6 @@ public final class ClientFacadeImpl implements ClientFacade, ClientInitializatio
 
     private SensorEffectorManager sem;
 
-    private Registry registry;
-
     //stores a reference to all exported object so they will not ever be available to garbage collection
     private static Vector<Object> exportedObjects = new Vector<Object>();
 
@@ -70,13 +68,12 @@ public final class ClientFacadeImpl implements ClientFacade, ClientInitializatio
         host = nameserver;
 
         try {
-            registry = LocateRegistry.getRegistry(host);
+        	    
+            ar = (AgentRegistry) lookup(AgentRegistry.class.getSimpleName());
+            dr = (DisplayRegistry) lookup(DisplayRegistry.class.getSimpleName());
+            sa = (SimulationAdmin) lookup(SimulationAdmin.class.getSimpleName());
 
-            ar = (AgentRegistry) registry.lookup(AgentRegistry.class.getSimpleName());
-            dr = (DisplayRegistry) registry.lookup(DisplayRegistry.class.getSimpleName());
-            sa = (SimulationAdmin) registry.lookup(SimulationAdmin.class.getSimpleName());
-
-            sem = (SensorEffectorManager) registry.lookup(SensorEffectorManager.class.getSimpleName());
+            sem = (SensorEffectorManager) lookup(SensorEffectorManager.class.getSimpleName());
         } catch (Exception e) {
             e.printStackTrace();
 
@@ -87,6 +84,15 @@ public final class ClientFacadeImpl implements ClientFacade, ClientInitializatio
             sem = null;
         }
     }
+
+    private Object lookup(String simpleName) throws RemoteException {
+		try {
+			return Naming.lookup("rmi://" + host + "/" + simpleName);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RemoteException(e.toString());
+		}
+	}
 
     /**
      * @return the unique instance for this object
@@ -103,7 +109,6 @@ public final class ClientFacadeImpl implements ClientFacade, ClientInitializatio
      */
     public Remote exportObject(Remote obj) throws RemoteException, AlreadyBoundException {
         Remote ret = UnicastRemoteObject.exportObject(obj, 0);
-        registry.bind(obj.getClass().getSimpleName() + "_" + obj.hashCode() + "_" + (System.currentTimeMillis()), ret);
 
         exportedObjects.add(obj);
         exportedObjects.add(ret);
@@ -111,7 +116,7 @@ public final class ClientFacadeImpl implements ClientFacade, ClientInitializatio
         return ret;
     }
 
-    /**
+	/**
      * @see rollerslam.infrastructure.client.ClientFacade#getAgentRegistry()
      */
     public AgentRegistry getAgentRegistry() throws RemoteException {
