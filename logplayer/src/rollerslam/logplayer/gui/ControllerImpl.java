@@ -12,6 +12,7 @@ package rollerslam.logplayer.gui;
 import java.io.File;
 import rollerslam.display.gui.mvc.Model;
 import rollerslam.display.gui.mvc.View;
+import rollerslam.logging.EnvironmentStateLogEntry;
 import rollerslam.logplayer.LogPlayingService;
 import rollerslam.logplayer.gui.mvc.Controller;
 import rollerslam.logplayer.impl.LogPlayingServiceImpl;
@@ -76,7 +77,7 @@ public class ControllerImpl implements Controller, Runnable {
     
     private void updateState(Integer cycle) {
         lps.setCurrentCycle(cycle);
-       // model.setModel(lps.getWorld());
+        model.setModel(((EnvironmentStateLogEntry)lps.getLogForAgent(-1)).getWorld());
     }
 
     public void run() {

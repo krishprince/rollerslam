@@ -10,8 +10,10 @@
 package rollerslam.infrastructure.logging;
 
 import java.rmi.RemoteException;
+import java.util.Properties;
 import orcas.logcomponents.basiclog.Log;
 import orcas.logcomponents.basiclog.LogFactory;
+
 
 /**
  *
@@ -24,7 +26,13 @@ public class LogRecordingServiceImpl implements LogRecordingService {
     private Log log = null;
     
     private LogRecordingServiceImpl() {
-        log = LogFactory.getInstance().getLog();
+        Properties p = new Properties();
+
+        p.setProperty("concrete.log.class", "rollerslam.logging.HSQLDBLog");
+        p.setProperty("log.level", "0");
+        p.setProperty("db.url", "file:///c://temp/");
+
+        log = LogFactory.getInstance(p).getLog();
     }
 
     public void addEntry(LogEntry entry) throws RemoteException {
