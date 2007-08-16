@@ -34,11 +34,7 @@ public class LogPlayingServiceImpl implements LogPlayingService {
     private Connection conn;
     private String user = "sa";
     private String password = "";
-
-
-    private String readWorldInCycleSQL = "SELECT winfo FROM t_log WHERE cycle = ? AND NOT winfo IS NULL";
-    private String readAdditionalDataInCycleSQL = "SELECT ainfo FROM t_log WHERE cycle = ? AND NOT ainfo IS NULL";
-    private String readMessagesInCycleSQL = "SELECT msg FROM t_log WHERE cycle = ? AND NOT msg IS NULL";
+    
     private String readLogForAgentSQL = "SELECT thelog FROM t_log WHERE aid = ?";
 
     public LogPlayingServiceImpl() {
@@ -65,7 +61,7 @@ public class LogPlayingServiceImpl implements LogPlayingService {
 
             System.out.println("read " + totalCycles + " registers");
         } catch (Exception err) {
-            throw new RuntimeException("Error loading simDescription. Details: " + err);
+            throw new RuntimeException("Error loading simDescription. Details: " + err, err);
         }
     }
 
@@ -92,86 +88,26 @@ public class LogPlayingServiceImpl implements LogPlayingService {
         }
     }
 
-    public World getWorld() {
-        World w = null;
+    public LogEntry getLogForAgent(Integer agId) {
+        LogEntry le = null;
         try {
-            PreparedStatement ps = conn.prepareStatement(readWorldInCycleSQL);
-            ps.setInt(1, this.currentCycle);
-
-            ResultSet rs = ps.executeQuery();
-            if (!rs.next()) {
-                throw new RuntimeException("No world info for the cycle " + currentCycle);
-            }
-            w = (World) SerializationHelper.string2Object(rs.getString(1));
-            
-            ps.close();
-        } catch (Exception ex) {
-            throw new RuntimeException("Error reading object. Details: " + ex);
-        }
-        return w;
-    }
-
-    public List<Message> getMessages() {
-        List<Message> ms = new ArrayList<Message>();
-        try {
-            PreparedStatement ps = conn.prepareStatement(readMessagesInCycleSQL);
-            ps.setInt(1, this.currentCycle);
+            PreparedStatement ps = conn.prepareStatement(readLogForAgentSQL);
+            ps.setInt(1, agId);
 
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                ms.add((Message) SerializationHelper.string2Object(rs.getString(1)));
+                le = (LogEntry)SerializationHelper.string2Object(rs.getString(1));
             }
             
             ps.close();
         } catch (Exception ex) {
-            throw new RuntimeException("Error reading object. Details: " + ex);
+            throw new RuntimeException("Error reading object. Details: " + ex, ex);
         }
-        return ms;
-    }
-
-    public Object getAdditionalData() {
-        Object o = null;
-        try {
-            PreparedStatement ps = conn.prepareStatement(readAdditionalDataInCycleSQL);
-            ps.setInt(1, this.currentCycle);
-
-            ResultSet rs = ps.executeQuery();
-            if (!rs.next()) {
-                throw new RuntimeException("No additional data info for the cycle " + currentCycle);
-            }
-            o = SerializationHelper.string2Object(rs.getString(1));
-            
-            ps.close();
-        } catch (Exception ex) {
-            throw new RuntimeException("Error reading object. Details: " + ex);
-        }
-        return o;
-    }
-
-    public LogEntry getLogForAgent(Integer agId) {
-        LogEntry le = null;
-//        try {
-//            PreparedStatement ps = conn.prepareStatement(readLogForAgentSQL);
-//            ps.setInt(1, agId);
-//
-//            ResultSet rs = ps.executeQuery();
-//
-//            while (rs.next()) {
-//                les.add((LogEntry) SerializationHelper.string2Object(rs.getString(1)));
-//            }
-//            
-//            ps.close();
-//        } catch (Exception ex) {
-//            throw new RuntimeException("Error reading object. Details: " + ex);
-//        }
         return le;
     }
 
     public static void main(String[] args) {
-        LogPlayingServiceImpl lpi = new LogPlayingServiceImpl();
-        lpi.load("file:///c:/temp/testrollerslam_20070814_1613");
-        lpi.setCurrentCycle(3);
-        System.out.println(((String[]) lpi.getAdditionalData())[1]);
+
     }
 }
