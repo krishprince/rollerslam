@@ -21,7 +21,7 @@ import java.util.List;
 import orcas.helpers.SerializationHelper;
 import rollerslam.environment.model.World;
 import rollerslam.infrastructure.agent.Message;
-import rollerslam.loggingservices.recording.LogEntry;
+import rollerslam.infrastructure.logging.LogEntry;
 
 /**
  *
@@ -149,23 +149,23 @@ public class LogPlayingServiceImpl implements LogPlayingService {
         return o;
     }
 
-    public List<LogEntry> getLogForAgent(Integer agId) {
-        List<LogEntry> les = new ArrayList<LogEntry>();
-        try {
-            PreparedStatement ps = conn.prepareStatement(readLogForAgentSQL);
-            ps.setInt(1, agId);
-
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                les.add((LogEntry) SerializationHelper.string2Object(rs.getString(1)));
-            }
-            
-            ps.close();
-        } catch (Exception ex) {
-            throw new RuntimeException("Error reading object. Details: " + ex);
-        }
-        return les;
+    public LogEntry getLogForAgent(Integer agId) {
+        LogEntry le = null;
+//        try {
+//            PreparedStatement ps = conn.prepareStatement(readLogForAgentSQL);
+//            ps.setInt(1, agId);
+//
+//            ResultSet rs = ps.executeQuery();
+//
+//            while (rs.next()) {
+//                les.add((LogEntry) SerializationHelper.string2Object(rs.getString(1)));
+//            }
+//            
+//            ps.close();
+//        } catch (Exception ex) {
+//            throw new RuntimeException("Error reading object. Details: " + ex);
+//        }
+        return le;
     }
 
     public static void main(String[] args) {

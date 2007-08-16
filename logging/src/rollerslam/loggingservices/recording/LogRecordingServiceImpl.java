@@ -9,6 +9,7 @@
 
 package rollerslam.loggingservices.recording;
 
+import rollerslam.infrastructure.logging.LogEntry;
 import rollerslam.infrastructure.logging.*;
 import java.io.File;
 import java.io.FileNotFoundException;

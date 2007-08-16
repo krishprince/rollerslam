@@ -1,6 +1,5 @@
 package rollerslam.infrastructure.logging;
 
-import rollerslam.loggingservices.recording.LogEntry;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 

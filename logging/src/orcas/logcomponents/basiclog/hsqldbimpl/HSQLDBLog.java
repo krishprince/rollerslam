@@ -18,10 +18,10 @@ import java.util.Date;
 import java.util.Properties;
 import orcas.helpers.SerializationHelper;
 import orcas.logcomponents.basiclog.AbstractLog;
-import rollerslam.loggingservices.recording.AgentActionLogEntry;
-import rollerslam.loggingservices.recording.EnvironmentStateLogEntry;
-import rollerslam.loggingservices.recording.GoalUpdateLogEntry;
-import rollerslam.loggingservices.recording.LogEntry;
+import rollerslam.infrastructure.logging.AgentActionLogEntry;
+import rollerslam.infrastructure.logging.EnvironmentStateLogEntry;
+import rollerslam.infrastructure.logging.GoalUpdateLogEntry;
+import rollerslam.infrastructure.logging.LogEntry;
 
 /**
  *
