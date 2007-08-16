@@ -7,13 +7,8 @@
  * and open the template in the editor.
  */
 
-package rollerslam.loggingservices.recording;
+package rollerslam.infrastructure.logging;
 
-import rollerslam.infrastructure.logging.LogEntry;
-import rollerslam.infrastructure.logging.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintStream;
 import java.rmi.RemoteException;
 import orcas.logcomponents.basiclog.Log;
 import orcas.logcomponents.basiclog.LogFactory;

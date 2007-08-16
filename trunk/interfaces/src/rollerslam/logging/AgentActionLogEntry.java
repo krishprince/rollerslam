@@ -7,8 +7,9 @@
  * and open the template in the editor.
  */
 
-package rollerslam.infrastructure.logging;
+package rollerslam.logging;
 
+import rollerslam.infrastructure.logging.*;
 import rollerslam.infrastructure.agent.Message;
 
 /**

@@ -33,7 +33,7 @@ import rollerslam.infrastructure.agent.Effector;
 import rollerslam.infrastructure.agent.Sensor;
 import rollerslam.infrastructure.agent.SensorEffectorManager;
 import rollerslam.infrastructure.logging.LogRecordingService;
-import rollerslam.loggingservices.recording.LogRecordingServiceImpl;
+import rollerslam.infrastructure.logging.LogRecordingServiceImpl;
 import rollerslam.infrastructure.server.AgentRegistry;
 import rollerslam.infrastructure.server.DisplayRegistry;
 import rollerslam.infrastructure.server.SimulationAdmin;

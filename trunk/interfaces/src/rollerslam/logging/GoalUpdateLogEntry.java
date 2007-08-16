@@ -3,7 +3,9 @@
  *
  */
 
-package rollerslam.infrastructure.logging;
+package rollerslam.logging;
+
+import rollerslam.infrastructure.logging.*;
 
 /**
  *

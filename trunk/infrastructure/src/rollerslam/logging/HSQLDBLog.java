@@ -3,7 +3,7 @@
  *
  */
 
-package orcas.logcomponents.basiclog.hsqldbimpl;
+package rollerslam.logging;
 
 import java.io.Serializable;
 import java.sql.Connection;
@@ -11,17 +11,14 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Types;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
 import orcas.helpers.SerializationHelper;
 import orcas.logcomponents.basiclog.AbstractLog;
-import rollerslam.infrastructure.logging.AgentActionLogEntry;
-import rollerslam.infrastructure.logging.EnvironmentStateLogEntry;
-import rollerslam.infrastructure.logging.GoalUpdateLogEntry;
 import rollerslam.infrastructure.logging.LogEntry;
+
 
 /**
  *
@@ -33,9 +30,9 @@ public class HSQLDBLog extends AbstractLog {
     private String password = "";
 
     //create table string
-    private String ctStr = "CREATE TABLE t_log (lid INTEGER IDENTITY, cycle INTEGER, agent_id INTEGER, dt_hour TIMESTAMP, winfo VARCHAR, msg VARCHAR, reason VARCHAR, ainfo VARCHAR, thelog VARCHAR)";
+    private String ctStr = "CREATE TABLE t_log (lid INTEGER IDENTITY, cycle INTEGER, agent_id INTEGER, dt_hour TIMESTAMP, lclass VARCHAR, thelog VARCHAR)";
 
-    private String insStr = "INSERT INTO t_log(cycle, agent_id, dt_hour, winfo, msg, reason, ainfo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    private String insStr = "INSERT INTO t_log(cycle, agent_id, dt_hour, lclass, thelog) VALUES (?, ?, ?, ?, ?)";
 
 
     private Connection conn = null;
@@ -52,7 +49,7 @@ public class HSQLDBLog extends AbstractLog {
             DateFormat df = new SimpleDateFormat("yyyyMMdd_HHmm");
             String ct = df.format(new Date());
 
-            String url = "jdbc:hsqldb:" + logProperties.getProperty("db.url") + "testrollerslam_" + ct + ";shutdown=true";
+            String url = "jdbc:hsqldb:" + logProperties.getProperty("db.url") + "rollerslam_" + ct + ";shutdown=true";
 
             conn = DriverManager.getConnection(url, "sa", "");
 
@@ -90,36 +87,14 @@ public class HSQLDBLog extends AbstractLog {
             ps.setInt(2, le.getAgentId());
             ps.setTimestamp(3, new java.sql.Timestamp(le.getTimestamp().getTime()));
 
-            if (le instanceof EnvironmentStateLogEntry) {
-                ps.setString(4, SerializationHelper.object2String(((EnvironmentStateLogEntry) le).getWorld()));
-            } else {
-                ps.setNull(4, Types.VARCHAR);
-            }
-
-            if (le instanceof AgentActionLogEntry) {
-                ps.setString(5, SerializationHelper.object2String(((AgentActionLogEntry) le).getMessage()));
-            } else {
-                ps.setNull(5, Types.VARCHAR);
-            }
-
-            if (le instanceof GoalUpdateLogEntry) {
-                ps.setString(6, ((GoalUpdateLogEntry) le).getReason());
-            } else {
-                ps.setNull(6, Types.VARCHAR);
-            }
             
-            if (le.getAdditionalData() != null) {
-                ps.setString(7, SerializationHelper.object2String(le.getAdditionalData()));
-            } else {
-                ps.setNull(7, Types.VARCHAR);
-            }
+            ps.setString(4, le.getClass().getName());
             
-            ps.setString(8, SerializationHelper.object2String(le));
+            ps.setString(5, SerializationHelper.object2String(le));
 
             ps.executeUpdate();
             
             ps.close();
-            
         } catch (Exception err) {
             System.out.println("Error on log operation. Details: " + err);
         }

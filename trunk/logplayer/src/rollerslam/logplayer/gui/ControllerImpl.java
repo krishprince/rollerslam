@@ -12,9 +12,11 @@ package rollerslam.logplayer.gui;
 import java.io.File;
 import rollerslam.display.gui.mvc.Model;
 import rollerslam.display.gui.mvc.View;
-import rollerslam.infrastructure.logplaying.LogPlayingService;
+import rollerslam.logplayer.LogPlayingService;
 import rollerslam.logplayer.gui.mvc.Controller;
 import rollerslam.logplayer.impl.LogPlayingServiceImpl;
+
+
 
 /**
  *
