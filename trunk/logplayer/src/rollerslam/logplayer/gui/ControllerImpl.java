@@ -74,7 +74,7 @@ public class ControllerImpl implements Controller, Runnable {
     
     private void updateState(Integer cycle) {
         lps.setCurrentCycle(cycle);
-        model.setModel(lps.getWorld());
+       // model.setModel(lps.getWorld());
     }
 
     public void run() {

@@ -3,7 +3,7 @@
  *
  */
 
-package rollerslam.loggingservices.recording;
+package rollerslam.infrastructure.logging;
 
 /**
  *
