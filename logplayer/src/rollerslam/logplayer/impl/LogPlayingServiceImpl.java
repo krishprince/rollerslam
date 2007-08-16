@@ -9,7 +9,6 @@
 
 package rollerslam.logplayer.impl;
 
-import rollerslam.infrastructure.logplaying.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -22,6 +21,7 @@ import orcas.helpers.SerializationHelper;
 import rollerslam.environment.model.World;
 import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.logging.LogEntry;
+import rollerslam.logplayer.LogPlayingService;
 
 /**
  *

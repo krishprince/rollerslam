@@ -33,7 +33,7 @@ import rollerslam.infrastructure.agent.Sensor;
 import rollerslam.infrastructure.agent.SensorEffectorManager;
 import rollerslam.infrastructure.agent.automata.AutomataAgent;
 import rollerslam.infrastructure.logging.LogRecordingService;
-import rollerslam.loggingservices.recording.LogRecordingServiceImpl;
+import rollerslam.infrastructure.logging.LogRecordingServiceImpl;
 
 /**
  * Default implementation for the server facade

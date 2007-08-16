@@ -3,7 +3,7 @@
  *
  */
 
-package rollerslam.infrastructure.logplaying;
+package rollerslam.logplayer;
 
 import rollerslam.infrastructure.logging.LogEntry;
 
