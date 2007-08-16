@@ -1,4 +1,4 @@
-package rollerslam.infrastructure.logging;
+package rollerslam.loggingservices.recording;
 
 import java.io.Serializable;
 import java.util.Date;

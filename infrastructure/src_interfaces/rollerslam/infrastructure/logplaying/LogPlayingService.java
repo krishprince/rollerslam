@@ -7,7 +7,7 @@ package rollerslam.infrastructure.logplaying;
 
 import java.util.List;
 import rollerslam.environment.model.World;
-import rollerslam.infrastructure.logging.LogEntry;
+import rollerslam.loggingservices.recording.LogEntry;
 
 /**
  *

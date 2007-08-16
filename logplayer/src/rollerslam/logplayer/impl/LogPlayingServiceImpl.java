@@ -21,7 +21,7 @@ import java.util.List;
 import orcas.helpers.SerializationHelper;
 import rollerslam.environment.model.World;
 import rollerslam.infrastructure.agent.Message;
-import rollerslam.infrastructure.logging.LogEntry;
+import rollerslam.loggingservices.recording.LogEntry;
 
 /**
  *

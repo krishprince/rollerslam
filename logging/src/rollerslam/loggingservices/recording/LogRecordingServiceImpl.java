@@ -7,8 +7,9 @@
  * and open the template in the editor.
  */
 
-package rollerslam.infrastructure.logging;
+package rollerslam.loggingservices.recording;
 
+import rollerslam.infrastructure.logging.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;

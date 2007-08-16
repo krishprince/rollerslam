@@ -7,7 +7,7 @@
  * and open the template in the editor.
  */
 
-package rollerslam.infrastructure.logging;
+package rollerslam.loggingservices.recording;
 
 import rollerslam.environment.model.World;
 
