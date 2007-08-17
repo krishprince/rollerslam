@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import rollerslam.display.gui.RollerslamDisplay;
+import rollerslam.display.gui.RollerslamMobileDisplay;
 import rollerslam.environment.gui.ServerDisplay;
 import rollerslam.infrastructure.client.ClientFacade;
 import rollerslam.infrastructure.client.ClientFacadeImpl;
@@ -61,6 +62,16 @@ public class RollerslamAllInOne extends JFrame implements ActionListener {
         // this should be called only AFTER the server is completely initialized!!!                
         ClientFacade cli = ClientFacadeImpl.getInstance();
         cli.getClientInitialization().init("localhost");
+        
+        new Thread(new Runnable() {
+        	public void run() {
+        		try {
+					RollerslamMobileDisplay.main(new String[]{"localhost"});
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+        	}
+        }).start();
     }
 
     public void actionPerformed(ActionEvent e) {
