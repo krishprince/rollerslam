@@ -2,7 +2,6 @@ package rollerslam.agent.goalbased;
 
 import java.rmi.RemoteException;
 
-import rollerslam.environment.RollerslamEnvironmentAgent;
 import rollerslam.environment.model.Player;
 import rollerslam.environment.model.PlayerTeam;
 import rollerslam.environment.model.World;
