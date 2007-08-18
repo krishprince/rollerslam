@@ -30,10 +30,12 @@ public final class SerializationHelper {
             ObjectOutputStream oos = new ObjectOutputStream(baos);
             oos.writeObject(o);
             oos.flush();
-            res = baos.toString();
-            oos.close();
+            
+            res = new sun.misc.BASE64Encoder().encode(baos.toByteArray());
+            
+            baos.close();
         } catch (Exception err) {
-            throw new RuntimeException("Error on object2string.");
+            throw new RuntimeException("Error on object2string: " + err, err);
         }
         return res;
     }
@@ -41,12 +43,12 @@ public final class SerializationHelper {
     public static Object string2Object(String st) {
         Object o = null;
         try {
-            ByteArrayInputStream bais = new ByteArrayInputStream(st.getBytes());
+            ByteArrayInputStream bais = new ByteArrayInputStream(new sun.misc.BASE64Decoder().decodeBuffer(st));
             ObjectInputStream ois = new ObjectInputStream(bais);
             o = ois.readObject();
             bais.close();
         } catch (Exception err) {
-            throw new RuntimeException("Error on string2object.");
+            throw new RuntimeException("Error on string2object: " + err, err);
         }
         return o;
     }
