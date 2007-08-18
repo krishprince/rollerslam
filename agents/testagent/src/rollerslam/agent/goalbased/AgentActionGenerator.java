@@ -86,8 +86,12 @@ public class AgentActionGenerator implements
 
 		try {
 			ServerFacade facade = ServerFacadeImpl.getInstance();
-			AgentActionLogEntry envLog = new AgentActionLogEntry(
-					((World) model.environmentStateModel).currentCycle, model.myID, m);
+			
+			int cycle = 0;
+			if ((World) model.environmentStateModel != null)
+				cycle = ((World) model.environmentStateModel).currentCycle;
+				
+			AgentActionLogEntry envLog = new AgentActionLogEntry(cycle, model.myID, m);
 
 			facade.getLogRecordingService().addEntry(envLog);
 
