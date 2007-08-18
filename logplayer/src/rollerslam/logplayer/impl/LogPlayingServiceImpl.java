@@ -35,7 +35,7 @@ public class LogPlayingServiceImpl implements LogPlayingService {
     private String user = "sa";
     private String password = "";
     
-    private String readLogForAgentSQL = "SELECT thelog FROM t_log WHERE aid = ?";
+    private String readLogForAgentSQL = "SELECT thelog FROM t_log WHERE agent_id = ? AND cycle = ?";
 
     public LogPlayingServiceImpl() {
     }
@@ -47,19 +47,16 @@ public class LogPlayingServiceImpl implements LogPlayingService {
             String url = "jdbc:hsqldb:" + simDescription + ";shutdown=true";
             conn = conn = DriverManager.getConnection(url, "sa", "");
             Runtime.getRuntime().addShutdownHook(new Thread() {
-
                 public void run() {
                     LogPlayingServiceImpl.this.terminate();
                 }
             });
 
             Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT count(*) FROM t_log");
+            ResultSet rs = st.executeQuery("SELECT max(cycle) FROM t_log");
             rs.next();
             totalCycles = rs.getInt(1);
             st.close();
-
-            System.out.println("read " + totalCycles + " registers");
         } catch (Exception err) {
             throw new RuntimeException("Error loading simDescription. Details: " + err, err);
         }
@@ -93,10 +90,11 @@ public class LogPlayingServiceImpl implements LogPlayingService {
         try {
             PreparedStatement ps = conn.prepareStatement(readLogForAgentSQL);
             ps.setInt(1, agId);
+            ps.setInt(2, currentCycle);
 
             ResultSet rs = ps.executeQuery();
 
-            while (rs.next()) {
+            if (rs.next()) {
                 le = (LogEntry)SerializationHelper.string2Object(rs.getString(1));
             }
             
