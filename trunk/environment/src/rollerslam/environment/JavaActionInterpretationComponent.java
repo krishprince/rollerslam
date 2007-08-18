@@ -32,6 +32,7 @@ import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
 import rollerslam.infrastructure.server.ServerFacade;
 import rollerslam.infrastructure.server.ServerFacadeImpl;
 
+
 public class JavaActionInterpretationComponent implements ActionInterpretationComponent {
 	public ServerFacade facade = ServerFacadeImpl.getInstance();
 
@@ -226,6 +227,7 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 		
 		// adds all actions to the world
 		((World)w).newActions.add(m);
+		
 	}
 
 	public void joinWorld(World worldModel, Agent agent, PlayerTeam playerTeam){
