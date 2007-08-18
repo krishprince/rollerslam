@@ -3,8 +3,6 @@ package rollerslam.infrastructure.agent.automata;
 import java.rmi.RemoteException;
 import java.util.Set;
 
-import rollerslam.environment.RollerslamEnvironmentAgent;
-import rollerslam.environment.model.World;
 import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.Effector;
 import rollerslam.infrastructure.agent.Message;
