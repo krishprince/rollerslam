@@ -37,6 +37,7 @@ public class World extends EnvironmentStateModel implements Serializable, Visita
 										 			          SimulationSettings.GOAL_A_Y);;        
     public Player       playerWithBall = null;
 
+    public Scoreboard   scoreboard     = new Scoreboard(this);
 
 	private Random      random 		   = new Random();
 	
