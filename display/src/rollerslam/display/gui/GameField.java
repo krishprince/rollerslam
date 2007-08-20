@@ -10,6 +10,7 @@
 package rollerslam.display.gui;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -38,6 +39,7 @@ public class GameField {
     private static final long[] CENTER1 = {93000, 68000, 2000, 2000};
     private static final long[] CENTER2 = {92000, 67000, 4000, 4000};
 
+    private static final long[] SCOREBOARD = {170000, 0, 18000, 7000};
         
     public GameField() {
         this(0.001);
@@ -109,6 +111,14 @@ public class GameField {
         g.fillOval(getSize(CENTER1[0]), getSize(CENTER1[1]), getSize(CENTER1[2]), getSize(CENTER1[3]));
         g.drawOval(getSize(CENTER2[0]), getSize(CENTER2[1]), getSize(CENTER2[2]), getSize(CENTER2[3]));
         
+        g.setColor(Color.BLUE);
+        g.fillRect(getSize(SCOREBOARD[0]), getSize(SCOREBOARD[1]), getSize(SCOREBOARD[2]), getSize(SCOREBOARD[3]));
+        g.setColor(Color.RED);
+        g.fillRect(getSize(SCOREBOARD[0]), getSize(SCOREBOARD[1]), getSize(SCOREBOARD[2]) / 2, getSize(SCOREBOARD[3]));
+        
+        g.setColor(Color.BLACK);
+        g.drawRect(getSize(SCOREBOARD[0]), getSize(SCOREBOARD[1]), getSize(SCOREBOARD[2]), getSize(SCOREBOARD[3]));
+        g.drawRect(getSize(SCOREBOARD[0]), getSize(SCOREBOARD[1]), getSize(SCOREBOARD[2]) / 2, getSize(SCOREBOARD[3]));
         
     }
     
