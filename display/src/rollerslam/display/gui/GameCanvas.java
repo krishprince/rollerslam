@@ -5,6 +5,7 @@ package rollerslam.display.gui;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import javax.swing.JLabel;
@@ -36,6 +37,8 @@ public class GameCanvas extends Canvas {
     private JLabel messagesLabel;
     
     private Sprite background;
+    private Sprite scoreBoardA;
+    private Sprite scoreBoardB;
     private GameField gameField;
 
     public GameCanvas(JLabel messages) {
@@ -51,6 +54,8 @@ public class GameCanvas extends Canvas {
         ss = SpriteStore.get();
 
         background = new Sprite(gameField.getImage());
+        scoreBoardA = new Sprite(gameField.getScoreboardA());
+        scoreBoardB = new Sprite(gameField.getScoreboardB());
     }
 
     public void init() {
@@ -71,7 +76,7 @@ public class GameCanvas extends Canvas {
                     g.fillRect(0, 0, 800, 600);
 
                     background.draw(g, 0, 0);
-
+                    
                     world = model.getModel();
                     if (world != null) {
                         boolean freeBall = true;
@@ -110,6 +115,24 @@ public class GameCanvas extends Canvas {
                                 MessageHandler.scheduleForExhibition(((SendMsgAction) message).subject);
                             }
                         }
+                        
+                        
+                        g = (Graphics2D) strategy.getDrawGraphics();
+                        g.setColor(Color.RED);
+                        g.fillRect(0, 0, scoreBoardA.getWidth(), scoreBoardA.getHeight());
+                        g.setColor(Color.BLUE);
+                        g.fillRect(scoreBoardB.getWidth(), 0, scoreBoardB.getWidth(), scoreBoardB.getHeight());
+                        
+                        g = (Graphics2D) strategy.getDrawGraphics();
+                        Font f = new Font(null, Font.BOLD, (int)(scoreBoardB.getHeight() / 1.3));
+                        g.setFont(f);
+                        g.setColor(Color.BLACK);
+                        g.drawString(Integer.toString(world.scoreboard.scoreTeamA), 0, (int)(scoreBoardB.getHeight() / 1.3));
+                        
+                        g = (Graphics2D) strategy.getDrawGraphics();
+                        g.setFont(f);
+                        g.setColor(Color.BLACK);
+                        g.drawString(Integer.toString(world.scoreboard.scoreTeamB), scoreBoardB.getWidth(), (int)(scoreBoardB.getHeight() / 1.3));
 
                         messagesLabel.setText(MessageHandler.getCurrentMessage());
                     }
