@@ -53,7 +53,6 @@ public class RollerslamGoalBasedAgent extends GoalBasedAgent {
 					((AgentWorldModel)w).environmentStateModel = ((StateMessage)m).model;
 				} else if (m instanceof GameStartedPerception) {
 					if (((GameStartedPerception)m).receiver.equals(remoteThis)) {
-						((AgentWorldModel)w).gameStarted = true;
 						((AgentWorldModel)w).myID = ((GameStartedPerception)m).playerID;
 					}
 				}
