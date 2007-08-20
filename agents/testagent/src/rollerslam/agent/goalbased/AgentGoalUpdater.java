@@ -4,7 +4,6 @@ import java.rmi.RemoteException;
 
 import rollerslam.environment.model.Player;
 import rollerslam.environment.model.PlayerTeam;
-import rollerslam.environment.model.World;
 import rollerslam.environment.model.utils.MathGeometry;
 import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.goalbased.GoalBasedEnvironmentStateModel;
@@ -40,7 +39,11 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
         			e.printStackTrace();
         		}
             	model.currentGoal = AgentGoal.GO_TO_BALL;
-            }			
+            } else {
+            	if (model.myID != -1 && model.environmentStateModel != null) {
+            		model.gameStarted = true;
+            	}
+            }
 		} else if (model.currentGoal == AgentGoal.GO_TO_BALL) { 
 			Player me = model.getMe();
             if(!me.inGround){
