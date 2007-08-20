@@ -1,8 +1,13 @@
-package rollerslam.repeater.display;
+package rollerslam.display;
 import java.rmi.RemoteException;
+import java.util.Vector;
+
+import javax.swing.JOptionPane;
+
 import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.display.Display;
 import rollerslam.infrastructure.server.DisplayRegistryServer;
+import rollerslam.repeater.server.RepeaterServer;
 
 /**
 * Essa classe representa um display, mas as mensagens enviadas pela simulação
@@ -23,14 +28,31 @@ public class RepeaterDisplay implements Display {
 	 * @see rollerslam.infrastructure.server.Display#update(Message m)
 	 */
 	public void update(Message m) throws RemoteException {
+		Vector<Display> toRemove = new Vector<Display>();
+		
 		for (Display display : displayRegistry.getRegisteredDisplays()) {			
 			try{
 				display.update(m);
 			} catch(Exception e) {
 				e.printStackTrace();
-				displayRegistry.unregister(display);
+				toRemove.add(display);
 			}
+		}
+		
+		for (Display display : toRemove) {
+			displayRegistry.unregister(display);
 		}
 	}
 
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {		
+		RepeaterServer server = RepeaterServer.getInstance();
+		try {
+			server.init(JOptionPane.showInputDialog("Simulation:", "localhost"));			
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		} 
+	}	
 }

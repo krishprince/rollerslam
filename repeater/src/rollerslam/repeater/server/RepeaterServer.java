@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 
+import rollerslam.display.RepeaterDisplay;
 import rollerslam.infrastructure.agent.SensorEffectorManager;
 import rollerslam.infrastructure.client.ClientFacade;
 import rollerslam.infrastructure.client.ClientFacadeImpl;
@@ -12,8 +13,6 @@ import rollerslam.infrastructure.display.Display;
 import rollerslam.infrastructure.server.AgentRegistry;
 import rollerslam.infrastructure.server.DisplayRegistry;
 import rollerslam.infrastructure.server.SimulationAdmin;
-import rollerslam.repeater.display.RepeaterDisplay;
-import rollerslam.repeater.stubs.SensorEffectorManagerStub;
 
 /**
 *  Classe usada para iniciar o Repetidor 
@@ -26,6 +25,7 @@ public class RepeaterServer {
 	ClientFacade clientFacade;
 	RepeaterDisplayRegistryServer repeaterRegistryServer;
 	RepeaterDisplay repeaterDisplay;
+	String host;
 	
 	private RepeaterServer() {
 		this.clientFacade = ClientFacadeImpl.getInstance();
@@ -45,8 +45,8 @@ public class RepeaterServer {
 	}
 	
 	public void init(String serverHost) throws RemoteException {
-		clientFacade.getClientInitialization().init(serverHost);
-		
+		host = serverHost;
+		clientFacade.getClientInitialization().init(serverHost);		
 		
 		try {
 			clientFacade.getDisplayRegistry().register(
@@ -71,11 +71,17 @@ public class RepeaterServer {
         bind(SimulationAdmin.class.getSimpleName(), clientFacade.getSimulationAdmin());
         
         //Stub do sensor manager
-        SensorEffectorManager sems = (SensorEffectorManager) UnicastRemoteObject
-			.exportObject(new SensorEffectorManagerStub(), 0);
-        
-        bind(SensorEffectorManager.class.getSimpleName(), sems);
-       
+        SensorEffectorManager sems = (SensorEffectorManager) lookup(SensorEffectorManager.class.getSimpleName());        
+        bind(SensorEffectorManager.class.getSimpleName(), sems);       
+	}
+	
+    private Object lookup(String simpleName) throws RemoteException {
+		try {
+			return Naming.lookup("rmi://" + host + "/" + simpleName);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RemoteException(e.toString());
+		}
 	}
 	
 	private void bind(String string, Remote ret) throws RemoteException {
