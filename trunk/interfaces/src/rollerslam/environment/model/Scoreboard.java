@@ -6,8 +6,8 @@ import rollerslam.environment.model.visitor.Visitor;
 
 @SuppressWarnings("serial")
 public class Scoreboard extends WorldObject implements Serializable {
-	public int ScoreTeamA = 0;
-	public int ScoreTeamB = 0;
+	public int scoreTeamA = 0;
+	public int scoreTeamB = 0;
 	
 	public Scoreboard(World w) {
 		super(w, 0, 0, 0, 0);
