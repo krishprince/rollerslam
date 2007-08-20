@@ -7,10 +7,9 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
-
 import javax.swing.JLabel;
-
 import rollerslam.display.gui.mvc.Model;
+import rollerslam.display.gui.sprite.Sprite;
 import rollerslam.display.gui.sprite.SpriteKind;
 import rollerslam.display.gui.sprite.SpriteStore;
 import rollerslam.environment.model.Player;
@@ -30,63 +29,88 @@ public class GameCanvas extends Canvas {
     private BufferStrategy strategy;
 
     private World world;
- 
+
     private Model model;
     private SpriteStore ss;
 
     private JLabel messagesLabel;
     
+    private Sprite background;
+    private GameField gameField;
+
     public GameCanvas(JLabel messages) {
-        setBounds(0, 0, 800, 600);
+        gameField = new GameField(4);
+
+        setBounds(0, 0, gameField.getWidth(), gameField.getHeight());
 
         this.messagesLabel = messages;
-        
+
         // Tell AWT not to bother repainting our canvas since we're
         // going to do that our self in accelerated mode
         setIgnoreRepaint(true);
         ss = SpriteStore.get();
+
+        background = new Sprite(gameField.getImage());
     }
 
-	public void init() {
+    public void init() {
         // create the buffering strategy which will allow AWT
         // to manage our accelerated graphics
         createBufferStrategy(2);
-
         strategy = getBufferStrategy();
-
         updateGraphics();
     }
-    
+
     private void updateGraphics() {
         new Thread() {
-
             public void run() {
                 while (true) {
-
                     Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
 
                     g.setColor(Color.GREEN);
                     g.fillRect(0, 0, 800, 600);
-                    ss.getSprite(SpriteKind.FIELD_BACKGROUND).draw(g, 0, 0);
+
+                    background.draw(g, 0, 0);
 
                     world = model.getModel();
                     if (world != null) {
+                        boolean freeBall = true;
                         for (Player player : world.playersA) {
-                            ss.getSprite(SpriteKind.RED_PLAYER).draw(g, translatex(player.s.x), translatey(player.s.y));
+                            Sprite s = null;
+                            if (player.hasBall) {
+                                s = ss.getSprite(SpriteKind.RED_PLAYER_WITH_BALL);
+                                freeBall = false;
+                            } else if (player.inGround) {
+                                s = ss.getSprite(SpriteKind.RED_PLAYER_GROUNDED);
+                            } else {
+                                s = ss.getSprite(SpriteKind.RED_PLAYER);
+                            }
+                            s.draw(g, translatex(player.s.x), translatey(player.s.y));
                         }
 
                         for (Player player : world.playersB) {
-                            ss.getSprite(SpriteKind.BLUE_PLAYER).draw(g, translatex(player.s.x), translatey(player.s.y));
+                            Sprite s = null;
+                            if (player.hasBall) {
+                                s = ss.getSprite(SpriteKind.BLUE_PLAYER_WITH_BALL);
+                                freeBall = false;
+                            } else if (player.inGround) {
+                                s = ss.getSprite(SpriteKind.BLUE_PLAYER_GROUNDED);
+                            } else {
+                                s = ss.getSprite(SpriteKind.BLUE_PLAYER);
+                            }
+                            s.draw(g, translatex(player.s.x), translatey(player.s.y));
                         }
 
-                        ss.getSprite(SpriteKind.BALL).draw(g, translatex(world.ball.s.x), translatey(world.ball.s.y));
-                        
+                        if (freeBall) {
+                            ss.getSprite(SpriteKind.BALL).draw(g, translatex(world.ball.s.x), translatey(world.ball.s.y));
+                        }
+
                         for (Message message : world.actions) {
-                        	if (message instanceof SendMsgAction) {
-                        		MessageHandler.scheduleForExhibition(((SendMsgAction)message).subject);
-                        	}
-						}
-                        
+                            if (message instanceof SendMsgAction) {
+                                MessageHandler.scheduleForExhibition(((SendMsgAction) message).subject);
+                            }
+                        }
+
                         messagesLabel.setText(MessageHandler.getCurrentMessage());
                     }
 
@@ -104,13 +128,11 @@ public class GameCanvas extends Canvas {
     }
 
     private int translatex(int sx) {
-        return ((sx + SimulationSettings.OUTTRACK_WIDTH / 2) * 782) / SimulationSettings.OUTTRACK_WIDTH;
-    	//return (sx * 764) / World.WIDTH / 2;
+        return ((sx + SimulationSettings.OUTTRACK_WIDTH / 2) * gameField.getWidth()) / SimulationSettings.OUTTRACK_WIDTH;
     }
 
     private int translatey(int sy) {
-        return ((sy + SimulationSettings.OUTTRACK_HEIGHT / 2) * 582) / SimulationSettings.OUTTRACK_HEIGHT;
-    	//return (sy * 564) / World.HEIGHT / 2; 
+        return ((sy + SimulationSettings.OUTTRACK_HEIGHT / 2) * gameField.getHeight()) / SimulationSettings.OUTTRACK_HEIGHT;
     }
 
     public void setModel(Model model) {

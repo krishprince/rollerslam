@@ -88,17 +88,19 @@ public class LogPlayingServiceImpl implements LogPlayingService {
     public LogEntry getLogForAgent(Integer agId) {
         LogEntry le = null;
         try {
-            PreparedStatement ps = conn.prepareStatement(readLogForAgentSQL);
-            ps.setInt(1, agId);
-            ps.setInt(2, currentCycle);
+            if (!conn.isClosed()) {
+                PreparedStatement ps = conn.prepareStatement(readLogForAgentSQL);
+                ps.setInt(1, agId);
+                ps.setInt(2, currentCycle);
 
-            ResultSet rs = ps.executeQuery();
+                ResultSet rs = ps.executeQuery();
 
-            if (rs.next()) {
-                le = (LogEntry)SerializationHelper.string2Object(rs.getString(1));
+                if (rs.next()) {
+                    le = (LogEntry)SerializationHelper.string2Object(rs.getString(1));
+                }
+
+                ps.close();
             }
-            
-            ps.close();
         } catch (Exception ex) {
             throw new RuntimeException("Error reading object. Details: " + ex, ex);
         }
@@ -106,6 +108,5 @@ public class LogPlayingServiceImpl implements LogPlayingService {
     }
 
     public static void main(String[] args) {
-
     }
 }
