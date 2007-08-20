@@ -8,8 +8,8 @@ import rollerslam.environment.model.utils.MathGeometry;
 import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.goalbased.GoalBasedEnvironmentStateModel;
 import rollerslam.infrastructure.agent.goalbased.GoalUpdateComponent;
-import rollerslam.infrastructure.server.ServerFacade;
-import rollerslam.infrastructure.server.ServerFacadeImpl;
+import rollerslam.infrastructure.client.ClientFacade;
+import rollerslam.infrastructure.client.ClientFacadeImpl;
 import rollerslam.infrastructure.server.SimulationState;
 import rollerslam.logging.GoalUpdateLogEntry;
 
@@ -24,11 +24,11 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 	public void updateGoal(GoalBasedEnvironmentStateModel goal) {
 		AgentWorldModel model = (AgentWorldModel) goal;
 		
-		ServerFacade facade = ServerFacadeImpl.getInstance();
+		ClientFacade facade = ClientFacadeImpl.getInstance();
 		SimulationState state = SimulationState.STOPPED;
 		
 		try {
-			state = facade.getSimulationStateProvider().getState();
+			state = facade.getSimulationAdmin().getState();
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}	
