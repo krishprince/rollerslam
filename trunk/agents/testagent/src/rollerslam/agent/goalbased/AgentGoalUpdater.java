@@ -10,6 +10,7 @@ import rollerslam.infrastructure.agent.goalbased.GoalBasedEnvironmentStateModel;
 import rollerslam.infrastructure.agent.goalbased.GoalUpdateComponent;
 import rollerslam.infrastructure.server.ServerFacade;
 import rollerslam.infrastructure.server.ServerFacadeImpl;
+import rollerslam.infrastructure.server.SimulationState;
 import rollerslam.logging.GoalUpdateLogEntry;
 
 public class AgentGoalUpdater implements GoalUpdateComponent {
@@ -24,8 +25,18 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 		AgentWorldModel model = (AgentWorldModel) goal;
 		
 		ServerFacade facade = ServerFacadeImpl.getInstance();
-
-		if (model.currentGoal == AgentGoal.JOIN_GAME) {
+		SimulationState state = SimulationState.STOPPED;
+		
+		try {
+			state = facade.getSimulationStateProvider().getState();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}	
+		
+		
+		if(state == SimulationState.STOPPED){
+			//Stop reasoning			
+		} else if (model.currentGoal == AgentGoal.JOIN_GAME) {
 			if (model.joinMessageSent) {
                 model.currentGoal = AgentGoal.WAIT_JOIN_GAME;
 			}
@@ -71,7 +82,6 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
                     		} catch (RemoteException e) {
                     			e.printStackTrace();
                     		}
-                    		System.out.println("TACKLE THE PLAYER - " + me.id);
                     		model.currentGoal = AgentGoal.TACKLE_PLAYER;
                     	}
                     }
@@ -111,7 +121,6 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
             		} catch (RemoteException e) {
             			e.printStackTrace();
             		}
-	                System.out.println("COUNTERTACKLE - " + me.id);
 	                model.currentGoal = AgentGoal.COUNTER_TACKLE;
             	}else{
             		try {
@@ -120,7 +129,6 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
             		} catch (RemoteException e) {
             			e.printStackTrace();
             		}
-	                System.out.println("GO TO GOAL - " + me.id);
 	                model.currentGoal = AgentGoal.GO_TO_GOAL;
             	}
             }else{
