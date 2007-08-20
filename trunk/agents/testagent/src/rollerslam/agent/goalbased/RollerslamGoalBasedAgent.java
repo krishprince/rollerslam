@@ -68,22 +68,27 @@ public class RollerslamGoalBasedAgent extends GoalBasedAgent {
 	}
 
 	public static void main(String... args) throws Exception {
-		ClientFacadeImpl.getInstance().getClientInitialization().init("localhost");
 		
 		PlayerTeam team = PlayerTeam.TEAM_A;
 		
 		String teamStr = "";
+		String hostStr = "";
 		
-		if(args.length == 0)
+		if(args.length == 0) { 
 			teamStr = JOptionPane.showInputDialog("Which team? [A | B]").toUpperCase();
-		else 
+			hostStr = JOptionPane.showInputDialog("Host?", "localhost");
+		} else  {
 			teamStr = args[0].toUpperCase();
+			hostStr = args[1];
+		}
 		
 		if (teamStr.equals("A"))
 			team = PlayerTeam.TEAM_A;
 		else
 			team = PlayerTeam.TEAM_B;
 		
+		ClientFacadeImpl.getInstance().getClientInitialization().init(hostStr);
+
 		new RollerslamGoalBasedAgent(team);
 	}
 }
