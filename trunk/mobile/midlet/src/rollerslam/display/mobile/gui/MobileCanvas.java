@@ -41,9 +41,8 @@ public class MobileCanvas extends GameCanvas {
 	}
 
 	public void paint(Graphics g) {
-        g.setColor(0, 255, 0);
-        g.fillRect(0, 0, getWidth(), getHeight());
-               
+        GameField.drawGameField(g, getWidth(), getHeight());
+                       
         if (model != null && model.getSimulationState() != null && model.getSimulationState().getData() != null) {
             int[] worldView = (int[]) model.getSimulationState().getData();
             
