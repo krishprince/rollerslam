@@ -50,7 +50,15 @@ public class RepeaterDisplay implements Display {
 	public static void main(String[] args) {		
 		RepeaterServer server = RepeaterServer.getInstance();
 		try {
-			server.init(JOptionPane.showInputDialog("Simulation:", "localhost"));			
+			String host = null;
+			
+			if (args.length > 0) {
+				host = args[0];
+			} else {
+				host = JOptionPane.showInputDialog("Simulation:", "localhost");
+			}
+			
+			server.init(host);			
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		} 
