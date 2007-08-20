@@ -7,6 +7,7 @@ import rollerslam.environment.model.Goal;
 import rollerslam.environment.model.OutTrack;
 import rollerslam.environment.model.Player;
 import rollerslam.environment.model.Ramp;
+import rollerslam.environment.model.Scoreboard;
 import rollerslam.environment.model.Trampoline;
 import rollerslam.environment.model.World;
 import rollerslam.environment.model.WorldObject;
@@ -22,4 +23,5 @@ public interface Visitor {
 	void visit(Goal obj);
 	void visit(Ramp obj);
 	void visit(Trampoline obj);
+	void visit(Scoreboard obj);
 }
