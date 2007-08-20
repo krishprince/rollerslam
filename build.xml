@@ -1,0 +1,64 @@
+<project name="Rollerslam" default="build">
+
+    <property name="build.dir" value="classes_tmp"/>
+	<property name="dist.dir" value="dist_tmp"/>
+	<property name="lib.dir" value="lib"/>
+	
+	<property name="logging.build.dir" value="${build.dir}/logging"/>
+	<property name="infrastructure.build.dir" value="${build.dir}/infrastructure"/>
+	<property name="interfaces.build.dir" value="${build.dir}/interface"/>
+	<property name="agents.build.dir" value="${build.dir}/agents"/>
+	<property name="environment.build.dir" value="${build.dir}/environment"/>
+	<property name="logplayer.build.dir" value="${build.dir}/logplayer"/>
+	<property name="display.build.dir" value="${build.dir}/display"/>
+	
+	
+    <target name="prepare" depends="clean">
+	    <mkdir dir="${build.dir}"/>
+		<mkdir dir="${dist.dir}"/>
+		
+		<mkdir dir="${logging.build.dir}"/>
+		<mkdir dir="${infrastructure.build.dir}"/>
+		<mkdir dir="${interfaces.build.dir}"/>
+		<mkdir dir="${agents.build.dir}"/>
+		<mkdir dir="${environment.build.dir}/"/>
+		<mkdir dir="${logplayer.build.dir}/"/>
+		<mkdir dir="${display.build.dir}/"/>
+		
+	</target>
+	
+    <target name="clean">
+        <delete dir="${build.dir}" />
+		<delete dir="${dist.dir}" />
+    </target>
+	
+    <target name="compile" depends="prepare">
+        <javac srcdir="logging/src" destdir="${logging.build.dir}" />
+		<javac srcdir="infrastructure/src" destdir="${infrastructure.build.dir}" />
+		
+    </target>
+	
+	<target name="copy-dependencies">
+	    <copy todir="${dist.dir}">
+            <fileset dir="${lib.dir}" includes="**/*.jar"/>
+        </copy>
+	</target>
+	
+	<target name="build" depends="clean,compile,copy-dependencies">
+	      
+	        <jar destfile="logging.jar">
+            <fileset dir="classes" includes="**/*.class" />
+            <manifest>
+                <attribute name="Main-Class" value="HelloProgram" />
+            </manifest>
+	</target>
+
+    <target name="jar" depends="compile">
+        <jar destfile="logging.jar">
+            <fileset dir="${logging.build.dir}" includes="**"/>
+            <!--manifest>
+		                <attribute name="Main-Class" value="" />
+		            </manifest-->
+        </jar>
+    </target>
+</project>
