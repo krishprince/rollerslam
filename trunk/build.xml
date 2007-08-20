@@ -12,14 +12,19 @@
 	<property name="logplayer.build.dir" value="${build.dir}/logplayer"/>
 	<property name="display.build.dir" value="${build.dir}/display"/>
 	<property name="testagent.build.dir" value="${agents.build.dir}/testagent"/>
+	<property name="repeater.build.dir" value="${build.dir}/repeater"/>
+	<property name="mobile-display.build.dir" value="${build.dir}/mobile/display"/>
 	
 	<property name="hsqldb.jarfile" value="hsqldb.jar"/>
 	<property name="logging.jarfile" value="logging.jar"/>
+	<property name="logplayer.jarfile" value="logplayer.jar"/>
 	<property name="infrastructure.jarfile" value="infrastructure.jar"/>
 	<property name="interfaces.jarfile" value="interfaces.jar"/>
 	<property name="display.jarfile" value="display.jar"/>
 	<property name="environment.jarfile" value="environment.jar"/>
 	<property name="testagent.jarfile" value="testagent.jar"/>
+	<property name="repeater.jarfile" value="repeater.jar"/>
+	<property name="mobile-display.jarfile" value="mobile-display.jar"/>
 	
 	
 	<path id="logging_classpath">
@@ -49,6 +54,8 @@
 		<mkdir dir="${environment.build.dir}/"/>
 		<mkdir dir="${logplayer.build.dir}/"/>
 		<mkdir dir="${display.build.dir}/"/>		
+		<mkdir dir="${repeater.build.dir}/"/>		
+		<mkdir dir="${mobile-display.build.dir}/"/>		
 	</target>
 	
     <target name="clean">
@@ -105,7 +112,7 @@
 	</target>
 	<target name="build-display" depends="compile-display">
 	    <jar destfile="${dist.dir}/${display.jarfile}">
-			<fileset dir="${display.build.dir}" includes="**/*.class" />
+			<fileset dir="${display.build.dir}" includes="**/*.class,**/*.png" />
 			<manifest>
 				<attribute name="Main-Class" value="rollerslam.display.gui.RollerslamDisplay" />
 				<attribute name="Class-Path" value="${infrastructure.jarfile} ${interfaces.jarfile}" />
@@ -172,6 +179,44 @@
 			</manifest>
 		</jar>
 	</target>
+
+	<!-- repeater -->
+	<target name="compile-repeater" depends="prepare">
+	    <javac srcdir="repeater/src" destdir="${repeater.build.dir}">
+			<classpath>
+			    <path refid="infrastructure_classpath"/>
+				<path refid="interfaces_classpath"/>
+			</classpath>
+		</javac>
+	</target>
+	<target name="build-repeater" depends="compile-repeater">
+	    <jar destfile="${dist.dir}/${repeater.jarfile}">
+			<fileset dir="${repeater.build.dir}" includes="**/*.class" />
+			<manifest>
+				<attribute name="Main-Class" value="rollerslam.display.RepeaterDisplay" />
+				<attribute name="Class-Path" value="${infrastructure.jarfile} ${interfaces.jarfile}" />
+			</manifest>
+		</jar>
+	</target>
+
+	<!-- mobile-display -->
+	<target name="compile-mobile-display" depends="prepare">
+	    <javac srcdir="mobile/display/src" destdir="${mobile-display.build.dir}">
+			<classpath>
+			    <path refid="infrastructure_classpath"/>
+				<path refid="interfaces_classpath"/>
+			</classpath>
+		</javac>
+	</target>
+	<target name="build-mobile-display" depends="compile-mobile-display">
+	    <jar destfile="${dist.dir}/${mobile-display.jarfile}">
+			<fileset dir="${mobile-display.build.dir}" includes="**/*.class" />
+			<manifest>
+				<attribute name="Main-Class" value="rollerslam.display.gui.RollerslamMobileDisplay" />
+				<attribute name="Class-Path" value="${infrastructure.jarfile} ${interfaces.jarfile}" />
+			</manifest>
+		</jar>
+	</target>
 	
 	<target name="copy-dependencies">
 	    <copy todir="${dist.dir}">
@@ -181,12 +226,12 @@
 	
 	<target name="compile" depends="compile-logging,compile-infrastructure,
 				compile-interfaces,compile-environment,compile-testagent,compile-display,
-				compile-logplayer">
+				compile-logplayer,compile-repeater,compile-mobile-display">
     </target>
 	
 	<target name="build" depends="build-logging,build-infrastructure,
 				build-interfaces,build-environment,build-testagent,build-display,
-				build-logplayer">
+				build-logplayer,build-repeater,build-mobile-display">
 	</target>
 
 </project>
