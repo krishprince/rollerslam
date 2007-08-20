@@ -71,6 +71,8 @@ public class GameCanvas extends Canvas {
             public void run() {
                 while (true) {
                     Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
+                    Font f;
+                    String tmp;
 
                     g.setColor(Color.GREEN);
                     g.fillRect(0, 0, 800, 600);
@@ -123,16 +125,24 @@ public class GameCanvas extends Canvas {
                         g.setColor(Color.BLUE);
                         g.fillRect(scoreBoardB.getWidth(), 0, scoreBoardB.getWidth(), scoreBoardB.getHeight());
                         
-                        g = (Graphics2D) strategy.getDrawGraphics();
-                        Font f = new Font(null, Font.BOLD, (int)(scoreBoardB.getHeight() / 1.3));
-                        g.setFont(f);
-                        g.setColor(Color.BLACK);
-                        g.drawString(Integer.toString(world.scoreboard.scoreTeamA), 0, (int)(scoreBoardB.getHeight() / 1.3));
+                        tmp = Integer.toString(world.scoreboard.scoreTeamA);
+                        for(int i = tmp.length(); i < 3; ++i)
+                        	tmp = "0" + tmp;
                         
                         g = (Graphics2D) strategy.getDrawGraphics();
+                        f = new Font(null, Font.BOLD, (int)(scoreBoardB.getHeight() / 1.3));
                         g.setFont(f);
                         g.setColor(Color.BLACK);
-                        g.drawString(Integer.toString(world.scoreboard.scoreTeamB), scoreBoardB.getWidth(), (int)(scoreBoardB.getHeight() / 1.3));
+                        g.drawString(tmp, 0, (int)(scoreBoardB.getHeight() / 1.3));
+
+                        tmp = Integer.toString(world.scoreboard.scoreTeamB);
+                        for(int i = tmp.length(); i < 3; ++i)
+                        	tmp = "0" + tmp;
+
+                        g = (Graphics2D) strategy.getDrawGraphics();
+                        g.setFont(f);
+                        g.setColor(Color.BLACK);
+                        g.drawString(tmp, scoreBoardB.getWidth(), (int)(scoreBoardB.getHeight() / 1.3));
 
                         messagesLabel.setText(MessageHandler.getCurrentMessage());
                     }
