@@ -85,7 +85,7 @@ public class GameCanvas extends Canvas {
                             } else {
                                 s = ss.getSprite(SpriteKind.RED_PLAYER);
                             }
-                            s.draw(g, translatex(player.s.x), translatey(player.s.y));
+                            s.draw(g, translatex(player.s.x - 15), translatey(player.s.y - 15));
                         }
 
                         for (Player player : world.playersB) {
@@ -98,11 +98,11 @@ public class GameCanvas extends Canvas {
                             } else {
                                 s = ss.getSprite(SpriteKind.BLUE_PLAYER);
                             }
-                            s.draw(g, translatex(player.s.x), translatey(player.s.y));
+                            s.draw(g, translatex(player.s.x - 15), translatey(player.s.y - 15));
                         }
 
                         if (freeBall) {
-                            ss.getSprite(SpriteKind.BALL).draw(g, translatex(world.ball.s.x), translatey(world.ball.s.y));
+                            ss.getSprite(SpriteKind.BALL).draw(g, translatex(world.ball.s.x - 5), translatey(world.ball.s.y - 5));
                         }
 
                         for (Message message : world.actions) {
