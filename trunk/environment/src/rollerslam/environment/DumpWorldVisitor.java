@@ -9,6 +9,7 @@ import rollerslam.environment.model.Basket;
 import rollerslam.environment.model.Goal;
 import rollerslam.environment.model.OutTrack;
 import rollerslam.environment.model.Player;
+import rollerslam.environment.model.Scoreboard;
 import rollerslam.environment.model.Trampoline;
 import rollerslam.environment.model.Ramp;
 import rollerslam.environment.model.World;
@@ -99,6 +100,11 @@ public class DumpWorldVisitor implements Visitor {
 	 */
 	public void visit(Basket obj) {
 		System.out.println("BASKET");
+		this.visit((WorldObject)obj);
+	}
+
+	public void visit(Scoreboard obj) {
+		System.out.println("SCOREBOARD");
 		this.visit((WorldObject)obj);
 	}
 }
