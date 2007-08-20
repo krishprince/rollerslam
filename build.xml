@@ -109,10 +109,15 @@
 				<path refid="interfaces_classpath"/>
 			</classpath>
 		</javac>
+		
+		<copy todir="${display.build.dir}">
+		  <fileset dir="display/src" includes="**/*.png" />
+		</copy>
 	</target>
 	<target name="build-display" depends="compile-display">
 	    <jar destfile="${dist.dir}/${display.jarfile}">
-			<fileset dir="${display.build.dir}" includes="**/*.class,**/*.png" />
+			<fileset dir="${display.build.dir}" includes="**/*.class" />
+			<fileset dir="${display.build.dir}" includes="**/*.png" />
 			<manifest>
 				<attribute name="Main-Class" value="rollerslam.display.gui.RollerslamDisplay" />
 				<attribute name="Class-Path" value="${infrastructure.jarfile} ${interfaces.jarfile}" />
