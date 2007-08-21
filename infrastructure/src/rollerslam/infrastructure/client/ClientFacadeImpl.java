@@ -50,6 +50,8 @@ public final class ClientFacadeImpl implements ClientFacade, ClientInitializatio
     private AgentRegistry ar;
     private DisplayRegistry dr;
     private SimulationAdmin sa;
+    
+    private LogRecordingService lrs;
 
     private SensorEffectorManager sem;
 
@@ -74,6 +76,8 @@ public final class ClientFacadeImpl implements ClientFacade, ClientInitializatio
             sa = (SimulationAdmin) lookup(SimulationAdmin.class.getSimpleName());
 
             sem = (SensorEffectorManager) lookup(SensorEffectorManager.class.getSimpleName());
+            
+            lrs = (LogRecordingService) lookup(LogRecordingService.class.getSimpleName());
         } catch (Exception e) {
             e.printStackTrace();
 
@@ -162,6 +166,6 @@ public final class ClientFacadeImpl implements ClientFacade, ClientInitializatio
      * @see rollerslam.infrastructure.client.ClientFacade#getLogRecordingService()
      */
     public LogRecordingService getLogRecordingService() throws RemoteException {
-        return LogRecordingServiceImpl.getInstance();
+        return lrs;
     }
 }
