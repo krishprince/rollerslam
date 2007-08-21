@@ -178,7 +178,6 @@ public final class ClientFacadeImpl implements ClientFacade, ClientInitializatio
         return lrs;
     }
 
-	@Override
 	public ServiceDiscoverer getServiceDiscoverer() throws RemoteException {
 		return sd;
 	}
