@@ -19,6 +19,7 @@ import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
 import rollerslam.infrastructure.agent.automata.ModelBasedBehaviorStrategyComponent;
 import rollerslam.infrastructure.client.ClientFacade;
 import rollerslam.infrastructure.client.ClientFacadeImpl;
+import rollerslam.infrastructure.server.SimulationState;
 import rollerslam.logging.AgentActionLogEntry;
 
 public class AgentActionGenerator implements
@@ -33,6 +34,20 @@ public class AgentActionGenerator implements
 	public Message computeAction(EnvironmentStateModel w) {
 		AgentWorldModel model = (AgentWorldModel) w;
 		Message m = null;
+		
+		ClientFacade facade = ClientFacadeImpl.getInstance();
+		SimulationState state = SimulationState.STOPPED;
+		
+		try {
+			state = facade.getSimulationAdmin().getState();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}	
+		
+		
+		if(state == SimulationState.STOPPED){
+			return null;			
+		}
 
 		if (model.currentGoal == AgentGoal.JOIN_GAME) {
 			model.joinMessageSent = true;
@@ -83,15 +98,14 @@ public class AgentActionGenerator implements
         }
 
 		try {
-			ClientFacade facade = ClientFacadeImpl.getInstance();
-			
 			int cycle = 0;
-			if ((World) model.environmentStateModel != null)
+			if (m != null && (World) model.environmentStateModel != null && model.myID != -1){
 				cycle = ((World) model.environmentStateModel).currentCycle;
 				
-			AgentActionLogEntry envLog = new AgentActionLogEntry(cycle, model.myID, m);
+				AgentActionLogEntry envLog = new AgentActionLogEntry(cycle, model.myID, m);
 
-			facade.getLogRecordingService().addEntry(envLog);
+				facade.getLogRecordingService().addEntry(envLog);
+			}
 
 		} catch (RemoteException e) {
 			e.printStackTrace();
