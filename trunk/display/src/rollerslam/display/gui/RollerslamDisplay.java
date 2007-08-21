@@ -3,6 +3,7 @@ package rollerslam.display.gui;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -103,7 +104,36 @@ public class RollerslamDisplay extends JPanel implements View, ActionListener {
     }
 
     private void connectButtonClick(ActionEvent e) {
-        String addr = JOptionPane.showInputDialog("Simulation URL:", "localhost");
+    	Vector<String> options = new Vector<String>();
+    	
+    	try {
+			options.addAll(controller.getAvailableHosts());
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		String addr = "";
+    	
+		if (options.isEmpty()) {
+    		addr = JOptionPane.showInputDialog("Simulation URL:", "localhost");
+    	} else {
+    		if (options.size() == 1) {
+    			addr = options.firstElement();
+    		} else {
+    			int opc = JOptionPane
+						.showOptionDialog(this, "Choose simulation host:", this
+								.getName(), JOptionPane.DEFAULT_OPTION,
+								JOptionPane.QUESTION_MESSAGE, null, options
+										.toArray(new String[0]), options
+										.firstElement());
+    			
+    			if (opc != JOptionPane.CLOSED_OPTION) {
+    				addr = options.elementAt(opc);
+    			}
+    		}
+    	}
+		
+		System.out.println("CONNECTING TO " + addr);
+		
         try {
             controller.connect(addr);
         } catch (Exception e1) {

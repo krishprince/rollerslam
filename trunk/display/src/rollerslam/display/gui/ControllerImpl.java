@@ -3,7 +3,10 @@
  */
 package rollerslam.display.gui;
 
+import java.net.InetAddress;
 import java.rmi.RemoteException;
+import java.util.Vector;
+
 import rollerslam.display.gui.mvc.Controller;
 import rollerslam.display.gui.mvc.Model;
 import rollerslam.display.gui.mvc.View;
@@ -27,6 +30,12 @@ public class ControllerImpl implements Controller {
     public ControllerImpl(View view, Model model) {
         this.view = view;
         this.model = model;
+        
+        try {
+			facade.getServiceDiscoverer().findServer();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 
     /**
@@ -46,4 +55,17 @@ public class ControllerImpl implements Controller {
                 )
             );
     }
+
+	/**
+	 * @see rollerslam.display.gui.mvc.Controller#getAvailableHosts()
+	 */
+	public Vector<String> getAvailableHosts() throws Exception {
+		Vector<String> ret = new Vector<String>();
+		for (InetAddress addr : facade.getServiceDiscoverer().getFoundAddresses()) {
+			ret.add(addr.getHostAddress());
+		}
+		return ret;
+	}
+    
+    
 }
