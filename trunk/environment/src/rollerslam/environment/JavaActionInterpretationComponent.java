@@ -283,8 +283,6 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 			idsMap.put(body, agent);
                         
 			try {
-				//TODO As mensagens nao estavam sincronizadas. Os Agentes tavam recebendo o mesmo id, ou trocado.  
-//                agent.setID(body.id);
                 facade.getEnvironmentEffector().doAction(new GameStartedPerception(null, agent, body.id));
 			} catch (RemoteException e) {
 				e.printStackTrace();
