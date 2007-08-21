@@ -21,6 +21,7 @@
 
 package rollerslam.infrastructure.client;
 
+import java.io.IOException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.Naming;
 import java.rmi.Remote;
@@ -32,8 +33,9 @@ import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.Effector;
 import rollerslam.infrastructure.agent.Sensor;
 import rollerslam.infrastructure.agent.SensorEffectorManager;
+import rollerslam.infrastructure.discoverer.client.MulticastServerDiscoverer;
+import rollerslam.infrastructure.discoverer.client.ServiceDiscoverer;
 import rollerslam.infrastructure.logging.LogRecordingService;
-import rollerslam.infrastructure.logging.LogRecordingServiceImpl;
 import rollerslam.infrastructure.server.AgentRegistry;
 import rollerslam.infrastructure.server.DisplayRegistry;
 import rollerslam.infrastructure.server.SimulationAdmin;
@@ -55,6 +57,8 @@ public final class ClientFacadeImpl implements ClientFacade, ClientInitializatio
 
     private SensorEffectorManager sem;
 
+    private ServiceDiscoverer sd;
+    
     //stores a reference to all exported object so they will not ever be available to garbage collection
     private static Vector<Object> exportedObjects = new Vector<Object>();
 
@@ -64,11 +68,16 @@ public final class ClientFacadeImpl implements ClientFacade, ClientInitializatio
      * Default constructor
      */
     private ClientFacadeImpl() {
+        try {
+			sd = new MulticastServerDiscoverer();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
     }
 
     public void init(String nameserver) {
         host = nameserver;
-
+        
         try {
         	    
             ar = (AgentRegistry) lookup(AgentRegistry.class.getSimpleName());
@@ -168,4 +177,9 @@ public final class ClientFacadeImpl implements ClientFacade, ClientInitializatio
     public LogRecordingService getLogRecordingService() throws RemoteException {
         return lrs;
     }
+
+	@Override
+	public ServiceDiscoverer getServiceDiscoverer() throws RemoteException {
+		return sd;
+	}
 }
