@@ -19,6 +19,8 @@ public class Player extends AnimatedObject {
 	public double strength = 0;
 	
 	public boolean counterTackle = false;
+	
+	public boolean dead = false;
 
 	public Player() {}
 	
