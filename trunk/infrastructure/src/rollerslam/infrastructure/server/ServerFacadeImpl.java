@@ -32,6 +32,7 @@ import rollerslam.infrastructure.agent.Effector;
 import rollerslam.infrastructure.agent.Sensor;
 import rollerslam.infrastructure.agent.SensorEffectorManager;
 import rollerslam.infrastructure.agent.automata.AutomataAgent;
+import rollerslam.infrastructure.discoverer.server.MulticastClientListener;
 import rollerslam.infrastructure.logging.LogRecordingService;
 import rollerslam.infrastructure.logging.LogRecordingServiceImpl;
 
@@ -142,6 +143,9 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
         displayUpdateThread = new DisplayUpdateThread(dri);
         displayUpdateThread.start();
 
+        // starts multicast listener
+        new MulticastClientListener().start();
+        
         //http://forum.java.sun.com/thread.jspa?threadID=5161052&tstart=180
         Object o = new Object();
 

@@ -25,6 +25,7 @@ import java.rmi.RemoteException;
 import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.Effector;
 import rollerslam.infrastructure.agent.Sensor;
+import rollerslam.infrastructure.discoverer.client.ServiceDiscoverer;
 import rollerslam.infrastructure.logging.LogRecordingService;
 import rollerslam.infrastructure.server.AgentRegistry;
 import rollerslam.infrastructure.server.DisplayRegistry;
@@ -74,10 +75,15 @@ public interface ClientFacade {
 	 */
 	ClientInitialization getClientInitialization() throws RemoteException;
         
-        /**
+    /**
 	 * @return the logging service interface
 	 * @throws RemoteException
 	 */
-        LogRecordingService getLogRecordingService() throws RemoteException;
-	
+     LogRecordingService getLogRecordingService() throws RemoteException;
+
+     /**
+     * @return the service discoverer
+     * @throws RemoteException
+     */
+    ServiceDiscoverer getServiceDiscoverer() throws RemoteException;
 }

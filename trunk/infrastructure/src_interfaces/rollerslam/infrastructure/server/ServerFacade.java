@@ -52,14 +52,40 @@ public interface ServerFacade {
 	 */
 	SimulationAdmin getSimulationAdmin() throws RemoteException;
 		
+    /**
+	 * @return the logging service interface
+	 * @throws RemoteException
+	 */
+     LogRecordingService getLogRecordingService() throws RemoteException;
+	
+	/**
+	 * @return
+	 * @throws RemoteException
+	 */
 	Effector getEnvironmentEffector() throws RemoteException;
 	
+	/**
+	 * @return
+	 * @throws RemoteException
+	 */
 	Sensor getEnvironmentSensor() throws RemoteException;
 	
+	/**
+	 * @return
+	 * @throws RemoteException
+	 */
 	ServerInitialization getServerInitialization() throws RemoteException;
 
+	/**
+	 * @return
+	 * @throws RemoteException
+	 */
 	SimulationStateProvider getSimulationStateProvider() throws RemoteException;
 	
+	/**
+	 * @param e
+	 * @throws RemoteException
+	 */
 	void setSimulationStateProvider(SimulationStateProvider e) throws RemoteException;
 	
 	// this should be visible only IN the server component...
@@ -68,11 +94,5 @@ public interface ServerFacade {
 	// this should be visible only IN the server component...
 	Remote exportObject(Remote obj) throws RemoteException, AlreadyBoundException;
         
-        
-        /**
-	 * @return the logging service interface
-	 * @throws RemoteException
-	 */
-        LogRecordingService getLogRecordingService() throws RemoteException;
-        
+                
 }
