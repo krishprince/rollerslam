@@ -1,5 +1,6 @@
 package rollerslam.environment.model;
 
+import rollerslam.environment.model.utils.Vector;
 import rollerslam.environment.model.visitor.Visitable;
 import rollerslam.environment.model.visitor.Visitor;
 import rollerslam.environment.model.SimulationSettings;
@@ -8,7 +9,10 @@ import rollerslam.environment.model.SimulationSettings;
 public class Ball extends AnimatedObject implements Visitable {
         
     public boolean withPlayer = false;
-        
+    
+    //Last position
+    public Vector ls = new Vector(0, 0);
+    
 	public Ball() {}
 	
 	public Ball(World w, int psx, int psy) {
