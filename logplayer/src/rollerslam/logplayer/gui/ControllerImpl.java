@@ -37,7 +37,7 @@ public class ControllerImpl implements Controller, Runnable {
 
     private Integer max;
 
-    protected long interval = 50;
+    protected Integer interval = 100;
 
     private boolean playing = false;
 
@@ -111,5 +111,13 @@ public class ControllerImpl implements Controller, Runnable {
                 Thread.sleep(interval);
             } catch (InterruptedException ex) {}
         }
+    }
+
+    public void setPlaySpeed(Integer speed) {
+        interval = speed;
+    }
+
+    public Integer getPlaySpeed() {
+        return interval;
     }
 }
