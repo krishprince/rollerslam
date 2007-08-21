@@ -19,5 +19,9 @@ public interface Controller {
     public void stop();
     
     public void goTo(Integer cycle);
+    
+    public void setPlaySpeed(Integer speed);
+    
+    public Integer getPlaySpeed();
 
 }

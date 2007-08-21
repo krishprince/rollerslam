@@ -1,11 +1,15 @@
 package rollerslam.logplayer.gui;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import javax.swing.event.ChangeEvent;
 import rollerslam.display.gui.*;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -35,9 +39,12 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
     private JPanel controls;
     private JPanel info;
     private JLabel lblCurrentCycle;
+    
+    private JLabel lblWait;
 
 
     private JSlider cycleSlider;
+    private JSlider speedSlider;
 
     private JButton runStopButton = new JButton("Run");
 
@@ -59,36 +66,71 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
         // get hold the content of the frame and set up the resolution of the game
         JPanel panel = new JPanel();
 
-        int w = 800;
-        int h = 600;
-        panel.setPreferredSize(new java.awt.Dimension(w, h));
-        panel.setMinimumSize(new java.awt.Dimension(w, h));
-        panel.setSize(new java.awt.Dimension(w, h));
-
+        int w = 752;
+        int h = 556;
+        panel.setPreferredSize(new Dimension(w, h));
+        panel.setMinimumSize(new Dimension(w, h));
+        panel.setSize(new Dimension(w, h));
+        panel.setMaximumSize(new Dimension(w, h));
+        
         panel.setLayout(null);
 
         panel.add(game);
 
         this.add(panel);
 
-
-        info = new JPanel();
-        info.setLayout(new FlowLayout());
-        lblCurrentCycle = new JLabel();
-        info.add(lblCurrentCycle);
-        this.add(info);
-
+        
         controls = new JPanel();
-        controls.setLayout(new FlowLayout());
-
-        cycleSlider = new JSlider(JSlider.HORIZONTAL, 1, 100, 1);
+        controls.setLayout(null);
+        controls.setBorder(BorderFactory.createTitledBorder("Simulation Execution Controls"));
+        
+        Dimension cD = new Dimension(752, 200);
+        controls.setMinimumSize(cD);
+        controls.setMaximumSize(cD);
+        controls.setSize(cD);
+        controls.setPreferredSize(cD);
+       // controls.setBackground(Color.RED);
+        
+        
+        lblCurrentCycle = new JLabel("Cycle 0 of 100.");
+        controls.add(lblCurrentCycle);
+        lblCurrentCycle.setBounds(10, 5, 350, 40);
+                
+                
+        cycleSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 1);
         cycleSlider.setEnabled(false);
         cycleSlider.addChangeListener(this);
+        cycleSlider.setMajorTickSpacing(100);
+        cycleSlider.setPaintLabels(true);
+        cycleSlider.setPaintTicks(true);
+        cycleSlider.setBorder(BorderFactory.createTitledBorder("Current Cycle"));
+        
         controls.add(cycleSlider);
+        cycleSlider.setBounds(0, 40, 400, 64);
 
+        speedSlider = new JSlider(JSlider.HORIZONTAL, 50, 1050, 200);
+        speedSlider.addChangeListener(this);
+        speedSlider.setMajorTickSpacing(250);
+        speedSlider.setMinorTickSpacing(50);
+        speedSlider.setSnapToTicks(true);
+        speedSlider.setPaintLabels(true);
+        speedSlider.setPaintTicks(true);
+        controls.add(speedSlider);
+        speedSlider.setBorder(BorderFactory.createTitledBorder("Play Speed (ms)"));
+        speedSlider.setBounds(520, 40, 200, 64);
+        
         runStopButton.addActionListener(this);
         controls.add(runStopButton);
         runStopButton.setEnabled(false);
+        runStopButton.setBounds(336, 160, 80, 26);
+        
+        lblWait = new JLabel("Loading Sim File...");
+        lblWait.setForeground(Color.BLUE);
+        lblWait.setVisible(false);
+        lblWait.setFont(new Font("Arial", Font.BOLD, 22));
+        controls.add(lblWait);
+        lblWait.setBounds(276, 120, 200, 26);
+        
         this.add(controls);
 
         JPanel down = new JPanel();
@@ -163,19 +205,23 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
             }
         });
         
+        lblWait.setVisible(true);
         int opt = jfc.showOpenDialog(this);
+        
         if (opt != JFileChooser.APPROVE_OPTION) {
             return;
         }
+        
         f = jfc.getSelectedFile();
+        
         try {
             controller.load(f);
+            runStopButton.setEnabled(true);
+            cycleSlider.setEnabled(true);
         } catch (Exception e1) {
             showException(e1);
         }
-
-        runStopButton.setEnabled(true);
-        cycleSlider.setEnabled(true);
+        lblWait.setVisible(false);
     }
 
     public void runStopButtonClick(ActionEvent e) {
@@ -189,7 +235,7 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
     }
 
     public void updateCurrentCycleMsg(Integer c, Integer m) {
-        this.lblCurrentCycle.setText("Current cycle: " + c + " Total cycles: " + m);
+        this.lblCurrentCycle.setText("Cycle " + c + " of " + m);
     }
 
     public void updateSliderBounds(Integer m) {
@@ -201,6 +247,15 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
     }
 
     public void stateChanged(ChangeEvent e) {
-        this.controller.goTo(cycleSlider.getValue());
+        Object source = e.getSource();
+        if (source == cycleSlider) {
+            if (cycleSlider.getValue() == 0) {
+                cycleSlider.setValue(1);
+            }
+            this.controller.goTo(cycleSlider.getValue());
+        }
+        if (source == speedSlider) {
+            this.controller.setPlaySpeed(speedSlider.getValue());
+        }
     }
 }
