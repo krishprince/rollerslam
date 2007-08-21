@@ -45,8 +45,8 @@ public class HSQLDBLog extends AbstractLog {
         try {
             Class.forName("org.hsqldb.jdbcDriver").newInstance();
 
-            //current timestamp yearmonthday_hourminute
-            DateFormat df = new SimpleDateFormat("yyyyMMdd_HHmm");
+            //current timestamp yearmonthday_hourminutesecond_millisecond
+            DateFormat df = new SimpleDateFormat("yyyyMMdd_HHmmss_SSS");
             String ct = df.format(new Date());
 
             String url = "jdbc:hsqldb:" + logProperties.getProperty("db.url") + "rollerslam_" + ct + ";shutdown=true";
