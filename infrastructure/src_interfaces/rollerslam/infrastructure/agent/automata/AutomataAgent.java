@@ -8,15 +8,11 @@ import rollerslam.infrastructure.agent.Effector;
 import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.agent.Sensor;
 import rollerslam.infrastructure.agent.StateMessage;
-import rollerslam.infrastructure.server.ServerFacade;
-import rollerslam.infrastructure.server.ServerFacadeImpl;
 import rollerslam.infrastructure.server.SimulationState;
 import rollerslam.infrastructure.server.SimulationStateProvider;
 
 public abstract class AutomataAgent implements Agent, SimulationStateProvider {
 	protected static long cycleDuration = 100;
-
-	public ServerFacade                           facade = ServerFacadeImpl.getInstance();
 	
 	protected EnvironmentStateModel               worldModel;
 	protected ModelInitializationComponent        initializationComponent;
