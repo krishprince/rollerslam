@@ -1,22 +1,23 @@
 package rollerslam.logplayer.gui;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.event.ChangeEvent;
 import rollerslam.display.gui.*;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
@@ -33,21 +34,23 @@ import rollerslam.logplayer.gui.mvc.Controller;
 public class LogPlayerDisplay extends JPanel implements View, ActionListener, ChangeListener {
 
     private Controller controller = null;
-
+    
     private JButton loadSimButton = new JButton("Load Simulation");
     private JLabel messages = new JLabel("");
-    private JPanel controls;
-    private JPanel info;
+    private JPanel pMiddle;
+    
     private JLabel lblCurrentCycle;
     
-    private JLabel lblWait;
-
-
     private JSlider cycleSlider;
     private JSlider speedSlider;
-
+    
     private JButton runStopButton = new JButton("Run");
-
+    
+    private JEditorPane jep;
+    
+    private JComboBox agentTypeCbo;
+    private JComboBox messageTypeCbo;
+    private JButton btnShowMessages; 
 
     private GameCanvas game = new GameCanvas(messages);
 
@@ -80,22 +83,22 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
         this.add(panel);
 
         
-        controls = new JPanel();
+        pMiddle = new JPanel();
+        pMiddle.setLayout(null);
+        Dimension mD = new Dimension(752, 200);
+        pMiddle.setMinimumSize(mD);
+        pMiddle.setMaximumSize(mD);
+        pMiddle.setSize(mD);
+        pMiddle.setPreferredSize(mD);
+        
+        JPanel controls = new JPanel();
         controls.setLayout(null);
         controls.setBorder(BorderFactory.createTitledBorder("Simulation Execution Controls"));
         
-        Dimension cD = new Dimension(752, 200);
-        controls.setMinimumSize(cD);
-        controls.setMaximumSize(cD);
-        controls.setSize(cD);
-        controls.setPreferredSize(cD);
-       // controls.setBackground(Color.RED);
-        
-        
         lblCurrentCycle = new JLabel("Cycle 0 of 100.");
         controls.add(lblCurrentCycle);
-        lblCurrentCycle.setBounds(10, 5, 350, 40);
-                
+        lblCurrentCycle.setBounds(10, 5, 360, 40);
+        
                 
         cycleSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 1);
         cycleSlider.setEnabled(false);
@@ -106,7 +109,7 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
         cycleSlider.setBorder(BorderFactory.createTitledBorder("Current Cycle"));
         
         controls.add(cycleSlider);
-        cycleSlider.setBounds(0, 40, 400, 64);
+        cycleSlider.setBounds(5, 40, 360, 64);
 
         speedSlider = new JSlider(JSlider.HORIZONTAL, 50, 1050, 200);
         speedSlider.addChangeListener(this);
@@ -116,22 +119,58 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
         speedSlider.setPaintLabels(true);
         speedSlider.setPaintTicks(true);
         controls.add(speedSlider);
+        speedSlider.setEnabled(false);
         speedSlider.setBorder(BorderFactory.createTitledBorder("Play Speed (ms)"));
-        speedSlider.setBounds(520, 40, 200, 64);
+        speedSlider.setBounds(5, 124, 200, 64);
         
         runStopButton.addActionListener(this);
         controls.add(runStopButton);
         runStopButton.setEnabled(false);
-        runStopButton.setBounds(336, 160, 80, 26);
+        runStopButton.setBounds(242, 160, 80, 26);
         
-        lblWait = new JLabel("Loading Sim File...");
-        lblWait.setForeground(Color.BLUE);
-        lblWait.setVisible(false);
-        lblWait.setFont(new Font("Arial", Font.BOLD, 22));
-        controls.add(lblWait);
-        lblWait.setBounds(276, 120, 200, 26);
         
-        this.add(controls);
+        pMiddle.add(controls);
+        controls.setBounds(0, 0, 370, 200);
+        
+        
+        JPanel mPanel = new JPanel();
+        mPanel.setLayout(null);
+        mPanel.setBorder(BorderFactory.createTitledBorder("Messages"));
+        
+        
+        agentTypeCbo = new JComboBox(new String[]{"All"});
+        mPanel.add(agentTypeCbo);
+        agentTypeCbo.setBorder(BorderFactory.createTitledBorder("Agent Filter"));
+        agentTypeCbo.setBounds(5, 15, 120, 50);
+        agentTypeCbo.setEnabled(false);
+        
+        messageTypeCbo = new JComboBox(new String[]{"All", "Agent Action", "Goal Update"});
+        mPanel.add(messageTypeCbo);
+        messageTypeCbo.setBorder(BorderFactory.createTitledBorder("Message Type Filter"));
+        messageTypeCbo.setBounds(135, 15, 120, 50);
+        messageTypeCbo.setEnabled(false);
+        
+        jep = new JEditorPane();
+        JScrollPane scrollPane = new JScrollPane(jep);
+
+        jep.setEditable(false);
+        jep.setContentType("text/html");
+        jep.setText("");
+        mPanel.add(scrollPane);
+        scrollPane.setBorder(BorderFactory.createTitledBorder("Message Info"));
+        scrollPane.setBounds(5, 70, 360, 120);
+        
+        btnShowMessages = new JButton("Show");
+        mPanel.add(btnShowMessages);
+        btnShowMessages.setBounds(270, 35, 70, 25);
+        btnShowMessages.setEnabled(false);
+        btnShowMessages.addActionListener(this);
+        
+        
+        pMiddle.add(mPanel);
+        mPanel.setBounds(376, 0, 370, 200);
+        
+        this.add(pMiddle);
 
         JPanel down = new JPanel();
         down.setLayout(new FlowLayout());
@@ -151,13 +190,20 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
     public void actionPerformed(ActionEvent e) {
         Object o = e.getSource();
         if (o == loadSimButton) {
+            loadSimButton.setText("Please Wait!!!");
             loadSimButtonClick(e);
+            loadSimButton.setText("Load Simulation");
             return;
-        }
+        } else 
         if (o == runStopButton) {
             runStopButtonClick(e);
             return;
         }
+        if (o == btnShowMessages) {
+            
+            return;
+        }
+        
         throw new RuntimeException("Object " + e.getSource() + " doesn't have action defined!");
     }
 
@@ -186,7 +232,6 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
 
     public void loadSimButtonClick(ActionEvent e) {
         File f = null;
-
         JFileChooser jfc = new JFileChooser("c:\\temp");
         jfc.removeChoosableFileFilter(jfc.getFileFilter());
         jfc.setFileFilter(new FileFilter() {
@@ -205,7 +250,6 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
             }
         });
         
-        lblWait.setVisible(true);
         int opt = jfc.showOpenDialog(this);
         
         if (opt != JFileChooser.APPROVE_OPTION) {
@@ -218,10 +262,14 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
             controller.load(f);
             runStopButton.setEnabled(true);
             cycleSlider.setEnabled(true);
+            speedSlider.setEnabled(true);
+            
+            agentTypeCbo.setEnabled(true);
+            messageTypeCbo.setEnabled(true);
+            btnShowMessages.setEnabled(true);
         } catch (Exception e1) {
             showException(e1);
         }
-        lblWait.setVisible(false);
     }
 
     public void runStopButtonClick(ActionEvent e) {
