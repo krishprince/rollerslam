@@ -74,7 +74,12 @@ public class HSQLDBLog extends AbstractLog {
     }
 
 
-    protected void doLog(Serializable message) {
+    protected void doLog(Serializable message) {  
+        if (!"rollerslam.logging.EnvironmentStateLogEntry".equals(message.getClass().getName())) {
+                return;
+        }
+        
+        
         if (!(message instanceof LogEntry)) {
             throw new RuntimeException("This log implementation wasn't designed to log " + message.getClass());
         }
@@ -82,6 +87,7 @@ public class HSQLDBLog extends AbstractLog {
             if (conn == null || conn.isClosed()) {
                 return;
             }
+            
 
             PreparedStatement ps = conn.prepareStatement(insStr);
 

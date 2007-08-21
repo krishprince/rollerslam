@@ -264,9 +264,9 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
             cycleSlider.setEnabled(true);
             speedSlider.setEnabled(true);
             
-            agentTypeCbo.setEnabled(true);
-            messageTypeCbo.setEnabled(true);
-            btnShowMessages.setEnabled(true);
+//            agentTypeCbo.setEnabled(true);
+//            messageTypeCbo.setEnabled(true);
+//            btnShowMessages.setEnabled(true);
         } catch (Exception e1) {
             showException(e1);
         }
