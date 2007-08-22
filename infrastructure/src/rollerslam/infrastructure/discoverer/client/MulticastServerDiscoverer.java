@@ -44,8 +44,8 @@ public class MulticastServerDiscoverer implements ServiceDiscoverer {
 				long started = System.currentTimeMillis();
 								
 				while (System.currentTimeMillis() - started < 30 * 1000) {
-					System.out.println("Procurando Servidores...");
-					System.out.print("Enviando Sinal...");
+					System.out.println("SEARCHING SERVERS...");
+					System.out.print("SENDIND SIGNAL...");
 					
 					try {
 						sendPackage();
@@ -61,7 +61,7 @@ public class MulticastServerDiscoverer implements ServiceDiscoverer {
 					DatagramPacket packet = new DatagramPacket(buf, buf.length);
 
 					try {
-						System.out.print("Aguardando Resposta..");
+						System.out.print("WAITING...");
 						
 						socket.receive(packet);
 
@@ -69,11 +69,10 @@ public class MulticastServerDiscoverer implements ServiceDiscoverer {
 						synchronized (serverAddress) {
 							serverAddress.add(packet.getAddress());
 						}
-
-						System.out.println("ok");
-						System.out.println("Servidor encontrado: "
+						
+						System.out.println("SERVER FOUND: "
 								+ serverAddress.toString());
-						System.out.println("Concluído!");
+						System.out.println("OK!");
 					} catch (Exception e1) {
 						if (PrintTrace.TracePrint){
 							e1.printStackTrace();

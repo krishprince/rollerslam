@@ -46,9 +46,9 @@ public class MulticastClientListener extends Thread {
 				int clientPort = packet.getPort();
 				
 				packet = new DatagramPacket(buf, buf.length, clientAddr, clientPort);
-				System.out.println("Enviando resposta para o cliente: " + clientAddr + ":" + clientPort);
+				System.out.println("SENDIND DATAGRAM PACKET TO CLIENT: " + clientAddr + ":" + clientPort);
 				socket.send(packet);
-				System.out.println("Pacote enviado: ");
+				System.out.println("PACKET SENT: ");
 			}
 			
 		} catch (IOException e) {
