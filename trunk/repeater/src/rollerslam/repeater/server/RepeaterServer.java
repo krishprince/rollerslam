@@ -1,5 +1,6 @@
 package rollerslam.repeater.server;
 import java.io.IOException;
+import java.rmi.AlreadyBoundException;
 import java.rmi.Naming;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -49,7 +50,13 @@ public class RepeaterServer {
 	
 	public void init(String serverHost) throws RemoteException {
 		host = serverHost;
-		clientFacade.getClientInitialization().init(serverHost);		
+		
+		if (serverHost == null) {
+			clientFacade.getClientInitialization().init();			
+			serverHost = clientFacade.getClientInitialization().getRemoteHost();
+		} else {
+			clientFacade.getClientInitialization().init(serverHost);
+		}
 		
 		try {
 			clientFacade.getDisplayRegistry().register(
@@ -57,11 +64,16 @@ public class RepeaterServer {
 							this.repeaterDisplay
 						)
 				);
-			
+		} catch (AlreadyBoundException e1) {
+			e1.printStackTrace();
+        	System.exit(-1);
+		}
+		
+		try {			
         	LocateRegistry.createRegistry(1099);
         } catch(Exception e) {
         	e.printStackTrace();
-        	System.exit(-1);
+        	LocateRegistry.getRegistry(1099);
         }
         
         DisplayRegistry drs = (DisplayRegistry) UnicastRemoteObject
