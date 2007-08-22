@@ -115,7 +115,7 @@ public class RollerslamDisplay extends JPanel implements View, ActionListener {
 		} catch (Exception e2) {
 			e2.printStackTrace();
 		}
-		String addr = "";
+		String addr = "localhost";
     	
 		if (options.isEmpty()) {
     		addr = JOptionPane.showInputDialog("Simulation URL:", "localhost");
