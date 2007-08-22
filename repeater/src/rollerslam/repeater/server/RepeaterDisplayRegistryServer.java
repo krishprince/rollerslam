@@ -19,7 +19,6 @@ public class RepeaterDisplayRegistryServer implements DisplayRegistryServer {
 	 * @see rollerslam.infrastructure.server.DisplayRegistry#register(rollerslam.infrastructure.display.Display)
 	 */
 	public void register(Display d) throws RemoteException {
-		System.out.println("ADDED " + d);
 		displays.add(d);		
 	}
 

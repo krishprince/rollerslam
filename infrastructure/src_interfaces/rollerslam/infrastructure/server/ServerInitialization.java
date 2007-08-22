@@ -1,7 +1,6 @@
 package rollerslam.infrastructure.server;
 
 import rollerslam.infrastructure.agent.automata.AutomataAgent;
-import rollerslam.infrastructure.logging.LogRecordingService;
 
 
 public interface ServerInitialization {
@@ -16,6 +15,4 @@ public interface ServerInitialization {
 	 * @throws Exception
 	 */
 	void init(int port, AutomataAgent environmentAgent) throws Exception;
-
-    void init(int port, AutomataAgent environmentAgent, LogRecordingService logRecordingService) throws Exception; 
 }

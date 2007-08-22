@@ -11,11 +11,11 @@ public class MulticastClientListener extends Thread {
 	private MulticastSocket socket = null;
 	
 	public MulticastClientListener() throws IOException {
-		this("255.255.255.255", 14446);
+		this("230.0.0.1", 4446);
 	}
 
 	public MulticastClientListener(String multicastAddress) throws IOException {
-		this(multicastAddress, 14446);
+		this(multicastAddress, 4446);
 	}
 
 	public MulticastClientListener(String multicastAddress, int port)
@@ -29,7 +29,7 @@ public class MulticastClientListener extends Thread {
 	public void run() {
 		
 		try {			
-//			socket.joinGroup(InetAddress.getByName(multicastAddress));
+			socket.joinGroup(InetAddress.getByName(multicastAddress));
 			System.out.println("MULTICAST SERVER STARTED. WAITING...");
 			
 			while(true) {

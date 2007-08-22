@@ -1,5 +1,4 @@
 package rollerslam.repeater.server;
-import java.io.IOException;
 import java.rmi.Naming;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -10,9 +9,7 @@ import rollerslam.display.RepeaterDisplay;
 import rollerslam.infrastructure.agent.SensorEffectorManager;
 import rollerslam.infrastructure.client.ClientFacade;
 import rollerslam.infrastructure.client.ClientFacadeImpl;
-import rollerslam.infrastructure.discoverer.server.MulticastClientListener;
 import rollerslam.infrastructure.display.Display;
-import rollerslam.infrastructure.logging.LogRecordingService;
 import rollerslam.infrastructure.server.AgentRegistry;
 import rollerslam.infrastructure.server.DisplayRegistry;
 import rollerslam.infrastructure.server.SimulationAdmin;
@@ -72,19 +69,10 @@ public class RepeaterServer {
         // Redireciona para o servidor
         bind(AgentRegistry.class.getSimpleName(), clientFacade.getAgentRegistry());        
         bind(SimulationAdmin.class.getSimpleName(), clientFacade.getSimulationAdmin());
-        bind(LogRecordingService.class.getSimpleName(), clientFacade.getLogRecordingService());
         
         //Stub do sensor manager
         SensorEffectorManager sems = (SensorEffectorManager) lookup(SensorEffectorManager.class.getSimpleName());        
-        bind(SensorEffectorManager.class.getSimpleName(), sems);  
-        
-        // starts multicast listener
-        try {
-			new MulticastClientListener().start();
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw new RemoteException(e.getMessage());
-		}        
+        bind(SensorEffectorManager.class.getSimpleName(), sems);       
 	}
 	
     private Object lookup(String simpleName) throws RemoteException {

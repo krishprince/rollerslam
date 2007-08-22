@@ -16,11 +16,11 @@ public class MulticastServerDiscoverer implements ServiceDiscoverer {
 	private int port;	
 	
 	public MulticastServerDiscoverer() throws IOException {		
-		this("255.255.255.255", 14446, 14447);
+		this("230.0.0.1", 4446, 4447);
 	}
 	
 	public MulticastServerDiscoverer(String multicastAddress, int multicastPort) throws IOException {
-		this(multicastAddress, multicastPort, 14447);
+		this(multicastAddress, multicastPort, 4447);
 	}
 	
 	public MulticastServerDiscoverer(String multicastAddress, int multicastPort, int listenPort) throws IOException {

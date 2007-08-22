@@ -77,6 +77,9 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
     }
 
     private ServerFacadeImpl() {
+        //initializing log service
+        logRecSrv = LogRecordingServiceImpl.init();
+
         dri = new DisplayRegistryImpl();
         ari = new AgentRegistryImpl();
         sem = new SensorEffectorManagerImpl();
@@ -93,21 +96,7 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
      * @see rollerslam.infrastructure.server.ServerFacade#init(int, rollerslam.infrastructure.server.AutomataAgent)
      */
     public void init(int port, AutomataAgent environmentAgent) throws Exception {
-    	init(port, environmentAgent, null);
-    }
 
-    /**
-     * @see rollerslam.infrastructure.server.ServerFacade#init(int, rollerslam.infrastructure.server.AutomataAgent)
-     */
-    public void init(int port, AutomataAgent environmentAgent, LogRecordingService logRecordingService) throws Exception {
-    	
-    	if (logRecordingService == null) {
-            //initializing log service
-    		logRecordingService = LogRecordingServiceImpl.init();
-    	}
-    	
-    	logRecSrv = logRecordingService;
-    	
     	try {
         	LocateRegistry.createRegistry(1099);
         } catch(Exception e) {
@@ -128,7 +117,7 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
 
         //exporting log service
         
-        UnicastRemoteObject.exportObject(logRecordingService, 0);
+        UnicastRemoteObject.exportObject(logRecSrv, 0);
 
         exportedObjects.add(sai);
         exportedObjects.add(ari);
@@ -141,7 +130,7 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
         exportedObjects.add(sems);
         
         //adding log to exported objs
-        exportedObjects.add(logRecordingService);
+        exportedObjects.add(logRecSrv);
 
         bind(AgentRegistry.class.getSimpleName(), ars);
         bind(DisplayRegistry.class.getSimpleName(), drs);
@@ -149,12 +138,7 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
         bind(SensorEffectorManager.class.getSimpleName(), sems);
         
         //binding log service to registry
-        try {
-        bind(LogRecordingService.class.getSimpleName(), logRecordingService);        	
-        } catch(Exception e) {
-        	// ignore this exception
-        	e.printStackTrace();
-        }
+        bind(LogRecordingService.class.getSimpleName(), logRecSrv);
 
         displayUpdateThread = new DisplayUpdateThread(dri);
         displayUpdateThread.start();

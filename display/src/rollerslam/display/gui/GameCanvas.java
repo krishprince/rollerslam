@@ -18,7 +18,6 @@ import rollerslam.environment.model.SimulationSettings;
 import rollerslam.environment.model.World;
 import rollerslam.environment.model.actions.voice.SendMsgAction;
 import rollerslam.infrastructure.agent.Message;
-import rollerslam.infrastructure.server.PrintTrace;
 
 /**
  *
@@ -133,7 +132,7 @@ public class GameCanvas extends Canvas {
                         g = (Graphics2D) strategy.getDrawGraphics();
                         f = new Font(null, Font.BOLD, (int)(scoreBoardB.getHeight() / 1.3));
                         g.setFont(f);
-                        g.setColor(Color.WHITE);
+                        g.setColor(Color.BLACK);
                         g.drawString(tmp, 0, (int)(scoreBoardB.getHeight() / 1.3));
 
                         tmp = Integer.toString(world.scoreboard.scoreTeamB);
@@ -142,7 +141,7 @@ public class GameCanvas extends Canvas {
 
                         g = (Graphics2D) strategy.getDrawGraphics();
                         g.setFont(f);
-                        g.setColor(Color.WHITE);
+                        g.setColor(Color.BLACK);
                         g.drawString(tmp, scoreBoardB.getWidth(), (int)(scoreBoardB.getHeight() / 1.3));
 
                         messagesLabel.setText(MessageHandler.getCurrentMessage());
@@ -154,9 +153,7 @@ public class GameCanvas extends Canvas {
                     try {
                         Thread.sleep(50);
                     } catch (InterruptedException e) {
-                    	if (PrintTrace.TracePrint) {
-                            e.printStackTrace();
-                    	}
+                        e.printStackTrace();
                     }
                 }
             }

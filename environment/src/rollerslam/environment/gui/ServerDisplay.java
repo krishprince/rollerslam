@@ -12,16 +12,12 @@ package rollerslam.environment.gui;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.rmi.registry.LocateRegistry;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import rollerslam.environment.RollerslamEnvironmentAgent;
-import rollerslam.infrastructure.logging.LogRecordingService;
 import rollerslam.infrastructure.server.ServerFacade;
 import rollerslam.infrastructure.server.ServerFacadeImpl;
 import rollerslam.infrastructure.server.SimulationState;
@@ -36,18 +32,13 @@ public class ServerDisplay extends JPanel implements ActionListener {
     private JButton startSimulationButton = new JButton("Start");
     private JLabel statusLabel = new JLabel("...");
     private ServerFacade serverFacade = null;
-    private LogRecordingService logger = null;
-    
-    public ServerDisplay() {
-    	this(null);
-    }
 
-    public ServerDisplay(LogRecordingService logger) {
+    public ServerDisplay() {
         serverFacade = ServerFacadeImpl.getInstance();
-        this.logger = logger;
+
         initComponents();
     }
-    
+
     private void updateStatusLabel() {
         try {
             while ((serverFacade == null) || (serverFacade.getSimulationAdmin() == null)) {
@@ -88,7 +79,7 @@ public class ServerDisplay extends JPanel implements ActionListener {
 
             public void run() {
                 try {
-                    serverFacade.getServerInitialization().init(1099, new RollerslamEnvironmentAgent(), logger);
+                    serverFacade.getServerInitialization().init(1099, new RollerslamEnvironmentAgent());
                 } catch (Exception ex) {
                     throw new RuntimeException("Error obtaining remote data... Details:\n\n" + ex);
                 }
@@ -99,20 +90,10 @@ public class ServerDisplay extends JPanel implements ActionListener {
     }
 
     public static void main(String[] args) {
-    	
-    	LogRecordingService logger;
-		try {
-			logger = (LogRecordingService) LocateRegistry.getRegistry("localhost")
-					.lookup(LogRecordingService.class.getSimpleName());
-		} catch (Exception e) {
-			e.printStackTrace();
-			logger = null;
-		}     	
-    	
         JFrame jf = new JFrame();
 
         jf.getContentPane().setLayout(new BoxLayout(jf.getContentPane(), BoxLayout.Y_AXIS));
-        jf.getContentPane().add(new ServerDisplay(logger));
+        jf.getContentPane().add(new ServerDisplay());
 
         jf.pack();
 

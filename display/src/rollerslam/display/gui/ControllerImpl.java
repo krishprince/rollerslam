@@ -16,7 +16,6 @@ import rollerslam.infrastructure.agent.StateMessage;
 import rollerslam.infrastructure.client.ClientFacade;
 import rollerslam.infrastructure.client.ClientFacadeImpl;
 import rollerslam.infrastructure.display.Display;
-import rollerslam.infrastructure.server.PrintTrace;
 
 /**
  * @author Marcos Aurélio
@@ -27,8 +26,7 @@ public class ControllerImpl implements Controller {
     ClientFacade facade = ClientFacadeImpl.getInstance();
     View view = null;
     Model model = null;
-      
-    
+
     public ControllerImpl(View view, Model model) {
         this.view = view;
         this.model = model;
@@ -36,9 +34,7 @@ public class ControllerImpl implements Controller {
         try {
 			facade.getServiceDiscoverer().findServer();
 		} catch (Exception e) {
-			if (PrintTrace.TracePrint) {
-				e.printStackTrace();
-			}			
+			e.printStackTrace();
 		}
     }
 
