@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import rollerslam.display.gui.mvc.Controller;
 import rollerslam.display.gui.mvc.Model;
 import rollerslam.display.gui.mvc.View;
+import rollerslam.infrastructure.server.PrintTrace;
 
 /**
  *
@@ -81,7 +82,10 @@ public class RollerslamDisplay extends JPanel implements View, ActionListener {
     }
 
     protected void showException(Exception e1) {
-        e1.printStackTrace();
+
+        if (PrintTrace.TracePrint){
+            e1.printStackTrace();
+        }
         JOptionPane.showMessageDialog(this, e1.getMessage());
     }
 

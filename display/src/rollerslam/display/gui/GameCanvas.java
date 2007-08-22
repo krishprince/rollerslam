@@ -18,6 +18,7 @@ import rollerslam.environment.model.SimulationSettings;
 import rollerslam.environment.model.World;
 import rollerslam.environment.model.actions.voice.SendMsgAction;
 import rollerslam.infrastructure.agent.Message;
+import rollerslam.infrastructure.server.PrintTrace;
 
 /**
  *
@@ -153,7 +154,9 @@ public class GameCanvas extends Canvas {
                     try {
                         Thread.sleep(50);
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                    	if (PrintTrace.TracePrint) {
+                            e.printStackTrace();
+                    	}
                     }
                 }
             }
