@@ -31,7 +31,7 @@ public class MulticastServerDiscoverer implements ServiceDiscoverer {
 		this.multicastPort    = multicastPort;
 		this.port = listenPort;
 		
-		System.out.println("OPEN SOCKET TO PORT " + this.port);
+		//System.out.println("OPEN SOCKET TO PORT " + this.port);
 		this.socket = new DatagramSocket(this.port);
 		socket.setSoTimeout(5000);
 	}
@@ -45,11 +45,11 @@ public class MulticastServerDiscoverer implements ServiceDiscoverer {
 								
 				while (System.currentTimeMillis() - started < 30 * 1000) {
 					System.out.println("SEARCHING SERVERS...");
-					System.out.print("SENDIND SIGNAL...");
+					//System.out.print("SENDIND SIGNAL...");
 					
 					try {
 						sendPackage();
-						System.out.println("ok");
+						//System.out.println("ok");
 					} catch (IOException e2) {
 						if (PrintTrace.TracePrint){
 							e2.printStackTrace();
@@ -61,7 +61,7 @@ public class MulticastServerDiscoverer implements ServiceDiscoverer {
 					DatagramPacket packet = new DatagramPacket(buf, buf.length);
 
 					try {
-						System.out.print("WAITING...");
+						//System.out.print("WAITING...");
 						
 						socket.receive(packet);
 
@@ -72,7 +72,7 @@ public class MulticastServerDiscoverer implements ServiceDiscoverer {
 						
 						System.out.println("SERVER FOUND: "
 								+ serverAddress.toString());
-						System.out.println("OK!");
+						//System.out.println("OK!");
 					} catch (Exception e1) {
 						if (PrintTrace.TracePrint){
 							e1.printStackTrace();
@@ -97,7 +97,7 @@ public class MulticastServerDiscoverer implements ServiceDiscoverer {
 		DatagramPacket packet = new DatagramPacket(buf, buf.length,
 				InetAddress.getByName(multicastAddress), multicastPort);
 		socket.send(packet);
-		System.out.println("SENT " + packet.getAddress() + ":" + packet.getPort());
+		//System.out.println("SENT " + packet.getAddress() + ":" + packet.getPort());
 	}
 
 	public int getTimeout() {
