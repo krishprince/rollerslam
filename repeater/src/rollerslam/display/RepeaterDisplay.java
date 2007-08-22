@@ -10,6 +10,7 @@ import rollerslam.infrastructure.client.ClientFacadeImpl;
 import rollerslam.infrastructure.discoverer.client.ServiceDiscoverer;
 import rollerslam.infrastructure.display.Display;
 import rollerslam.infrastructure.server.DisplayRegistryServer;
+import rollerslam.infrastructure.server.PrintTrace;
 import rollerslam.repeater.server.RepeaterServer;
 
 /**
@@ -38,7 +39,10 @@ public class RepeaterDisplay implements Display {
 			try{
 				display.update(m);
 			} catch(Exception e) {
-				e.printStackTrace();
+				if (PrintTrace.TracePrint){
+					e.printStackTrace();
+				}
+				
 				toRemove.add(display);
 			}
 		}
@@ -68,7 +72,9 @@ public class RepeaterDisplay implements Display {
 			
 			server.init(host);			
 		} catch (RemoteException e) {
-			e.printStackTrace();
+			if (PrintTrace.TracePrint){
+				e.printStackTrace();
+			}
 		} 
 	}	
 }
