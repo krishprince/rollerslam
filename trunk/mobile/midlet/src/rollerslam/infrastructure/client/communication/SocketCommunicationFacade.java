@@ -6,6 +6,8 @@ import java.io.IOException;
 import javax.microedition.io.Connector;
 import javax.microedition.io.StreamConnection;
 
+import rollerslam.infrastructure.server.PrintTrace;
+
 
 public class SocketCommunicationFacade implements CommunicationFacade {
 	
@@ -48,7 +50,9 @@ public class SocketCommunicationFacade implements CommunicationFacade {
 						}
 					}
 				} catch (IOException e) {
-					e.printStackTrace();
+					if (PrintTrace.TracePrint){
+						e.printStackTrace();
+					}
 				}
 			}
 			
