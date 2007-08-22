@@ -66,7 +66,11 @@ public class LogRecordingServiceImpl implements LogRecordingService {
     	Naming.bind(LogRecordingService.class.getSimpleName(), logExp);
     	
     	System.out.println("Logging service exported!");
-    	
-    	while(true);
+
+        Object o = new Object();
+
+        synchronized (o) {
+            o.wait();
+        }
     }
 }
