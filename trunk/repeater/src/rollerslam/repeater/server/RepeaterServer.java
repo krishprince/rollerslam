@@ -16,6 +16,7 @@ import rollerslam.infrastructure.display.Display;
 import rollerslam.infrastructure.logging.LogRecordingService;
 import rollerslam.infrastructure.server.AgentRegistry;
 import rollerslam.infrastructure.server.DisplayRegistry;
+import rollerslam.infrastructure.server.PrintTrace;
 import rollerslam.infrastructure.server.SimulationAdmin;
 
 /**
@@ -65,14 +66,18 @@ public class RepeaterServer {
 						)
 				);
 		} catch (AlreadyBoundException e1) {
-			e1.printStackTrace();
+			if (PrintTrace.TracePrint){
+				e1.printStackTrace();
+			}
         	System.exit(-1);
 		}
 		
 		try {			
         	LocateRegistry.createRegistry(1099);
         } catch(Exception e) {
-        	e.printStackTrace();
+        	if (PrintTrace.TracePrint){
+				e.printStackTrace();
+			}
         	LocateRegistry.getRegistry(1099);
         }
         
@@ -94,7 +99,9 @@ public class RepeaterServer {
         try {
 			new MulticastClientListener().start();
 		} catch (IOException e) {
-			e.printStackTrace();
+			if (PrintTrace.TracePrint){
+				e.printStackTrace();
+			}
 			throw new RemoteException(e.getMessage());
 		}        
 	}
@@ -103,7 +110,9 @@ public class RepeaterServer {
 		try {
 			return Naming.lookup("rmi://" + host + "/" + simpleName);
 		} catch (Exception e) {
-			e.printStackTrace();
+			if (PrintTrace.TracePrint){
+				e.printStackTrace();
+			}
 			throw new RemoteException(e.toString());
 		}
 	}
@@ -112,7 +121,9 @@ public class RepeaterServer {
     	try {
 			Naming.bind(string, ret);
 		} catch (Exception e) {
-			e.printStackTrace();
+			if (PrintTrace.TracePrint){
+				e.printStackTrace();
+			}
 			throw new RemoteException(e.toString());
 		}
 	}
