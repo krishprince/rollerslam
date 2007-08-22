@@ -57,7 +57,8 @@ public class ControllerImpl implements Controller, Runnable {
             dbUri = dbUri.substring(0, dbUri.length() - 7);
 
             lps.load(dbUri);
-            max = lps.getTotalCycles() - 1;
+            max = lps.getTotalCycles() - 1;            
+            view.updateSliderBounds(max);
             goTo(1);
         } catch (Exception er) {
             throw new RuntimeException(er);
@@ -88,7 +89,6 @@ public class ControllerImpl implements Controller, Runnable {
     private void updateState(Integer cycle) {
         lps.setCurrentCycle(cycle);
         view.updateCurrentCycleMsg(cycle, max);
-        view.updateSliderBounds(max);
         view.updateSlider(cycle);
         LogEntry o = lps.getLogForAgent(-1);
         if (o != null) {

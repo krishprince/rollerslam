@@ -119,10 +119,12 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
         speedSlider.setSnapToTicks(true);
         speedSlider.setPaintLabels(true);
         speedSlider.setPaintTicks(true);
+        speedSlider.setInverted(true);
         controls.add(speedSlider);
         speedSlider.setEnabled(false);
         speedSlider.setBorder(BorderFactory.createTitledBorder("Play Speed (ms)"));
         speedSlider.setBounds(5, 124, 200, 64);
+        
         
         runStopButton.addActionListener(this);
         controls.add(runStopButton);
@@ -221,7 +223,7 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
     public static void main(String[] args) {
         LogPlayerDisplay panel = new LogPlayerDisplay();
 
-        JFrame jf = new JFrame();
+        JFrame jf = new JFrame("Rollerslam Log Player");
 
         jf.getContentPane().setLayout(new BoxLayout(jf.getContentPane(), BoxLayout.Y_AXIS));
         jf.getContentPane().add(panel);
@@ -293,6 +295,8 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
     }
 
     public void updateSliderBounds(Integer m) {
+        cycleSlider.setMajorTickSpacing(Math.round(m / 5));
+        cycleSlider.setLabelTable(cycleSlider.createStandardLabels(cycleSlider.getMajorTickSpacing()));
         cycleSlider.setMaximum(m);
     }
 

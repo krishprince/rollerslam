@@ -96,7 +96,7 @@ public class RollerslamDisplay extends JPanel implements View, ActionListener {
     public static void main(String[] args) {
         RollerslamDisplay panel = new RollerslamDisplay();
 
-        JFrame jf = new JFrame();
+        JFrame jf = new JFrame("Rollerslam Display");
 
         jf.getContentPane().setLayout(new BoxLayout(jf.getContentPane(), BoxLayout.Y_AXIS));
         jf.getContentPane().add(panel);
