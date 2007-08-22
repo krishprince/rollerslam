@@ -1,10 +1,13 @@
 package rollerslam.display;
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.Vector;
 
 import javax.swing.JOptionPane;
 
 import rollerslam.infrastructure.agent.Message;
+import rollerslam.infrastructure.client.ClientFacadeImpl;
+import rollerslam.infrastructure.discoverer.client.ServiceDiscoverer;
 import rollerslam.infrastructure.display.Display;
 import rollerslam.infrastructure.server.DisplayRegistryServer;
 import rollerslam.repeater.server.RepeaterServer;
@@ -54,7 +57,11 @@ public class RepeaterDisplay implements Display {
 			String host = null;
 			
 			if (args.length > 0) {
-				host = args[0];
+				if (args[0].toUpperCase().equals("AUTO")) {
+					host = null;
+				} else {
+					host = args[0];
+				}
 			} else {
 				host = JOptionPane.showInputDialog("Simulation:", "localhost");
 			}
