@@ -179,13 +179,17 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
 			final LogRecordingService logRecordingService) {
     	return new LogRecordingService() {
 
+    		private boolean onError = false;
 			public void addEntry(LogEntry entry) throws RemoteException {
-				try{
-					logRecordingService.addEntry(entry);
-				} catch(Exception e) {
-					if (PrintTrace.TracePrint) {
-						e.printStackTrace();
-					}
+				if (!onError) {
+					try{
+						logRecordingService.addEntry(entry);
+					} catch(Exception e) {
+						if (PrintTrace.TracePrint) {
+							e.printStackTrace();
+						}
+						onError = true;
+					}					
 				}
 			}
     		
