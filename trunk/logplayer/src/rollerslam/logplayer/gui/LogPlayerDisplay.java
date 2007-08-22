@@ -209,10 +209,14 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
     }
 
     protected void showException(Exception e1) {
-    	if (PrintTrace.TracePrint){
-			e1.printStackTrace();
-		}
-        JOptionPane.showMessageDialog(this, e1.getMessage());
+        if (PrintTrace.TracePrint) {
+            e1.printStackTrace();
+        }
+        String msg = e1.getMessage();
+        if (msg == null || "".equals(msg)) {
+            msg = "Exception class: " + e1.getClass().getName();
+        }
+        JOptionPane.showMessageDialog(this, msg, "There was an error...", JOptionPane.ERROR_MESSAGE);        
     }
 
     public static void main(String[] args) {
