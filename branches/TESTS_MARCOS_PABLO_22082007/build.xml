@@ -84,6 +84,9 @@
 	<target name="build-infrastructure" depends="compile-infrastructure">
 	    <jar destfile="${dist.dir}/${infrastructure.jarfile}">
 			<fileset dir="${infrastructure.build.dir}" includes="**/*.class" />
+			<manifest>
+				<attribute name="Class-Path" value="${interfaces.jarfile} ${logging.jarfile} ${hsqldb.jarfile}" />
+			</manifest>
 		</jar>
 	</target>
 	
