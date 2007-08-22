@@ -33,6 +33,7 @@ import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.agent.automata.ActionInterpretationComponent;
 import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
+import rollerslam.infrastructure.server.PrintTrace;
 import rollerslam.infrastructure.server.ServerFacade;
 import rollerslam.infrastructure.server.ServerFacadeImpl;
 
@@ -285,7 +286,10 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 			try {
                 facade.getEnvironmentEffector().doAction(new GameStartedPerception(null, agent, body.id));
 			} catch (RemoteException e) {
-				e.printStackTrace();
+				if (PrintTrace.TracePrint){
+					e.printStackTrace();
+				}
+				
 			}
 		}
 	}
