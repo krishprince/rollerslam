@@ -101,8 +101,13 @@ public class RollerslamMobileDisplay {
 	 */
 	@SuppressWarnings("serial")
 	public static void main(String[] args) throws Exception {
-		ClientFacade facade = ClientFacadeImpl.getInstance(); 
-		facade.getClientInitialization().init(getHost(args));
+		ClientFacade facade = ClientFacadeImpl.getInstance();
+		String host = getHost(args);
+		if (host == null) {
+			facade.getClientInitialization().init();			
+		} else {			
+			facade.getClientInitialization().init(host);			
+		}
 		facade.getDisplayRegistry().register(
 				(Display) facade.getClientInitialization().exportObject(new Display() {
 					public void update(Message m) throws RemoteException {
@@ -125,7 +130,11 @@ public class RollerslamMobileDisplay {
 		if (args.length == 0) {
 			return JOptionPane.showInputDialog("Simulation host", "localhost");
 		} else {
-			return args[0];			
+			if (args[0].toUpperCase().equals("AUTO")) {
+				return null;
+			} else {
+				return args[0];			
+			}
 		}
 	}
 
