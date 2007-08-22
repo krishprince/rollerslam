@@ -9,8 +9,13 @@
 
 package rollerslam.infrastructure.logging;
 
+import java.rmi.Naming;
+import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.Properties;
+
 import orcas.logcomponents.basiclog.Log;
 import orcas.logcomponents.basiclog.LogFactory;
 
@@ -49,5 +54,19 @@ public class LogRecordingServiceImpl implements LogRecordingService {
     public static synchronized LogRecordingService init() {
         instance = new LogRecordingServiceImpl();
         return getInstance();
+    }
+    
+    public static void main(String[] str) throws Exception {
+    	LogRecordingServiceImpl.init();
+    	LogRecordingService logRecordingService = LogRecordingServiceImpl.getInstance();
+
+    	LocateRegistry.createRegistry(1099);
+    	
+    	Remote logExp = UnicastRemoteObject.exportObject(logRecordingService, 0);
+    	Naming.bind(LogRecordingService.class.getSimpleName(), logExp);
+    	
+    	System.out.println("Logging service exported!");
+    	
+    	while(true);
     }
 }
