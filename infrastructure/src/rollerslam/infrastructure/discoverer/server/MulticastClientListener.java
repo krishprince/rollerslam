@@ -5,6 +5,8 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 
+import rollerslam.infrastructure.server.PrintTrace;
+
 public class MulticastClientListener extends Thread {
 	private String multicastAddress;
 	private int    multicastPort;
@@ -50,7 +52,9 @@ public class MulticastClientListener extends Thread {
 			}
 			
 		} catch (IOException e) {
-			e.printStackTrace();
+			if (PrintTrace.TracePrint){
+				e.printStackTrace();
+			}
 		} finally {
 			if(this.socket != null)
 				this.socket.close();

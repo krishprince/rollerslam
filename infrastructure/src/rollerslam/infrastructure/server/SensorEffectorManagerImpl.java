@@ -84,13 +84,17 @@ public class SensorEffectorManagerImpl implements SensorEffectorManager {
 			try {
 				data.effector = (Effector) ServerFacadeImpl.getInstance().exportObject(data.effector);
 			} catch (AlreadyBoundException e) {
-				e.printStackTrace();
+				if (PrintTrace.TracePrint){
+					e.printStackTrace();
+				}
 			}
 
 			try {
 				data.sensor   = (Sensor) ServerFacadeImpl.getInstance().exportObject(data.sensor);
 			} catch (AlreadyBoundException e) {
-				e.printStackTrace();
+				if (PrintTrace.TracePrint){
+					e.printStackTrace();
+				}
 			}
 		}
 	}
