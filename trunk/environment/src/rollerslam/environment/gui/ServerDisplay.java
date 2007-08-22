@@ -100,10 +100,17 @@ public class ServerDisplay extends JPanel implements ActionListener {
     }
 
     public static void main(String[] args) {
-    	
+		String logServer = "";
+
+		if (args.length > 0) {
+			logServer = args[0];
+		} else {
+			logServer = "localhost";
+		}
+		
     	LogRecordingService logger;
 		try {
-			logger = (LogRecordingService) LocateRegistry.getRegistry("localhost")
+			logger = (LogRecordingService) LocateRegistry.getRegistry(logServer)
 					.lookup(LogRecordingService.class.getSimpleName());
 		} catch (Exception e) {
 			if (PrintTrace.TracePrint){
