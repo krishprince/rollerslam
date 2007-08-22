@@ -4,6 +4,7 @@ import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.game.GameCanvas;
 
 import rollerslam.display.mobile.gui.mvc.Model;
+import rollerslam.infrastructure.server.PrintTrace;
 
 public class MobileCanvas extends GameCanvas {
 
@@ -29,7 +30,9 @@ public class MobileCanvas extends GameCanvas {
 					try {
 						Thread.sleep(100);
 					} catch (InterruptedException e) {
-						e.printStackTrace();
+						if (PrintTrace.TracePrint){
+							e.printStackTrace();
+						}
 					}
 									
 					MobileCanvas.this.paint(g);
