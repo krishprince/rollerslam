@@ -201,7 +201,6 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
             return;
         }
         if (o == btnShowMessages) {
-            
             return;
         }
         
