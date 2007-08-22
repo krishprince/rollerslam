@@ -12,6 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import javax.swing.JComboBox;
+
 import rollerslam.display.gui.mvc.Controller;
 import rollerslam.display.gui.mvc.Model;
 import rollerslam.display.gui.mvc.View;
@@ -109,33 +111,23 @@ public class RollerslamDisplay extends JPanel implements View, ActionListener {
 
     private void connectButtonClick(ActionEvent e) {
     	Vector<String> options = new Vector<String>();
-    	
+    	options.add("Select one option");
+		
     	try {
 			options.addAll(controller.getAvailableHosts());
 		} catch (Exception e2) {
-			e2.printStackTrace();
+			//nothing
 		}
-		String addr = "localhost";
-    	
-		if (options.isEmpty()) {
-    		addr = JOptionPane.showInputDialog("Simulation URL:", "localhost");
-    	} else {
-    		if (options.size() == 1) {
-    			addr = options.firstElement();
-    		} else {
-    			int opc = JOptionPane
-						.showOptionDialog(this, "Choose simulation host:", this
-								.getName(), JOptionPane.DEFAULT_OPTION,
-								JOptionPane.QUESTION_MESSAGE, null, options
-										.toArray(new String[0]), options
-										.firstElement());
-    			
-    			if (opc != JOptionPane.CLOSED_OPTION) {
-    				addr = options.elementAt(opc);
-    			}
-    		}
-    	}
 		
+		JComboBox jcb = new JComboBox(options);
+		jcb.setEditable(true);
+		
+		JOptionPane.showMessageDialog(this, jcb);
+		if ("Select one option".equals(jcb.getSelectedItem())) {
+		    return;
+		}
+		
+		String addr = (String)jcb.getSelectedItem();
 		System.out.println("CONNECTING TO " + addr);
 		
         try {
