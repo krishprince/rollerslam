@@ -22,6 +22,7 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 import rollerslam.display.gui.mvc.Model;
+import rollerslam.infrastructure.server.PrintTrace;
 import rollerslam.logplayer.gui.mvc.View;
 import rollerslam.logplayer.gui.mvc.Controller;
 
@@ -208,7 +209,9 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
     }
 
     protected void showException(Exception e1) {
-        e1.printStackTrace();
+    	if (PrintTrace.TracePrint){
+			e1.printStackTrace();
+		}
         JOptionPane.showMessageDialog(this, e1.getMessage());
     }
 
