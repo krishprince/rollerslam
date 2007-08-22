@@ -13,6 +13,12 @@ public interface ClientInitialization {
 	void init(String nameserver);
 
 	/**
+	 * Call this method before any other method.
+	 * Tries to locate the simulation  
+	 */
+	void init();
+	
+	/**
 	 * Helps clients on registering remote objects. Every object that is supposed to be
 	 * accessed remotely should be exported first. 
 	 * 
@@ -23,5 +29,7 @@ public interface ClientInitialization {
 	 */
 	Remote exportObject(Remote obj) throws RemoteException,
 			AlreadyBoundException;
+	
+	String getRemoteHost();
 	
 }

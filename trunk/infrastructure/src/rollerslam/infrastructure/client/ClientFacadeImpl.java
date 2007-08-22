@@ -22,11 +22,14 @@
 package rollerslam.infrastructure.client;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.rmi.AlreadyBoundException;
 import java.rmi.Naming;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.Set;
 import java.util.Vector;
 
 import rollerslam.infrastructure.agent.Agent;
@@ -180,5 +183,34 @@ public final class ClientFacadeImpl implements ClientFacade, ClientInitializatio
 
 	public ServiceDiscoverer getServiceDiscoverer() throws RemoteException {
 		return sd;
+	}
+
+	public String getRemoteHost() {
+		return host;
+	}
+
+	public void init() {
+		System.out.println("STARTING AUTO DETECTION");
+		
+		try {
+			sd.findServer();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		Set<InetAddress> found = null;
+		
+		while((found = sd.getFoundAddresses()).isEmpty()) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		System.out.println("FOUND: " + found);
+
+		host = new ArrayList<InetAddress>(found).get(0).getHostName();
+		init(host);
 	}
 }
