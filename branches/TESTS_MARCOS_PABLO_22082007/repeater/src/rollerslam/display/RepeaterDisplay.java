@@ -83,25 +83,27 @@ public class RepeaterDisplay implements Display, Runnable {
 					Vector<Display> toRemove = new Vector<Display>();		
 					
 					try {
-						for (Display display : displayRegistry.getRegisteredDisplays()) {
-							for (Message m : messages) {
-								try{
+						for (Message m : messages) {
+							for (Display display : displayRegistry
+									.getRegisteredDisplays()) {
+								try {
 									display.update(m);
-								} catch(Exception e) {
-									if (PrintTrace.TracePrint){
+								} catch (Exception e) {
+									if (PrintTrace.TracePrint) {
 										e.printStackTrace();
 									}
-									
+
 									toRemove.add(display);
 									break;
-								}					
+								}
 							}
 
+							for (Display display : toRemove) {
+								displayRegistry.unregister(display);
+							}
 						}
 
-						for (Display display : toRemove) {
-							displayRegistry.unregister(display);
-						}
+						messages.clear();
 					} catch (RemoteException e) {
 						e.printStackTrace();
 					}										
