@@ -1,5 +1,6 @@
 package rollerslam.display.gui;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -45,11 +46,12 @@ public class RollerslamDisplay extends JPanel implements View, ActionListener {
         // get hold the content of the frame and set up the resolution of the game
         JPanel panel = new JPanel();
 
-        int w = 800;
-        int h = 600;
-        panel.setPreferredSize(new java.awt.Dimension(w, h));
-        panel.setMinimumSize(new java.awt.Dimension(w, h));
-        panel.setSize(new java.awt.Dimension(w, h));
+        int w = 752;
+        int h = 556;
+        panel.setPreferredSize(new Dimension(w, h));
+        panel.setMinimumSize(new Dimension(w, h));
+        panel.setSize(new Dimension(w, h));
+        panel.setMaximumSize(new Dimension(w, h));
 
         panel.setLayout(null);
 
@@ -117,7 +119,7 @@ public class RollerslamDisplay extends JPanel implements View, ActionListener {
         try {
             options.addAll(controller.getAvailableHosts());
         } catch (Exception e2) {
-            //nothing
+            this.showException(e2);
         }
 
         JComboBox jcb = new JComboBox(options);
