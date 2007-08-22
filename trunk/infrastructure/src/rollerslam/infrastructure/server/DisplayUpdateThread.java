@@ -60,7 +60,9 @@ public class DisplayUpdateThread extends Thread {
 			try {
 				state = ServerFacadeImpl.getInstance().getSimulationStateProvider().getEnvironmentState();
 			} catch (RemoteException e1) {
-				e1.printStackTrace();
+				if (PrintTrace.TracePrint){
+					e1.printStackTrace();
+				}
 			}
 			
 //			System.out.println("SENDING STATUS...");
@@ -81,7 +83,9 @@ public class DisplayUpdateThread extends Thread {
 						((DisplayRegistry)displayRegistry).unregister(display);
 					}
 				} catch (RemoteException e) {
-					e.printStackTrace();
+					if (PrintTrace.TracePrint){
+						e.printStackTrace();
+					}
 				}
 			}
 			
@@ -89,7 +93,9 @@ public class DisplayUpdateThread extends Thread {
 			try {
 				Thread.sleep(DISPLAY_UPDATE_INTERVAL);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				if (PrintTrace.TracePrint){
+					e.printStackTrace();
+				}
 			}
 		}
 	}

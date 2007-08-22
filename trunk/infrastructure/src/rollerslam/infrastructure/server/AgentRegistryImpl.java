@@ -53,7 +53,9 @@ public class AgentRegistryImpl implements AgentRegistryServer {
 		try {
 			ServerFacadeImpl.getInstance().getSensorEffectorManager().unregisterAgent(a);
 		} catch (RemoteException e) {
-			e.printStackTrace();
+			if (PrintTrace.TracePrint){
+				e.printStackTrace();
+			}
 		}
 	}
 

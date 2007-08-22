@@ -41,6 +41,7 @@ import rollerslam.infrastructure.discoverer.client.ServiceDiscoverer;
 import rollerslam.infrastructure.logging.LogRecordingService;
 import rollerslam.infrastructure.server.AgentRegistry;
 import rollerslam.infrastructure.server.DisplayRegistry;
+import rollerslam.infrastructure.server.PrintTrace;
 import rollerslam.infrastructure.server.SimulationAdmin;
 
 /**
@@ -74,7 +75,10 @@ public final class ClientFacadeImpl implements ClientFacade, ClientInitializatio
         try {
 			sd = new MulticastServerDiscoverer();
 		} catch (IOException e1) {
-			e1.printStackTrace();
+			if (PrintTrace.TracePrint){
+				e1.printStackTrace();
+			}
+			
 		}
     }
 
@@ -91,7 +95,9 @@ public final class ClientFacadeImpl implements ClientFacade, ClientInitializatio
             
             lrs = (LogRecordingService) lookup(LogRecordingService.class.getSimpleName());
         } catch (Exception e) {
-            e.printStackTrace();
+        	if (PrintTrace.TracePrint){
+				e.printStackTrace();
+			}
 
             ar = null;
             dr = null;
@@ -105,7 +111,9 @@ public final class ClientFacadeImpl implements ClientFacade, ClientInitializatio
 		try {
 			return Naming.lookup("rmi://" + host + "/" + simpleName);
 		} catch (Exception e) {
-			e.printStackTrace();
+			if (PrintTrace.TracePrint){
+				e.printStackTrace();
+			}
 			throw new RemoteException(e.toString());
 		}
 	}
