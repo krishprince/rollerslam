@@ -83,6 +83,7 @@ public final class ClientFacadeImpl implements ClientFacade, ClientInitializatio
     }
 
     public void init(String nameserver) {
+    	System.out.println("CONNECTING TO " + nameserver);
         host = nameserver;
         
         try {

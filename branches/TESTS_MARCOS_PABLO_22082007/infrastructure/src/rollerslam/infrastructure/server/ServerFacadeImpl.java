@@ -189,7 +189,7 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
 
     private void bind(String string, Remote ret) throws RemoteException {
     	try {
-			Naming.bind(string, ret);
+			Naming.rebind(string, ret);
 		} catch (Exception e) {
 			if (PrintTrace.TracePrint){
 				e.printStackTrace();
