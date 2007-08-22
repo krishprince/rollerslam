@@ -132,7 +132,7 @@ public class GameCanvas extends Canvas {
                         g = (Graphics2D) strategy.getDrawGraphics();
                         f = new Font(null, Font.BOLD, (int)(scoreBoardB.getHeight() / 1.3));
                         g.setFont(f);
-                        g.setColor(Color.BLACK);
+                        g.setColor(Color.WHITE);
                         g.drawString(tmp, 0, (int)(scoreBoardB.getHeight() / 1.3));
 
                         tmp = Integer.toString(world.scoreboard.scoreTeamB);
@@ -141,7 +141,7 @@ public class GameCanvas extends Canvas {
 
                         g = (Graphics2D) strategy.getDrawGraphics();
                         g.setFont(f);
-                        g.setColor(Color.BLACK);
+                        g.setColor(Color.WHITE);
                         g.drawString(tmp, scoreBoardB.getWidth(), (int)(scoreBoardB.getHeight() / 1.3));
 
                         messagesLabel.setText(MessageHandler.getCurrentMessage());
