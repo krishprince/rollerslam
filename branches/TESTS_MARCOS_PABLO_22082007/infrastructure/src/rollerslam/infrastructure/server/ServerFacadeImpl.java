@@ -85,7 +85,9 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
             envSensor = sem.getEnvironmentSensor();
             envEffector = sem.getEnvironmentEffector();
         } catch (RemoteException e) {
-            e.printStackTrace();
+        	if (PrintTrace.TracePrint){
+				e.printStackTrace();
+			}
         }
     }
 
@@ -153,7 +155,9 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
         bind(LogRecordingService.class.getSimpleName(), logRecordingService);        	
         } catch(Exception e) {
         	// ignore this exception
-        	e.printStackTrace();
+        	if (PrintTrace.TracePrint){
+				e.printStackTrace();
+			}
         }
 
         displayUpdateThread = new DisplayUpdateThread(dri);
@@ -187,7 +191,9 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
     	try {
 			Naming.bind(string, ret);
 		} catch (Exception e) {
-			e.printStackTrace();
+			if (PrintTrace.TracePrint){
+				e.printStackTrace();
+			}
 			throw new RemoteException(e.toString());
 		}
 	}

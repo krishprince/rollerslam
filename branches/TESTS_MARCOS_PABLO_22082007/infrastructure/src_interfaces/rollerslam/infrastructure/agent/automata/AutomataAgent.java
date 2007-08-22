@@ -8,6 +8,7 @@ import rollerslam.infrastructure.agent.Effector;
 import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.agent.Sensor;
 import rollerslam.infrastructure.agent.StateMessage;
+import rollerslam.infrastructure.server.PrintTrace;
 import rollerslam.infrastructure.server.SimulationState;
 import rollerslam.infrastructure.server.SimulationStateProvider;
 
@@ -51,7 +52,9 @@ public abstract class AutomataAgent implements Agent, SimulationStateProvider {
 						try {
 							AutomataAgent.this.wait();
 						} catch (InterruptedException e) {
-							e.printStackTrace();
+							if (PrintTrace.TracePrint){
+								e.printStackTrace();
+							}
 							onError = true;
 						}
 					}
@@ -60,14 +63,18 @@ public abstract class AutomataAgent implements Agent, SimulationStateProvider {
 				try {
 					AutomataAgent.this.processCycle();
 				} catch (Exception e) {
-					e.printStackTrace();
+					if (PrintTrace.TracePrint){
+						e.printStackTrace();
+					}
 					onError = true;
 				}
 
 				try {
 					Thread.sleep(cycleDuration);
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					if (PrintTrace.TracePrint){
+						e.printStackTrace();
+					}
 					onError = true;
 				}
 			}

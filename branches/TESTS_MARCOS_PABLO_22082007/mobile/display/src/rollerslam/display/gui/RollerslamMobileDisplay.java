@@ -13,6 +13,7 @@ import rollerslam.infrastructure.agent.StateMessage;
 import rollerslam.infrastructure.client.ClientFacade;
 import rollerslam.infrastructure.client.ClientFacadeImpl;
 import rollerslam.infrastructure.display.Display;
+import rollerslam.infrastructure.server.PrintTrace;
 
 
 /**
@@ -36,7 +37,9 @@ public class RollerslamMobileDisplay {
 			try {
 				dos = new DataOutputStream(s.getOutputStream());
 			} catch (IOException e1) {
-				e1.printStackTrace();
+				if (PrintTrace.TracePrint){
+					e1.printStackTrace();
+				}
 				return;
 			}
 			
@@ -44,13 +47,17 @@ public class RollerslamMobileDisplay {
 				try {
 					Thread.sleep(100);
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					if (PrintTrace.TracePrint){
+						e.printStackTrace();
+					}
 				}
 				
 				try {
 					sendData(dos);
 				} catch (IOException e) {
-					e.printStackTrace();
+					if (PrintTrace.TracePrint){
+						e.printStackTrace();
+					}
 					break;
 				}
 			}

@@ -7,6 +7,8 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.HashSet;
 import java.util.Set;
+
+import rollerslam.infrastructure.server.PrintTrace;
 	
 public class MulticastServerDiscoverer implements ServiceDiscoverer {
 	private String multicastAddress;
@@ -69,7 +71,9 @@ public class MulticastServerDiscoverer implements ServiceDiscoverer {
 						sendPackage();
 //						System.out.println("ok");
 					} catch (IOException e2) {
-						e2.printStackTrace();
+						if (PrintTrace.TracePrint){
+							e2.printStackTrace();
+						}
 						break;
 					}					
 					
@@ -91,14 +95,18 @@ public class MulticastServerDiscoverer implements ServiceDiscoverer {
 //								+ serverAddress.toString());
 //						System.out.println("Concluído!");
 					} catch (Exception e1) {
-						e1.printStackTrace();
+						if (PrintTrace.TracePrint){
+							e1.printStackTrace();
+						}
 					}
 
 					
 					try {
 						Thread.sleep(100);
 					} catch (InterruptedException e) {
-						e.printStackTrace();
+						if (PrintTrace.TracePrint){
+							e.printStackTrace();
+						}
 					}
 				}
 			}
@@ -118,7 +126,9 @@ public class MulticastServerDiscoverer implements ServiceDiscoverer {
 		try {
 			timeout = this.socket.getSoTimeout();
 		} catch (SocketException e) {
-		e.printStackTrace();
+			if (PrintTrace.TracePrint){
+				e.printStackTrace();
+			}
 		}
 		
 		return timeout;
@@ -128,7 +138,9 @@ public class MulticastServerDiscoverer implements ServiceDiscoverer {
 		try {
 			this.socket.setSoTimeout(timeout);
 		} catch (SocketException e) {
-			e.printStackTrace();
+			if (PrintTrace.TracePrint){
+				e.printStackTrace();
+			}
 		}
 	}
 
