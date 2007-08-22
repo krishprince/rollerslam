@@ -1,0 +1,245 @@
+<project name="Rollerslam" default="build">
+
+    <property name="build.dir" value="classes_tmp"/>
+	<property name="dist.dir" value="dist_tmp"/>
+	<property name="lib.dir" value="lib"/>
+	
+	<property name="logging.build.dir" value="${build.dir}/logging"/>
+	<property name="infrastructure.build.dir" value="${build.dir}/infrastructure"/>
+	<property name="interfaces.build.dir" value="${build.dir}/interface"/>
+	<property name="agents.build.dir" value="${build.dir}/agents"/>
+	<property name="environment.build.dir" value="${build.dir}/environment"/>
+	<property name="logplayer.build.dir" value="${build.dir}/logplayer"/>
+	<property name="display.build.dir" value="${build.dir}/display"/>
+	<property name="testagent.build.dir" value="${agents.build.dir}/testagent"/>
+	<property name="repeater.build.dir" value="${build.dir}/repeater"/>
+	<property name="mobile-display.build.dir" value="${build.dir}/mobile/display"/>
+	
+	<property name="hsqldb.jarfile" value="hsqldb.jar"/>
+	<property name="logging.jarfile" value="logging.jar"/>
+	<property name="logplayer.jarfile" value="logplayer.jar"/>
+	<property name="infrastructure.jarfile" value="infrastructure.jar"/>
+	<property name="interfaces.jarfile" value="interfaces.jar"/>
+	<property name="display.jarfile" value="display.jar"/>
+	<property name="environment.jarfile" value="environment.jar"/>
+	<property name="testagent.jarfile" value="testagent.jar"/>
+	<property name="repeater.jarfile" value="repeater.jar"/>
+	<property name="mobile-display.jarfile" value="mobile-display.jar"/>
+	
+	
+	<path id="logging_classpath">
+        <fileset dir="${dist.dir}" includes="${logging.jarfile}"/>
+    </path>
+	<path id="infrastructure_classpath">
+        <fileset dir="${dist.dir}" includes="${infrastructure.jarfile}"/>
+    </path>
+	<path id="interfaces_classpath">
+        <fileset dir="${dist.dir}" includes="${interfaces.jarfile}"/>
+    </path>
+	<path id="display_classpath">
+        <fileset dir="${dist.dir}" includes="${display.jarfile}"/>
+    </path>
+	
+
+	
+    <target name="prepare">
+	    <mkdir dir="${build.dir}"/>
+		<mkdir dir="${dist.dir}"/>
+		
+		<mkdir dir="${logging.build.dir}"/>
+		<mkdir dir="${infrastructure.build.dir}"/>
+		<mkdir dir="${interfaces.build.dir}"/>
+		<mkdir dir="${agents.build.dir}"/>
+		<mkdir dir="${testagent.build.dir}"/>
+		<mkdir dir="${environment.build.dir}/"/>
+		<mkdir dir="${logplayer.build.dir}/"/>
+		<mkdir dir="${display.build.dir}/"/>		
+		<mkdir dir="${repeater.build.dir}/"/>		
+		<mkdir dir="${mobile-display.build.dir}/"/>		
+	</target>
+	
+    <target name="clean">
+        <delete dir="${build.dir}" />
+		<delete dir="${dist.dir}" />
+    </target>
+	
+	<!-- logging -->
+	<target name="compile-logging" depends="prepare">
+	    <javac srcdir="logging/src" destdir="${logging.build.dir}" />
+	</target>
+	<target name="build-logging" depends="compile-logging">
+	    <jar destfile="${dist.dir}/${logging.jarfile}">
+			<fileset dir="${logging.build.dir}" includes="**/*.class" />
+		</jar>
+	</target>
+	
+	<!-- infrastructure -->
+	<target name="compile-infrastructure" depends="prepare">
+	    <javac srcdir="infrastructure/src_interfaces:infrastructure/src" destdir="${infrastructure.build.dir}">
+			<classpath>
+			    <path refid="logging_classpath"/>
+			</classpath>
+		</javac>		
+	</target>
+	<target name="build-infrastructure" depends="compile-infrastructure">
+	    <jar destfile="${dist.dir}/${infrastructure.jarfile}">
+			<fileset dir="${infrastructure.build.dir}" includes="**/*.class" />
+			<manifest>
+				<attribute name="Class-Path" value="${interfaces.jarfile} ${logging.jarfile} ${hsqldb.jarfile}" />
+			</manifest>
+		</jar>
+	</target>
+	
+	<!-- interfaces -->
+	<target name="compile-interfaces" depends="prepare">
+	    <javac srcdir="interfaces/src" destdir="${interfaces.build.dir}">
+			<classpath>
+			    <path refid="infrastructure_classpath"/>
+			</classpath>
+		</javac>
+	</target>
+	<target name="build-interfaces" depends="compile-interfaces">
+	    <jar destfile="${dist.dir}/${interfaces.jarfile}">
+			<fileset dir="${interfaces.build.dir}" includes="**/*.class" />
+		</jar>
+	</target>
+		
+    <!-- display -->
+	<target name="compile-display" depends="prepare">
+	    <javac srcdir="display/src" destdir="${display.build.dir}">
+			<classpath>
+			    <path refid="infrastructure_classpath"/>
+				<path refid="interfaces_classpath"/>
+			</classpath>
+		</javac>
+		
+		<copy todir="${display.build.dir}">
+		  <fileset dir="display/src" includes="**/*.png" />
+		</copy>
+	</target>
+	<target name="build-display" depends="compile-display">
+	    <jar destfile="${dist.dir}/${display.jarfile}">
+			<fileset dir="${display.build.dir}" includes="**/*.class" />
+			<fileset dir="${display.build.dir}" includes="**/*.png" />
+			<manifest>
+				<attribute name="Main-Class" value="rollerslam.display.gui.RollerslamDisplay" />
+				<attribute name="Class-Path" value="${infrastructure.jarfile} ${interfaces.jarfile}" />
+			</manifest>
+		</jar>
+	</target>
+	
+	
+	<!-- logplayer -->
+	<target name="compile-logplayer" depends="prepare">
+	    <javac srcdir="logplayer/src" destdir="${logplayer.build.dir}">
+			<classpath>
+			    <path refid="infrastructure_classpath"/>
+				<path refid="interfaces_classpath"/>
+				<path refid="display_classpath"/>
+				<path refid="logging_classpath"/>
+			</classpath>
+		</javac>
+	</target>
+	<target name="build-logplayer" depends="compile-logplayer,copy-dependencies">
+	    <jar destfile="${dist.dir}/${logplayer.jarfile}">
+			<fileset dir="${logplayer.build.dir}" includes="**/*.class" />
+			<manifest>
+				<attribute name="Main-Class" value="rollerslam.logplayer.gui.LogPlayerDisplay" />
+				<attribute name="Class-Path" value="${hsqldb.jarfile} ${logging.jarfile} ${infrastructure.jarfile} ${interfaces.jarfile} ${display.jarfile}" />
+			</manifest>
+		</jar>
+	</target>
+	
+	<!-- environment -->
+	<target name="compile-environment" depends="prepare">
+	    <javac srcdir="environment/src" destdir="${environment.build.dir}">
+			<classpath>
+			    <path refid="infrastructure_classpath"/>
+				<path refid="interfaces_classpath"/>
+			</classpath>
+		</javac>
+	</target>
+	<target name="build-environment" depends="compile-environment,copy-dependencies">
+	    <jar destfile="${dist.dir}/${environment.jarfile}">
+			<fileset dir="${environment.build.dir}" includes="**/*.class" />
+			<manifest>
+				<attribute name="Main-Class" value="rollerslam.environment.gui.ServerDisplay" />
+				<attribute name="Class-Path" value="${hsqldb.jarfile} ${logging.jarfile} ${infrastructure.jarfile} ${interfaces.jarfile}" />
+			</manifest>
+		</jar>
+	</target>
+	
+	<!-- testagent -->
+	<target name="compile-testagent" depends="prepare">
+	    <javac srcdir="agents/testagent/src" destdir="${testagent.build.dir}">
+			<classpath>
+			    <path refid="infrastructure_classpath"/>
+				<path refid="interfaces_classpath"/>
+			</classpath>
+		</javac>
+	</target>
+	<target name="build-testagent" depends="compile-testagent">
+	    <jar destfile="${dist.dir}/${testagent.jarfile}">
+			<fileset dir="${testagent.build.dir}" includes="**/*.class" />
+			<manifest>
+				<attribute name="Main-Class" value="rollerslam.agent.goalbased.RollerslamGoalBasedAgent" />
+				<attribute name="Class-Path" value="${infrastructure.jarfile} ${interfaces.jarfile}" />
+			</manifest>
+		</jar>
+	</target>
+
+	<!-- repeater -->
+	<target name="compile-repeater" depends="prepare">
+	    <javac srcdir="repeater/src" destdir="${repeater.build.dir}">
+			<classpath>
+			    <path refid="infrastructure_classpath"/>
+				<path refid="interfaces_classpath"/>
+			</classpath>
+		</javac>
+	</target>
+	<target name="build-repeater" depends="compile-repeater">
+	    <jar destfile="${dist.dir}/${repeater.jarfile}">
+			<fileset dir="${repeater.build.dir}" includes="**/*.class" />
+			<manifest>
+				<attribute name="Main-Class" value="rollerslam.display.RepeaterDisplay" />
+				<attribute name="Class-Path" value="${infrastructure.jarfile} ${interfaces.jarfile}" />
+			</manifest>
+		</jar>
+	</target>
+
+	<!-- mobile-display -->
+	<target name="compile-mobile-display" depends="prepare">
+	    <javac srcdir="mobile/display/src" destdir="${mobile-display.build.dir}">
+			<classpath>
+			    <path refid="infrastructure_classpath"/>
+				<path refid="interfaces_classpath"/>
+			</classpath>
+		</javac>
+	</target>
+	<target name="build-mobile-display" depends="compile-mobile-display">
+	    <jar destfile="${dist.dir}/${mobile-display.jarfile}">
+			<fileset dir="${mobile-display.build.dir}" includes="**/*.class" />
+			<manifest>
+				<attribute name="Main-Class" value="rollerslam.display.gui.RollerslamMobileDisplay" />
+				<attribute name="Class-Path" value="${infrastructure.jarfile} ${interfaces.jarfile}" />
+			</manifest>
+		</jar>
+	</target>
+	
+	<target name="copy-dependencies">
+	    <copy todir="${dist.dir}">
+            <fileset dir="${lib.dir}" includes="**/*.jar"/>
+        </copy>
+	</target>
+	
+	<target name="compile" depends="compile-logging,compile-infrastructure,
+				compile-interfaces,compile-environment,compile-testagent,compile-display,
+				compile-logplayer,compile-repeater,compile-mobile-display">
+    </target>
+	
+	<target name="build" depends="build-logging,build-infrastructure,
+				build-interfaces,build-environment,build-testagent,build-display,
+				build-logplayer,build-repeater,build-mobile-display">
+	</target>
+
+</project>
