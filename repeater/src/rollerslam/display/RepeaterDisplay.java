@@ -19,9 +19,10 @@ import rollerslam.repeater.server.RepeaterServer;
 public class RepeaterDisplay implements Display {
 	
 	private DisplayRegistryServer displayRegistry;
-	
+
 	public RepeaterDisplay(DisplayRegistryServer displayRegistry) {
 		this.displayRegistry = displayRegistry;
+		
 	}
 
 	/**
