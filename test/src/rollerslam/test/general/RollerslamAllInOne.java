@@ -3,6 +3,10 @@ package rollerslam.test.general;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Method;
+import java.rmi.AccessException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -16,6 +20,8 @@ import rollerslam.display.gui.RollerslamMobileDisplay;
 import rollerslam.environment.gui.ServerDisplay;
 import rollerslam.infrastructure.client.ClientFacade;
 import rollerslam.infrastructure.client.ClientFacadeImpl;
+import rollerslam.infrastructure.logging.LogRecordingService;
+import rollerslam.infrastructure.logging.LogRecordingServiceImpl;
 
 /**
  *
@@ -25,13 +31,24 @@ import rollerslam.infrastructure.client.ClientFacadeImpl;
 public class RollerslamAllInOne extends JFrame implements ActionListener {
 
     private RollerslamDisplay rd = new RollerslamDisplay();
-    private ServerDisplay sd = new ServerDisplay();
+    private ServerDisplay sd;
 
     private JPanel pinf = new JPanel();
     private JTextField jtfClass = new JTextField("rollerslam.agent.goalbased.GoalBasedAgentTeam");
     private JButton jbInstantiate = new JButton("Init");
 
     public RollerslamAllInOne() {
+    	
+    	
+    	LogRecordingService logger;
+		try {
+			logger = (LogRecordingService) LocateRegistry.getRegistry("localhost")
+					.lookup(LogRecordingService.class.getSimpleName());
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger = null;
+		}     	
+    	sd = new ServerDisplay(logger);
         initComponents();
     }
 
@@ -51,7 +68,19 @@ public class RollerslamAllInOne extends JFrame implements ActionListener {
     }
 
     public static void main(String... args) throws Exception {
-        RollerslamAllInOne raio = new RollerslamAllInOne();
+        new Thread(new Runnable() {
+        	public void run() {
+        		try {
+        	    	LogRecordingServiceImpl.main(new String[0]);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+        	}
+        }).start();
+
+        Thread.sleep(5000);
+    	
+    	RollerslamAllInOne raio = new RollerslamAllInOne();
         raio.pack();
         raio.rd.main();
         raio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
