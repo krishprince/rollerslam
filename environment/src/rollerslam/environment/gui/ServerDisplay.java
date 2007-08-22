@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 
 import rollerslam.environment.RollerslamEnvironmentAgent;
 import rollerslam.infrastructure.logging.LogRecordingService;
+import rollerslam.infrastructure.server.PrintTrace;
 import rollerslam.infrastructure.server.ServerFacade;
 import rollerslam.infrastructure.server.ServerFacadeImpl;
 import rollerslam.infrastructure.server.SimulationState;
@@ -105,7 +106,9 @@ public class ServerDisplay extends JPanel implements ActionListener {
 			logger = (LogRecordingService) LocateRegistry.getRegistry("localhost")
 					.lookup(LogRecordingService.class.getSimpleName());
 		} catch (Exception e) {
-			e.printStackTrace();
+			if (PrintTrace.TracePrint){
+				e.printStackTrace();
+			}
 			logger = null;
 		}     	
     	

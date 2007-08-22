@@ -9,6 +9,7 @@ import rollerslam.infrastructure.agent.automata.AutomataAgent;
 import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
 import rollerslam.infrastructure.agent.automata.ModelBasedBehaviorStrategyComponent;
 import rollerslam.infrastructure.agent.automata.ModelInitializationComponent;
+import rollerslam.infrastructure.server.PrintTrace;
 import rollerslam.infrastructure.server.ServerFacade;
 import rollerslam.infrastructure.server.ServerFacadeImpl;
 import rollerslam.logging.EnvironmentStateLogEntry;
@@ -42,7 +43,10 @@ public class RollerslamEnvironmentAgent extends AutomataAgent {
 
 					return m;
 				} catch (RemoteException e) {
-					e.printStackTrace();
+					if (PrintTrace.TracePrint){
+						e.printStackTrace();
+					}
+					
 				}
 				return null;
 			}
