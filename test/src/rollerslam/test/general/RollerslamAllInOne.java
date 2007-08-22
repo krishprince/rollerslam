@@ -22,6 +22,7 @@ import rollerslam.infrastructure.client.ClientFacade;
 import rollerslam.infrastructure.client.ClientFacadeImpl;
 import rollerslam.infrastructure.logging.LogRecordingService;
 import rollerslam.infrastructure.logging.LogRecordingServiceImpl;
+import rollerslam.infrastructure.server.PrintTrace;
 
 /**
  *
@@ -45,7 +46,9 @@ public class RollerslamAllInOne extends JFrame implements ActionListener {
 			logger = (LogRecordingService) LocateRegistry.getRegistry("localhost")
 					.lookup(LogRecordingService.class.getSimpleName());
 		} catch (Exception e) {
-			e.printStackTrace();
+			if (PrintTrace.TracePrint){
+				e.printStackTrace();
+			}
 			logger = null;
 		}     	
     	sd = new ServerDisplay(logger);
@@ -73,7 +76,9 @@ public class RollerslamAllInOne extends JFrame implements ActionListener {
         		try {
         	    	LogRecordingServiceImpl.main(new String[0]);
 				} catch (Exception e) {
-					e.printStackTrace();
+					if (PrintTrace.TracePrint){
+						e.printStackTrace();
+					}
 				}
         	}
         }).start();
@@ -97,7 +102,9 @@ public class RollerslamAllInOne extends JFrame implements ActionListener {
         		try {
 					RollerslamMobileDisplay.main(new String[]{"localhost"});
 				} catch (Exception e) {
-					e.printStackTrace();
+					if (PrintTrace.TracePrint){
+						e.printStackTrace();
+					}
 				}
         	}
         }).start();
