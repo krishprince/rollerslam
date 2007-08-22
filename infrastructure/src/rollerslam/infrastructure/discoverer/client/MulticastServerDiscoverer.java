@@ -29,13 +29,33 @@ public class MulticastServerDiscoverer implements ServiceDiscoverer {
 		
 		this.multicastAddress = multicastAddress;
 		this.multicastPort    = multicastPort;
-		this.port = listenPort;
 		
+		tryPort(listenPort);
+
 		System.out.println("OPEN SOCKET TO PORT " + this.port);
-		this.socket = new DatagramSocket(this.port);
 		socket.setSoTimeout(5000);
 	}
 	
+	private void tryPort(int listenPort) {
+		int chances = 100;
+		this.port = listenPort;
+		
+		while(true) {
+			try {
+				--chances;
+				this.socket = new DatagramSocket(this.port);
+				break;
+			} catch (SocketException e) {
+				this.port ++;
+			}
+			
+			if (chances < 0) {
+				break;
+			}				
+		}
+		
+	}
+
 	public void findServer() throws IOException {
 		clearCache();
 		
@@ -44,12 +64,12 @@ public class MulticastServerDiscoverer implements ServiceDiscoverer {
 				long started = System.currentTimeMillis();
 								
 				while (System.currentTimeMillis() - started < 30 * 1000) {
-					System.out.println("Procurando Servidores...");
-					System.out.print("Enviando Sinal...");
+//					System.out.println("Procurando Servidores...");
+//					System.out.print("Enviando Sinal...");
 					
 					try {
 						sendPackage();
-						System.out.println("ok");
+//						System.out.println("ok");
 					} catch (IOException e2) {
 						if (PrintTrace.TracePrint){
 							e2.printStackTrace();
@@ -61,7 +81,7 @@ public class MulticastServerDiscoverer implements ServiceDiscoverer {
 					DatagramPacket packet = new DatagramPacket(buf, buf.length);
 
 					try {
-						System.out.print("Aguardando Resposta..");
+//						System.out.print("Aguardando Resposta..");
 						
 						socket.receive(packet);
 
@@ -70,10 +90,10 @@ public class MulticastServerDiscoverer implements ServiceDiscoverer {
 							serverAddress.add(packet.getAddress());
 						}
 
-						System.out.println("ok");
-						System.out.println("Servidor encontrado: "
-								+ serverAddress.toString());
-						System.out.println("Concluído!");
+//						System.out.println("ok");
+//						System.out.println("Servidor encontrado: "
+//								+ serverAddress.toString());
+//						System.out.println("Concluído!");
 					} catch (Exception e1) {
 						if (PrintTrace.TracePrint){
 							e1.printStackTrace();
@@ -98,7 +118,7 @@ public class MulticastServerDiscoverer implements ServiceDiscoverer {
 		DatagramPacket packet = new DatagramPacket(buf, buf.length,
 				InetAddress.getByName(multicastAddress), multicastPort);
 		socket.send(packet);
-		System.out.println("SENT " + packet.getAddress() + ":" + packet.getPort());
+//		System.out.println("SENT " + packet.getAddress() + ":" + packet.getPort());
 	}
 
 	public int getTimeout() {

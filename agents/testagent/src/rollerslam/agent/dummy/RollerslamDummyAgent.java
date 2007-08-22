@@ -11,7 +11,6 @@ import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.client.ClientFacade;
 import rollerslam.infrastructure.client.ClientFacadeImpl;
-import rollerslam.infrastructure.server.PrintTrace;
 
 @SuppressWarnings("serial")
 public class RollerslamDummyAgent implements Agent, Runnable {
@@ -58,9 +57,7 @@ public class RollerslamDummyAgent implements Agent, Runnable {
 			facade.getAgentEffector(remoteThis).doAction(
 					new DashAction(remoteThis, new Vector(900, 500)));
 		} catch (Exception e) {
-			if (PrintTrace.TracePrint){
-				e.printStackTrace();
-			}
+			e.printStackTrace();
 		}
 	}
 
