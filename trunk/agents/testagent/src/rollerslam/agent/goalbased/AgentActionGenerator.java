@@ -19,6 +19,7 @@ import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
 import rollerslam.infrastructure.agent.automata.ModelBasedBehaviorStrategyComponent;
 import rollerslam.infrastructure.client.ClientFacade;
 import rollerslam.infrastructure.client.ClientFacadeImpl;
+import rollerslam.infrastructure.server.PrintTrace;
 import rollerslam.infrastructure.server.SimulationState;
 import rollerslam.logging.AgentActionLogEntry;
 
@@ -41,7 +42,9 @@ public class AgentActionGenerator implements
 		try {
 			state = facade.getSimulationAdmin().getState();
 		} catch (RemoteException e) {
-			e.printStackTrace();
+			if (PrintTrace.TracePrint){
+				e.printStackTrace();
+			}
 		}	
 		
 		
@@ -108,7 +111,9 @@ public class AgentActionGenerator implements
 			}
 
 		} catch (RemoteException e) {
-			e.printStackTrace();
+			if (PrintTrace.TracePrint){
+				e.printStackTrace();
+			}
 			return m;
 		}
 		
