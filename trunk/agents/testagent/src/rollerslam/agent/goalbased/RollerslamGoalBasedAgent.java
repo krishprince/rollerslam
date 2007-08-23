@@ -87,11 +87,7 @@ public class RollerslamGoalBasedAgent extends GoalBasedAgent {
 		else
 			team = PlayerTeam.TEAM_B;
 		
-		if (hostStr.toLowerCase().equals("auto")) {
-			ClientFacadeImpl.getInstance().getClientInitialization().init();			
-		} else {
-			ClientFacadeImpl.getInstance().getClientInitialization().init(hostStr);
-		}
+		ClientFacadeImpl.getInstance().getClientInitialization().init(hostStr);
 
 		new RollerslamGoalBasedAgent(team);
 	}

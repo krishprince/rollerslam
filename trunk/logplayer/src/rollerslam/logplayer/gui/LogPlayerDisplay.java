@@ -119,10 +119,12 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
         speedSlider.setSnapToTicks(true);
         speedSlider.setPaintLabels(true);
         speedSlider.setPaintTicks(true);
+        speedSlider.setInverted(true);
         controls.add(speedSlider);
         speedSlider.setEnabled(false);
         speedSlider.setBorder(BorderFactory.createTitledBorder("Play Speed (ms)"));
         speedSlider.setBounds(5, 124, 200, 64);
+        
         
         runStopButton.addActionListener(this);
         controls.add(runStopButton);
@@ -201,7 +203,6 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
             return;
         }
         if (o == btnShowMessages) {
-            
             return;
         }
         
@@ -209,16 +210,20 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
     }
 
     protected void showException(Exception e1) {
-    	if (PrintTrace.TracePrint){
-			e1.printStackTrace();
-		}
-        JOptionPane.showMessageDialog(this, e1.getMessage());
+        if (PrintTrace.TracePrint) {
+            e1.printStackTrace();
+        }
+        String msg = e1.getMessage();
+        if (msg == null || "".equals(msg)) {
+            msg = "Exception class: " + e1.getClass().getName();
+        }
+        JOptionPane.showMessageDialog(this, msg, "There was an error...", JOptionPane.ERROR_MESSAGE);        
     }
 
     public static void main(String[] args) {
         LogPlayerDisplay panel = new LogPlayerDisplay();
 
-        JFrame jf = new JFrame();
+        JFrame jf = new JFrame("Rollerslam Log Player");
 
         jf.getContentPane().setLayout(new BoxLayout(jf.getContentPane(), BoxLayout.Y_AXIS));
         jf.getContentPane().add(panel);
@@ -290,6 +295,8 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
     }
 
     public void updateSliderBounds(Integer m) {
+        cycleSlider.setMajorTickSpacing(Math.round(m / 5));
+        cycleSlider.setLabelTable(cycleSlider.createStandardLabels(cycleSlider.getMajorTickSpacing()));
         cycleSlider.setMaximum(m);
     }
 
