@@ -31,7 +31,6 @@ public class MulticastClientListener extends Thread {
 	public void run() {
 		
 		try {			
-//			socket.joinGroup(InetAddress.getByName(multicastAddress));
 			System.out.println("MULTICAST SERVER STARTED. WAITING...");
 			
 			while(true) {
@@ -48,7 +47,6 @@ public class MulticastClientListener extends Thread {
 				packet = new DatagramPacket(buf, buf.length, clientAddr, clientPort);
 				//System.out.println("SENDIND DATAGRAM PACKET TO CLIENT: " + clientAddr + ":" + clientPort);
 				socket.send(packet);
-				//System.out.println("PACKET SENT: ");
 			}
 			
 		} catch (IOException e) {
