@@ -39,16 +39,16 @@ public class MulticastClientListener extends Thread {
 				
 				DatagramPacket packet = new DatagramPacket(buf, buf.length);		
 				socket.receive(packet);
-				//System.out.println("DATAGRAM PACKET RECEIVED");
+//				System.out.println("DATAGRAM PACKET RECEIVED");
 				
 				//Informacoes do cliente
 				InetAddress clientAddr = packet.getAddress();
 				int clientPort = packet.getPort();
 				
 				packet = new DatagramPacket(buf, buf.length, clientAddr, clientPort);
-				//System.out.println("SENDIND DATAGRAM PACKET TO CLIENT: " + clientAddr + ":" + clientPort);
+//				System.out.println("Enviando resposta para o cliente: " + clientAddr + ":" + clientPort);
 				socket.send(packet);
-				//System.out.println("PACKET SENT: ");
+//				System.out.println("Pacote enviado: ");
 			}
 			
 		} catch (IOException e) {

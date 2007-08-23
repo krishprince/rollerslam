@@ -1,17 +1,19 @@
 package rollerslam.display.gui;
 
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
 import javax.swing.JComboBox;
+
 import rollerslam.display.gui.mvc.Controller;
 import rollerslam.display.gui.mvc.Model;
 import rollerslam.display.gui.mvc.View;
@@ -27,8 +29,8 @@ public class RollerslamDisplay extends JPanel implements View, ActionListener {
     private Controller controller = null;
 
     private JButton connectButton = new JButton("Connect to Simulation");
-    private JLabel messages = new JLabel("");
-
+    private JLabel  messages      = new JLabel("");
+    
     private GameCanvas game = new GameCanvas(messages);
 
     public RollerslamDisplay() {
@@ -36,22 +38,21 @@ public class RollerslamDisplay extends JPanel implements View, ActionListener {
         this.controller = new ControllerImpl(this, model);
 
         game.setModel(model);
-
+        
         initComponents();
     }
-
+    
     private void initComponents() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // get hold the content of the frame and set up the resolution of the game
         JPanel panel = new JPanel();
-
-        int w = 752;
-        int h = 556;
-        panel.setPreferredSize(new Dimension(w, h));
-        panel.setMinimumSize(new Dimension(w, h));
-        panel.setSize(new Dimension(w, h));
-        panel.setMaximumSize(new Dimension(w, h));
+        
+        int w = 800;
+        int h = 600;
+        panel.setPreferredSize(new java.awt.Dimension(w, h));
+        panel.setMinimumSize(new java.awt.Dimension(w, h));
+        panel.setSize(new java.awt.Dimension(w, h));
 
         panel.setLayout(null);
 
@@ -68,7 +69,7 @@ public class RollerslamDisplay extends JPanel implements View, ActionListener {
 
         this.add(down);
     }
-
+    
     public void main() {
         game.init();
     }
@@ -83,60 +84,57 @@ public class RollerslamDisplay extends JPanel implements View, ActionListener {
     }
 
     protected void showException(Exception e1) {
-        if (PrintTrace.TracePrint) {
+
+        if (PrintTrace.TracePrint){
             e1.printStackTrace();
         }
-        String msg = e1.getMessage();
-        if (msg == null || "".equals(msg)) {
-            msg = "Exception class: " + e1.getClass().getName();
-        }
-        JOptionPane.showMessageDialog(this, msg, "There was an error...", JOptionPane.ERROR_MESSAGE);        
+        JOptionPane.showMessageDialog(this, e1.getMessage());
     }
 
     public static void main(String[] args) {
         RollerslamDisplay panel = new RollerslamDisplay();
-
-        JFrame jf = new JFrame("Rollerslam Display");
-
+        
+        JFrame jf = new JFrame();
+        
         jf.getContentPane().setLayout(new BoxLayout(jf.getContentPane(), BoxLayout.Y_AXIS));
         jf.getContentPane().add(panel);
-
+        
         // finally make the window visible
         jf.pack();
         jf.setResizable(false);
 
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        
         panel.main();
         jf.setVisible(true);
     }
 
     private void connectButtonClick(ActionEvent e) {
-        final String DEFAULT_MSG = "Select one option";
-        Vector<String> options = new Vector<String>();
-        options.add(DEFAULT_MSG);
-
-        try {
-            options.addAll(controller.getAvailableHosts());
-        } catch (Exception e2) {
-            this.showException(e2);
-        }
-
-        JComboBox jcb = new JComboBox(options);
-        jcb.setEditable(true);
-
-        int opt = JOptionPane.showConfirmDialog(this, jcb, "Select or inform server URI", JOptionPane.OK_CANCEL_OPTION);
-        if (opt != JOptionPane.OK_OPTION) {
-            return;
-        }
-
-        String addr = (String) jcb.getSelectedItem();
-        System.out.println("CONNECTING TO " + addr);
-
+    	Vector<String> options = new Vector<String>();
+    	options.add("Select one option");
+		
+    	try {
+			options.addAll(controller.getAvailableHosts());
+		} catch (Exception e2) {
+			//nothing
+		}
+		
+		JComboBox jcb = new JComboBox(options);
+		jcb.setEditable(true);
+		
+		JOptionPane.showMessageDialog(this, jcb);
+		if ("Select one option".equals(jcb.getSelectedItem())) {
+		    return;
+		}
+		
+		String addr = (String)jcb.getSelectedItem();
+		System.out.println("CONNECTING TO " + addr);
+		
         try {
             controller.connect(addr);
         } catch (Exception e1) {
             showException(e1);
         }
     }
+
 }

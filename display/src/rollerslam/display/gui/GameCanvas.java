@@ -8,7 +8,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
-import java.text.NumberFormat;
 import javax.swing.JLabel;
 import rollerslam.display.gui.mvc.Model;
 import rollerslam.display.gui.sprite.Sprite;
@@ -37,7 +36,7 @@ public class GameCanvas extends Canvas {
     private SpriteStore ss;
 
     private JLabel messagesLabel;
-
+    
     private Sprite background;
     private Sprite scoreBoardA;
     private Sprite scoreBoardB;
@@ -71,22 +70,16 @@ public class GameCanvas extends Canvas {
     private void updateGraphics() {
         new Thread() {
             public void run() {
-                NumberFormat nf = NumberFormat.getInstance();
-                nf.setMaximumIntegerDigits(3);
-                nf.setMinimumIntegerDigits(3);
-                nf.setParseIntegerOnly(true);
-                Font f = new Font(null, Font.BOLD, (int) (scoreBoardB.getHeight() / 1.3));
-
-                String tmp;
-                Graphics2D g;
                 while (true) {
-                    g = (Graphics2D) strategy.getDrawGraphics();
+                    Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
+                    Font f;
+                    String tmp;
 
                     g.setColor(Color.GREEN);
                     g.fillRect(0, 0, 800, 600);
 
                     background.draw(g, 0, 0);
-
+                    
                     world = model.getModel();
                     if (world != null) {
                         boolean freeBall = true;
@@ -125,22 +118,32 @@ public class GameCanvas extends Canvas {
                                 MessageHandler.scheduleForExhibition(((SendMsgAction) message).subject);
                             }
                         }
-
+                        
+                        
+                        g = (Graphics2D) strategy.getDrawGraphics();
                         g.setColor(Color.RED);
                         g.fillRect(0, 0, scoreBoardA.getWidth(), scoreBoardA.getHeight());
                         g.setColor(Color.BLUE);
                         g.fillRect(scoreBoardB.getWidth(), 0, scoreBoardB.getWidth(), scoreBoardB.getHeight());
                         
-                        tmp = nf.format(world.scoreboard.scoreTeamA);
-
+                        tmp = Integer.toString(world.scoreboard.scoreTeamA);
+                        for(int i = tmp.length(); i < 3; ++i)
+                        	tmp = "0" + tmp;
+                        
+                        g = (Graphics2D) strategy.getDrawGraphics();
+                        f = new Font(null, Font.BOLD, (int)(scoreBoardB.getHeight() / 1.3));
                         g.setFont(f);
                         g.setColor(Color.WHITE);
-                        g.drawString(tmp, 0, (int) (scoreBoardB.getHeight() / 1.3));
+                        g.drawString(tmp, 0, (int)(scoreBoardB.getHeight() / 1.3));
 
-                        tmp = nf.format(world.scoreboard.scoreTeamB);
+                        tmp = Integer.toString(world.scoreboard.scoreTeamB);
+                        for(int i = tmp.length(); i < 3; ++i)
+                        	tmp = "0" + tmp;
 
+                        g = (Graphics2D) strategy.getDrawGraphics();
+                        g.setFont(f);
                         g.setColor(Color.WHITE);
-                        g.drawString(tmp, scoreBoardB.getWidth(), (int) (scoreBoardB.getHeight() / 1.3));
+                        g.drawString(tmp, scoreBoardB.getWidth(), (int)(scoreBoardB.getHeight() / 1.3));
 
                         messagesLabel.setText(MessageHandler.getCurrentMessage());
                     }
@@ -151,9 +154,9 @@ public class GameCanvas extends Canvas {
                     try {
                         Thread.sleep(50);
                     } catch (InterruptedException e) {
-                        if (PrintTrace.TracePrint) {
+                    	if (PrintTrace.TracePrint) {
                             e.printStackTrace();
-                        }
+                    	}
                     }
                 }
             }

@@ -6,6 +6,6 @@ package rollerslam.infrastructure.server;
 */
 public class PrintTrace {
 
-	public static boolean TracePrint = false;
+	public static boolean TracePrint = true;
 			
 }

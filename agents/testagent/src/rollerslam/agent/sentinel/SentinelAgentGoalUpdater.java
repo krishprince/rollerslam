@@ -12,7 +12,6 @@ import rollerslam.infrastructure.agent.goalbased.GoalBasedEnvironmentStateModel;
 import rollerslam.infrastructure.agent.goalbased.GoalUpdateComponent;
 import rollerslam.infrastructure.client.ClientFacade;
 import rollerslam.infrastructure.client.ClientFacadeImpl;
-import rollerslam.infrastructure.server.PrintTrace;
 import rollerslam.infrastructure.server.ServerFacade;
 import rollerslam.infrastructure.server.ServerFacadeImpl;
 import rollerslam.logging.GoalUpdateLogEntry;
@@ -37,9 +36,7 @@ public class SentinelAgentGoalUpdater implements GoalUpdateComponent {
         			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "The player " + me.id + " is out");
         			facade.getLogRecordingService().addEntry(envLog);
         		} catch (RemoteException e) {
-        			if (PrintTrace.TracePrint){
-    					e.printStackTrace();
-    				}
+        			e.printStackTrace();
         		}
             	model.currentGoal = SentinelAgentGoal.CREATE_PLAYER;
             }
@@ -51,9 +48,7 @@ public class SentinelAgentGoalUpdater implements GoalUpdateComponent {
         			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "The player " + me.id + " is out");
         			facade.getLogRecordingService().addEntry(envLog);
         		} catch (RemoteException e) {
-        			if (PrintTrace.TracePrint){
-    					e.printStackTrace();
-    				}
+        			e.printStackTrace();
         		}
             	model.currentGoal = SentinelAgentGoal.CREATE_PLAYER;
             }			
@@ -63,9 +58,7 @@ public class SentinelAgentGoalUpdater implements GoalUpdateComponent {
     			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "New Player in the game:" + me.id);
     			facade.getLogRecordingService().addEntry(envLog);
     		} catch (RemoteException e) {
-    			if (PrintTrace.TracePrint){
-					e.printStackTrace();
-				}
+    			e.printStackTrace();
     		}
         	model.currentGoal = SentinelAgentGoal.CHECK_ALIVE;
         }
