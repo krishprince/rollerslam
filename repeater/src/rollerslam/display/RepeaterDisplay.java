@@ -64,7 +64,6 @@ public class RepeaterDisplay implements Display, Runnable {
 		} 
 	}
 
-	@Override
 	public void run() {
 		
 		while(true) {
