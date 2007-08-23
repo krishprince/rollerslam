@@ -12,7 +12,6 @@ import javax.microedition.lcdui.TextField;
 import rollerslam.display.mobile.gui.mvc.Controller;
 import rollerslam.display.mobile.gui.mvc.Model;
 import rollerslam.display.mobile.gui.mvc.View;
-import rollerslam.infrastructure.server.PrintTrace;
 
 public class ConnectionForm extends Form implements CommandListener, View {
 
@@ -44,9 +43,7 @@ public class ConnectionForm extends Form implements CommandListener, View {
 				display.setCurrent(canvas);
 			} catch (Exception e) {
 				display.setCurrent(new Alert("Error", e.getMessage(), null, AlertType.ERROR), this);
-				if (PrintTrace.TracePrint){
-					e.printStackTrace();
-				}
+				e.printStackTrace();
 			}
 		}
 	}

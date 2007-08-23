@@ -6,14 +6,11 @@ import java.io.IOException;
 import javax.microedition.io.Connector;
 import javax.microedition.io.StreamConnection;
 
-import rollerslam.infrastructure.server.PrintTrace;
-
-
 public class SocketCommunicationFacade implements CommunicationFacade {
-	
+
 	private static CommunicationFacade instance;
 	private SimulationObserver observer;
-	
+
 	public static CommunicationFacade getInstance() {
 		if (instance == null) {
 			instance = new SocketCommunicationFacade();
@@ -21,14 +18,15 @@ public class SocketCommunicationFacade implements CommunicationFacade {
 		return instance;
 	}
 
-	
-	public void connect(String host, final SimulationObserver obs) throws Exception {
+	public void connect(String host, final SimulationObserver obs)
+			throws Exception {
 		this.observer = obs;
-		
-		StreamConnection con = (StreamConnection) Connector.open("socket://" + host + ":1100");		
-		
+
+		StreamConnection con = (StreamConnection) Connector.open("socket://"
+				+ host + ":1100");
+
 		final DataInputStream dis = con.openDataInputStream();
-		
+
 		new Thread(new Runnable() {
 
 			public void run() {
@@ -50,12 +48,10 @@ public class SocketCommunicationFacade implements CommunicationFacade {
 						}
 					}
 				} catch (IOException e) {
-					if (PrintTrace.TracePrint){
-						e.printStackTrace();
-					}
+					e.printStackTrace();
 				}
 			}
-			
+
 		}).start();
 	}
 
