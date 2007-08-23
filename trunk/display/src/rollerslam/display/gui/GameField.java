@@ -103,10 +103,10 @@ public class GameField {
         g.drawOval(getSize(TRAMPOLINE_B[0]), getSize(TRAMPOLINE_B[1]), getSize(TRAMPOLINE_B[2]), getSize(TRAMPOLINE_B[3]));
 
         //GOALS
-        g.setColor(Color.RED);
+        g.setColor(Color.BLUE);
+        
         g.drawRect(getSize(GOAL_A[0]), getSize(GOAL_A[1]), getSize(GOAL_A[2]), getSize(GOAL_A[3]));
         
-        g.setColor(Color.BLUE);
         g.drawRect(getSize(GOAL_B[0]), getSize(GOAL_B[1]), getSize(GOAL_B[2]), getSize(GOAL_B[3]));
         
         //CENTER
