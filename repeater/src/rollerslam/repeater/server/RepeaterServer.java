@@ -50,6 +50,7 @@ public class RepeaterServer {
 	}
 	
 	public void init(String serverHost) throws RemoteException {
+		host = serverHost;
 		
 		if (serverHost == null) {
 			clientFacade.getClientInitialization().init();			
@@ -58,8 +59,6 @@ public class RepeaterServer {
 			clientFacade.getClientInitialization().init(serverHost);
 		}
 		
-		host = serverHost;
-		System.out.println("HOST: " + host);
 		try {
 			clientFacade.getDisplayRegistry().register(
 					(Display) clientFacade.getClientInitialization().exportObject(
@@ -120,7 +119,7 @@ public class RepeaterServer {
 	
 	private void bind(String string, Remote ret) throws RemoteException {
     	try {
-			Naming.rebind(string, ret);
+			Naming.bind(string, ret);
 		} catch (Exception e) {
 			if (PrintTrace.TracePrint){
 				e.printStackTrace();

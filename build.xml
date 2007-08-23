@@ -65,7 +65,7 @@
 	
 	<!-- logging -->
 	<target name="compile-logging" depends="prepare">
-	    <javac srcdir="logging/src" destdir="${logging.build.dir}" target="1.5"/>
+	    <javac srcdir="logging/src" destdir="${logging.build.dir}" />
 	</target>
 	<target name="build-logging" depends="compile-logging">
 	    <jar destfile="${dist.dir}/${logging.jarfile}">
@@ -75,7 +75,7 @@
 	
 	<!-- infrastructure -->
 	<target name="compile-infrastructure" depends="prepare">
-	    <javac srcdir="infrastructure/src_interfaces:infrastructure/src" destdir="${infrastructure.build.dir}" target="1.5">
+	    <javac srcdir="infrastructure/src_interfaces:infrastructure/src" destdir="${infrastructure.build.dir}">
 			<classpath>
 			    <path refid="logging_classpath"/>
 			</classpath>
@@ -84,15 +84,12 @@
 	<target name="build-infrastructure" depends="compile-infrastructure">
 	    <jar destfile="${dist.dir}/${infrastructure.jarfile}">
 			<fileset dir="${infrastructure.build.dir}" includes="**/*.class" />
-			<manifest>
-				<attribute name="Class-Path" value="${interfaces.jarfile} ${logging.jarfile} ${hsqldb.jarfile}" />
-			</manifest>
 		</jar>
 	</target>
 	
 	<!-- interfaces -->
 	<target name="compile-interfaces" depends="prepare">
-	    <javac srcdir="interfaces/src" destdir="${interfaces.build.dir}" target="1.5">
+	    <javac srcdir="interfaces/src" destdir="${interfaces.build.dir}">
 			<classpath>
 			    <path refid="infrastructure_classpath"/>
 			</classpath>
@@ -106,7 +103,7 @@
 		
     <!-- display -->
 	<target name="compile-display" depends="prepare">
-	    <javac srcdir="display/src" destdir="${display.build.dir}" target="1.5">
+	    <javac srcdir="display/src" destdir="${display.build.dir}">
 			<classpath>
 			    <path refid="infrastructure_classpath"/>
 				<path refid="interfaces_classpath"/>
@@ -131,7 +128,7 @@
 	
 	<!-- logplayer -->
 	<target name="compile-logplayer" depends="prepare">
-	    <javac srcdir="logplayer/src" destdir="${logplayer.build.dir}" target="1.5">
+	    <javac srcdir="logplayer/src" destdir="${logplayer.build.dir}">
 			<classpath>
 			    <path refid="infrastructure_classpath"/>
 				<path refid="interfaces_classpath"/>
@@ -152,7 +149,7 @@
 	
 	<!-- environment -->
 	<target name="compile-environment" depends="prepare">
-	    <javac srcdir="environment/src" destdir="${environment.build.dir}" target="1.5">
+	    <javac srcdir="environment/src" destdir="${environment.build.dir}">
 			<classpath>
 			    <path refid="infrastructure_classpath"/>
 				<path refid="interfaces_classpath"/>
@@ -171,7 +168,7 @@
 	
 	<!-- testagent -->
 	<target name="compile-testagent" depends="prepare">
-	    <javac srcdir="agents/testagent/src" destdir="${testagent.build.dir}" target="1.5">
+	    <javac srcdir="agents/testagent/src" destdir="${testagent.build.dir}">
 			<classpath>
 			    <path refid="infrastructure_classpath"/>
 				<path refid="interfaces_classpath"/>
@@ -190,7 +187,7 @@
 
 	<!-- repeater -->
 	<target name="compile-repeater" depends="prepare">
-	    <javac srcdir="repeater/src" destdir="${repeater.build.dir}" target="1.5">
+	    <javac srcdir="repeater/src" destdir="${repeater.build.dir}">
 			<classpath>
 			    <path refid="infrastructure_classpath"/>
 				<path refid="interfaces_classpath"/>
@@ -209,7 +206,7 @@
 
 	<!-- mobile-display -->
 	<target name="compile-mobile-display" depends="prepare">
-	    <javac srcdir="mobile/display/src" destdir="${mobile-display.build.dir}" target="1.5">
+	    <javac srcdir="mobile/display/src" destdir="${mobile-display.build.dir}">
 			<classpath>
 			    <path refid="infrastructure_classpath"/>
 				<path refid="interfaces_classpath"/>

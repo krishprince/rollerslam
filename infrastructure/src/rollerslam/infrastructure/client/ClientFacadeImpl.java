@@ -29,7 +29,6 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Set;
 import java.util.Vector;
 
@@ -84,7 +83,6 @@ public final class ClientFacadeImpl implements ClientFacade, ClientInitializatio
     }
 
     public void init(String nameserver) {
-    	System.out.println("CONNECTING TO " + nameserver);
         host = nameserver;
         
         try {
@@ -220,8 +218,7 @@ public final class ClientFacadeImpl implements ClientFacade, ClientInitializatio
 		
 		System.out.println("FOUND: " + found);
 
-		Random r = new Random();
-		host = new ArrayList<InetAddress>(found).get(r.nextInt(found.size())).getHostName();
+		host = new ArrayList<InetAddress>(found).get(0).getHostName();
 		init(host);
 	}
 }

@@ -13,7 +13,7 @@ public class GoalBasedAgentTeam {
 	 * @throws Exception 
 	 */
 	public static void main(String[] args) throws Exception {		
-		ClientFacadeImpl.getInstance().getClientInitialization().init();
+		ClientFacadeImpl.getInstance().getClientInitialization().init("172.17.200.8");
 		mainAllInOne(args);
 	}
 

@@ -63,7 +63,7 @@ public class LogRecordingServiceImpl implements LogRecordingService {
     	LocateRegistry.createRegistry(1099);
     	
     	Remote logExp = UnicastRemoteObject.exportObject(logRecordingService, 0);
-    	Naming.rebind(LogRecordingService.class.getSimpleName(), logExp);
+    	Naming.bind(LogRecordingService.class.getSimpleName(), logExp);
     	
     	System.out.println("Logging service exported!");
 
