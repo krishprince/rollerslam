@@ -8,6 +8,8 @@ import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.display.Display;
 import rollerslam.infrastructure.server.DisplayRegistryServer;
 import rollerslam.infrastructure.server.PrintTrace;
+import rollerslam.repeater.server.DisplayRegistryObserver;
+import rollerslam.repeater.server.RepeaterDisplayRegistryServer;
 import rollerslam.repeater.server.RepeaterServer;
 
 /**
@@ -17,24 +19,90 @@ import rollerslam.repeater.server.RepeaterServer;
 * @author Pablo
 */
 @SuppressWarnings("serial")
-public class RepeaterDisplay implements Display, Runnable {
+public class RepeaterDisplay implements Display, DisplayRegistryObserver {
 	
 	private DisplayRegistryServer displayRegistry;
-	private Vector<Message> messages = new Vector<Message>();
+	private Vector<DisplayProcessor> processors = new Vector<DisplayProcessor>();
+	
+    private class DisplayProcessor implements Runnable {
+		private Vector<Message> messages = new Vector<Message>();
 
-	public RepeaterDisplay(DisplayRegistryServer displayRegistry) {
+		private Display display;
+
+		public DisplayProcessor(Display d) {
+			this.display = d;
+		}
+
+		public void addMessage(Message m) {
+			synchronized (messages) {
+				messages.add(m);
+				messages.notifyAll();
+			}
+		}
+
+		public void run() {
+			boolean onError = false;
+
+			while (!onError) {
+				while (messages.isEmpty()) {
+					synchronized (messages) {
+						try {
+							messages.wait();
+						} catch (Exception e) {
+
+						}
+					}
+				}
+
+				synchronized (messages) {
+					for (Message m : messages) {
+						try {
+							display.update(m);
+						} catch (Exception e) {
+							if (PrintTrace.TracePrint) {
+								e.printStackTrace();
+							}
+							onError = true;
+							break;
+						}
+					}
+
+					messages.clear();
+				}
+			}
+			
+			if (onError) {
+				try {
+					displayRegistry.unregister(display);
+				} catch (RemoteException e) {
+					if (PrintTrace.TracePrint) {
+						e.printStackTrace();
+					}
+				}
+				synchronized (processors) {
+					processors.remove(this);
+				}
+			}
+		}
+
+		public Display getDisplay() {
+			return display;
+		}
+	}
+    
+	public RepeaterDisplay(RepeaterDisplayRegistryServer displayRegistry) {
 		this.displayRegistry = displayRegistry;
-		
-		new Thread(this).start();
+		displayRegistry.setObserver(this);
 	}
 
 	/**
 	 * @see rollerslam.infrastructure.server.Display#update(Message m)
 	 */
 	public void update(Message m) throws RemoteException {
-		synchronized (messages) {
-			messages.add(m);
-			messages.notifyAll();
+		synchronized (processors) {
+			for (DisplayProcessor processor : processors) {
+				processor.addMessage(m);
+			}
 		}
 	}
 
@@ -64,50 +132,20 @@ public class RepeaterDisplay implements Display, Runnable {
 		} 
 	}
 
-	public void run() {
+	public void notifyRegistered(Display d) {
+		processors.add(new DisplayProcessor(d));
+	}
+
+	public void notifyUnregistered(Display d) {
+		DisplayProcessor proc = null;
+		for (DisplayProcessor processor : processors) {
+			if (processor.getDisplay().equals(d)) {
+				proc = processor;
+			}
+		}
 		
-		while(true) {
-			while(messages.isEmpty()) {
-				synchronized (messages) {
-					try {
-						messages.wait();						
-					} catch(Exception e) {
-						
-					}
-				}
-			}
-			
-			synchronized (messages) {
-				synchronized (displayRegistry) {
-					Vector<Display> toRemove = new Vector<Display>();		
-					
-					try {
-						for (Message m : messages) {
-							for (Display display : displayRegistry
-									.getRegisteredDisplays()) {
-								try {
-									display.update(m);
-								} catch (Exception e) {
-									if (PrintTrace.TracePrint) {
-										e.printStackTrace();
-									}
-
-									toRemove.add(display);
-									break;
-								}
-							}
-
-							for (Display display : toRemove) {
-								displayRegistry.unregister(display);
-							}
-						}
-
-						messages.clear();
-					} catch (RemoteException e) {
-						e.printStackTrace();
-					}										
-				}				
-			}
-		}		
-	}	
+		if (proc != null) {
+			processors.remove(proc);
+		}
+	}
 }
