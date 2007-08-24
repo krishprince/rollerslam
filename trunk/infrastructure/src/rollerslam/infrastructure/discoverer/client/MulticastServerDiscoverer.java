@@ -35,6 +35,25 @@ public class MulticastServerDiscoverer implements ServiceDiscoverer {
 		socket.setSoTimeout(5000);
 	}
 	
+	private void tryPort(int listenPort) {
+		int chances = 100;
+		this.port = listenPort;
+		
+		while(true) {
+			try {
+				--chances;
+				this.socket = new DatagramSocket(this.port);
+				break;
+			} catch (SocketException e) {
+				this.port ++;
+			}
+			
+			if (chances < 0) {
+				break;
+			}				
+		}
+		
+	}
 	public void findServer() throws IOException {
 		clearCache();
 		
