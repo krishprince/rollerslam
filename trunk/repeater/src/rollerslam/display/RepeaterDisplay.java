@@ -133,7 +133,9 @@ public class RepeaterDisplay implements Display, DisplayRegistryObserver {
 	}
 
 	public void notifyRegistered(Display d) {
-		processors.add(new DisplayProcessor(d));
+		DisplayProcessor dp = new DisplayProcessor(d);
+		processors.add(dp);
+		new Thread(dp).start();
 	}
 
 	public void notifyUnregistered(Display d) {
