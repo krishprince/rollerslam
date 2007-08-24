@@ -34,26 +34,35 @@ import rollerslam.infrastructure.display.Display;
 public class DisplayRegistryImpl implements DisplayRegistryServer {
 
 	private Set<Display> displays = new HashSet<Display>();
-	
+	private Set<Display> copy     = new HashSet<Display>();
+
 	/**
 	 * @see rollerslam.infrastructure.server.DisplayRegistry#register(rollerslam.infrastructure.display.Display)
 	 */
 	public void register(Display d) {
-		displays.add(d);
+		synchronized (displays) {
+			displays.add(d);			
+			
+			copy = new HashSet<Display>(displays);
+		}
 	}
 
 	/**
 	 * @see rollerslam.infrastructure.server.DisplayRegistry#unregister(rollerslam.infrastructure.display.Display)
 	 */
 	public void unregister(Display d) {
-		displays.remove(d);
+		synchronized (displays) {
+			displays.remove(d);
+			
+			copy = new HashSet<Display>(displays);
+		}
 	}
 
 	/**
 	 * @see rollerslam.infrastructure.server.DisplayRegistryExtended#getRegisteredDisplays()
 	 */
 	public Set<Display> getRegisteredDisplays() {
-		return displays;
+		return copy;
 	}
 
 	
