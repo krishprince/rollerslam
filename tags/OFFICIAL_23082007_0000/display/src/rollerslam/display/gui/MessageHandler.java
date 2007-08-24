@@ -1,0 +1,33 @@
+package rollerslam.display.gui;
+
+import java.util.Vector;
+
+import rollerslam.environment.model.Fact;
+
+public class MessageHandler {
+	
+	private static Vector<Fact> facts = new Vector<Fact>();
+	private static long removeOn = -1;
+	private static Fact currentFact = null;	
+	
+	public static void scheduleForExhibition(Fact fact) {
+		facts.add(fact);
+	}
+	
+	public static String getCurrentMessage() {
+		
+		long now = System.currentTimeMillis();
+		if (now > removeOn && !facts.isEmpty()) {
+			currentFact = facts.elementAt(0);
+			facts.removeElementAt(0);
+			
+			removeOn = now + 5000;
+		}
+		
+		if (currentFact != null) {
+			return currentFact.toString();
+		} else {
+			return "";
+		}
+	}
+}
