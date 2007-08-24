@@ -14,6 +14,8 @@ import rollerslam.infrastructure.server.DisplayRegistryServer;
 public class RepeaterDisplayRegistryServer implements DisplayRegistryServer {
 	
 	private Set<Display> displays = new HashSet<Display>();
+	private Set<Display> copy     = new HashSet<Display>();
+	
 	private DisplayRegistryObserver observer;
 
 	public DisplayRegistryObserver getObserver() {
@@ -29,8 +31,13 @@ public class RepeaterDisplayRegistryServer implements DisplayRegistryServer {
 	 */
 	public void register(Display d) throws RemoteException {
 		System.out.println("ADDED " + d);
-		displays.add(d);
-		
+
+		synchronized (displays) {
+			displays.add(d);
+			
+			copy = new HashSet<Display>(displays);
+		}
+
 		if (observer != null) {
 			observer.notifyRegistered(d);
 		}
@@ -40,7 +47,11 @@ public class RepeaterDisplayRegistryServer implements DisplayRegistryServer {
 	 * @see rollerslam.infrastructure.server.DisplayRegistry#unregister(rollerslam.infrastructure.display.Display)
 	 */
 	public void unregister(Display d) throws RemoteException {
-		displays.remove(d);		
+		synchronized (displays) {
+			displays.remove(d);
+
+			copy = new HashSet<Display>(displays);
+		}
 
 		if (observer != null) {
 			observer.notifyUnregistered(d);
@@ -51,7 +62,7 @@ public class RepeaterDisplayRegistryServer implements DisplayRegistryServer {
 	 * @see rollerslam.infrastructure.server.DisplayRegistryExtended#getRegisteredDisplays()
 	 */
 	public Set<Display> getRegisteredDisplays() throws RemoteException {
-		return displays;
+		return copy;
 	}
 
 }
