@@ -1,6 +1,10 @@
 package rollerslam.environment;
 
+import java.net.Inet4Address;
 import java.rmi.RemoteException;
+
+import com.parctechnologies.eclipse.EclipseConnection;
+import com.parctechnologies.eclipse.RemoteEclipse;
 
 import rollerslam.environment.model.World;
 import rollerslam.infrastructure.agent.StateMessage;
@@ -16,7 +20,12 @@ import rollerslam.logging.EnvironmentStateLogEntry;
 
 @SuppressWarnings("serial")
 public class RollerslamEnvironmentAgent extends AutomataAgent {
+	
+	public EclipseConnection eclipse;
+	
 	public RollerslamEnvironmentAgent() throws Exception {
+
+		eclipse = new RemoteEclipse(Inet4Address.getByName("localhost"), 1023); 
 
 		this.worldModel = new World();
 		this.sensor = ServerFacadeImpl.getInstance().getEnvironmentSensor();
@@ -28,7 +37,7 @@ public class RollerslamEnvironmentAgent extends AutomataAgent {
 
 		this.interpretationComponent = new JavaActionInterpretationComponent();
 
-		this.ramificationComponent = new FluxRamificationComponent();
+		this.ramificationComponent = new FluxRamificationComponent(eclipse);
 
 		this.strategyComponent = new ModelBasedBehaviorStrategyComponent() {
 			public Message computeAction(EnvironmentStateModel w) {
