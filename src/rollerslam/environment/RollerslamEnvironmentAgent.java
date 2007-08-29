@@ -28,7 +28,7 @@ public class RollerslamEnvironmentAgent extends AutomataAgent {
 
 		this.interpretationComponent = new JavaActionInterpretationComponent();
 
-		this.ramificationComponent = new RamificationWorldVisitor();
+		this.ramificationComponent = new FluxRamificationComponent();
 
 		this.strategyComponent = new ModelBasedBehaviorStrategyComponent() {
 			public Message computeAction(EnvironmentStateModel w) {
@@ -60,6 +60,7 @@ public class RollerslamEnvironmentAgent extends AutomataAgent {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
-		ServerFacadeImpl.getInstance().getServerInitialization().init(1099, new RollerslamEnvironmentAgent());		
-        }
+		ServerFacadeImpl.getInstance().getServerInitialization().init(1099,
+				new RollerslamEnvironmentAgent());
+	}
 }
