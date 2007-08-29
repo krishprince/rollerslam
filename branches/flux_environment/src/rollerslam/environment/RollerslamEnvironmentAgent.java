@@ -1,14 +1,11 @@
 package rollerslam.environment;
 
-import java.net.Inet4Address;
+import java.io.File;
 import java.rmi.RemoteException;
 
-import com.parctechnologies.eclipse.EclipseConnection;
-import com.parctechnologies.eclipse.RemoteEclipse;
-
 import rollerslam.environment.model.World;
-import rollerslam.infrastructure.agent.StateMessage;
 import rollerslam.infrastructure.agent.Message;
+import rollerslam.infrastructure.agent.StateMessage;
 import rollerslam.infrastructure.agent.automata.AutomataAgent;
 import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
 import rollerslam.infrastructure.agent.automata.ModelBasedBehaviorStrategyComponent;
@@ -18,15 +15,18 @@ import rollerslam.infrastructure.server.ServerFacade;
 import rollerslam.infrastructure.server.ServerFacadeImpl;
 import rollerslam.logging.EnvironmentStateLogEntry;
 
+import com.parctechnologies.eclipse.EclipseConnection;
+import com.parctechnologies.eclipse.EclipseEngineOptions;
+import com.parctechnologies.eclipse.EmbeddedEclipse;
+
 @SuppressWarnings("serial")
 public class RollerslamEnvironmentAgent extends AutomataAgent {
 	
 	public EclipseConnection eclipse;
 	
 	public RollerslamEnvironmentAgent() throws Exception {
-
-		eclipse = new RemoteEclipse(Inet4Address.getByName("localhost"), 1023); 
-
+		initializeEclipseConnection();
+		
 		this.worldModel = new World();
 		this.sensor = ServerFacadeImpl.getInstance().getEnvironmentSensor();
 		this.effector = ServerFacadeImpl.getInstance().getEnvironmentEffector();
@@ -64,6 +64,26 @@ public class RollerslamEnvironmentAgent extends AutomataAgent {
 		startSimulation();
 	}
 	
+	private void initializeEclipseConnection() throws Exception {
+	    System.setProperty("eclipse.directory", "D:\\ECLiPSe 5.10");
+	    String folder = "c:\\temp\\maas\\2808\\rollerslam\\environment\\flux\\";
+
+	    EclipseEngineOptions eclipseEngineOptions = new EclipseEngineOptions();
+	    File eclipseProgram;
+	    
+	    eclipseEngineOptions.setUseQueues(false);
+	    eclipse = EmbeddedEclipse.getInstance(eclipseEngineOptions);
+	    
+	    eclipseProgram = new File(folder+"flux.pl");
+	    eclipse.compile(eclipseProgram);
+	    
+	    eclipseProgram = new File(folder+"fluent.chr");
+	    eclipse.compile(eclipseProgram);
+	    
+	    eclipseProgram = new File(folder+"rollerslam.pl");
+	    eclipse.compile(eclipseProgram);
+	}
+
 	/**
 	 * @param args
 	 * @throws Exception

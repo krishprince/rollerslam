@@ -63,3 +63,10 @@ main1(FinalState) :-
            Actions = [dash(agent1, vector(1,3)), ramify, ramify, ramify],
 
            runSeriesOfActions(CurrentState, Actions, FinalState).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%% RAMIFICATIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+processRamifications(InitialState, FinalState) :-
+           runAction(InitialState, ramify, FinalState).
