@@ -1,4 +1,8 @@
-package rollerslam.environment.visitor;
+package rollerslam.environment;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Vector;
 
 import rollerslam.environment.model.AnimatedObject;
 import rollerslam.environment.model.Ball;
@@ -11,96 +15,89 @@ import rollerslam.environment.model.Scoreboard;
 import rollerslam.environment.model.Trampoline;
 import rollerslam.environment.model.World;
 import rollerslam.environment.model.WorldObject;
-import rollerslam.environment.model.utils.Vector;
+import rollerslam.environment.model.visitor.Visitor;
+import rollerslam.environment.visitor.SampleJavaPrologWorldVisitor;
 
-public class SampleJavaPrologWorldVisitor implements JavaPrologWorldVisitor {
+public class RamifiableObjectsVisitor implements Visitor {
 
-	private java.util.Vector<String> accumulator = new java.util.Vector<String>();
+	private Set<WorldObject> ramifiable = new HashSet<WorldObject>();
 	
-	public static String getIDForObject(WorldObject obj) {
-		if (obj instanceof Ball) {
-			return "ball";
-		} else if (obj instanceof Player) {
-			return "player("+((Player)obj).id+")";
-		} else {
-			return "obj("+obj.hashCode()+")";			
-		}
-	}
-	
-	private String vectorToString(Vector v) {
-		return "vector("+v.x+","+v.y+")";
-	}
-	
+	@Override
 	public void visit(World obj) {
 		// TODO Auto-generated method stub
 
 	}
 
+	@Override
 	public void visit(WorldObject obj) {
-		accumulator.add("position("+getIDForObject(obj)+","+vectorToString(obj.s)+")");
+		ramifiable.add(obj);
 	}
 
+	@Override
 	public void visit(AnimatedObject obj) {
-		visit((WorldObject)obj);
-		
-		accumulator.add("acceleration("+getIDForObject(obj)+","+vectorToString(obj.a)+")");
-		accumulator.add("speed("+getIDForObject(obj)+","+vectorToString(obj.v)+")");
+		ramifiable.add(obj);
 	}
 
+	@Override
 	public void visit(Ball obj) {
-		visit((AnimatedObject)obj);
-		if (obj.withPlayer) {
-			accumulator.add("withPlayer("+getIDForObject(obj)+")");
-		}
+		ramifiable.add(obj);
 	}
 
+	@Override
 	public void visit(OutTrack obj) {
 		// TODO Auto-generated method stub
 
 	}
 
+	@Override
 	public void visit(Player obj) {
-		visit((AnimatedObject)obj);
+		ramifiable.add(obj);
 	}
 
+	@Override
 	public void visit(Basket obj) {
 		// TODO Auto-generated method stub
 
 	}
 
+	@Override
 	public void visit(Goal obj) {
 		// TODO Auto-generated method stub
 
 	}
 
+	@Override
 	public void visit(Ramp obj) {
 		// TODO Auto-generated method stub
 
 	}
 
+	@Override
 	public void visit(Trampoline obj) {
 		// TODO Auto-generated method stub
 
 	}
 
+	@Override
 	public void visit(Scoreboard obj) {
 		// TODO Auto-generated method stub
 
 	}
 
-	public String getPrologRepresentation(World world) {
-		accumulator.clear();
-		world.accept(this);
+	public String getRamifiableObjects(World w) {
+		ramifiable.clear();
+		w.accept(this);
 		
 		StringBuffer sb = new StringBuffer();
 		
-		for(int i=0;i<accumulator.size();++i) {
-			sb.append(accumulator.elementAt(i));
-			if (i!=accumulator.size()-1) {
+		Vector<WorldObject> v = new Vector<WorldObject>(ramifiable);
+		for (int i=0;i<v.size();++i) {
+			sb.append(SampleJavaPrologWorldVisitor.getIDForObject(v.elementAt(i)));
+			if (i!=v.size()-1) {
 				sb.append(",");
 			}
 		}
+		
 		return sb.toString();
 	}
-
 }

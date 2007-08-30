@@ -4,6 +4,7 @@ import rollerslam.environment.model.World;
 import rollerslam.environment.visitor.JavaPrologWorldVisitor;
 import rollerslam.environment.visitor.PrologJavaWorldVisitor;
 import rollerslam.environment.visitor.SampleJavaPrologWorldVisitor;
+import rollerslam.environment.visitor.SamplePrologJavaWorldVisitor;
 import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
 import rollerslam.infrastructure.agent.automata.RamificationComponent;
 
@@ -15,17 +16,22 @@ public class FluxRamificationComponent implements RamificationComponent {
 	private EclipseConnection eclipse;
 	private JavaPrologWorldVisitor javaPrologVisitor;
 	private PrologJavaWorldVisitor prologJavaVisitor;
+	private RamifiableObjectsVisitor ramifiableObjects;
 	
 	public FluxRamificationComponent(EclipseConnection eclipse) {
 		this.eclipse = eclipse;
 		this.javaPrologVisitor = new SampleJavaPrologWorldVisitor();
 		this.prologJavaVisitor = new SamplePrologJavaWorldVisitor();
+		this.ramifiableObjects = new RamifiableObjectsVisitor();
 	}
 	
 	public void processRamifications(EnvironmentStateModel world) {
-		String query = "processRamifications(["+javaPrologVisitor.getPrologRepresentation((World) world)+"], R)";
+		String query = "processRamifications(["
+				+ javaPrologVisitor.getPrologRepresentation((World) world)
+				+ "],[" + ramifiableObjects.getRamifiableObjects((World) world)
+				+ "], R)";
 
-//		System.out.println("query: "+query);
+		System.out.println("query: "+query);
 		
 		CompoundTerm ret;
 		try {
@@ -33,8 +39,7 @@ public class FluxRamificationComponent implements RamificationComponent {
 			
 //			System.out.println("result: "+ret);
 			
-			System.out.println(ret.arg(1).equals(ret.arg(2)));
-			prologJavaVisitor.updateWorldRepresentation((World)world, ret.arg(2));
+			prologJavaVisitor.updateWorldRepresentation((World)world, ret.arg(3));
 			
 		} catch (Exception e) {
 			e.printStackTrace();
