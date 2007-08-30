@@ -16,19 +16,16 @@ public class FluxRamificationComponent implements RamificationComponent {
 	private EclipseConnection eclipse;
 	private JavaPrologWorldVisitor javaPrologVisitor;
 	private PrologJavaWorldVisitor prologJavaVisitor;
-	private RamifiableObjectsVisitor ramifiableObjects;
 	
 	public FluxRamificationComponent(EclipseConnection eclipse) {
 		this.eclipse = eclipse;
 		this.javaPrologVisitor = new SampleJavaPrologWorldVisitor();
 		this.prologJavaVisitor = new SamplePrologJavaWorldVisitor();
-		this.ramifiableObjects = new RamifiableObjectsVisitor();
 	}
 	
 	public void processRamifications(EnvironmentStateModel world) {
 		String query = "processRamifications(["
 				+ javaPrologVisitor.getPrologRepresentation((World) world)
-				+ "],[" + ramifiableObjects.getRamifiableObjects((World) world)
 				+ "], R)";
 
 		System.out.println("query: "+query);
@@ -39,7 +36,7 @@ public class FluxRamificationComponent implements RamificationComponent {
 			
 //			System.out.println("result: "+ret);
 			
-			prologJavaVisitor.updateWorldRepresentation((World)world, ret.arg(3));
+			prologJavaVisitor.updateWorldRepresentation((World)world, ret.arg(2));
 			
 		} catch (Exception e) {
 			e.printStackTrace();
