@@ -1,11 +1,10 @@
-package rollerslam.environment;
+package rollerslam.environment.visitor;
 
 import java.util.Collection;
 
 import rollerslam.environment.model.Player;
 import rollerslam.environment.model.World;
 import rollerslam.environment.model.utils.Vector;
-import rollerslam.environment.visitor.PrologJavaWorldVisitor;
 
 import com.parctechnologies.eclipse.CompoundTerm;
 

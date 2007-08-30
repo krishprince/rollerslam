@@ -4,7 +4,7 @@ state_update(Z1,dash(Agent, vector(X,Y)),Z2,[]) :-
   holds(acceleration(Agent, vector(X0,Y0)),Z1),
   update(Z1,[acceleration(Agent, vector(X,Y))],[acceleration(Agent, vector(X0,Y0))],Z2).
 
-state_update(Z1,ramify,Z2,[]) :-
+state_update(Z1,ramify(Agent),Z2,[]) :-
   holds(acceleration(Agent, vector(Ax0,Ay0)),Z1),
   holds(speed(Agent, vector(Vx0,Vy0)),Z1),
   holds(position(Agent, vector(Sx0,Sy0)),Z1),
@@ -68,5 +68,7 @@ main1(FinalState) :-
 %%%%%%%%%%%%%%%%%%%%%% RAMIFICATIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-processRamifications(InitialState, FinalState) :-
-           runAction(InitialState, ramify, FinalState).
+processRamifications(InitialState, [], InitialState).
+processRamifications(InitialState, [RamifiableObject|Others], FinalState) :-
+           runAction(InitialState, ramify(RamifiableObject), IntermediaryState),
+           processRamifications(IntermediaryState, Others, FinalState).
