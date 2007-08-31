@@ -16,4 +16,12 @@ public class StateMessage extends Message {
 		super(sender);
 		this.model = m;
 	}
+	
+	public StateMessage (){
+		
+	}
+	
+	public StateMessage(EnvironmentStateModel m){
+		this.model = m;
+	}
 }
