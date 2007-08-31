@@ -7,13 +7,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 import rollerslam.infrastructure.agent.Agent;
+import rollerslam.infrastructure.agent.SimpleAgent;
 import rollerslam.infrastructure.agent.Effector;
 import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.agent.Sensor;
 import rollerslam.infrastructure.agent.SensorEffectorManager;
 
 public class SensorEffectorManagerImpl implements SensorEffectorManager {
-
+	private static int namesAgent = 1;
+	
 	private class AgentData {
 		public Agent		agent    = null;
 		public Set<Message> messages = new HashSet<Message>();
@@ -67,6 +69,11 @@ public class SensorEffectorManagerImpl implements SensorEffectorManager {
 			for (Agent agent : buckets.keySet()) {
 				AgentData data = buckets.get(agent);
 				
+				SimpleAgent sa = new SimpleAgent();
+				sa.setName(((Agent)agent).getName());
+				
+				m.sender = sa;
+
 				if (data != null) {					
 					synchronized (data.messages) {
 						data.messages.add(m);
@@ -81,6 +88,9 @@ public class SensorEffectorManagerImpl implements SensorEffectorManager {
 			AgentData data = new AgentData(ag);
 			buckets.put(ag, data);
 			
+			//Add the name agent
+			ag.setName(namesAgent++);
+
 			try {
 				data.effector = (Effector) ServerFacadeImpl.getInstance().exportObject(data.effector);
 			} catch (AlreadyBoundException e) {
@@ -113,6 +123,7 @@ public class SensorEffectorManagerImpl implements SensorEffectorManager {
 
 	public Sensor getAgentSensor(Agent ag) throws RemoteException {
 		AgentData data = buckets.get(ag);
+
 		if (data != null) {
 			return data.sensor;
 		}

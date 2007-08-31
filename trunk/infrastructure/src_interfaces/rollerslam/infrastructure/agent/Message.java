@@ -33,4 +33,8 @@ public abstract class Message implements Serializable {
 	public Message(Agent sender) {
 		this.sender = sender;
 	}
+	
+	public Message(){
+		
+	}
 }
