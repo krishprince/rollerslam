@@ -54,22 +54,22 @@ public class AgentActionGenerator implements
 
 		if (model.currentGoal == AgentGoal.JOIN_GAME) {
 			model.joinMessageSent = true;
-			m = new JoinGameAction(remoteThis, model.myTeam);
+			m = new JoinGameAction(model.myTeam);
 		} else if (model.currentGoal == AgentGoal.WAIT_JOIN_GAME) {
 
 		} else if (model.currentGoal == AgentGoal.GO_TO_BALL) {
 			Player me = model.getMe();
 
-			m = new DashAction(remoteThis, me.world.ball.s.subtract(me.s));
+			m = new DashAction(me.world.ball.s.subtract(me.s));
 		} else if (model.currentGoal == AgentGoal.GO_TO_GOAL) {
 			Player me = model.getMe();
 
 			World world = (World) model.environmentStateModel;
 
 			if (me.team == PlayerTeam.TEAM_A) {
-				m = new DashAction(remoteThis, world.goalB.s.subtract(me.s));
+				m = new DashAction(world.goalB.s.subtract(me.s));
 			} else {
-				m = new DashAction(remoteThis, world.goalA.s.subtract(me.s));
+				m = new DashAction(world.goalA.s.subtract(me.s));
 			}
 
 		} else if (model.currentGoal == AgentGoal.CATCH_BALL) {
@@ -83,18 +83,19 @@ public class AgentActionGenerator implements
 			World world = (World) model.environmentStateModel;
 
 			if (me.team == PlayerTeam.TEAM_A) {
-				m = new ThrowAction(remoteThis, world.goalB.s.subtract(me.s));
-			} else {
-				m = new ThrowAction(remoteThis, world.goalA.s.subtract(me.s));
+
+				m = new ThrowAction(world.goalB.s.subtract(me.s));
+			} else {			
+				m = new ThrowAction(world.goalA.s.subtract(me.s));
 			}
         } else if(model.currentGoal == AgentGoal.KICK_BALL){
         	Player me = model.getMe();
 			World world = (World)model.environmentStateModel;
 				        	
         	if(me.team == PlayerTeam.TEAM_A){
-        		m = new KickAction(remoteThis, world.goalB.s.subtract(me.s));
+        		m = new KickAction(world.goalB.s.subtract(me.s));
 			}else{
-				m = new KickAction(remoteThis, world.goalA.s.subtract(me.s));
+				m = new KickAction(world.goalA.s.subtract(me.s));
 			}
         } else if(model.currentGoal == AgentGoal.COUNTER_TACKLE){
         	m = new CountertackleAction(remoteThis);			

@@ -1,6 +1,7 @@
 package rollerslam.agent.dummy;
 
 import java.util.Set;
+import java.rmi.RemoteException;
 
 import rollerslam.environment.model.PlayerTeam;
 import rollerslam.environment.model.actions.leg.DashAction;
@@ -20,15 +21,15 @@ public class RollerslamDummyAgent implements Agent, Runnable {
 
 	public boolean gameStarted = false;
         
-        private int id = -1;
-        
-        public int getID(){
-            return id;
-        }
-        
-        public void setID(int id){
-            this.id = id;
-        }
+    private int name = -1;
+    
+    public int getName() throws RemoteException{
+        return name;
+    }
+    
+    public void setName(int name) throws RemoteException{
+        this.name = name;
+    }
 	
 	public RollerslamDummyAgent() throws Exception {
 		facade = ClientFacadeImpl.getInstance();
