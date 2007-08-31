@@ -8,4 +8,8 @@ public class TackleAction extends ArmAction {
 	public TackleAction(Agent a){
 		super(a);
 	}
+	
+	public TackleAction(){
+		
+	}
 }

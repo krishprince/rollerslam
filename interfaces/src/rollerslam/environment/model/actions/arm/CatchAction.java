@@ -8,4 +8,8 @@ public class CatchAction extends ArmAction {
 	public CatchAction(Agent a){
 		super(a);
 	}
+	
+	public CatchAction(){
+		
+	}
 }

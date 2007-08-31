@@ -8,4 +8,8 @@ public class BodyPercept extends Message {
 	public BodyPercept(Agent sender){
 		super(sender);
 	}
+	
+	public BodyPercept(){
+		
+	}
 }

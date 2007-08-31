@@ -13,4 +13,8 @@ public class HitAction extends KickAction {
 	public HitAction(Agent a, Vector acceleration){
 		super(a, acceleration);
 	}	
+	
+	public HitAction(Vector acceleration){
+		super(acceleration);
+	}
 }

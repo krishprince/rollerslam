@@ -14,4 +14,9 @@ public class FeelPercept extends BodyPercept {
 			Vector velocity, Vector acceleration){
 		super(sender);
 	}
+	
+	public FeelPercept( boolean hasBall, Vector position, 
+			Vector velocity, Vector acceleration){
+		
+	}
 }

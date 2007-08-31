@@ -8,4 +8,8 @@ public class CountertackleAction extends ArmAction {
 	public CountertackleAction(Agent a){
 		super(a);
 	}
+	
+	public CountertackleAction(){
+		
+	}
 }

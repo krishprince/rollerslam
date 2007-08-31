@@ -13,4 +13,8 @@ public class DashAction extends LegAction {
 		super(a);
 		this.acceleration = acceleration;
 	}
+	
+	public DashAction(Vector acceleration){
+		this.acceleration = acceleration;
+	}
 }

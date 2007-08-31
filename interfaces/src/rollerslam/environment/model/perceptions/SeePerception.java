@@ -11,5 +11,9 @@ public class SeePerception extends EyePercept {
 		super(sender);
 		this.envModel = envModel;
 	}
-	
+
+	public SeePerception(World envModel){
+		this.envModel = envModel;
+	}
+
 }

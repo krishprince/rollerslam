@@ -12,4 +12,8 @@ public class SendMsgAction extends VoiceAction {
 		super(a);
 		subject = f;
 	}
+	
+	public SendMsgAction(Fact f){
+		subject = f;
+	}
 }
