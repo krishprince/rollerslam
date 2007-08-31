@@ -37,13 +37,12 @@ import rollerslam.infrastructure.server.PrintTrace;
 import rollerslam.infrastructure.server.ServerFacade;
 import rollerslam.infrastructure.server.ServerFacadeImpl;
 
-
 public class JavaActionInterpretationComponent implements ActionInterpretationComponent {
 	public ServerFacade facade = ServerFacadeImpl.getInstance();
 
 	public Hashtable<Agent, Player> playersMap                  = new Hashtable<Agent, Player>();
 	public Hashtable<Player, Agent> idsMap                      = new Hashtable<Player, Agent>();
-	public int 						  nextAgentID 				  = 0;
+	public int 						nextAgentID 				= 0;
 
 	
 	private void dash(World w, Player p, Vector vet) {
@@ -150,7 +149,7 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 			if(error > 0.15){
 				error = 0.15;
 			}
-			
+	
 			w.ball.a = a.multVector((1 + p.strength) * 0.75);
 			//w.ball.v = p.v.sumVector(a.multVector((1 + p.strength) * 0.5));
 			
@@ -195,6 +194,7 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 	}
 		
 	public void processAction(EnvironmentStateModel w, Message m) {
+
 		//Actions of Leg
 		if (m instanceof LegAction) {
 			if (m instanceof DashAction) {
@@ -236,6 +236,7 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 			}else if(m instanceof ThrowAction){
 				//Throw the ball
 				ThrowAction mt = (ThrowAction) m;
+
 				this.throwA((World)w, playersMap.get(mt.sender), mt.acceleration);
 			}
 		//Actions of Voice
@@ -261,7 +262,7 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 				this.createPlayer((World) w, playersMap.get(mt.sender));
 			}
 		}
-		
+
 		// adds all actions to the world
 		((World)w).newActions.add(m);
 		

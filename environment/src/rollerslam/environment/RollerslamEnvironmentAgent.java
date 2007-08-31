@@ -36,8 +36,8 @@ public class RollerslamEnvironmentAgent extends AutomataAgent {
 				try {
 					Message m = RollerslamEnvironmentAgent.this
 					.getEnvironmentState();
-
-					EnvironmentStateLogEntry envLog = new EnvironmentStateLogEntry(((World)((StateMessage)m).model).currentCycle, -1, (World)((StateMessage)m).model);
+					
+					EnvironmentStateLogEntry envLog = new EnvironmentStateLogEntry(((World)((StateMessage)m).model).currentCycle, -1, ((World)((StateMessage)m).model).getSimpleWorld());
 
 					facade.getLogRecordingService().addEntry(envLog);
 
