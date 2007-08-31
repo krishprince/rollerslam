@@ -11,4 +11,8 @@ public class RecvMsgPercept extends EarPercept {
 		super(sender);
 		this.fact = fact;
 	}
+
+	public RecvMsgPercept(Fact fact){
+		this.fact = fact;
+	}
 }

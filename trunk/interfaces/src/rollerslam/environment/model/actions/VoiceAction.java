@@ -9,4 +9,8 @@ public class VoiceAction extends Message {
 	public VoiceAction(Agent a) {
 		super(a);
 	}
+	
+	public VoiceAction(){
+		
+	}
 }

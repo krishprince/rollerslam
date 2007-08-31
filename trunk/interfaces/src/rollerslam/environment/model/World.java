@@ -12,7 +12,7 @@ import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
 
 @SuppressWarnings("serial")
-public class World extends EnvironmentStateModel implements Serializable, Visitable  {
+public class World extends EnvironmentStateModel implements Serializable, Visitable {
 
 	public int           currentCycle  = 0;
 	
@@ -94,4 +94,62 @@ public class World extends EnvironmentStateModel implements Serializable, Visita
 			playersB[i].accept(visitor);
 		}
 	}
+	
+	public World getSimpleWorld(){
+		World sw = new World();
+		sw.currentCycle = this.currentCycle;
+		sw.outTrack.world = null;
+		//sw.actions = null;
+		sw.newActions = null;
+		
+		sw.ball.a = null;
+		sw.ball.ls = null;
+		sw.ball.s = this.ball.s;
+		sw.ball.v = null;
+		sw.ball.withPlayer = this.ball.withPlayer;
+		sw.ball.world = null;
+		sw.playerWithBall = null;
+		
+		for(int i = 0; i < this.playersA.length; ++i){
+			sw.playersA[i].a = null;
+			sw.playersA[i].counterTackle = this.playersA[i].counterTackle;
+			sw.playersA[i].dead = this.playersA[i].dead;
+			sw.playersA[i].hasBall = this.playersA[i].hasBall;
+			sw.playersA[i].id = this.playersA[i].id;
+			sw.playersA[i].inGround = this.playersA[i].inGround;
+			sw.playersA[i].s = this.playersA[i].s;
+			sw.playersA[i].strength = this.playersA[i].strength;
+			sw.playersA[i].team = this.playersA[i].team;
+			sw.playersA[i].v = null;
+			sw.playersA[i].world = null;
+		}
+
+		for(int i = 0; i < this.playersB.length; ++i){
+			sw.playersB[i].a = null;
+			sw.playersB[i].counterTackle = this.playersB[i].counterTackle;
+			sw.playersB[i].dead = this.playersB[i].dead;
+			sw.playersB[i].hasBall = this.playersB[i].hasBall;
+			sw.playersB[i].id = this.playersB[i].id;
+			sw.playersB[i].inGround = this.playersB[i].inGround;
+			sw.playersB[i].s = this.playersB[i].s;
+			sw.playersB[i].strength = this.playersB[i].strength;
+			sw.playersB[i].team = this.playersB[i].team;
+			sw.playersB[i].v = null;
+			sw.playersB[i].world = null;
+		}
+		
+		sw.goalA.world = null;
+		sw.goalB.world = null;
+		sw.rampA.world = null;
+		sw.rampB.world = null;
+		sw.trampolineA.world = null;
+		sw.trampolineB.world = null;
+
+		sw.scoreboard.scoreTeamA = this.scoreboard.scoreTeamA;
+		sw.scoreboard.scoreTeamB = this.scoreboard.scoreTeamB;
+		sw.scoreboard.world = null;
+		
+		return sw;
+	}
+	
 }

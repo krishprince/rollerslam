@@ -12,4 +12,8 @@ public class JoinGameAction extends Message {
 		super(a);
 		this.team = team;
 	}
+	
+	public JoinGameAction(PlayerTeam team){
+		this.team = team;
+	}
 }

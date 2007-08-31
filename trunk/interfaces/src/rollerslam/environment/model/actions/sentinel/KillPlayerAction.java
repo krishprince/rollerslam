@@ -8,4 +8,8 @@ public class KillPlayerAction extends SentinelAction {
 	public KillPlayerAction(Agent a){
 		super(a);
 	}
+	
+	public KillPlayerAction(){
+		
+	}
 }

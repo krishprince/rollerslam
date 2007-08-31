@@ -13,5 +13,9 @@ public class GameStartedPerception extends Message {
 		this.receiver = receiver;
 		this.playerID = playerID;
 	}
-
+	
+	public GameStartedPerception(Agent receiver, int playerID) {
+		this.receiver = receiver;
+		this.playerID = playerID;
+	}
 }

@@ -8,4 +8,8 @@ public class ReleaseAction extends ArmAction {
 	public ReleaseAction(Agent a) {
 		super(a);
 	}
+	
+	public ReleaseAction(){
+		
+	}
 }

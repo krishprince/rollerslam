@@ -8,4 +8,8 @@ public class CheckAliveAction extends SentinelAction {
 	public CheckAliveAction(Agent a){
 		super(a);
 	}
+	
+	public CheckAliveAction(){
+		
+	}
 }

@@ -21,5 +21,9 @@ public class ThrowAction extends ArmAction {
 		super(a);
 		this.acceleration = acceleration;
 	}
+	
+	public ThrowAction(Vector acceleration){
+		this.acceleration = acceleration;
+	}
 }
 

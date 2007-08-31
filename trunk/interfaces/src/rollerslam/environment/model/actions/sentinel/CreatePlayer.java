@@ -12,4 +12,8 @@ public class CreatePlayer extends SentinelAction {
 		super(a);
 		this.team = team;
 	}
+	
+	public CreatePlayer(PlayerTeam team){
+		this.team = team;
+	}
 }

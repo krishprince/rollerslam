@@ -8,4 +8,8 @@ public class LegAction extends Message {
 	public LegAction(Agent a) {
 		super(a);
 	}
+	
+	public LegAction(){
+		
+	}
 }

@@ -8,4 +8,8 @@ public class EarPercept extends Message {
 	public EarPercept(Agent sender){
 		super(sender);
 	}
+	
+	public EarPercept(){
+		
+	}
 }

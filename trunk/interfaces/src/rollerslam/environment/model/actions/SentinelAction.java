@@ -8,4 +8,8 @@ public class SentinelAction extends Message {
 	public SentinelAction(Agent a) {
 		super(a);
 	}
+	
+	public SentinelAction(){
+		
+	}
 }

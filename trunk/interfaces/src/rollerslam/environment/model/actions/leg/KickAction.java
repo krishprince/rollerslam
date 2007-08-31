@@ -21,5 +21,9 @@ public class KickAction extends LegAction {
 		super(a);
 		this.acceleration = acceleration;
 	}
+	
+	public KickAction(Vector acceleration){
+		this.acceleration = acceleration;
+	}
 }
 

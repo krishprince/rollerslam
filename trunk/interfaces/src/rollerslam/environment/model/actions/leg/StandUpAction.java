@@ -8,4 +8,8 @@ public class StandUpAction extends LegAction {
 	public StandUpAction(Agent a){
 		super(a);
 	}	
+	
+	public StandUpAction(){
+		
+	}
 }

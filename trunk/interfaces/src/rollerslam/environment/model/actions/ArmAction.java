@@ -8,4 +8,8 @@ public class ArmAction extends Message {
 	public ArmAction(Agent a) {
 		super(a);
 	}
+	
+	public ArmAction(){
+		
+	}
 }

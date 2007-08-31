@@ -9,4 +9,8 @@ public class EyePercept extends Message {
 	public EyePercept(Agent sender){
 		super(sender);
 	}
+	
+	public EyePercept(){
+		
+	}
 }
