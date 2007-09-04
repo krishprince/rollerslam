@@ -39,8 +39,6 @@ public class RollerslamAllInOne extends JFrame implements ActionListener {
     private JButton jbInstantiate = new JButton("Init");
 
     public RollerslamAllInOne() {
-    	
-    	
     	LogRecordingService logger;
 		try {
 			logger = (LogRecordingService) LocateRegistry.getRegistry("localhost")

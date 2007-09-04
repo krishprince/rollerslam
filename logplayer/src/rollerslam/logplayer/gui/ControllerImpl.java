@@ -57,9 +57,9 @@ public class ControllerImpl implements Controller, Runnable {
             dbUri = dbUri.substring(0, dbUri.length() - 7);
 
             lps.load(dbUri);
-            max = lps.getTotalCycles() - 1;            
+            max = lps.getTotalCycles();            
             view.updateSliderBounds(max);
-            goTo(1);
+            goTo(0);
         } catch (Exception er) {
             throw new RuntimeException(er);
         }
@@ -74,8 +74,8 @@ public class ControllerImpl implements Controller, Runnable {
     }
 
     public void goTo(Integer cycle) {
-        if (cycle < 1) {
-            cycle = 1;
+        if (cycle < 0) {
+            cycle = 0;
         }
         if (cycle > max) {
             cycle = max;
@@ -94,7 +94,6 @@ public class ControllerImpl implements Controller, Runnable {
         if (o != null) {
             model.setModel(((EnvironmentStateLogEntry) o).getWorld());
         } else {
-            System.out.println("No entry for agent environment on cycle " + cycle + " with total cycles " + max);
             model.setModel(null);
         }
     }

@@ -101,7 +101,7 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
         lblCurrentCycle.setBounds(10, 5, 360, 40);
         
                 
-        cycleSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 1);
+        cycleSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 0);
         cycleSlider.setEnabled(false);
         cycleSlider.addChangeListener(this);
         cycleSlider.setMajorTickSpacing(100);
@@ -124,7 +124,6 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
         speedSlider.setEnabled(false);
         speedSlider.setBorder(BorderFactory.createTitledBorder("Play Speed (ms)"));
         speedSlider.setBounds(5, 124, 200, 64);
-        
         
         runStopButton.addActionListener(this);
         controls.add(runStopButton);
@@ -307,9 +306,6 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
     public void stateChanged(ChangeEvent e) {
         Object source = e.getSource();
         if (source == cycleSlider) {
-            if (cycleSlider.getValue() == 0) {
-                cycleSlider.setValue(1);
-            }
             this.controller.goTo(cycleSlider.getValue());
         }
         if (source == speedSlider) {
