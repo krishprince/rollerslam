@@ -1,9 +1,8 @@
 package rollerslam.display;
+
 import java.rmi.RemoteException;
 import java.util.Vector;
-
 import javax.swing.JOptionPane;
-
 import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.display.Display;
 import rollerslam.infrastructure.server.DisplayRegistryServer;
@@ -13,141 +12,138 @@ import rollerslam.repeater.server.RepeaterDisplayRegistryServer;
 import rollerslam.repeater.server.RepeaterServer;
 
 /**
-* Essa classe representa um display, mas as mensagens enviadas pela simulação
-* são reencaminhadas para o conjunto de displays registrados pelo repetidor
-* 
-* @author Pablo
-*/
-@SuppressWarnings("serial")
+ * Essa classe representa um display, mas as mensagens enviadas pela simulação
+ * são reencaminhadas para o conjunto de displays registrados pelo repetidor
+ *
+ * @author Pablo
+ */
 public class RepeaterDisplay implements Display, DisplayRegistryObserver {
-	
-	private DisplayRegistryServer displayRegistry;
-	private Vector<DisplayProcessor> processors = new Vector<DisplayProcessor>();
-	
+
+    private DisplayRegistryServer displayRegistry;
+    private Vector<DisplayProcessor> processors = new Vector<DisplayProcessor>();
+
     private class DisplayProcessor implements Runnable {
-		private Vector<Message> messages = new Vector<Message>();
 
-		private Display display;
+        private Vector<Message> messages = new Vector<Message>();
 
-		public DisplayProcessor(Display d) {
-			this.display = d;
-		}
+        private Display display;
 
-		public void addMessage(Message m) {
-			synchronized (messages) {
-				messages.add(m);
-				messages.notifyAll();
-			}
-		}
+        public DisplayProcessor(Display d) {
+            this.display = d;
+        }
 
-		public void run() {
-			boolean onError = false;
+        public void addMessage(Message m) {
+            synchronized (messages) {
+                messages.add(m);
+                messages.notifyAll();
+            }
+        }
 
-			while (!onError) {
-				while (messages.isEmpty()) {
-					synchronized (messages) {
-						try {
-							messages.wait();
-						} catch (Exception e) {
+        public void run() {
+            boolean onError = false;
 
-						}
-					}
-				}
+            while (!onError) {
+                while (messages.isEmpty()) {
+                    synchronized (messages) {
+                        try {
+                            messages.wait();
+                        } catch (Exception e) {
+                        }
+                    }
+                }
 
-				synchronized (messages) {
-					for (Message m : messages) {
-						try {
-							display.update(m);
-						} catch (Exception e) {
-							if (PrintTrace.TracePrint) {
-								e.printStackTrace();
-							}
-							onError = true;
-							break;
-						}
-					}
+                synchronized (messages) {
+                    for (Message m : messages) {
+                        try {
+                            display.update(m);
+                        } catch (Exception e) {
+                            if (PrintTrace.TracePrint) {
+                                e.printStackTrace();
+                            }
+                            onError = true;
+                            break;
+                        }
+                    }
 
-					messages.clear();
-				}
-			}
-			
-			if (onError) {
-				try {
-					displayRegistry.unregister(display);
-				} catch (RemoteException e) {
-					if (PrintTrace.TracePrint) {
-						e.printStackTrace();
-					}
-				}
-				synchronized (processors) {
-					processors.remove(this);
-				}
-			}
-		}
+                    messages.clear();
+                }
+            }
 
-		public Display getDisplay() {
-			return display;
-		}
-	}
-    
-	public RepeaterDisplay(RepeaterDisplayRegistryServer displayRegistry) {
-		this.displayRegistry = displayRegistry;
-		displayRegistry.setObserver(this);
-	}
+            if (onError) {
+                try {
+                    displayRegistry.unregister(display);
+                } catch (RemoteException e) {
+                    if (PrintTrace.TracePrint) {
+                        e.printStackTrace();
+                    }
+                }
+                synchronized (processors) {
+                    processors.remove(this);
+                }
+            }
+        }
 
-	/**
-	 * @see rollerslam.infrastructure.server.Display#update(Message m)
-	 */
-	public void update(Message m) throws RemoteException {
-		synchronized (processors) {
-			for (DisplayProcessor processor : processors) {
-				processor.addMessage(m);
-			}
-		}
-	}
+        public Display getDisplay() {
+            return display;
+        }
+    }
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {		
-		RepeaterServer server = RepeaterServer.getInstance();
-		try {
-			String host = null;
-			
-			if (args.length > 0) {
-				if (args[0].toUpperCase().equals("AUTO")) {
-					host = null;
-				} else {
-					host = args[0];
-				}
-			} else {
-				host = JOptionPane.showInputDialog("Simulation:", "localhost");
-			}
-			
-			server.init(host);			
-		} catch (RemoteException e) {
-			if (PrintTrace.TracePrint){
-				e.printStackTrace();
-			}
-		} 
-	}
+    public RepeaterDisplay(RepeaterDisplayRegistryServer displayRegistry) {
+        this.displayRegistry = displayRegistry;
+        displayRegistry.setObserver(this);
+    }
 
-	public void notifyRegistered(Display d) {
-		DisplayProcessor dp = new DisplayProcessor(d);
-		processors.add(dp);
-		new Thread(dp).start();
-	}
+    /**
+     * @see rollerslam.infrastructure.server.Display#update(Message m)
+     */
+    public void update(Message m) throws RemoteException {
+        synchronized (processors) {
+            for (DisplayProcessor processor : processors) {
+                processor.addMessage(m);
+            }
+        }
+    }
 
-	public void notifyUnregistered(Display d) {
-		DisplayProcessor proc = null;
-		for (DisplayProcessor processor : processors) {
-			if (processor.getDisplay().equals(d)) {
-				proc = processor;
-			}
-		}
-		
-		if (proc != null) {
-			processors.remove(proc);
-		}
-	}
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        RepeaterServer server = RepeaterServer.getInstance();
+        try {
+            String host = null;
+
+            if (args.length > 0) {
+                host = args[0];
+            } else {
+                host = JOptionPane.showInputDialog("Simulation:", "AUTO");
+            }
+            if ("AUTO".equalsIgnoreCase(host)) {
+                host = null;
+            }
+            server.init(host);
+        } catch (RemoteException e) {
+            if (PrintTrace.TracePrint) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void notifyRegistered(Display d) {
+        DisplayProcessor dp = new DisplayProcessor(d);
+        processors.add(dp);
+        new Thread(dp).start();
+    }
+
+    public void notifyUnregistered(Display d) {
+        DisplayProcessor proc = null;
+        for (DisplayProcessor processor : processors) {
+            if (processor.getDisplay().equals(d)) {
+                proc = processor;
+            }
+        }
+
+        if (proc != null) {
+            processors.remove(proc);
+        }
+    }
 }
