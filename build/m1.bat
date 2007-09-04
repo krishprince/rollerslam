@@ -7,17 +7,17 @@
 IF "%1"=="" GOTO Continue
 
 start java -jar environment.jar %1
-echo MAQUINA 3
+echo MACHINE #3
 pause
 
 start java -jar mobile-display.jar
 
 start java -jar display.jar
-echo MAQUINA 3
+echo MACHINE #3
 
 goto End
 
 :Continue
-echo PRECISA PREENCHER O IP DO LOGSERVER
+echo LOG SERVER IP PARAMETER REQUIRED
 
 :End

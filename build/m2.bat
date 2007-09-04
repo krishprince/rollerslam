@@ -20,7 +20,7 @@ start java -cp testagent.jar rollerslam.agent.goalbased.RollerslamGoalBasedAgent
 
 start java -cp microemulator.jar;. RollerslamMobile.jad
 
-echo MAQUINA LOG
+echo LOG MACHINE
 pause
 
 
