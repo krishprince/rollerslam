@@ -19,7 +19,7 @@ public class IntegrationTest1 {
     
   public static void main(String[] args) throws Exception  {
       
-    System.setProperty("eclipse.directory", "H:\\Arquivos de Programas\\ECLiPSe 5.10");
+    System.setProperty("eclipse.directory", "N:\\ECLiPSe 5.10");
   
     EclipseEngineOptions eclipseEngineOptions = new EclipseEngineOptions();
     EclipseEngine eclipse;
