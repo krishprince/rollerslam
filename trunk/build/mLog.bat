@@ -5,7 +5,7 @@
 @set path=C:\Program Files\Java\jdk1.5.0_06\bin;%path%
 
 start java -Xms512m -Xmx1024m -cp infrastructure.jar rollerslam.infrastructure.logging.LogRecordingServiceImpl
-echo MAQUINA 1
+echo MACHINE #1
 pause
 
 
@@ -13,4 +13,4 @@ start java -jar display.jar
 start java -jar microemulator.jar RollerslamMobile.jad
 
 
-echo PRONTO
+echo DONE

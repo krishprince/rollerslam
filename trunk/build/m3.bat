@@ -16,8 +16,8 @@ start java -cp testagent.jar rollerslam.agent.goalbased.RollerslamGoalBasedAgent
 start java -cp testagent.jar rollerslam.agent.goalbased.RollerslamGoalBasedAgent B auto
 start java -cp testagent.jar rollerslam.agent.goalbased.RollerslamGoalBasedAgent B auto
 start java -cp testagent.jar rollerslam.agent.goalbased.RollerslamGoalBasedAgent B auto
-echo MAQUINA 1
+echo MACHINE #1
 pause
 
 start java -jar microemulator.jar RollerslamMobile.jad
-echo MAQUINA 2
+echo MACHINE #2
