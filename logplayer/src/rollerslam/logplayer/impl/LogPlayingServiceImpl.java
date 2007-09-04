@@ -55,7 +55,11 @@ public class LogPlayingServiceImpl implements LogPlayingService {
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("SELECT max(cycle) FROM t_log");
             rs.next();
-            totalCycles = rs.getInt(1);
+            int temp = rs.getInt(1);
+            if (temp < 2) {
+                throw new RuntimeException("This is not a valid simulation database.");
+            }
+            totalCycles = temp;
             st.close();
         } catch (Exception err) {
             throw new RuntimeException("Error loading simDescription. Details: " + err, err);
