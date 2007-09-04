@@ -75,11 +75,6 @@ public class HSQLDBLog extends AbstractLog {
 
 
     protected void doLog(Serializable message) {  
-        if (!"rollerslam.logging.EnvironmentStateLogEntry".equals(message.getClass().getName())) {
-                return;
-        }
-        
-        
         if (!(message instanceof LogEntry)) {
             throw new RuntimeException("This log implementation wasn't designed to log " + message.getClass());
         }
@@ -120,13 +115,13 @@ public class HSQLDBLog extends AbstractLog {
         }
     }
 
-    public static void main(String... args) throws Exception {
-        Class.forName("org.hsqldb.jdbcDriver").newInstance();
-        Connection c = DriverManager.getConnection("jdbc:hsqldb:file:///c:/temp/testrollerslam_20070812_2316;");
-        Statement s = c.createStatement();
-        java.sql.ResultSet rs = s.executeQuery("SELECT * FROM t_log");
-        while (rs.next()) {
-            System.out.println("Found: " + rs.getString(1) + " - " + rs.getString(2) + " - " + rs.getString(3) + " - " + rs.getString(4) + " - " + rs.getString(5));
-        }
-    }
+//    public static void main(String... args) throws Exception {
+//        Class.forName("org.hsqldb.jdbcDriver").newInstance();
+//        Connection c = DriverManager.getConnection("jdbc:hsqldb:file:///c:/temp/testrollerslam_20070812_2316;");
+//        Statement s = c.createStatement();
+//        java.sql.ResultSet rs = s.executeQuery("SELECT * FROM t_log");
+//        while (rs.next()) {
+//            System.out.println("Found: " + rs.getString(1) + " - " + rs.getString(2) + " - " + rs.getString(3) + " - " + rs.getString(4) + " - " + rs.getString(5));
+//        }
+//    }
 }
