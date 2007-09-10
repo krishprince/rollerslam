@@ -5,6 +5,8 @@
 package rollerslam.logplayer.gui.mvc;
 
 import java.io.File;
+import java.util.List;
+import rollerslam.infrastructure.logging.LogEntry;
 
 /**
  *
@@ -23,5 +25,7 @@ public interface Controller {
     public void setPlaySpeed(Integer speed);
     
     public Integer getPlaySpeed();
+
+    public List<LogEntry> getLogForAgent(Integer agentId, String messageType);
 
 }
