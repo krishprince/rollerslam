@@ -18,8 +18,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import orcas.helpers.SerializationHelper;
-import rollerslam.environment.model.World;
-import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.logging.LogEntry;
 import rollerslam.logplayer.LogPlayingService;
 
@@ -36,6 +34,8 @@ public class LogPlayingServiceImpl implements LogPlayingService {
     private String password = "";
     
     private String readLogForAgentSQL = "SELECT thelog FROM t_log WHERE agent_id = ? AND cycle = ?";
+    private String readAgentsIdsSQL = "SELECT DISTINCT agent_id FROM t_log ORDER BY 1";
+    
 
     public LogPlayingServiceImpl() {
     }
@@ -109,5 +109,72 @@ public class LogPlayingServiceImpl implements LogPlayingService {
     }
 
     public static void main(String[] args) {
+    }
+
+    public List<Integer> getAgentsIds() {
+        List<Integer> lIds = new ArrayList<Integer>();
+        try {
+            if (!conn.isClosed()) {
+                PreparedStatement ps = conn.prepareStatement(readAgentsIdsSQL);
+                
+                ResultSet rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    lIds.add(rs.getInt(1));
+                }
+
+                ps.close();
+            }
+        } catch (Exception ex) {
+            throw new RuntimeException("Error reading agents ids list. Details: " + ex, ex);
+        }
+        return lIds;
+    }
+
+    public List<LogEntry> getAllLogForAgentInCycle(Integer agentId, String messageType) {
+        List<LogEntry> lIds = new ArrayList<LogEntry>();
+        try {
+            if (!conn.isClosed()) {
+                String sql = "SELECT thelog FROM t_log WHERE cycle = ?";
+                if (agentId != null || messageType != null) {
+                    sql += " AND ";
+                }
+                
+                if (agentId != null) {
+                    sql += " agent_id = ?";
+                }
+                
+                if (agentId != null && messageType != null) {
+                    sql += " AND ";
+                }
+                
+                if (messageType != null) {
+                    sql += " lclass = ?";
+                }
+                sql += " ORDER BY lid";
+                
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ps.setInt(1, currentCycle);
+                if (agentId != null) {
+                    ps.setInt(2, agentId);
+                }
+                if (messageType != null && agentId != null) {
+                    ps.setString(3, messageType);
+                } else if (messageType != null) {
+                    ps.setString(2, messageType);
+                }
+                
+                ResultSet rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    lIds.add((LogEntry)SerializationHelper.string2Object(rs.getString(1)));
+                }
+
+                ps.close();
+            }
+        } catch (Exception ex) {
+            throw new RuntimeException("Error reading log entries for agent in cycle. Details: " + ex, ex);
+        }
+        return lIds;
     }
 }

@@ -1,6 +1,7 @@
 package rollerslam.logplayer.gui;
 
 import java.awt.Dimension;
+import java.util.List;
 import javax.swing.event.ChangeEvent;
 import rollerslam.display.gui.*;
 import java.awt.FlowLayout;
@@ -22,7 +23,10 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 import rollerslam.display.gui.mvc.Model;
+import rollerslam.infrastructure.logging.LogEntry;
 import rollerslam.infrastructure.server.PrintTrace;
+import rollerslam.logging.AgentActionLogEntry;
+import rollerslam.logging.GoalUpdateLogEntry;
 import rollerslam.logplayer.gui.mvc.View;
 import rollerslam.logplayer.gui.mvc.Controller;
 
@@ -35,23 +39,23 @@ import rollerslam.logplayer.gui.mvc.Controller;
 public class LogPlayerDisplay extends JPanel implements View, ActionListener, ChangeListener {
 
     private Controller controller = null;
-    
+
     private JButton loadSimButton = new JButton("Load Simulation");
     private JLabel messages = new JLabel("");
     private JPanel pMiddle;
-    
+
     private JLabel lblCurrentCycle;
-    
+
     private JSlider cycleSlider;
     private JSlider speedSlider;
-    
+
     private JButton runStopButton = new JButton("Run");
-    
+
     private JEditorPane jep;
-    
+
     private JComboBox agentTypeCbo;
     private JComboBox messageTypeCbo;
-    private JButton btnShowMessages; 
+    private JButton btnShowMessages;
 
     private GameCanvas game = new GameCanvas(messages);
 
@@ -62,6 +66,35 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
         game.setModel(model);
 
         initComponents();
+    }
+
+    private void btnShowMessagesClick(ActionEvent e) {
+        Integer aId = null;
+        if (!"All".equals(agentTypeCbo.getSelectedItem())) {
+            aId = (Integer) agentTypeCbo.getSelectedItem();
+        }
+        String messageType = null;
+        if (!"All".equals(messageTypeCbo.getSelectedItem())) {
+            if ("Agent Action".equals(messageTypeCbo.getSelectedItem())) {
+                messageType = AgentActionLogEntry.class.getName();
+            } else {
+                messageType = GoalUpdateLogEntry.class.getName();
+            }
+        }
+        List<LogEntry> ls = this.controller.getLogForAgent(aId, messageType);
+        StringBuffer entries = new StringBuffer(100);
+        entries.append("<table border=\"1\" width=\"100%\">");
+        if (ls.isEmpty()) {
+            entries.append("<tr><td>No entries found.</td></tr>");
+        }
+        
+        for (LogEntry le : ls) {
+            entries.append("<tr><td>" + le + "</td></tr>");
+        }
+    
+        entries.append("</table>");
+        
+        jep.setText(entries.toString());
     }
 
     private void initComponents() {
@@ -76,14 +109,14 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
         panel.setMinimumSize(new Dimension(w, h));
         panel.setSize(new Dimension(w, h));
         panel.setMaximumSize(new Dimension(w, h));
-        
+
         panel.setLayout(null);
 
         panel.add(game);
 
         this.add(panel);
 
-        
+
         pMiddle = new JPanel();
         pMiddle.setLayout(null);
         Dimension mD = new Dimension(752, 200);
@@ -91,16 +124,16 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
         pMiddle.setMaximumSize(mD);
         pMiddle.setSize(mD);
         pMiddle.setPreferredSize(mD);
-        
+
         JPanel controls = new JPanel();
         controls.setLayout(null);
         controls.setBorder(BorderFactory.createTitledBorder("Simulation Execution Controls"));
-        
+
         lblCurrentCycle = new JLabel("Cycle 0 of 100.");
         controls.add(lblCurrentCycle);
         lblCurrentCycle.setBounds(10, 5, 360, 40);
-        
-                
+
+
         cycleSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 0);
         cycleSlider.setEnabled(false);
         cycleSlider.addChangeListener(this);
@@ -108,7 +141,7 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
         cycleSlider.setPaintLabels(true);
         cycleSlider.setPaintTicks(true);
         cycleSlider.setBorder(BorderFactory.createTitledBorder("Current Cycle"));
-        
+
         controls.add(cycleSlider);
         cycleSlider.setBounds(5, 40, 360, 64);
 
@@ -124,34 +157,34 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
         speedSlider.setEnabled(false);
         speedSlider.setBorder(BorderFactory.createTitledBorder("Play Speed (ms)"));
         speedSlider.setBounds(5, 124, 200, 64);
-        
+
         runStopButton.addActionListener(this);
         controls.add(runStopButton);
         runStopButton.setEnabled(false);
         runStopButton.setBounds(242, 160, 80, 26);
-        
-        
+
+
         pMiddle.add(controls);
         controls.setBounds(0, 0, 370, 200);
-        
-        
+
+
         JPanel mPanel = new JPanel();
         mPanel.setLayout(null);
         mPanel.setBorder(BorderFactory.createTitledBorder("Messages"));
-        
-        
+
+
         agentTypeCbo = new JComboBox(new String[]{"All"});
         mPanel.add(agentTypeCbo);
         agentTypeCbo.setBorder(BorderFactory.createTitledBorder("Agent Filter"));
         agentTypeCbo.setBounds(5, 15, 120, 50);
         agentTypeCbo.setEnabled(false);
-        
+
         messageTypeCbo = new JComboBox(new String[]{"All", "Agent Action", "Goal Update"});
         mPanel.add(messageTypeCbo);
         messageTypeCbo.setBorder(BorderFactory.createTitledBorder("Message Type Filter"));
         messageTypeCbo.setBounds(135, 15, 120, 50);
         messageTypeCbo.setEnabled(false);
-        
+
         jep = new JEditorPane();
         JScrollPane scrollPane = new JScrollPane(jep);
 
@@ -161,17 +194,17 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
         mPanel.add(scrollPane);
         scrollPane.setBorder(BorderFactory.createTitledBorder("Message Info"));
         scrollPane.setBounds(5, 70, 360, 120);
-        
+
         btnShowMessages = new JButton("Show");
         mPanel.add(btnShowMessages);
         btnShowMessages.setBounds(270, 35, 70, 25);
         btnShowMessages.setEnabled(false);
         btnShowMessages.addActionListener(this);
-        
-        
+
+
         pMiddle.add(mPanel);
         mPanel.setBounds(376, 0, 370, 200);
-        
+
         this.add(pMiddle);
 
         JPanel down = new JPanel();
@@ -196,15 +229,15 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
             loadSimButtonClick(e);
             loadSimButton.setText("Load Simulation");
             return;
-        } else 
-        if (o == runStopButton) {
+        } else if (o == runStopButton) {
             runStopButtonClick(e);
             return;
         }
         if (o == btnShowMessages) {
+            btnShowMessagesClick(e);
             return;
         }
-        
+
         throw new RuntimeException("Object " + e.getSource() + " doesn't have action defined!");
     }
 
@@ -216,7 +249,7 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
         if (msg == null || "".equals(msg)) {
             msg = "Exception class: " + e1.getClass().getName();
         }
-        JOptionPane.showMessageDialog(this, msg, "There was an error...", JOptionPane.ERROR_MESSAGE);        
+        JOptionPane.showMessageDialog(this, msg, "There was an error...", JOptionPane.ERROR_MESSAGE);
     }
 
     public static void main(String[] args) {
@@ -242,6 +275,7 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
         JFileChooser jfc = new JFileChooser("c:\\temp");
         jfc.removeChoosableFileFilter(jfc.getFileFilter());
         jfc.setFileFilter(new FileFilter() {
+
             public boolean accept(File pathname) {
                 if (!pathname.isDirectory()) {
                     if (pathname.getName().endsWith(".script")) {
@@ -256,24 +290,24 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
                 return "Rollerslam db file (*.script)";
             }
         });
-        
+
         int opt = jfc.showOpenDialog(this);
-        
+
         if (opt != JFileChooser.APPROVE_OPTION) {
             return;
         }
-        
+
         f = jfc.getSelectedFile();
-        
+
         try {
             controller.load(f);
             runStopButton.setEnabled(true);
             cycleSlider.setEnabled(true);
             speedSlider.setEnabled(true);
-            
-//            agentTypeCbo.setEnabled(true);
-//            messageTypeCbo.setEnabled(true);
-//            btnShowMessages.setEnabled(true);
+
+            agentTypeCbo.setEnabled(true);
+            messageTypeCbo.setEnabled(true);
+            btnShowMessages.setEnabled(true);
         } catch (Exception e1) {
             showException(e1);
         }
@@ -291,6 +325,7 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
 
     public void updateCurrentCycleMsg(Integer c, Integer m) {
         this.lblCurrentCycle.setText("Cycle " + c + " of " + m);
+        jep.setText("");
     }
 
     public void updateSliderBounds(Integer m) {
@@ -311,5 +346,14 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
         if (source == speedSlider) {
             this.controller.setPlaySpeed(speedSlider.getValue());
         }
+    }
+
+    public void updateComboAgentsIds(List<Integer> lIds) {
+        agentTypeCbo.removeAllItems();
+        agentTypeCbo.addItem("All");
+        for (Integer i : lIds) {
+            agentTypeCbo.addItem(i);
+        }
+        jep.setText("");
     }
 }

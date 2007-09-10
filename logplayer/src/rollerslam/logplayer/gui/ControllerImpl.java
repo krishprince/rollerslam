@@ -10,6 +10,7 @@
 package rollerslam.logplayer.gui;
 
 import java.io.File;
+import java.util.List;
 import rollerslam.display.gui.mvc.Model;
 import rollerslam.infrastructure.logging.LogEntry;
 
@@ -59,6 +60,7 @@ public class ControllerImpl implements Controller, Runnable {
             lps.load(dbUri);
             max = lps.getTotalCycles();            
             view.updateSliderBounds(max);
+            view.updateComboAgentsIds(lps.getAgentsIds());
             goTo(0);
         } catch (Exception er) {
             throw new RuntimeException(er);
@@ -118,5 +120,9 @@ public class ControllerImpl implements Controller, Runnable {
 
     public Integer getPlaySpeed() {
         return interval;
+    }
+
+    public List<LogEntry> getLogForAgent(Integer agentId, String messageType) {
+        return lps.getAllLogForAgentInCycle(agentId, messageType);
     }
 }

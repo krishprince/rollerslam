@@ -10,6 +10,7 @@
 package rollerslam.logplayer.gui.mvc;
 
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 /**
  *
@@ -21,4 +22,5 @@ public interface View {
     public void updateCurrentCycleMsg(Integer c, Integer m);
     public void updateSliderBounds(Integer m);
     public void updateSlider(Integer i);
+    public void updateComboAgentsIds(List<Integer> lIds);
 }
