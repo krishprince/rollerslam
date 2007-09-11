@@ -3,9 +3,9 @@ package rollerslam.agent.coach;
 import javax.swing.JOptionPane;
 
 import rollerslam.environment.model.PlayerTeam;
-import rollerslam.environment.model.perceptions.GameStartedPerception;
 import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.Message;
+import rollerslam.infrastructure.agent.SimpleAgent;
 import rollerslam.infrastructure.agent.StateMessage;
 import rollerslam.infrastructure.agent.automata.ActionInterpretationComponent;
 import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
@@ -22,27 +22,29 @@ public class RollerslamCoachAgent extends GoalBasedAgent {
 	
 	public RollerslamCoachAgent(final PlayerTeam team) throws Exception {
 		facade = ClientFacadeImpl.getInstance();
-		remoteThis = (Agent) facade.getClientInitialization().exportObject(this);
+		//remoteThis = (Agent) facade.getClientInitialization().exportObject(this);
+		remoteThis = (Agent) facade.getClientInitialization().exportObject(new SimpleAgent());
+		this.setName(remoteThis.getName());
+
 		facade.getAgentRegistry().register(remoteThis);
 
 		this.sensor = facade.getAgentSensor(remoteThis);
 		this.effector = facade.getAgentEffector(remoteThis);
 
-		this.worldModel = new AgentWorldModel(null);
+		this.worldModel = new CoachAgentWorldModel(null);
 		
 		this.goalInitializationComponent = new GoalInitializationComponent() {
 			public void initialize(GoalBasedEnvironmentStateModel goal) {
-				((AgentWorldModel)goal).currentGoal = AgentGoal.WAIT_JOIN_GAME;
-				((AgentWorldModel)goal).myTeam = team;
+				((CoachAgentWorldModel)goal).currentGoal = CoachAgentGoal.WAIT_JOIN_GAME;
+				((CoachAgentWorldModel)goal).myTeam = team;
 			}			
 		};
 		
-		//this.goalUpdateComponent = new AgentGoalUpdater(remoteThis);
-		this.goalUpdateComponent = new AgentGoalUpdater();
+		this.goalUpdateComponent = new CoachAgentGoalUpdater();
 		
 		this.initializationComponent = new ModelInitializationComponent() {
 			public void initialize(EnvironmentStateModel model) {
-				((AgentWorldModel)model).gameStarted = false;				
+				((CoachAgentWorldModel)model).gameStarted = false;				
 			}
 			
 		};
@@ -50,18 +52,14 @@ public class RollerslamCoachAgent extends GoalBasedAgent {
 		this.interpretationComponent = new ActionInterpretationComponent() {
 			public void processAction(EnvironmentStateModel w, Message m) {			
 				if (m instanceof StateMessage) {
-					((AgentWorldModel)w).environmentStateModel = ((StateMessage)m).model;
-				} else if (m instanceof GameStartedPerception) {
-					if (((GameStartedPerception)m).receiver.equals(remoteThis)) {
-						((AgentWorldModel)w).myID = ((GameStartedPerception)m).playerID;
-					}
+					((CoachAgentWorldModel)w).environmentStateModel = ((StateMessage)m).model;
 				}
 			}			
 		};
 		
-		this.ramificationComponent = new AgentRamificator();
+		this.ramificationComponent = new CoachAgentRamificator();
 		
-		this.strategyComponent = new AgentActionGenerator(remoteThis);
+		this.strategyComponent = new CoachAgentActionGenerator();
 		
 		this.run();
 		startSimulation();

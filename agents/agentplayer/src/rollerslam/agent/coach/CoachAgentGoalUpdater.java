@@ -7,8 +7,6 @@ import rollerslam.environment.model.Fact;
 import rollerslam.environment.model.PlayerTeam;
 import rollerslam.environment.model.World;
 import rollerslam.environment.model.actions.voice.SendMsgAction;
-import rollerslam.environment.model.strategy.AgentRole;
-import rollerslam.environment.model.strategy.DefineRoleFact;
 import rollerslam.environment.model.strategy.InitializationFact;
 import rollerslam.environment.model.strategy.Receivers;
 import rollerslam.infrastructure.agent.Message;
@@ -19,10 +17,10 @@ import rollerslam.infrastructure.client.ClientFacadeImpl;
 import rollerslam.infrastructure.server.PrintTrace;
 import rollerslam.infrastructure.server.SimulationState;
 
-public class AgentGoalUpdater implements GoalUpdateComponent {
+public class CoachAgentGoalUpdater implements GoalUpdateComponent {
 
 	public void updateGoal(GoalBasedEnvironmentStateModel goal) {
-		AgentWorldModel model = (AgentWorldModel) goal;
+		CoachAgentWorldModel model = (CoachAgentWorldModel) goal;
 		
 		ClientFacade facade = ClientFacadeImpl.getInstance();
 		SimulationState state = SimulationState.STOPPED;
@@ -39,16 +37,16 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 		
 		if(state == SimulationState.STOPPED){
 			//Stop reasoning			
-		} else if (model.currentGoal == AgentGoal.WAIT_JOIN_GAME) {
+		} else if (model.currentGoal == CoachAgentGoal.WAIT_JOIN_GAME) {
 			waitJoinGame(model);
-		} else if (model.currentGoal == AgentGoal.LISTENING) {
+		} else if (model.currentGoal == CoachAgentGoal.LISTENING) {
 			listening(model);
 		} 
 	}
 	
-	private void waitJoinGame(AgentWorldModel model){
+	private void waitJoinGame(CoachAgentWorldModel model){
         if (model.gameStarted) {
-        	model.currentGoal = AgentGoal.LISTENING;
+        	model.currentGoal = CoachAgentGoal.LISTENING;
         } else {
         	if (model.environmentStateModel != null) {
         		model.gameStarted = true;
@@ -56,7 +54,7 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
         }
 	}
 	
-	private void listening(AgentWorldModel model){
+	private void listening(CoachAgentWorldModel model){
 		Vector<Message> acts = ((World)model.environmentStateModel).actions;
 		String me = null;
 		
@@ -64,19 +62,14 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 			me = Receivers.COACH_A.getValue();
 		else
 			me = Receivers.COACH_B.getValue();
-		
-System.out.println("0# listening gu " + acts.size());
 
 		for(Message a : acts){
-System.out.println("1# listening gu " + (a instanceof SendMsgAction));			
 			if(a instanceof SendMsgAction){
 				Fact f = ((SendMsgAction)a).subject;
-System.out.println("2# listening gu " + f.receiver);			
+
 				if(f.receiver.equals(me)){
 					if(f.message instanceof InitializationFact){
 						model.playersToSetPosition.add(Integer.parseInt(f.sender));
-System.out.println("3# listening gu " + f.sender);		
-
 					}
 				}
 			}

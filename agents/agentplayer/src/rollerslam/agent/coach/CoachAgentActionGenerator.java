@@ -5,12 +5,12 @@ import java.rmi.RemoteException;
 import rollerslam.environment.model.Fact;
 import rollerslam.environment.model.PlayerTeam;
 import rollerslam.environment.model.World;
-import rollerslam.environment.model.actions.JoinGameAction;
 import rollerslam.environment.model.actions.voice.SendMsgAction;
 import rollerslam.environment.model.strategy.AgentRole;
 import rollerslam.environment.model.strategy.DefineRoleFact;
+import rollerslam.environment.model.strategy.PlayerPosition;
+import rollerslam.environment.model.strategy.PositionCoord;
 import rollerslam.environment.model.strategy.Receivers;
-import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
 import rollerslam.infrastructure.agent.automata.ModelBasedBehaviorStrategyComponent;
@@ -19,17 +19,11 @@ import rollerslam.infrastructure.client.ClientFacadeImpl;
 import rollerslam.infrastructure.server.PrintTrace;
 import rollerslam.infrastructure.server.SimulationState;
 
-public class AgentActionGenerator implements
+public class CoachAgentActionGenerator implements
 		ModelBasedBehaviorStrategyComponent {
 
-	public Agent remoteThis;
-
-	public AgentActionGenerator(Agent remoteThis) {
-		this.remoteThis = remoteThis;
-	}
-
 	public Message computeAction(EnvironmentStateModel w) {
-		AgentWorldModel model = (AgentWorldModel) w;
+		CoachAgentWorldModel model = (CoachAgentWorldModel) w;
 		Message m = null;
 		
 		ClientFacade facade = ClientFacadeImpl.getInstance();
@@ -47,17 +41,17 @@ public class AgentActionGenerator implements
 			return null;			
 		}
 		
-		if (model.currentGoal == AgentGoal.WAIT_JOIN_GAME) {
+		if (model.currentGoal == CoachAgentGoal.WAIT_JOIN_GAME) {
 			//Do nothing
-		}else if (model.currentGoal == AgentGoal.LISTENING) {
+		}else if (model.currentGoal == CoachAgentGoal.LISTENING) {
 			m = listening(model);
 		}
 		
 		return m;
 	}
 	
-	public Message listening(AgentWorldModel model){
-		if(model.lastPosition != -1){
+	public Message listening(CoachAgentWorldModel model){
+		if(model.lastPosition != null){
 			Fact f = new Fact();
 			DefineRoleFact mesg = new DefineRoleFact();
 			f.cycle = ((World)model.environmentStateModel).currentCycle;
@@ -67,26 +61,26 @@ public class AgentActionGenerator implements
 			else
 				f.sender = Receivers.COACH_B.getValue();
 
-System.out.println("1# listening ag " + model.lastPlayers.toString());
-
 			f.receiver = model.lastPlayers.toString();
 			
 			mesg.position = model.lastPosition;
 			
-			if(model.lastPosition == 0){
+			if(model.lastPosition == PlayerPosition.GOALKEEPER){
 				mesg.role = AgentRole.GOALKEEPER;
-			} else if(model.lastPosition >= 1 && model.lastPosition <= 6){
+			} else if(model.lastPosition.getValue() >= 1 && model.lastPosition.getValue() <= 6){
 				mesg.role = AgentRole.BACKS;
-			} else if(model.lastPosition >= 7 && model.lastPosition <= 13){
+			} else if(model.lastPosition.getValue() >= 7 && model.lastPosition.getValue() <= 13){
 				mesg.role = AgentRole.MIDFIELDER;
-			} else if(model.lastPosition >= 14 && model.lastPosition <= 19){
+			} else if(model.lastPosition.getValue() >= 14 && model.lastPosition.getValue() <= 19){
 				mesg.role = AgentRole.FORWARDS;	
 			}
 			
-			f.message = mesg;
+			mesg.posCoord = PositionCoord.getCoord(model.lastPosition);
 			
-			model.lastPlayers = -1;
-			model.lastPosition = -1;
+			f.message = mesg;
+
+			model.lastPlayers = null;
+			model.lastPosition = null;
 			
 			return new SendMsgAction(f);
 		} else {

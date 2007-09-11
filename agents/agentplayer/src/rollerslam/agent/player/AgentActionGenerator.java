@@ -17,7 +17,6 @@ import rollerslam.environment.model.actions.leg.StandUpAction;
 import rollerslam.environment.model.actions.voice.SendMsgAction;
 import rollerslam.environment.model.strategy.InitializationFact;
 import rollerslam.environment.model.strategy.Receivers;
-import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
 import rollerslam.infrastructure.agent.automata.ModelBasedBehaviorStrategyComponent;
@@ -30,10 +29,7 @@ import rollerslam.logging.AgentActionLogEntry;
 public class AgentActionGenerator implements
 		ModelBasedBehaviorStrategyComponent {
 
-	public Agent remoteThis;
-
-	public AgentActionGenerator(Agent remoteThis) {
-		this.remoteThis = remoteThis;
+	public AgentActionGenerator() {
 	}
 
 	public Message computeAction(EnvironmentStateModel w) {
@@ -67,6 +63,8 @@ public class AgentActionGenerator implements
 			Player me = model.getMe();
 
 			m = new DashAction(me.world.ball.s.subtract(me.s));
+		} else if (model.currentGoal == AgentGoal.GO_TO_INIT_COORD){
+			m = goToInitCoord(model);
 		} else if (model.currentGoal == AgentGoal.GO_TO_GOAL) {
 			Player me = model.getMe();
 
@@ -79,11 +77,11 @@ public class AgentActionGenerator implements
 			}
 
 		} else if (model.currentGoal == AgentGoal.CATCH_BALL) {
-			m = new CatchAction(remoteThis);
+			m = new CatchAction();
 		} else if (model.currentGoal == AgentGoal.TACKLE_PLAYER) {
-			m = new TackleAction(remoteThis);
+			m = new TackleAction();
 		} else if (model.currentGoal == AgentGoal.STAND_UP) {
-			m = new StandUpAction(remoteThis);
+			m = new StandUpAction();
 		} else if (model.currentGoal == AgentGoal.THROW_BALL) {
 			Player me = model.getMe();
 			World world = (World) model.environmentStateModel;
@@ -104,7 +102,7 @@ public class AgentActionGenerator implements
 				m = new KickAction(world.goalA.s.subtract(me.s));
 			}
         } else if(model.currentGoal == AgentGoal.COUNTER_TACKLE){
-        	m = new CountertackleAction(remoteThis);			
+        	m = new CountertackleAction();			
         }
 
 		try {
@@ -144,12 +142,19 @@ public class AgentActionGenerator implements
 			f.receiver = Receivers.COACH_B.getValue();
 		
 		f.message = mesg;
-
+		
 		return new SendMsgAction(f);
 	}
 	
 	public Message setRoles(AgentWorldModel model){
 		return null;
+	}
+	
+	private Message goToInitCoord(AgentWorldModel model){
+		Player me = model.getMe();
+
+		return new DashAction(model.posCoord.subtract(me.s));
+
 	}
 	
 	public Message goToBall(AgentWorldModel model){
