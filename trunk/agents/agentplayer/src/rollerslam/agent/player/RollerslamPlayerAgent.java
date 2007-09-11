@@ -6,6 +6,7 @@ import rollerslam.environment.model.PlayerTeam;
 import rollerslam.environment.model.perceptions.GameStartedPerception;
 import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.Message;
+import rollerslam.infrastructure.agent.SimpleAgent;
 import rollerslam.infrastructure.agent.StateMessage;
 import rollerslam.infrastructure.agent.automata.ActionInterpretationComponent;
 import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
@@ -22,7 +23,10 @@ public class RollerslamPlayerAgent extends GoalBasedAgent {
 	
 	public RollerslamPlayerAgent(final PlayerTeam team) throws Exception {
 		facade = ClientFacadeImpl.getInstance();
-		remoteThis = (Agent) facade.getClientInitialization().exportObject(this);
+		//remoteThis = (Agent) facade.getClientInitialization().exportObject(this);
+		remoteThis = (Agent) facade.getClientInitialization().exportObject(new SimpleAgent());
+		this.setName(remoteThis.getName());
+
 		facade.getAgentRegistry().register(remoteThis);
 
 		this.sensor = facade.getAgentSensor(remoteThis);
@@ -61,7 +65,7 @@ public class RollerslamPlayerAgent extends GoalBasedAgent {
 		
 		this.ramificationComponent = new AgentRamificator();
 		
-		this.strategyComponent = new AgentActionGenerator(remoteThis);
+		this.strategyComponent = new AgentActionGenerator();
 		
 		this.run();
 		startSimulation();
