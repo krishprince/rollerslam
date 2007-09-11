@@ -1,7 +1,6 @@
 package rollerslam.environment.model.utils;
 
 import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
 
  public class MathGeometry {
 	public static boolean calculePointIntoEllipse(int majorAxis, int f1x, int f1y, int f2x, int f2y, int px, int py){
