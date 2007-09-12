@@ -1,21 +1,8 @@
 package rollerslam.agent.sentinel;
 
-import java.util.Set;
-
-import javax.swing.JOptionPane;
-
-import rollerslam.agent.dummy.RollerslamDummyAgent;
-import rollerslam.agent.goalbased.AgentActionGenerator;
-import rollerslam.agent.goalbased.AgentGoal;
-import rollerslam.agent.goalbased.AgentGoalUpdater;
-import rollerslam.agent.goalbased.AgentRamificator;
 import rollerslam.agent.goalbased.AgentWorldModel;
-import rollerslam.agent.goalbased.RollerslamGoalBasedAgent;
 import rollerslam.environment.model.PlayerTeam;
-import rollerslam.environment.model.actions.JoinGameAction;
-import rollerslam.environment.model.actions.leg.DashAction;
 import rollerslam.environment.model.perceptions.GameStartedPerception;
-import rollerslam.environment.model.utils.Vector;
 import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.agent.StateMessage;
