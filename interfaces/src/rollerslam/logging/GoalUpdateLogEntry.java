@@ -11,6 +11,8 @@ import rollerslam.infrastructure.logging.*;
  *
  * @author Weslei
  */
+
+@SuppressWarnings("serial")
 public class GoalUpdateLogEntry extends LogEntry {
 
     private String reason;

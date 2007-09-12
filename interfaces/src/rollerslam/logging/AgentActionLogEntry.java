@@ -16,6 +16,8 @@ import rollerslam.infrastructure.agent.Message;
  *
  * @author Weslei
  */
+
+@SuppressWarnings("serial")
 public class AgentActionLogEntry extends LogEntry {
 
     private Message message;

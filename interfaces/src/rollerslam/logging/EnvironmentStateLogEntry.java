@@ -16,6 +16,8 @@ import rollerslam.environment.model.World;
  *
  * @author Weslei
  */
+
+@SuppressWarnings("serial")
 public class EnvironmentStateLogEntry extends LogEntry {
 
     private World world;
