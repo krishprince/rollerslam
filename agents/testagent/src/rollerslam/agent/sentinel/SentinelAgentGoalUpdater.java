@@ -2,19 +2,13 @@ package rollerslam.agent.sentinel;
 
 import java.rmi.RemoteException;
 
-import rollerslam.agent.goalbased.AgentGoal;
-import rollerslam.agent.goalbased.AgentWorldModel;
 import rollerslam.environment.model.Player;
-import rollerslam.environment.model.PlayerTeam;
-import rollerslam.environment.model.utils.MathGeometry;
 import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.goalbased.GoalBasedEnvironmentStateModel;
 import rollerslam.infrastructure.agent.goalbased.GoalUpdateComponent;
 import rollerslam.infrastructure.client.ClientFacade;
 import rollerslam.infrastructure.client.ClientFacadeImpl;
 import rollerslam.infrastructure.server.PrintTrace;
-import rollerslam.infrastructure.server.ServerFacade;
-import rollerslam.infrastructure.server.ServerFacadeImpl;
 import rollerslam.logging.GoalUpdateLogEntry;
 
 public class SentinelAgentGoalUpdater implements GoalUpdateComponent {

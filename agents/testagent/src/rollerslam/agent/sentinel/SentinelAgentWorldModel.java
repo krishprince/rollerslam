@@ -1,6 +1,5 @@
 package rollerslam.agent.sentinel;
 
-import rollerslam.agent.goalbased.AgentGoal;
 import rollerslam.environment.model.Player;
 import rollerslam.environment.model.PlayerTeam;
 import rollerslam.environment.model.World;
