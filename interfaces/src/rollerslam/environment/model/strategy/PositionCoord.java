@@ -7,7 +7,7 @@ import rollerslam.environment.model.utils.Vector;
 public class PositionCoord {
 	private static HashMap<PlayerPosition, Vector> posCoord = new HashMap<PlayerPosition, Vector>();
 	
-	public static int maxArea = 10000;
+	public static int maxArea = 20000;
 	
 	public static Vector getCoord(PlayerPosition position){
 		return posCoord.get(position);
