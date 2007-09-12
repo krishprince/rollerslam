@@ -50,4 +50,8 @@ public class Vector implements java.io.Serializable {
 	public Vector clone() {
 		return new Vector(x,y);
 	}
+	
+	public String toString() {
+		return "(" + x + ";" + y + ")";
+	}
 }
