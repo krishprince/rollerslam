@@ -9,7 +9,6 @@ import rollerslam.environment.model.PlayerTeam;
 import rollerslam.environment.model.World;
 import rollerslam.environment.model.actions.voice.SendMsgAction;
 import rollerslam.environment.model.strategy.DefineRoleFact;
-import rollerslam.environment.model.strategy.PlayerPosition;
 import rollerslam.environment.model.strategy.PositionCoord;
 import rollerslam.environment.model.utils.MathGeometry;
 import rollerslam.infrastructure.agent.Message;
@@ -53,6 +52,8 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 			goToInitCoord(model);
 		} else if (model.currentGoal == AgentGoal.STOP) {
 			stop(model);
+		} else if (model.currentGoal == AgentGoal.WAIT_MOVIMENT) {
+			waitMoviment(model);
 		} else if (model.currentGoal == AgentGoal.GO_TO_BALL) {
 			goToBall(model);
 	    } else if (model.currentGoal == AgentGoal.CATCH_BALL){
@@ -128,11 +129,13 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 	private void goToInitCoord(AgentWorldModel model){
 		Player me = model.getMe();
 		
-		if(model.position == PlayerPosition.CENTERFORWARD){
+		if(me.inGround){
+			model.currentGoal = AgentGoal.STAND_UP;
+		} else if(me.hasBall){
+			model.currentGoal = AgentGoal.GO_TO_GOAL;
+		} else if(nearBall(model)){
 			model.currentGoal = AgentGoal.GO_TO_BALL;
 		} else if(MathGeometry.calculeDistancePoints(me.s.x, model.posCoord.x, me.s.y, model.posCoord.y) < PositionCoord.maxArea * 0.10) {
-			//TODO mudar aqui
-			//model.currentGoal = AgentGoal.GO_TO_BALL;
 			model.currentGoal = AgentGoal.STOP;
 		}
 	}
@@ -140,16 +143,29 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 	private void stop(AgentWorldModel model){
 		Player me = model.getMe();
 		
-		//It only will stop to dash with a = -v when v = 0 and a = 0
-		if(me.v.getModule() == 0 && me.a.getModule() == 0 ){
+		//It only will stop to dash with a = -v when v = 0 and a = 0, but, he is near the ball, he go to catch it
+		if(nearBall(model)){
+			model.currentGoal = AgentGoal.GO_TO_BALL;
+		} else if(me.v.getModule() == 0 && me.a.getModule() == 0 ){
+			model.currentGoal = AgentGoal.WAIT_MOVIMENT;
+		}
+	}
+	
+	private void waitMoviment(AgentWorldModel model){
+		//if(MathGeometry.calculeDistancePoints(me.world.ball.s.x, model.posCoord.x, me.world.ball.s.y, model.posCoord.y) < PositionCoord.maxArea) {
+		if(nearBall(model)){
 			model.currentGoal = AgentGoal.GO_TO_BALL;
 		}
 	}
 	
 	private void goToBall(AgentWorldModel model){
 		Player me = model.getMe();
-        if(!me.inGround){
-            if (MathGeometry.calculeDistancePoints(me.s.x, me.world.ball.s.x, me.s.y, me.world.ball.s.y) < 5000) {
+
+		if(!me.inGround){
+        	//if(MathGeometry.calculeDistancePoints(me.s.x, model.posCoord.x, me.s.y, model.posCoord.y) > PositionCoord.maxArea) {
+        	if(!nearBall(model)){
+    			model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
+    		} else if (MathGeometry.calculeDistancePoints(me.s.x, me.world.ball.s.x, me.s.y, me.world.ball.s.y) < 5000) {
                 if(!me.world.ball.withPlayer){
             		try {
             			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Catch the ball");
@@ -170,6 +186,7 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
             					e.printStackTrace();
             				}
                 		}
+                		model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
                 	}else{
                 		try {
                 			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Tackle the Player");
@@ -198,7 +215,11 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 	
 	private void catchBall(AgentWorldModel model){
 		Player me = model.getMe();
-        if(me.hasBall){
+		//if(MathGeometry.calculeDistancePoints(me.s.x, model.posCoord.x, me.s.y, model.posCoord.y) > PositionCoord.maxArea) {
+		//if(!nearBall(model)){
+		//	model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
+		//} else 
+		if(me.hasBall){
         	boolean nearOpponent = false;
         	
         	if(me.team == PlayerTeam.TEAM_A){
@@ -246,6 +267,8 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
     					e.printStackTrace();
     				}
         		}
+        		
+        		model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
             }else{
         		try {
         			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Go to ball");
@@ -255,7 +278,12 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
     					e.printStackTrace();
     				}
         		}
-            	model.currentGoal = AgentGoal.GO_TO_BALL;
+        		
+        		if(!nearBall(model)){
+        			model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
+        		} else {
+        			model.currentGoal = AgentGoal.GO_TO_BALL;
+        		}
             }
         }		
 	}
@@ -263,7 +291,11 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 	private void tacklePlayer(AgentWorldModel model){
 		Player me = model.getMe();
         
-        if(me.world.playerWithBall != null && me.world.playerWithBall.team == me.team){
+		//if(MathGeometry.calculeDistancePoints(me.s.x, model.posCoord.x, me.s.y, model.posCoord.y) > PositionCoord.maxArea) {
+		//if(!nearBall(model)){
+		//	model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
+		//} else 
+		if(me.world.playerWithBall != null && me.world.playerWithBall.team == me.team){
     		try {
     			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Ball with team. Do nothing");
     			facade.getLogRecordingService().addEntry(envLog);
@@ -272,6 +304,8 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 					e.printStackTrace();
 				}
     		}
+    		
+    		model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
         }else{
     		try {
     			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Go to ball");
@@ -281,7 +315,12 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 					e.printStackTrace();
 				}
     		}
-        	model.currentGoal = AgentGoal.GO_TO_BALL;
+    		
+    		if(!nearBall(model)){
+    			model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
+    		} else {
+    			model.currentGoal = AgentGoal.GO_TO_BALL;
+    		}
         }		
 	}
 	
@@ -297,6 +336,8 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 					e.printStackTrace();
 				}
     		}
+    		
+    		model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
         }else{
     		try {
     			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Go to ball");
@@ -306,7 +347,13 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 					e.printStackTrace();
 				}
     		}
-        	model.currentGoal = AgentGoal.GO_TO_BALL;
+    		
+    		//if(MathGeometry.calculeDistancePoints(me.s.x, model.posCoord.x, me.s.y, model.posCoord.y) > PositionCoord.maxArea) {
+    		if(!nearBall(model)){
+    			model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
+    		} else { 
+    			model.currentGoal = AgentGoal.GO_TO_BALL;
+    		}
         }
 	}
 	
@@ -322,7 +369,7 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 				}
     		}
     		model.currentGoal = AgentGoal.STAND_UP;
-    	} else {
+    	} else if (me.hasBall) {
     		if(me.team == PlayerTeam.TEAM_A){
 				if(MathGeometry.calculeDistancePoints(me.s.x, me.world.goalB.s.x, me.s.y, me.world.goalB.s.y) < 30000) {
 	        		try {
@@ -368,32 +415,48 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 	        		model.currentGoal = AgentGoal.KICK_BALL;
 				}
 			}        	
+    	} else {
+    		if(!nearBall(model)){
+    			model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
+    		} else {
+    			model.currentGoal = AgentGoal.GO_TO_BALL;
+    		}
     	}
 	}
 	
 	private void throwBall(AgentWorldModel model){
 		Player me = model.getMe();
-   	 if(me.inGround){
-   		try {
-   			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Stand Up");
-   			facade.getLogRecordingService().addEntry(envLog);
-   		} catch (RemoteException e) {
-   			if (PrintTrace.TracePrint){
-					e.printStackTrace();
+	    if(me.inGround){
+	   		try {
+	   			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Stand Up");
+	   			facade.getLogRecordingService().addEntry(envLog);
+	   		} catch (RemoteException e) {
+	   			if (PrintTrace.TracePrint){
+						e.printStackTrace();
 				}
-   		}
-    		model.currentGoal = AgentGoal.STAND_UP;
+	   		}
+	   		model.currentGoal = AgentGoal.STAND_UP;
     	} else {      		
-    		if(me.world.ball.withPlayer && me.world.playerWithBall.team != me.team){
-       		try {
-       			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Go to ball");
-       			facade.getLogRecordingService().addEntry(envLog);
-       		} catch (RemoteException e) {
-       			if (PrintTrace.TracePrint){
-   					e.printStackTrace();
-   				}
-       		}
-           	model.currentGoal = AgentGoal.GO_TO_BALL;
+    		if(me.world.ball.withPlayer && me.world.playerWithBall.team == me.team){
+    			if(me.hasBall){
+    				model.currentGoal = AgentGoal.GO_TO_GOAL;
+    			} else {
+    				model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
+    			}
+    		}else{
+	       		try {
+	       			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Go to ball");
+	       			facade.getLogRecordingService().addEntry(envLog);
+	       		} catch (RemoteException e) {
+	       			if (PrintTrace.TracePrint){
+	   					e.printStackTrace();
+	   				}
+	       		}
+	       		if(MathGeometry.calculeDistancePoints(me.s.x, model.posCoord.x, me.s.y, model.posCoord.y) > PositionCoord.maxArea) {
+	    			model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
+	    		} else {
+	    			model.currentGoal = AgentGoal.GO_TO_BALL;
+	    		}
     		}
     	}
 	}
@@ -411,7 +474,13 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 			}
 	 		model.currentGoal = AgentGoal.STAND_UP;
 	 	} else {
-	 		if(me.world.ball.withPlayer && me.world.playerWithBall.team != me.team){
+	 		if(me.world.ball.withPlayer && me.world.playerWithBall.team == me.team){
+    			if(me.hasBall){
+    				model.currentGoal = AgentGoal.GO_TO_GOAL;
+    			} else {
+    				model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
+    			}
+    		}else{
 	    		try {
 	    			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Go to ball");
 	    			facade.getLogRecordingService().addEntry(envLog);
@@ -420,7 +489,11 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 						e.printStackTrace();
 					}
 	    		}
-	        	model.currentGoal = AgentGoal.GO_TO_BALL;
+	    		if(MathGeometry.calculeDistancePoints(me.s.x, model.posCoord.x, me.s.y, model.posCoord.y) > PositionCoord.maxArea) {
+	    			model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
+	    		} else {
+	    			model.currentGoal = AgentGoal.GO_TO_BALL;
+	    		}
 	 		}
 	 	}		
 	}
@@ -456,7 +529,39 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 					e.printStackTrace();
 				}
     		}
-     		model.currentGoal = AgentGoal.GO_TO_BALL;
+    		
+    		if(MathGeometry.calculeDistancePoints(me.s.x, model.posCoord.x, me.s.y, model.posCoord.y) > PositionCoord.maxArea) {
+    			model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
+    		} else {
+    			model.currentGoal = AgentGoal.GO_TO_BALL;
+    		}
      	}		
+	}
+	
+	private boolean nearBall(AgentWorldModel model){
+		Player me = model.getMe();
+
+		if(MathGeometry.calculeDistancePoints(me.world.ball.s.x, model.posCoord.x, me.world.ball.s.y, model.posCoord.y) < PositionCoord.maxArea) {
+			return true;
+		}
+		
+		int myDistance = MathGeometry.calculeDistancePoints(me.s.x, me.world.ball.s.x, me.s.y, me.world.ball.s.y);
+		boolean flag = true;
+		
+		Player[] team = null;
+		
+		if(model.myTeam == PlayerTeam.TEAM_A){
+			team = me.world.playersA;
+		}else{
+			team = me.world.playersB;
+		}
+		
+		for(Player others : team){
+			if(myDistance > MathGeometry.calculeDistancePoints(others.s.x, me.world.ball.s.x, others.s.y, me.world.ball.s.y)){
+				flag = false;
+			}
+		}
+		
+		return flag;
 	}
 }
