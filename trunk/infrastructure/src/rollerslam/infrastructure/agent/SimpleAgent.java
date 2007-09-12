@@ -3,6 +3,7 @@ package rollerslam.infrastructure.agent;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 
+@SuppressWarnings("serial")
 public class SimpleAgent implements Agent, Serializable {
 	private int name;
 	
