@@ -3,9 +3,6 @@ package rollerslam.test.general;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Method;
-import java.rmi.AccessException;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 
 import javax.swing.BoxLayout;
