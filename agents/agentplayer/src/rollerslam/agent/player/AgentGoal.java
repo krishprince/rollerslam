@@ -7,6 +7,7 @@ public enum AgentGoal {
 	INITIALIZATION,
 	SET_ROLES,
 	GO_TO_INIT_COORD,
+	STOP,
 	GO_TO_BALL,
 	GO_TO_GOAL,
 	CATCH_BALL,
@@ -14,5 +15,6 @@ public enum AgentGoal {
     STAND_UP,
     THROW_BALL,
     KICK_BALL,
-    COUNTER_TACKLE;
+    COUNTER_TACKLE,
+    NOTHING;
 }
