@@ -45,7 +45,7 @@ public class LogPlayingServiceImpl implements LogPlayingService {
         try {
             Class.forName("org.hsqldb.jdbcDriver").newInstance();
             String url = "jdbc:hsqldb:" + simDescription + ";shutdown=true";
-            conn = conn = DriverManager.getConnection(url, "sa", "");
+            conn = DriverManager.getConnection(url, "sa", "");
             Runtime.getRuntime().addShutdownHook(new Thread() {
                 public void run() {
                     LogPlayingServiceImpl.this.terminate();
