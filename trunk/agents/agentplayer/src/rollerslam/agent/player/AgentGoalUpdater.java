@@ -9,6 +9,7 @@ import rollerslam.environment.model.PlayerTeam;
 import rollerslam.environment.model.World;
 import rollerslam.environment.model.actions.voice.SendMsgAction;
 import rollerslam.environment.model.strategy.DefineRoleFact;
+import rollerslam.environment.model.strategy.PlayerPosition;
 import rollerslam.environment.model.strategy.PositionCoord;
 import rollerslam.environment.model.utils.MathGeometry;
 import rollerslam.infrastructure.agent.Message;
@@ -50,259 +51,25 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 			setRoles(model);
 		} else if (model.currentGoal == AgentGoal.GO_TO_INIT_COORD){
 			goToInitCoord(model);
+		} else if (model.currentGoal == AgentGoal.STOP) {
+			stop(model);
 		} else if (model.currentGoal == AgentGoal.GO_TO_BALL) {
 			goToBall(model);
-	    } else if(model.currentGoal == AgentGoal.CATCH_BALL){
-			Player me = model.getMe();
-	        if(me.hasBall){
-	        	boolean nearOpponent = false;
-	        	
-	        	if(me.team == PlayerTeam.TEAM_A){
-	        		for(Player p : me.world.playersB){
-	        			if(MathGeometry.calculeDistancePoints(me.s.x, p.s.x, me.s.y, p.s.y) < 5000 && Math.random() > 0.5){
-	        				nearOpponent = true;
-	        			}
-	        		}
-	        	}else{
-	        		for(Player p : me.world.playersA){
-	        			if(MathGeometry.calculeDistancePoints(me.s.x, p.s.x, me.s.y, p.s.y) < 5000 && Math.random() > 0.5){
-	        				nearOpponent = true;
-	        			}
-	        		}
-	        	}
-	        	
-	        	if(nearOpponent){
-	        		try {
-	        			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "CounterTackle");
-	        			facade.getLogRecordingService().addEntry(envLog);
-	        		} catch (RemoteException e) {
-	        			if (PrintTrace.TracePrint){
-	    					e.printStackTrace();
-	    				}
-	        		}
-	                model.currentGoal = AgentGoal.COUNTER_TACKLE;
-	        	}else{
-	        		try {
-	        			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Go to goal");
-	        			facade.getLogRecordingService().addEntry(envLog);
-	        		} catch (RemoteException e) {
-	        			if (PrintTrace.TracePrint){
-	    					e.printStackTrace();
-	    				}
-	        		}
-	                model.currentGoal = AgentGoal.GO_TO_GOAL;
-	        	}
-	        }else{
-	        	if(me.world.playerWithBall != null && me.world.playerWithBall.team == me.team){
-	        		try {
-	        			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Ball with team. Do nothing");
-	        			facade.getLogRecordingService().addEntry(envLog);
-	        		} catch (RemoteException e) {
-	        			if (PrintTrace.TracePrint){
-	    					e.printStackTrace();
-	    				}
-	        		}
-	            }else{
-	        		try {
-	        			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Go to ball");
-	        			facade.getLogRecordingService().addEntry(envLog);
-	        		} catch (RemoteException e) {
-	        			if (PrintTrace.TracePrint){
-	    					e.printStackTrace();
-	    				}
-	        		}
-	            	model.currentGoal = AgentGoal.GO_TO_BALL;
-	            }
-	        }
-	    } else if(model.currentGoal == AgentGoal.TACKLE_PLAYER) {
-			Player me = model.getMe();
-	        
-	        if(me.world.playerWithBall != null && me.world.playerWithBall.team == me.team){
-	    		try {
-	    			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Ball with team. Do nothing");
-	    			facade.getLogRecordingService().addEntry(envLog);
-	    		} catch (RemoteException e) {
-	    			if (PrintTrace.TracePrint){
-						e.printStackTrace();
-					}
-	    		}
-	        }else{
-	    		try {
-	    			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Go to ball");
-	    			facade.getLogRecordingService().addEntry(envLog);
-	    		} catch (RemoteException e) {
-	    			if (PrintTrace.TracePrint){
-						e.printStackTrace();
-					}
-	    		}
-	        	model.currentGoal = AgentGoal.GO_TO_BALL;
-	        }
-	    } else if(model.currentGoal == AgentGoal.STAND_UP) {
-			Player me = model.getMe();
-	    	
-	    	if(me.world.playerWithBall != null && me.world.playerWithBall.team == me.team){
-	    		try {
-	    			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Ball with team. Do nothing");
-	    			facade.getLogRecordingService().addEntry(envLog);
-	    		} catch (RemoteException e) {
-	    			if (PrintTrace.TracePrint){
-						e.printStackTrace();
-					}
-	    		}
-	        }else{
-	    		try {
-	    			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Go to ball");
-	    			facade.getLogRecordingService().addEntry(envLog);
-	    		} catch (RemoteException e) {
-	    			if (PrintTrace.TracePrint){
-						e.printStackTrace();
-					}
-	    		}
-	        	model.currentGoal = AgentGoal.GO_TO_BALL;
-	        }
-	    } else if(model.currentGoal == AgentGoal.GO_TO_GOAL){
-			Player me = model.getMe();
-	    	if(me.inGround){
-	    		try {
-	    			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Stand Up");
-	    			facade.getLogRecordingService().addEntry(envLog);
-	    		} catch (RemoteException e) {
-	    			if (PrintTrace.TracePrint){
-						e.printStackTrace();
-					}
-	    		}
-	    		model.currentGoal = AgentGoal.STAND_UP;
-	    	} else {
-	    		if(me.team == PlayerTeam.TEAM_A){
-					if(MathGeometry.calculeDistancePoints(me.s.x, me.world.goalB.s.x, me.s.y, me.world.goalB.s.y) < 30000) {
-		        		try {
-		        			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Throw the ball");
-		        			facade.getLogRecordingService().addEntry(envLog);
-		        		} catch (RemoteException e) {
-		        			if (PrintTrace.TracePrint){
-		    					e.printStackTrace();
-		    				}
-		        		}
-		        		model.currentGoal = AgentGoal.THROW_BALL;
-					}else if(MathGeometry.calculeDistancePoints(me.s.x, me.world.goalB.s.x, me.s.y, me.world.goalB.s.y) < 50000) {
-		        		try {
-		        			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Kick the ball");
-		        			facade.getLogRecordingService().addEntry(envLog);
-		        		} catch (RemoteException e) {
-		        			if (PrintTrace.TracePrint){
-		    					e.printStackTrace();
-		    				}
-		        		}
-		        		model.currentGoal = AgentGoal.KICK_BALL;
-					}
-				}else{
-					if(MathGeometry.calculeDistancePoints(me.s.x, me.world.goalA.s.x, me.s.y, me.world.goalA.s.y) < 30000) {
-		        		try {
-		        			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Throw the ball");
-		        			facade.getLogRecordingService().addEntry(envLog);
-		        		} catch (RemoteException e) {
-		        			if (PrintTrace.TracePrint){
-		    					e.printStackTrace();
-		    				}
-		        		}
-		        		model.currentGoal = AgentGoal.THROW_BALL;    					
-					}if(MathGeometry.calculeDistancePoints(me.s.x, me.world.goalA.s.x, me.s.y, me.world.goalA.s.y) < 50000) {
-		        		try {
-		        			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Kick the ball");
-		        			facade.getLogRecordingService().addEntry(envLog);
-		        		} catch (RemoteException e) {
-		        			if (PrintTrace.TracePrint){
-		    					e.printStackTrace();
-		    				}
-		        		}
-		        		model.currentGoal = AgentGoal.KICK_BALL;
-					}
-				}        	
-	    	}
-	     } else if(model.currentGoal == AgentGoal.THROW_BALL){
-				Player me = model.getMe();
-	    	 if(me.inGround){
-	    		try {
-	    			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Stand Up");
-	    			facade.getLogRecordingService().addEntry(envLog);
-	    		} catch (RemoteException e) {
-	    			if (PrintTrace.TracePrint){
-						e.printStackTrace();
-					}
-	    		}
-	     		model.currentGoal = AgentGoal.STAND_UP;
-	     	} else {      		
-	     		if(me.world.ball.withPlayer && me.world.playerWithBall.team != me.team){
-	        		try {
-	        			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Go to ball");
-	        			facade.getLogRecordingService().addEntry(envLog);
-	        		} catch (RemoteException e) {
-	        			if (PrintTrace.TracePrint){
-	    					e.printStackTrace();
-	    				}
-	        		}
-	            	model.currentGoal = AgentGoal.GO_TO_BALL;
-	     		}
-	     	}
-	     } else if(model.currentGoal == AgentGoal.KICK_BALL){
-	    	 Player me = model.getMe();
-	    	 if(me.inGround){
-	    		try {
-	    			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Stand Up");
-	    			facade.getLogRecordingService().addEntry(envLog);
-	    		} catch (RemoteException e) {
-	    			if (PrintTrace.TracePrint){
-						e.printStackTrace();
-					}
-	    		}
-	     		model.currentGoal = AgentGoal.STAND_UP;
-	     	} else {
-	     		if(me.world.ball.withPlayer && me.world.playerWithBall.team != me.team){
-	        		try {
-	        			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Go to ball");
-	        			facade.getLogRecordingService().addEntry(envLog);
-	        		} catch (RemoteException e) {
-	        			if (PrintTrace.TracePrint){
-	    					e.printStackTrace();
-	    				}
-	        		}
-	            	model.currentGoal = AgentGoal.GO_TO_BALL;
-	     		}
-	     	}
-	     } else if(model.currentGoal == AgentGoal.COUNTER_TACKLE){
-	    	 Player me = model.getMe();
-	    	 if(me.inGround){
-	     		try {
-	    			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Stand Up");
-	    			facade.getLogRecordingService().addEntry(envLog);
-	    		} catch (RemoteException e) {
-	    			if (PrintTrace.TracePrint){
-						e.printStackTrace();
-					}
-	    		}
-	     		model.currentGoal = AgentGoal.STAND_UP;
-	     	} else if(me.hasBall){
-	    		try {
-	    			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Go to ball");
-	    			facade.getLogRecordingService().addEntry(envLog);
-	    		} catch (RemoteException e) {
-	    			if (PrintTrace.TracePrint){
-						e.printStackTrace();
-					}
-	    		}
-	     		model.currentGoal = AgentGoal.GO_TO_GOAL;
-	     	} else {
-	    		try {
-	    			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Go to ball");
-	    			facade.getLogRecordingService().addEntry(envLog);
-	    		} catch (RemoteException e) {
-	    			if (PrintTrace.TracePrint){
-						e.printStackTrace();
-					}
-	    		}
-	     		model.currentGoal = AgentGoal.GO_TO_BALL;
-	     	}
-	     }		
+	    } else if (model.currentGoal == AgentGoal.CATCH_BALL){
+	    	catchBall(model);
+	    } else if (model.currentGoal == AgentGoal.TACKLE_PLAYER) {
+	    	tacklePlayer(model);
+	    } else if (model.currentGoal == AgentGoal.STAND_UP) {
+	    	standUp(model);
+	    } else if (model.currentGoal == AgentGoal.GO_TO_GOAL){
+	    	goToGoal(model);
+	    } else if (model.currentGoal == AgentGoal.THROW_BALL){
+	    	throwBall(model);
+	    } else if(model.currentGoal == AgentGoal.KICK_BALL){
+	    	kickBall(model);
+	    } else if(model.currentGoal == AgentGoal.COUNTER_TACKLE){
+	    	counterTackle(model);
+	    }		
 	}
 	
 	private void joinGame(AgentWorldModel model){
@@ -353,7 +120,7 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 			}
 		}	
 		
-		if(((World)model.environmentStateModel).currentCycle - model.cycleLastMsg > 10){
+		if(model.cycleLastMsg != -1 && ((World)model.environmentStateModel).currentCycle - model.cycleLastMsg > 10){
 			model.currentGoal = AgentGoal.INITIALIZATION;
 		}
 	}
@@ -361,7 +128,20 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 	private void goToInitCoord(AgentWorldModel model){
 		Player me = model.getMe();
 		
-		if(MathGeometry.calculeDistancePoints(me.s.x, model.posCoord.x, me.s.y, model.posCoord.y) < PositionCoord.maxArea) {
+		if(model.position == PlayerPosition.CENTERFORWARD){
+			model.currentGoal = AgentGoal.GO_TO_BALL;
+		} else if(MathGeometry.calculeDistancePoints(me.s.x, model.posCoord.x, me.s.y, model.posCoord.y) < PositionCoord.maxArea * 0.10) {
+			//TODO mudar aqui
+			//model.currentGoal = AgentGoal.GO_TO_BALL;
+			model.currentGoal = AgentGoal.STOP;
+		}
+	}
+	
+	private void stop(AgentWorldModel model){
+		Player me = model.getMe();
+		
+		//It only will stop to dash with a = -v when v = 0 and a = 0
+		if(me.v.getModule() == 0 && me.a.getModule() == 0 ){
 			model.currentGoal = AgentGoal.GO_TO_BALL;
 		}
 	}
@@ -415,5 +195,268 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
         	model.currentGoal = AgentGoal.STAND_UP;
         }
 	}
-
+	
+	private void catchBall(AgentWorldModel model){
+		Player me = model.getMe();
+        if(me.hasBall){
+        	boolean nearOpponent = false;
+        	
+        	if(me.team == PlayerTeam.TEAM_A){
+        		for(Player p : me.world.playersB){
+        			if(MathGeometry.calculeDistancePoints(me.s.x, p.s.x, me.s.y, p.s.y) < 5000 && Math.random() > 0.5){
+        				nearOpponent = true;
+        			}
+        		}
+        	}else{
+        		for(Player p : me.world.playersA){
+        			if(MathGeometry.calculeDistancePoints(me.s.x, p.s.x, me.s.y, p.s.y) < 5000 && Math.random() > 0.5){
+        				nearOpponent = true;
+        			}
+        		}
+        	}
+        	
+        	if(nearOpponent){
+        		try {
+        			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "CounterTackle");
+        			facade.getLogRecordingService().addEntry(envLog);
+        		} catch (RemoteException e) {
+        			if (PrintTrace.TracePrint){
+    					e.printStackTrace();
+    				}
+        		}
+                model.currentGoal = AgentGoal.COUNTER_TACKLE;
+        	}else{
+        		try {
+        			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Go to goal");
+        			facade.getLogRecordingService().addEntry(envLog);
+        		} catch (RemoteException e) {
+        			if (PrintTrace.TracePrint){
+    					e.printStackTrace();
+    				}
+        		}
+                model.currentGoal = AgentGoal.GO_TO_GOAL;
+        	}
+        }else{
+        	if(me.world.playerWithBall != null && me.world.playerWithBall.team == me.team){
+        		try {
+        			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Ball with team. Do nothing");
+        			facade.getLogRecordingService().addEntry(envLog);
+        		} catch (RemoteException e) {
+        			if (PrintTrace.TracePrint){
+    					e.printStackTrace();
+    				}
+        		}
+            }else{
+        		try {
+        			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Go to ball");
+        			facade.getLogRecordingService().addEntry(envLog);
+        		} catch (RemoteException e) {
+        			if (PrintTrace.TracePrint){
+    					e.printStackTrace();
+    				}
+        		}
+            	model.currentGoal = AgentGoal.GO_TO_BALL;
+            }
+        }		
+	}
+	
+	private void tacklePlayer(AgentWorldModel model){
+		Player me = model.getMe();
+        
+        if(me.world.playerWithBall != null && me.world.playerWithBall.team == me.team){
+    		try {
+    			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Ball with team. Do nothing");
+    			facade.getLogRecordingService().addEntry(envLog);
+    		} catch (RemoteException e) {
+    			if (PrintTrace.TracePrint){
+					e.printStackTrace();
+				}
+    		}
+        }else{
+    		try {
+    			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Go to ball");
+    			facade.getLogRecordingService().addEntry(envLog);
+    		} catch (RemoteException e) {
+    			if (PrintTrace.TracePrint){
+					e.printStackTrace();
+				}
+    		}
+        	model.currentGoal = AgentGoal.GO_TO_BALL;
+        }		
+	}
+	
+	private void standUp(AgentWorldModel model){
+		Player me = model.getMe();
+    	
+    	if(me.world.playerWithBall != null && me.world.playerWithBall.team == me.team){
+    		try {
+    			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Ball with team. Do nothing");
+    			facade.getLogRecordingService().addEntry(envLog);
+    		} catch (RemoteException e) {
+    			if (PrintTrace.TracePrint){
+					e.printStackTrace();
+				}
+    		}
+        }else{
+    		try {
+    			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Go to ball");
+    			facade.getLogRecordingService().addEntry(envLog);
+    		} catch (RemoteException e) {
+    			if (PrintTrace.TracePrint){
+					e.printStackTrace();
+				}
+    		}
+        	model.currentGoal = AgentGoal.GO_TO_BALL;
+        }
+	}
+	
+	private void goToGoal(AgentWorldModel model){
+		Player me = model.getMe();
+    	if(me.inGround){
+    		try {
+    			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Stand Up");
+    			facade.getLogRecordingService().addEntry(envLog);
+    		} catch (RemoteException e) {
+    			if (PrintTrace.TracePrint){
+					e.printStackTrace();
+				}
+    		}
+    		model.currentGoal = AgentGoal.STAND_UP;
+    	} else {
+    		if(me.team == PlayerTeam.TEAM_A){
+				if(MathGeometry.calculeDistancePoints(me.s.x, me.world.goalB.s.x, me.s.y, me.world.goalB.s.y) < 30000) {
+	        		try {
+	        			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Throw the ball");
+	        			facade.getLogRecordingService().addEntry(envLog);
+	        		} catch (RemoteException e) {
+	        			if (PrintTrace.TracePrint){
+	    					e.printStackTrace();
+	    				}
+	        		}
+	        		model.currentGoal = AgentGoal.THROW_BALL;
+				}else if(MathGeometry.calculeDistancePoints(me.s.x, me.world.goalB.s.x, me.s.y, me.world.goalB.s.y) < 50000) {
+	        		try {
+	        			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Kick the ball");
+	        			facade.getLogRecordingService().addEntry(envLog);
+	        		} catch (RemoteException e) {
+	        			if (PrintTrace.TracePrint){
+	    					e.printStackTrace();
+	    				}
+	        		}
+	        		model.currentGoal = AgentGoal.KICK_BALL;
+				}
+			}else{
+				if(MathGeometry.calculeDistancePoints(me.s.x, me.world.goalA.s.x, me.s.y, me.world.goalA.s.y) < 30000) {
+	        		try {
+	        			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Throw the ball");
+	        			facade.getLogRecordingService().addEntry(envLog);
+	        		} catch (RemoteException e) {
+	        			if (PrintTrace.TracePrint){
+	    					e.printStackTrace();
+	    				}
+	        		}
+	        		model.currentGoal = AgentGoal.THROW_BALL;    					
+				}if(MathGeometry.calculeDistancePoints(me.s.x, me.world.goalA.s.x, me.s.y, me.world.goalA.s.y) < 50000) {
+	        		try {
+	        			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Kick the ball");
+	        			facade.getLogRecordingService().addEntry(envLog);
+	        		} catch (RemoteException e) {
+	        			if (PrintTrace.TracePrint){
+	    					e.printStackTrace();
+	    				}
+	        		}
+	        		model.currentGoal = AgentGoal.KICK_BALL;
+				}
+			}        	
+    	}
+	}
+	
+	private void throwBall(AgentWorldModel model){
+		Player me = model.getMe();
+   	 if(me.inGround){
+   		try {
+   			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Stand Up");
+   			facade.getLogRecordingService().addEntry(envLog);
+   		} catch (RemoteException e) {
+   			if (PrintTrace.TracePrint){
+					e.printStackTrace();
+				}
+   		}
+    		model.currentGoal = AgentGoal.STAND_UP;
+    	} else {      		
+    		if(me.world.ball.withPlayer && me.world.playerWithBall.team != me.team){
+       		try {
+       			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Go to ball");
+       			facade.getLogRecordingService().addEntry(envLog);
+       		} catch (RemoteException e) {
+       			if (PrintTrace.TracePrint){
+   					e.printStackTrace();
+   				}
+       		}
+           	model.currentGoal = AgentGoal.GO_TO_BALL;
+    		}
+    	}
+	}
+	
+	private void kickBall(AgentWorldModel model){
+	   	 Player me = model.getMe();
+		 if(me.inGround){
+			try {
+				GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Stand Up");
+				facade.getLogRecordingService().addEntry(envLog);
+			} catch (RemoteException e) {
+				if (PrintTrace.TracePrint){
+					e.printStackTrace();
+				}
+			}
+	 		model.currentGoal = AgentGoal.STAND_UP;
+	 	} else {
+	 		if(me.world.ball.withPlayer && me.world.playerWithBall.team != me.team){
+	    		try {
+	    			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Go to ball");
+	    			facade.getLogRecordingService().addEntry(envLog);
+	    		} catch (RemoteException e) {
+	    			if (PrintTrace.TracePrint){
+						e.printStackTrace();
+					}
+	    		}
+	        	model.currentGoal = AgentGoal.GO_TO_BALL;
+	 		}
+	 	}		
+	}
+	
+	private void counterTackle(AgentWorldModel model){
+		Player me = model.getMe();
+    	if(me.inGround){
+    		try {
+    			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Stand Up");
+    			facade.getLogRecordingService().addEntry(envLog);
+    		} catch (RemoteException e) {
+    			if (PrintTrace.TracePrint){
+					e.printStackTrace();
+				}
+    		}
+     		model.currentGoal = AgentGoal.STAND_UP;
+     	} else if(me.hasBall){
+    		try {
+    			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Go to ball");
+    			facade.getLogRecordingService().addEntry(envLog);
+    		} catch (RemoteException e) {
+    			if (PrintTrace.TracePrint){
+					e.printStackTrace();
+				}
+    		}
+     		model.currentGoal = AgentGoal.GO_TO_GOAL;
+     	} else {
+    		try {
+    			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Go to ball");
+    			facade.getLogRecordingService().addEntry(envLog);
+    		} catch (RemoteException e) {
+    			if (PrintTrace.TracePrint){
+					e.printStackTrace();
+				}
+    		}
+     		model.currentGoal = AgentGoal.GO_TO_BALL;
+     	}		
+	}
 }

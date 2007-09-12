@@ -60,49 +60,27 @@ public class AgentActionGenerator implements
 		}else if(model.currentGoal == AgentGoal.SET_ROLES) {
 			m = setRoles(model);
 		} else if (model.currentGoal == AgentGoal.GO_TO_BALL) {
-			Player me = model.getMe();
-
-			m = new DashAction(me.world.ball.s.subtract(me.s));
+			m = goToBall(model);
 		} else if (model.currentGoal == AgentGoal.GO_TO_INIT_COORD){
 			m = goToInitCoord(model);
+		} else if (model.currentGoal == AgentGoal.STOP){
+			m = stop(model);
+		} else if (model.currentGoal == AgentGoal.NOTHING){
+			m = null;
 		} else if (model.currentGoal == AgentGoal.GO_TO_GOAL) {
-			Player me = model.getMe();
-
-			World world = (World) model.environmentStateModel;
-
-			if (me.team == PlayerTeam.TEAM_A) {
-				m = new DashAction(world.goalB.s.subtract(me.s));
-			} else {
-				m = new DashAction(world.goalA.s.subtract(me.s));
-			}
-
+			m = goToGoal(model);
 		} else if (model.currentGoal == AgentGoal.CATCH_BALL) {
-			m = new CatchAction();
+			m = catchBall(model);
 		} else if (model.currentGoal == AgentGoal.TACKLE_PLAYER) {
-			m = new TackleAction();
+			m = tacklePlayer(model);
 		} else if (model.currentGoal == AgentGoal.STAND_UP) {
-			m = new StandUpAction();
+			m = standUp(model);
 		} else if (model.currentGoal == AgentGoal.THROW_BALL) {
-			Player me = model.getMe();
-			World world = (World) model.environmentStateModel;
-
-			if (me.team == PlayerTeam.TEAM_A) {
-
-				m = new ThrowAction(world.goalB.s.subtract(me.s));
-			} else {			
-				m = new ThrowAction(world.goalA.s.subtract(me.s));
-			}
+			m = throwBall(model);
         } else if(model.currentGoal == AgentGoal.KICK_BALL){
-        	Player me = model.getMe();
-			World world = (World)model.environmentStateModel;
-				        	
-        	if(me.team == PlayerTeam.TEAM_A){
-        		m = new KickAction(world.goalB.s.subtract(me.s));
-			}else{
-				m = new KickAction(world.goalA.s.subtract(me.s));
-			}
+        	m = kickBall(model);
         } else if(model.currentGoal == AgentGoal.COUNTER_TACKLE){
-        	m = new CountertackleAction();			
+        	m = counterTackle(model);
         }
 
 		try {
@@ -159,8 +137,61 @@ public class AgentActionGenerator implements
 	
 	public Message goToBall(AgentWorldModel model){
 		Player me = model.getMe();
-
-		return new DashAction(((World)model.environmentStateModel).ball.s.subtract(me.s));		
+		return new DashAction(me.world.ball.s.subtract(me.s));
 	}
+	
+	private Message stop(AgentWorldModel model){
+		Player me = model.getMe();
+		return new DashAction(me.v.multVector(-1));
+	}
+	
+	public Message goToGoal(AgentWorldModel model){
+		Player me = model.getMe();
 
+		World world = (World) model.environmentStateModel;
+
+		if (me.team == PlayerTeam.TEAM_A) {
+			return new DashAction(world.goalB.s.subtract(me.s));
+		} else {
+			return new DashAction(world.goalA.s.subtract(me.s));
+		}
+	}
+	
+	public Message catchBall(AgentWorldModel model){
+		return new CatchAction();
+	}
+	
+	private Message tacklePlayer(AgentWorldModel model){
+		return new TackleAction();
+	}
+	
+	private Message counterTackle(AgentWorldModel model){
+		return new CountertackleAction();
+	}
+	
+	private Message kickBall(AgentWorldModel model){
+    	Player me = model.getMe();
+		World world = (World)model.environmentStateModel;
+			        	
+    	if(me.team == PlayerTeam.TEAM_A){
+    		return new KickAction(world.goalB.s.subtract(me.s));
+		}else{
+			return new KickAction(world.goalA.s.subtract(me.s));
+		}
+	}
+	
+	private Message throwBall(AgentWorldModel model){
+		Player me = model.getMe();
+		World world = (World) model.environmentStateModel;
+
+		if (me.team == PlayerTeam.TEAM_A) {
+			return new ThrowAction(world.goalB.s.subtract(me.s));
+		} else {			
+			return new ThrowAction(world.goalA.s.subtract(me.s));
+		}
+	}
+	
+	private Message standUp(AgentWorldModel model){
+		return new StandUpAction();
+	}
 }
