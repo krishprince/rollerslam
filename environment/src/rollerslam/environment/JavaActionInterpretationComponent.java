@@ -263,6 +263,11 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 			}
 		}
 
+		//TODO: retirar essa gambiarra!
+		if (((World)w).playerWithBall == null) {
+			((World)w).ball.withPlayer = false;
+		}
+		
 		// adds all actions to the world
 		((World)w).newActions.add(m);
 		
