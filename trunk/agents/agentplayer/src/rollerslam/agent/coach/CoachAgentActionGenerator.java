@@ -76,7 +76,7 @@ public class CoachAgentActionGenerator implements
 			}
 			
 			mesg.posCoord = PositionCoord.getCoord(model.lastPosition);
-			
+
 			f.message = mesg;
 
 			model.lastPlayers = null;

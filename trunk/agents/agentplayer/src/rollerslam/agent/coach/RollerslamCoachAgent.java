@@ -25,7 +25,6 @@ public class RollerslamCoachAgent extends GoalBasedAgent {
 		//remoteThis = (Agent) facade.getClientInitialization().exportObject(this);
 		remoteThis = (Agent) facade.getClientInitialization().exportObject(new SimpleAgent());
 		this.setName(remoteThis.getName());
-
 		facade.getAgentRegistry().register(remoteThis);
 
 		this.sensor = facade.getAgentSensor(remoteThis);
