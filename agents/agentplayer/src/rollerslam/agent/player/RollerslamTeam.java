@@ -2,6 +2,7 @@ package rollerslam.agent.player;
 
 import javax.swing.JOptionPane;
 
+import rollerslam.agent.coach.RollerslamCoachAgent;
 import rollerslam.environment.model.PlayerTeam;
 import rollerslam.environment.model.SimulationSettings;
 import rollerslam.infrastructure.client.ClientFacadeImpl;
@@ -34,6 +35,8 @@ public class RollerslamTeam {
 		for(int i=0;i<SimulationSettings.PLAYERS_PER_TEAM;++i) {
 				new RollerslamPlayerAgent(team);
 		}
+		
+		new RollerslamCoachAgent(team);
 	}
 
 }
