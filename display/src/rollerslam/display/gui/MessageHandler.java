@@ -21,7 +21,7 @@ public class MessageHandler {
 			currentFact = facts.elementAt(0);
 			facts.removeElementAt(0);
 			
-			removeOn = now + 5000;
+			removeOn = 0;
 		}
 		
 		if (currentFact != null) {
