@@ -24,7 +24,7 @@ public class SimulationSettings {
 	public static final int FOCUS2X = 63835;
 	public static final int FOCUS2Y = 0;
 
-	public static final int PLAYERS_PER_TEAM = 7;
+	public static final int PLAYERS_PER_TEAM = 20;
 
 	public static final int MAX_VELOCITY = 1000;
 	public static final int MAX_DISTANCE = 5000;
