@@ -34,8 +34,8 @@ public class LogRecordingServiceImpl implements LogRecordingService {
         Properties p = new Properties();
 
         //TODO change to generate log
-        //p.setProperty("concrete.log.class", "rollerslam.logging.HSQLDBLog");
-        p.setProperty("concrete.log.class", "rollerslam.logging.NullLog");
+        p.setProperty("concrete.log.class", "rollerslam.logging.HSQLDBLog");
+        //p.setProperty("concrete.log.class", "rollerslam.logging.NullLog");
         p.setProperty("log.level", "0");
         p.setProperty("db.url", "file:///c://temp/");
 
