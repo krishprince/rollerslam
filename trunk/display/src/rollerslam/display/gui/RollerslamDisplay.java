@@ -62,11 +62,17 @@ public class RollerslamDisplay extends JPanel implements View, ActionListener {
         JPanel down = new JPanel();
         down.setLayout(new FlowLayout());
         down.add(messages);
-        down.add(connectButton);
+
+        this.add(down);
+
+        JPanel down2 = new JPanel();
+        down2.setLayout(new FlowLayout());
+        down2.add(connectButton);
 
         connectButton.addActionListener(this);
 
-        this.add(down);
+        this.add(down2);
+        
     }
 
     public void main() {
