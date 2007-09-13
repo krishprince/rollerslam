@@ -290,7 +290,7 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
         		}
          		model.currentGoal = AgentGoal.STAND_UP;
          	} else {      		
-         		if(me.world.ball.withPlayer && me.world.playerWithBall.team != me.team){
+         		if(me.world.ball.withPlayer && me.world.playerWithBall != null && me.world.playerWithBall.team != me.team){
 	        		try {
 	        			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Go to ball");
 	        			facade.getLogRecordingService().addEntry(envLog);
