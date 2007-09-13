@@ -26,7 +26,9 @@ import rollerslam.infrastructure.logging.LogEntry;
  */
 public class HSQLDBLog extends AbstractLog {
 
+	@SuppressWarnings("unused")
     private String user = "sa";
+	@SuppressWarnings("unused")
     private String password = "";
 
     //create table string

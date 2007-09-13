@@ -8,6 +8,7 @@ import java.net.MulticastSocket;
 import rollerslam.infrastructure.server.PrintTrace;
 
 public class MulticastClientListener extends Thread {
+	@SuppressWarnings("unused")
 	private String multicastAddress;
 	private int    multicastPort;
 	private MulticastSocket socket = null;
