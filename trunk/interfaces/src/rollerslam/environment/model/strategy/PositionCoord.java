@@ -8,6 +8,7 @@ public class PositionCoord {
 	private static HashMap<PlayerPosition, Vector> posCoord = new HashMap<PlayerPosition, Vector>();
 	
 	public static int maxArea = 80000;
+	public static double maxPlayers = 0.25;
 	
 	public static Vector getCoord(PlayerPosition position){
 		return posCoord.get(position);
