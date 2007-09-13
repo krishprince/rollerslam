@@ -23,7 +23,7 @@ import rollerslam.logging.GoalUpdateLogEntry;
 public class AgentGoalUpdater implements GoalUpdateComponent {
 	String logMsg = "";
 	int cycle = 0;
-	int id = -5;
+	int id = -1;
 
 	public void updateGoal(GoalBasedEnvironmentStateModel goal) {
 		AgentWorldModel model = (AgentWorldModel) goal;
