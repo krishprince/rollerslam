@@ -30,7 +30,9 @@ public class LogPlayingServiceImpl implements LogPlayingService {
     private Integer currentCycle;
     private Integer totalCycles;
     private Connection conn;
+    @SuppressWarnings("unused")
     private String user = "sa";
+    @SuppressWarnings("unused")
     private String password = "";
     
     private String readLogForAgentSQL = "SELECT thelog FROM t_log WHERE agent_id = ? AND cycle = ?";
