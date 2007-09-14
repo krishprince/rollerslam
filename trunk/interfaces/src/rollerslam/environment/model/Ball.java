@@ -9,6 +9,7 @@ import rollerslam.environment.model.SimulationSettings;
 public class Ball extends AnimatedObject implements Visitable {
         
     public boolean withPlayer = false;
+    public boolean isMoving = false;
     
     //Last position
     public Vector ls = new Vector(0, 0);
