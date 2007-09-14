@@ -37,240 +37,258 @@ import rollerslam.infrastructure.server.PrintTrace;
 import rollerslam.infrastructure.server.ServerFacade;
 import rollerslam.infrastructure.server.ServerFacadeImpl;
 
-
-public class JavaActionInterpretationComponent implements ActionInterpretationComponent {
+public class JavaActionInterpretationComponent implements
+		ActionInterpretationComponent {
 	public ServerFacade facade = ServerFacadeImpl.getInstance();
 
-	public Hashtable<Agent, Player> playersMap                  = new Hashtable<Agent, Player>();
-	public Hashtable<Player, Agent> idsMap                      = new Hashtable<Player, Agent>();
-	public int 						  nextAgentID 				  = 0;
+	public Hashtable<Agent, Player> playersMap = new Hashtable<Agent, Player>();
 
-	
+	public Hashtable<Player, Agent> idsMap = new Hashtable<Player, Agent>();
+
+	public int nextAgentID = 0;
+
 	private void dash(World w, Player p, Vector vet) {
-		//TODO test if p is in w
-		if(!p.inGround){					
+		// TODO test if p is in w
+		if (!p.inGround) {
 			p.a = vet.limitModuloTo(p.maxA);
 		}
 	}
-	
-	private void hit(World w, Player p, Vector vet){
-		//Body
-		if(!w.ball.withPlayer && !p.inGround){
-			if(MathGeometry.calculeDistancePoints(w.ball.s.x, p.s.x, w.ball.s.y, p.s.y) < SimulationSettings.MAX_DISTANCE){
+
+	private void hit(World w, Player p, Vector vet) {
+		// Body
+		if (!w.ball.withPlayer && !p.inGround) {
+			if (MathGeometry.calculeDistancePoints(w.ball.s.x, p.s.x,
+					w.ball.s.y, p.s.y) < SimulationSettings.MAX_DISTANCE) {
 				double error = Math.random();
-				
-				if(error > 0.3){
+
+				if (error > 0.3) {
 					error = 0.3;
 				}
-				
-				w.ball.a = vet;
 
-				if(error % 2 == 0)
-					w.ball.a.x = (int)Math.floor(w.ball.a.x * error);
+				w.ball.a = vet;
+				w.ball.isMoving = true;
+
+				if (error % 2 == 0)
+					w.ball.a.x = (int) Math.floor(w.ball.a.x * error);
 				else
-					w.ball.a.y = (int)Math.floor(w.ball.a.y * error);
+					w.ball.a.y = (int) Math.floor(w.ball.a.y * error);
 			}
 		}
+
 	}
 
-	private void kick(World w, Player p, Vector vet){
-		//Body
-		if(p.hasBall && !p.inGround){
+	private void kick(World w, Player p, Vector vet) {
+		// Body
+		if (p.hasBall && !p.inGround) {
 			double error = Math.random();
-			
-			if(error > 0.3){
+
+			if (error > 0.3) {
 				error = 0.3;
 			}
-			
+
 			p.hasBall = false;
 			w.playerWithBall = null;
 			w.ball.withPlayer = false;
-			
+			w.ball.isMoving = true;
+
 			w.ball.a = vet.multVector((1 + p.strength) * 1.25);
-			
-			if(error % 2 == 0)
-				w.ball.a.x = (int)Math.floor(w.ball.a.x * error);
+
+			if (error % 2 == 0)
+				w.ball.a.x = (int) Math.floor(w.ball.a.x * error);
 			else
-				w.ball.a.y = (int)Math.floor(w.ball.a.y * error);
+				w.ball.a.y = (int) Math.floor(w.ball.a.y * error);
+
 		}
 	}
-	
-	private void countertackle(World w, Player p){
-		//Body
-		if(!p.inGround){
+
+	private void countertackle(World w, Player p) {
+		// Body
+		if (!p.inGround) {
 			p.counterTackle = true;
 		}
 	}
-	
-	private void catchA(World w, Player p){
-		//Body
-		if(!w.ball.withPlayer && !p.inGround){
-			if(MathGeometry.calculeDistancePoints(w.ball.s.x, p.s.x, w.ball.s.y, p.s.y) < SimulationSettings.MAX_DISTANCE){
+
+	private void catchA(World w, Player p) {
+		// Body
+		if (!w.ball.withPlayer && !p.inGround) {
+			if (MathGeometry.calculeDistancePoints(w.ball.s.x, p.s.x,
+					w.ball.s.y, p.s.y) < SimulationSettings.MAX_DISTANCE) {
 
 				p.hasBall = true;
 				p.world.ball.withPlayer = true;
 				p.world.playerWithBall = p;
+				w.ball.isMoving = false;
 			}
+
 		}
 	}
-	
-	private void release(World w, Player p){
-		//Body
-		if(p.hasBall && !p.inGround){
+
+	private void release(World w, Player p) {
+		// Body
+		if (p.hasBall && !p.inGround) {
 			p.hasBall = false;
 			w.playerWithBall = null;
 			w.ball.withPlayer = false;
+			w.ball.isMoving = false;
 		}
 	}
-	
-	private void tackle(World w, Player p){
-		//Body
-		if(w.ball.withPlayer && !p.inGround){
-			if(MathGeometry.calculeDistancePoints(w.playerWithBall.s.x, p.s.x, w.playerWithBall.s.y, p.s.y) < SimulationSettings.MAX_DISTANCE){
-				if(!w.playerWithBall.counterTackle){
+
+	private void tackle(World w, Player p) {
+		// Body
+		if (w.ball.withPlayer && !p.inGround) {
+			if (MathGeometry.calculeDistancePoints(w.playerWithBall.s.x, p.s.x,
+					w.playerWithBall.s.y, p.s.y) < SimulationSettings.MAX_DISTANCE) {
+				if (!w.playerWithBall.counterTackle) {
 					w.playerWithBall.inGround = true;
 					w.playerWithBall.hasBall = false;
 					w.ball.withPlayer = false;
 					w.playerWithBall = null;
-				}else{
+				} else {
 				}
 			}
 		}
 	}
-	
-	private void throwA(World w, Player p, Vector a){
-		//Body
-		if(p.hasBall && !p.inGround){
+
+	private void throwA(World w, Player p, Vector a) {
+		// Body
+		if (p.hasBall && !p.inGround) {
 			p.hasBall = false;
 			w.playerWithBall = null;
 			w.ball.withPlayer = false;
+			w.ball.isMoving = true;
 
 			double error = Math.random();
-			
-			if(error > 0.15){
+
+			if (error > 0.15) {
 				error = 0.15;
 			}
-			
+
 			w.ball.a = a.multVector((1 + p.strength) * 0.75);
-			//w.ball.v = p.v.sumVector(a.multVector((1 + p.strength) * 0.5));
-			
-			if(error % 2 == 0)
-				w.ball.a.x = (int)Math.floor(w.ball.a.x * error);
+			// w.ball.v = p.v.sumVector(a.multVector((1 + p.strength) * 0.5));
+
+			if (error % 2 == 0)
+				w.ball.a.x = (int) Math.floor(w.ball.a.x * error);
 			else
-				w.ball.a.y = (int)Math.floor(w.ball.a.y * error);			
+				w.ball.a.y = (int) Math.floor(w.ball.a.y * error);
 		}
+
 	}
-	
-	private void sendMsg(World w, Agent agent, Fact f){
-		//Body
+
+	private void sendMsg(World w, Agent agent, Fact f) {
+		// Body
 		f.cycle = w.currentCycle;
-	}	
-	
-	private void standUp(World w, Player p){
-		//Body
-		if(p.inGround){
+	}
+
+	private void standUp(World w, Player p) {
+		// Body
+		if (p.inGround) {
 			p.inGround = false;
 		}
 	}
-	
-	private void checkAlive(World w, Player p){
-		//Body
-		//if(){
-			
-		//}
-		p.dead= true;
+
+	private void checkAlive(World w, Player p) {
+		// Body
+		// if(){
+
+		// }
+		p.dead = true;
 	}
-	
-	private void killPlayer(World w, Player p){
-		//Body
-		if (p.dead){
+
+	private void killPlayer(World w, Player p) {
+		// Body
+		if (p.dead) {
 			p = null;
 		}
-		
+
 	}
-	
-	private void createPlayer(World w, Player p){
-		//Body
-		
+
+	private void createPlayer(World w, Player p) {
+		// Body
+
 	}
-		
+
 	public void processAction(EnvironmentStateModel w, Message m) {
-		//Actions of Leg
+		// Actions of Leg
 		if (m instanceof LegAction) {
 			if (m instanceof DashAction) {
-				//Dash
+				// Dash
 				DashAction mt = (DashAction) m;
-				this.dash((World)w, playersMap.get(mt.sender), mt.acceleration);
-			} else if(m instanceof KickAction) {
-				if(m instanceof HitAction){
-					//Hit the ball
+				this
+						.dash((World) w, playersMap.get(mt.sender),
+								mt.acceleration);
+			} else if (m instanceof KickAction) {
+				if (m instanceof HitAction) {
+					// Hit the ball
 					HitAction mt = (HitAction) m;
-					this.hit((World)w, playersMap.get(mt.sender), mt.acceleration);
-				}else{
-					//Kick the ball
+					this.hit((World) w, playersMap.get(mt.sender),
+							mt.acceleration);
+				} else {
+					// Kick the ball
 					KickAction mt = (KickAction) m;
-					this.kick((World)w, playersMap.get(mt.sender), mt.acceleration);
+					this.kick((World) w, playersMap.get(mt.sender),
+							mt.acceleration);
 				}
 			} else if (m instanceof StandUpAction) {
 				StandUpAction mt = (StandUpAction) m;
-				this.standUp((World)w, playersMap.get(mt.sender));
+				this.standUp((World) w, playersMap.get(mt.sender));
 			}
-		//Actions of Arm
+			// Actions of Arm
 		} else if (m instanceof ArmAction) {
-			if(m instanceof CountertackleAction){
-				//Countertackle Action
+			if (m instanceof CountertackleAction) {
+				// Countertackle Action
 				CountertackleAction mt = (CountertackleAction) m;
-				this.countertackle((World)w, playersMap.get(mt.sender));
-			}else if(m instanceof CatchAction){
-				//Catch the ball
+				this.countertackle((World) w, playersMap.get(mt.sender));
+			} else if (m instanceof CatchAction) {
+				// Catch the ball
 				CatchAction mt = (CatchAction) m;
-				this.catchA((World)w, playersMap.get(mt.sender));
-			}else if(m instanceof ReleaseAction){
-				//Release the ball
+				this.catchA((World) w, playersMap.get(mt.sender));
+			} else if (m instanceof ReleaseAction) {
+				// Release the ball
 				ReleaseAction mt = (ReleaseAction) m;
-				this.release((World)w, playersMap.get(mt.sender));
-			}else if(m instanceof TackleAction){
-				//Tackle another player
+				this.release((World) w, playersMap.get(mt.sender));
+			} else if (m instanceof TackleAction) {
+				// Tackle another player
 				TackleAction mt = (TackleAction) m;
-				this.tackle((World)w, playersMap.get(mt.sender));
-			}else if(m instanceof ThrowAction){
-				//Throw the ball
+				this.tackle((World) w, playersMap.get(mt.sender));
+			} else if (m instanceof ThrowAction) {
+				// Throw the ball
 				ThrowAction mt = (ThrowAction) m;
-				this.throwA((World)w, playersMap.get(mt.sender), mt.acceleration);
+				this.throwA((World) w, playersMap.get(mt.sender),
+						mt.acceleration);
 			}
-		//Actions of Voice
-		} else if(m instanceof VoiceAction){
-			if(m instanceof SendMsgAction){
-				//Send the message ("Say")
+			// Actions of Voice
+		} else if (m instanceof VoiceAction) {
+			if (m instanceof SendMsgAction) {
+				// Send the message ("Say")
 				SendMsgAction mt = (SendMsgAction) m;
-				this.sendMsg((World)w, mt.sender, mt.subject);
+				this.sendMsg((World) w, mt.sender, mt.subject);
 			}
-		//Player Join to Game
+			// Player Join to Game
 		} else if (m instanceof JoinGameAction) {
 			JoinGameAction mt = (JoinGameAction) m;
-			this.joinWorld((World)w, mt.sender, mt.team);
-		} else if (m instanceof SentinelAction){
-			if (m instanceof CheckAliveAction){
+			this.joinWorld((World) w, mt.sender, mt.team);
+		} else if (m instanceof SentinelAction) {
+			if (m instanceof CheckAliveAction) {
 				CheckAliveAction mt = (CheckAliveAction) m;
 				this.checkAlive((World) w, playersMap.get(mt.sender));
-			}else if (m instanceof KillPlayerAction){
+			} else if (m instanceof KillPlayerAction) {
 				KillPlayerAction mt = (KillPlayerAction) m;
 				this.killPlayer((World) w, playersMap.get(mt.sender));
-			}else if (m instanceof CreatePlayer){
+			} else if (m instanceof CreatePlayer) {
 				CreatePlayer mt = (CreatePlayer) m;
 				this.createPlayer((World) w, playersMap.get(mt.sender));
 			}
 		}
-		
+
 		// adds all actions to the world
-		((World)w).newActions.add(m);
-		
+		((World) w).newActions.add(m);
+
 	}
 
-	public void joinWorld(World worldModel, Agent agent, PlayerTeam playerTeam){
-		
+	public void joinWorld(World worldModel, Agent agent, PlayerTeam playerTeam) {
+
 		Player body = playersMap.get(agent);
-		
+
 		if (body == null) {
 			if (playerTeam == PlayerTeam.TEAM_A) {
 				body = getBodyForAgent(worldModel.playersA);
@@ -282,14 +300,15 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 		if (body != null) {
 			playersMap.put(agent, body);
 			idsMap.put(body, agent);
-                        
+
 			try {
-                facade.getEnvironmentEffector().doAction(new GameStartedPerception(null, agent, body.id));
+				facade.getEnvironmentEffector().doAction(
+						new GameStartedPerception(null, agent, body.id));
 			} catch (RemoteException e) {
-				if (PrintTrace.TracePrint){
+				if (PrintTrace.TracePrint) {
 					e.printStackTrace();
 				}
-				
+
 			}
 		}
 	}
