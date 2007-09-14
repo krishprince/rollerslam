@@ -24,7 +24,7 @@ public class FluxRamificationComponent implements RamificationComponent {
 	}
 	
 	public void processRamifications(EnvironmentStateModel world) {
-		String query = "processRamifications(["
+		String query = "processRamifications(["		
 				+ javaPrologVisitor.getPrologRepresentation((World) world)
 				+ "], R)";
 
@@ -36,7 +36,7 @@ public class FluxRamificationComponent implements RamificationComponent {
 			
 //			System.out.println("result: "+ret);
 			
-			prologJavaVisitor.updateWorldRepresentation((World)world, ret.arg(2));
+			prologJavaVisitor.updateWorldRepresentation((World)world, (String) ret.arg(2));
 			
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -2,8 +2,17 @@ package rollerslam.environment.visitor;
 
 import java.util.Collection;
 
+import rollerslam.environment.model.AnimatedObject;
+import rollerslam.environment.model.Ball;
+import rollerslam.environment.model.Basket;
+import rollerslam.environment.model.Goal;
+import rollerslam.environment.model.OutTrack;
 import rollerslam.environment.model.Player;
+import rollerslam.environment.model.Ramp;
+import rollerslam.environment.model.Scoreboard;
+import rollerslam.environment.model.Trampoline;
 import rollerslam.environment.model.World;
+import rollerslam.environment.model.WorldObject;
 import rollerslam.environment.model.utils.Vector;
 
 import com.parctechnologies.eclipse.CompoundTerm;
@@ -12,45 +21,87 @@ public class SamplePrologJavaWorldVisitor implements PrologJavaWorldVisitor {
 
 	@SuppressWarnings("unchecked")
 	public void updateWorldRepresentation(World world, Object worldState) {
-//		System.out.println("obj: " + worldState);
+		// System.out.println("obj: " + worldState);
 
 		// if it's not there anymore it should be false...
-		world.ball.withPlayer = false;		
-		
+		world.ball.withPlayer = false;
+
 		if (worldState instanceof Collection) {
 			Collection stateCol = (Collection) worldState;
-			
+
 			for (Object object : stateCol) {
 				if (object instanceof CompoundTerm) {
 					CompoundTerm term = (CompoundTerm) object;
-					
+
 					if (term.functor().equals("position")) {
-						if (((CompoundTerm)term.arg(1)).functor().equals("ball")) {
-							world.ball.s = termToVector(((CompoundTerm)term.arg(2)));
-						} else if (((CompoundTerm)term.arg(1)).functor().equals("player")) {
-							int id = (Integer) ((CompoundTerm)term.arg(1)).arg(1);
+						if (((CompoundTerm) term.arg(1)).functor().equals(
+								"ball")) {
+							world.ball.s = termToVector(((CompoundTerm) term
+									.arg(2)));
+						} else if (((CompoundTerm) term.arg(1)).functor()
+								.equals("player")) {
+							int id = (Integer) ((CompoundTerm) term.arg(1))
+									.arg(1);
 							Player p = getPlayerFromID(world, id);
-							p.s = termToVector(((CompoundTerm)term.arg(2)));
-						}						
+							p.s = termToVector(((CompoundTerm) term.arg(2)));
+						}
 					} else if (term.functor().equals("acceleration")) {
-						if (((CompoundTerm)term.arg(1)).functor().equals("ball")) {
-							world.ball.a = termToVector(((CompoundTerm)term.arg(2)));
-						} else if (((CompoundTerm)term.arg(1)).functor().equals("player")) {
-							int id = (Integer) ((CompoundTerm)term.arg(1)).arg(1);
+						if (((CompoundTerm) term.arg(1)).functor().equals(
+								"ball")) {
+							world.ball.a = termToVector(((CompoundTerm) term
+									.arg(2)));
+						} else if (((CompoundTerm) term.arg(1)).functor()
+								.equals("player")) {
+							int id = (Integer) ((CompoundTerm) term.arg(1))
+									.arg(1);
 							Player p = getPlayerFromID(world, id);
-							p.a = termToVector(((CompoundTerm)term.arg(2)));
-						}						
+							p.a = termToVector(((CompoundTerm) term.arg(2)));
+						}
 					} else if (term.functor().equals("speed")) {
-						if (((CompoundTerm)term.arg(1)).functor().equals("ball")) {
-							world.ball.v = termToVector(((CompoundTerm)term.arg(2)));
-						} else if (((CompoundTerm)term.arg(1)).functor().equals("player")) {
-							int id = (Integer) ((CompoundTerm)term.arg(1)).arg(1);
+						if (((CompoundTerm) term.arg(1)).functor().equals(
+								"ball")) {
+							world.ball.v = termToVector(((CompoundTerm) term
+									.arg(2)));
+						} else if (((CompoundTerm) term.arg(1)).functor()
+								.equals("player")) {
+							int id = (Integer) ((CompoundTerm) term.arg(1))
+									.arg(1);
 							Player p = getPlayerFromID(world, id);
-							p.v = termToVector(((CompoundTerm)term.arg(2)));
+							p.v = termToVector(((CompoundTerm) term.arg(2)));
 						}
 					} else if (term.functor().equals("withPlayer")) {
-						if (((CompoundTerm)term.arg(1)).functor().equals("ball")) {
+						if (((CompoundTerm) term.arg(1)).functor().equals(
+								"ball")) {
 							world.ball.withPlayer = true;
+						}
+					} else if (term.functor().equals("hasBall")) {
+						if (((CompoundTerm) term.arg(1)).functor().equals(
+								"player")) {
+							int id = (Integer) ((CompoundTerm) term.arg(1))
+									.arg(1);
+							Player p = getPlayerFromID(world, id);
+							p.hasBall = true;
+						}
+					} else if (term.functor().equals("inGround")) {
+						if (((CompoundTerm) term.arg(1)).functor().equals(
+								"player")) {
+							int id = (Integer) ((CompoundTerm) term.arg(1))
+									.arg(1);
+							Player p = getPlayerFromID(world, id);
+							p.inGround = true;
+						}
+					} else if (term.functor().equals("counterTackle")) {
+						if (((CompoundTerm) term.arg(1)).functor().equals(
+								"player")) {
+							int id = (Integer) ((CompoundTerm) term.arg(1))
+									.arg(1);
+							Player p = getPlayerFromID(world, id);
+							p.counterTackle = true;
+						}
+					} else if (term.functor().equals("isMoving")) {
+						if (((CompoundTerm) term.arg(1)).functor().equals(
+								"ball")) {
+							world.ball.isMoving = true;
 						}
 					}
 				}
@@ -73,7 +124,68 @@ public class SamplePrologJavaWorldVisitor implements PrologJavaWorldVisitor {
 		return null;
 	}
 
-	private Vector termToVector(CompoundTerm compoundTerm) {		
-		return new Vector((Integer)compoundTerm.arg(1), (Integer)compoundTerm.arg(2));
+	private Vector termToVector(CompoundTerm compoundTerm) {
+		return new Vector((Integer) compoundTerm.arg(1), (Integer) compoundTerm
+				.arg(2));
+	}
+
+	public void updateWorldRepresentation(World world, String worldState) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void visit(World obj) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void visit(WorldObject obj) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void visit(AnimatedObject obj) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void visit(Ball obj) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void visit(OutTrack obj) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void visit(Player obj) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void visit(Basket obj) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void visit(Goal obj) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void visit(Ramp obj) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void visit(Trampoline obj) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void visit(Scoreboard obj) {
+		// TODO Auto-generated method stub
+
 	}
 }
