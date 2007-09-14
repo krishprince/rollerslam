@@ -1,34 +1,31 @@
 :- ['flux'].
 
-%% Focus1_X=_Y=
-%% Focus2_X=Y=
-%% Diameter=
+%% Focus1 (-63835,0)
+%% Focus2 (0,63835)
+%% Diameter= 188000
 
 %%%%%%%%%%%%%%%%%%%%
 %% PRE-CONDITION %%%
 %%%%%%%%%%%%%%%%%%%%
 
-poss(throwA(Agent,Strength),Z1) :- holds(hasBall(Agent, Ball), Z1),
+poss(throwA(Agent,Strength),Z1) :- holds(hasBall(Agent), Z1),
                                    not_holds(inGround(Agent),Z1).
-poss(release(Agent),Z1) :- holds(hasBall(Agent, Ball),Z1).
-poss(kick(Agent,Strength),Z1) :- holds(hasBall(Agent, Ball), Z1),
+poss(release(Agent),Z1) :- holds(hasBall(Agent),Z1).
+poss(kick(Agent,Strength),Z1) :- holds(hasBall(Agent), Z1),
                                  not_holds(inGround(Agent),Z1).
 poss(tackle(Agent,AgentB,vector(Xmax, Ymax), MaxDistance),Z1) :- not_holds(inGround(Agent),Z1),
-                                                                 holds(hasBall(AgentB, Ball), Z1),
+                                                                 holds(hasBall(AgentB), Z1),
                                                                  not_holds(counterTackle(AgentB),Z1),
-                                                                 closer(Sxa, Sya, Sxb, Syb, MaxDistance).                                                                 .
+                                                                 closer(Sxa, Sya, Sxb, Syb, MaxDistance).
 poss(counterTackle(Agent),Z1) :- not_holds(inGround(Agent),Z1).
 poss(hit(Agent,Strength, MaxDistance),Z1) :- not_holds(inGround(Agent), Z1),
                                              closer(Sxa, Sya, Sxb, Syb, MaxDistance).
 poss(catchA(Agent, MaxDistance),Z1) :- not_holds(inGround(Agent),Z1),
-                                       not_holds(hasBall(Agent, Ball), Z1),
+                                       not_holds(hasBall(Agent), Z1),
                                        closer(Sxa, Sya, Sxb, Syb, MaxDistance).
 poss(standUp(Agent),Z1) :- holds(inGround(Agent),Z1).
 poss(ramifySit2, Z1):- holds(isMoving(Ball, Attrition), Z1).
-poss(ramifySit3, Z1):- holds(outBoundary(Ball), Z1).
-poss(ramifySit4, Z1):- holds(outBoundary(Agent), Z1).
-%% Check with the manager if the last poss is indeed necessary
-
+poss(ramifySit3, Z1):- holds(outBoundary(Object), Z1).
 
 
 %% End Pre-Condition Group
@@ -38,7 +35,7 @@ poss(ramifySit4, Z1):- holds(outBoundary(Agent), Z1).
 %%%%%%%%%%%%%
 
 %%
-%% Dash Action  
+%% Dash Action
 %%
 state_update(Z1,dash(Agent, vector(X,Y)),Z2,[]) :-
   holds(acceleration(Agent, vector(X0,Y0)),Z1),
@@ -53,9 +50,11 @@ state_update(Z1,throwA(Agent,Strength),Z2,[]) :-
   holds(position(Ball, vector(X0, Y0)),Z1),
   X #= X0 * Strength,
   Y #= Y0 * Strength,
-  update(Z1,[position(Ball, vector(X,Y))],[hasBall(Agent, Ball),position(Ball, vector(X0, Y0))],Z2))
+  update(Z1,[position(Ball, vector(X,Y))],[hasBall(Agent),position(Ball, vector(X0, Y0))],Z2))
   ;
-  (not poss(throwA(Agent,Strength),Z1), Z2=Z1).
+  (not poss(throwA(Agent,Strength),Z1), 
+  Z2#=Z1
+  ).
 
 %%
 %% Release Action
@@ -63,9 +62,11 @@ state_update(Z1,throwA(Agent,Strength),Z2,[]) :-
 
 state_update(Z1,release(Agent),Z2,[]) :-
   (poss(release(Agent),Z1),
-  update(Z1,[],[hasBall(Agent, Ball)],Z2))
+  update(Z1,[],[hasBall(Agent)],Z2))
   ;
-  (not poss(release(Agent),Z1), Z2=Z1)).
+  (not poss(release(Agent),Z1), 
+  Z2#=Z1
+  ).
 
 %%
 %% Kick Action
@@ -76,9 +77,11 @@ state_update(Z1,kick(Agent,Strength),Z2,[]) :-
   holds(position(Ball, vector(X0, Y0)),Z1),
   X #= X0 * Strength,
   Y #= Y0 * Strength,
-  update(Z1,[position(Ball, vector(X,Y))],[hasBall(Agent, Ball),position(Ball, vector(X0, Y0))],Z2))
+  update(Z1,[position(Ball, vector(X,Y))],[hasBall(Agent),position(Ball, vector(X0, Y0))],Z2))
   ;
-  (not poss(kick(Agent,Strength),Z1), Z2=Z1).
+  (not poss(kick(Agent,Strength),Z1), 
+  Z2#=Z1
+  ).
 
 %%
 %% Tackle Action
@@ -88,9 +91,11 @@ state_update(Z1,tackle(Agent,AgentB,vector(Xmax, Ymax), MaxDistance),Z2,[]) :-
   (poss(tackle(Agent,AgentB,vector(Xmax, Ymax), MaxDistance),Z1),
   holds(position(Agent, vector(Sxa,Sya)),Z1),
   holds(position(AgentB, vector(Sxb,Syb)),Z1),
-  update(Z1,[inGround(AgentB)],[hasBall(AgentB, Ball)],Z2))
+  update(Z1,[inGround(AgentB)],[hasBall(AgentB)],Z2))
   ;
-  (not poss(tackle(Agent,AgentB,vector(Xmax, Ymax), MaxDistance),Z1), Z2=Z1)).
+  (not poss(tackle(Agent,AgentB,vector(Xmax, Ymax), MaxDistance),Z1), 
+  Z2#=Z1
+  ).
 
 %%
 %% CounterTacle Action
@@ -100,7 +105,9 @@ state_update(Z1,counterTackle(Agent),Z2,[]) :-
   (poss(counterTackle(Agent),Z1),
   update(Z1,[counterTackle(Agent)],[],Z2))
   ;
-  (not poss(counterTackle(Agent),Z1), Z2=Z1)).
+  (not poss(counterTackle(Agent),Z1), 
+  Z2#=Z1
+  ).
 
 %%
 %% Hit Action
@@ -114,7 +121,9 @@ state_update(Z1,hit(Agent,Strength, MaxDistance),Z2,[]) :-
   Y #= Syb * Strength,
   update(Z1,[position(Ball, vector(X,Y))],[position(Ball, vector(Sxb,Syb))],Z2))
   ;
-  (not poss(hit(Agent,Strength, MaxDistance),Z1), Z2=Z1)).
+  (not poss(hit(Agent,Strength, MaxDistance),Z1), 
+  Z2#=Z1
+  ).
 
 %%
 %% Catch Action
@@ -124,20 +133,23 @@ state_update(Z1,catchA(Agent, MaxDistance),Z2,[]) :-
   (poss(catchA(Agent, MaxDistance),Z1),
   holds(position(Agent, vector(Sxa,Sya)),Z1),
   holds(position(Ball, vector(Sxb,Syb)),Z1),
-  update(Z1,[holds(hasBall(Agent, Ball))],[],Z2))
+  update(Z1,[hasBall(Agent)],[],Z2))
   ;
-  (not poss(catchA(Agent, MaxDistance),Z1), Z2=Z1)).
+  (not poss(catchA(Agent, MaxDistance),Z1), 
+  Z2#=Z1
+  ).
 
 %%
 %% Stand Up Action
 %%
 
 state_update(Z1,standUp(Agent),Z2,[]) :-
-  (poss(standUp(Agent),Z1),
-  update(Z1,[],[inGround(Agent)],Z2)
+ (poss(standUp(Agent),Z1),
+  update(Z1,[],[inGround(Agent)],Z2))
   ;
-  (not poss(standUp(Agent),Z1), Z2=Z1)).
-
+ (not poss(standUp(Agent),Z1), 
+ Z2#=Z1
+ ).
 
 %% End Action Group
 
@@ -151,12 +163,12 @@ processRamifications(InitialState, FinalState) :-
 
 state_update(Z1,ramify,Z2,[]) :-
 collect_ramifiable_agents(Z1, Agents),
-ramify_agents(Z1, Agents, Z2).
+ramify_objects(Z1, Agents, Z2).
 
-ramify_agents(Z1, [], Z1).
-ramify_agents(Z1, [A|R], Z3) :- ramify_agent(Z1,A,Z2), ramify_agents(Z2,R,Z3).
+ramify_objects(Z1, [], Z1).
+ramify_objects(Z1, [A|R], Z3) :- ramify_object(Z1,A,Z2), ramify_objects(Z2,R,Z3).
 
-ramify_agent(Z1, Agent, Z2) :-
+ramify_object(Z1, Agent, Z2) :-
  ( holds(acceleration(Agent, vector(Ax0,Ay0)),Z1),
    holds(speed(Agent, vector(Vx0,Vy0)),Z1),
    holds(position(Agent, vector(Sx0,Sy0)),Z1),
@@ -191,6 +203,7 @@ ramify_agent(Z1, Agent, Z2) :-
   update(Z1, [position(Ball, vector(X2, Y2))], [position(Ball, vector(X0, Y0))], Z2))
             ;
 (poss(ramifySit3, Z1),
+ (Object='ball',
  holds(acceleration(Ball, vector(Ax0,Ay0)),Z1),
  holds(speed(Ball, vector(Vx0,Vy0)),Z1),
   Vx1 #= 0,
@@ -198,10 +211,9 @@ ramify_agent(Z1, Agent, Z2) :-
   Ax1 #= 0,
   Ay1 #= 0,
   update(Z1,[acceleration(Ball, vector(Ax1,Ay1)), speed(Ball, vector(Vx1,Vy1))],
-            [acceleration(Ball, vector(Ax0,Ay0)), speed(Ball, vector(Vx0,Vy0))],Z2))
+            [acceleration(Ball, vector(Ax0,Ay0)), speed(Ball, vector(Vx0,Vy0))],Z2)))
            ;
-(poss(ramifySit4, Z1),
- holds(acceleration(Agent, vector(Ax0,Ay0)),Z1),
+(holds(acceleration(Agent, vector(Ax0,Ay0)),Z1),
  holds(speed(Agent, vector(Vx0,Vy0)),Z1),
   Vx1 #= 0,
   Vy1 #= 0,
@@ -221,7 +233,7 @@ init(Z0) :- Z0 = [acceleration(agent1, vector(0,0)),
                   speed(agent1, vector(0,0)),
                   position(agent1, vector(0,0)),
                   position(ball1, vector(1,2)),
-                  hasBall(agent1,ball1),
+                  hasBall(agent1),
                   inGround(agent1)],
                   duplicate_free(Z0),
                   consistent(Z0).
@@ -243,10 +255,6 @@ collect_ramifiable_agents0([speed(Agent, _) | R], UpToNow, Result) :-
 				(not in_list(Agent, UpToNow), collect_ramifiable_agents0(R, [Agent|UpToNow], Result)).
 collect_ramifiable_agents0([X | R], UpToNow, Result) :- 
  			collect_ramifiable_agents0(R, UpToNow, Result).
-
-%% position, focus1, focus2, diameter
-%% outBoundary(Result, A, B, Vextor(X,Y), Vector(-63835,0), Vector(63835,0),18800) :-
-%%           A is .
 
 closer(Sxa, Sya, Sxb, Syb, MaxDistance) :-
            calcDistance(Sxa, Sya, Sxb, Syb, A, B, C),
