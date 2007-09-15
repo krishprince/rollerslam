@@ -11,6 +11,7 @@
 poss(throwA(Agent,Strength),Z1) :- holds(hasBall(Agent), Z1),
                                    not_holds(inGround(Agent),Z1).
 poss(release(Agent),Z1) :- holds(hasBall(Agent),Z1).
+poss(dash(Agent),Z1):- not_holds(inGround(Agent),Z1).
 poss(kick(Agent,Strength),Z1) :- holds(hasBall(Agent), Z1),
                                  not_holds(inGround(Agent),Z1).
 poss(tackle(Agent,AgentB,vector(Xmax, Ymax), MaxDistance),Z1) :- not_holds(inGround(Agent),Z1),
@@ -18,8 +19,8 @@ poss(tackle(Agent,AgentB,vector(Xmax, Ymax), MaxDistance),Z1) :- not_holds(inGro
                                                                  not_holds(counterTackle(AgentB),Z1),
                                                                  closer(Sxa, Sya, Sxb, Syb, MaxDistance).
 poss(counterTackle(Agent),Z1) :- not_holds(inGround(Agent),Z1).
-poss(hit(Agent,Strength, MaxDistance),Z1) :- not_holds(inGround(Agent), Z1),
-                                             closer(Sxa, Sya, Sxb, Syb, MaxDistance).
+  poss(hit(Agent,Strength, MaxDistance),Z1) :- not_holds(inGround(Agent), Z1),
+                                               closer(Sxa, Sya, Sxb, Syb, MaxDistance).
 poss(catchA(Agent, MaxDistance),Z1) :- not_holds(inGround(Agent),Z1),
                                        not_holds(hasBall(Agent), Z1),
                                        closer(Sxa, Sya, Sxb, Syb, MaxDistance).
@@ -53,7 +54,7 @@ state_update(Z1,throwA(Agent,Strength),Z2,[]) :-
   update(Z1,[position(Ball, vector(X,Y))],[hasBall(Agent),position(Ball, vector(X0, Y0))],Z2))
   ;
   (not poss(throwA(Agent,Strength),Z1), 
-  Z2#=Z1
+  Z2=Z1
   ).
 
 %%
@@ -65,7 +66,7 @@ state_update(Z1,release(Agent),Z2,[]) :-
   update(Z1,[],[hasBall(Agent)],Z2))
   ;
   (not poss(release(Agent),Z1), 
-  Z2#=Z1
+  Z2=Z1
   ).
 
 %%
@@ -80,7 +81,7 @@ state_update(Z1,kick(Agent,Strength),Z2,[]) :-
   update(Z1,[position(Ball, vector(X,Y))],[hasBall(Agent),position(Ball, vector(X0, Y0))],Z2))
   ;
   (not poss(kick(Agent,Strength),Z1), 
-  Z2#=Z1
+  Z2=Z1
   ).
 
 %%
@@ -93,8 +94,8 @@ state_update(Z1,tackle(Agent,AgentB,vector(Xmax, Ymax), MaxDistance),Z2,[]) :-
   holds(position(AgentB, vector(Sxb,Syb)),Z1),
   update(Z1,[inGround(AgentB)],[hasBall(AgentB)],Z2))
   ;
-  (not poss(tackle(Agent,AgentB,vector(Xmax, Ymax), MaxDistance),Z1), 
-  Z2#=Z1
+  (not poss(tackle(Agent,AgentB,vector(Xmax, Ymax), MaxDistance),Z1),
+  Z2=Z1
   ).
 
 %%
@@ -106,7 +107,7 @@ state_update(Z1,counterTackle(Agent),Z2,[]) :-
   update(Z1,[counterTackle(Agent)],[],Z2))
   ;
   (not poss(counterTackle(Agent),Z1), 
-  Z2#=Z1
+  Z2=Z1
   ).
 
 %%
@@ -121,8 +122,8 @@ state_update(Z1,hit(Agent,Strength, MaxDistance),Z2,[]) :-
   Y #= Syb * Strength,
   update(Z1,[position(Ball, vector(X,Y))],[position(Ball, vector(Sxb,Syb))],Z2))
   ;
-  (not poss(hit(Agent,Strength, MaxDistance),Z1), 
-  Z2#=Z1
+  (not poss(hit(Agent,Strength, MaxDistance),Z1),
+  Z2=Z1
   ).
 
 %%
@@ -136,7 +137,7 @@ state_update(Z1,catchA(Agent, MaxDistance),Z2,[]) :-
   update(Z1,[hasBall(Agent)],[],Z2))
   ;
   (not poss(catchA(Agent, MaxDistance),Z1), 
-  Z2#=Z1
+  Z2=Z1
   ).
 
 %%
@@ -148,7 +149,7 @@ state_update(Z1,standUp(Agent),Z2,[]) :-
   update(Z1,[],[inGround(Agent)],Z2))
   ;
  (not poss(standUp(Agent),Z1), 
- Z2#=Z1
+ Z2=Z1
  ).
 
 %% End Action Group
