@@ -22,8 +22,8 @@ public class GeneralSettingsImpl implements Serializable, GeneralSettings {
     
     private GeneralSettingsImpl() {
         try {
-            settings = new java.util.Properties();
-            settings.load(java.lang.ClassLoader.getSystemResourceAsStream("settings.properties"));
+            settings = new Properties();
+            settings.load(ClassLoader.getSystemResourceAsStream("settings.properties"));
         } catch (Exception ex) {
             throw new RuntimeException("Error reading settings properties. Details: " + ex, ex);
         }
