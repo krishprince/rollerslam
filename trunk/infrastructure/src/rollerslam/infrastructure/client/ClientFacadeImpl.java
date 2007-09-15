@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Set;
 import java.util.Vector;
-
 import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.Effector;
 import rollerslam.infrastructure.agent.Sensor;
@@ -40,10 +39,12 @@ import rollerslam.infrastructure.agent.SensorEffectorManager;
 import rollerslam.infrastructure.discoverer.client.MulticastServerDiscoverer;
 import rollerslam.infrastructure.discoverer.client.ServiceDiscoverer;
 import rollerslam.infrastructure.logging.LogRecordingService;
+import rollerslam.infrastructure.logging.SelectiveLogRecordingServiceDecorator;
 import rollerslam.infrastructure.server.AgentRegistry;
 import rollerslam.infrastructure.server.DisplayRegistry;
 import rollerslam.infrastructure.server.PrintTrace;
 import rollerslam.infrastructure.server.SimulationAdmin;
+import rollerslam.infrastructure.settings.GeneralSettings;
 
 /**
  * Default implementation for the client facade
@@ -57,13 +58,15 @@ public final class ClientFacadeImpl implements ClientFacade, ClientInitializatio
     private AgentRegistry ar;
     private DisplayRegistry dr;
     private SimulationAdmin sa;
-    
+
     private LogRecordingService lrs;
 
     private SensorEffectorManager sem;
 
     private ServiceDiscoverer sd;
     
+    private GeneralSettings gs;
+
     //stores a reference to all exported object so they will not ever be available to garbage collection
     private static Vector<Object> exportedObjects = new Vector<Object>();
 
@@ -74,51 +77,54 @@ public final class ClientFacadeImpl implements ClientFacade, ClientInitializatio
      */
     private ClientFacadeImpl() {
         try {
-			sd = new MulticastServerDiscoverer();
-		} catch (IOException e1) {
-			if (PrintTrace.TracePrint){
-				e1.printStackTrace();
-			}
-			
-		}
+            sd = new MulticastServerDiscoverer();
+        } catch (IOException e1) {
+            if (PrintTrace.TracePrint) {
+                e1.printStackTrace();
+            }
+        }
     }
 
     public void init(String nameserver) {
-    	System.out.println("CONNECTING TO " + nameserver);
+        System.out.println("CONNECTING TO " + nameserver);
         host = nameserver;
-        
+
         try {
-        	    
+
             ar = (AgentRegistry) lookup(AgentRegistry.class.getSimpleName());
             dr = (DisplayRegistry) lookup(DisplayRegistry.class.getSimpleName());
             sa = (SimulationAdmin) lookup(SimulationAdmin.class.getSimpleName());
 
             sem = (SensorEffectorManager) lookup(SensorEffectorManager.class.getSimpleName());
+
+            gs = (GeneralSettings) lookup(GeneralSettings.class.getSimpleName());
             
-            lrs = (LogRecordingService) lookup(LogRecordingService.class.getSimpleName());
+            lrs = new SelectiveLogRecordingServiceDecorator((LogRecordingService) lookup(LogRecordingService.class.getSimpleName()), gs);
+            
         } catch (Exception e) {
-        	if (PrintTrace.TracePrint){
-				e.printStackTrace();
-			}
+            if (PrintTrace.TracePrint) {
+                e.printStackTrace();
+            }
 
             ar = null;
             dr = null;
             sa = null;
 
             sem = null;
+            gs = null;
         }
     }
 
     private Object lookup(String simpleName) throws RemoteException {
-		try {
-			return Naming.lookup("rmi://" + host + "/" + simpleName);
-		} catch (Exception e) {
-			if (PrintTrace.TracePrint){
-				e.printStackTrace();
-			}
-			throw new RemoteException(e.toString());
-		}
-	}
+        try {
+            return Naming.lookup("rmi://" + host + "/" + simpleName);
+        } catch (Exception e) {
+            if (PrintTrace.TracePrint) {
+                e.printStackTrace();
+            }
+            throw new RemoteException(e.toString());
+        }
+    }
 
     /**
      * @return the unique instance for this object
@@ -142,7 +148,7 @@ public final class ClientFacadeImpl implements ClientFacade, ClientInitializatio
         return ret;
     }
 
-	/**
+    /**
      * @see rollerslam.infrastructure.client.ClientFacade#getAgentRegistry()
      */
     public AgentRegistry getAgentRegistry() throws RemoteException {
@@ -191,37 +197,41 @@ public final class ClientFacadeImpl implements ClientFacade, ClientInitializatio
         return lrs;
     }
 
-	public ServiceDiscoverer getServiceDiscoverer() throws RemoteException {
-		return sd;
-	}
+    public ServiceDiscoverer getServiceDiscoverer() throws RemoteException {
+        return sd;
+    }
 
-	public String getRemoteHost() {
-		return host;
-	}
+    public String getRemoteHost() {
+        return host;
+    }
 
-	public void init() {
-		System.out.println("STARTING AUTO DETECTION");
-		
-		try {
-			sd.findServer();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		Set<InetAddress> found = null;
-		
-		while((found = sd.getFoundAddresses()).isEmpty()) {
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		System.out.println("FOUND: " + found);
+    public void init() {
+        System.out.println("STARTING AUTO DETECTION");
 
-		Random r = new Random();
-		host = new ArrayList<InetAddress>(found).get(r.nextInt(found.size())).getHostName();
-		init(host);
-	}
+        try {
+            sd.findServer();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Set<InetAddress> found = null;
+
+        while ((found = sd.getFoundAddresses()).isEmpty()) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        System.out.println("FOUND: " + found);
+
+        Random r = new Random();
+        host = new ArrayList<InetAddress>(found).get(r.nextInt(found.size())).getHostName();
+        init(host);
+    }
+
+    public GeneralSettings getGeneralSettings() throws RemoteException {
+        return gs;
+    }
 }

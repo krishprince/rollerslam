@@ -1,5 +1,8 @@
 package rollerslam.environment.model;
 
+import rollerslam.infrastructure.settings.GeneralSettings;
+import rollerslam.infrastructure.settings.GeneralSettingsImpl;
+
 public class SimulationSettings {
 
 	public static final int BALL_HEIGHT = 500;
@@ -24,7 +27,15 @@ public class SimulationSettings {
 	public static final int FOCUS2X = 63835;
 	public static final int FOCUS2Y = 0;
 
-	public static final int PLAYERS_PER_TEAM = 20;
+	public static final int PLAYERS_PER_TEAM;
+        
+        static {
+            try {
+                PLAYERS_PER_TEAM = Integer.parseInt((String)GeneralSettingsImpl.getInstance().getSetting(GeneralSettings.PLAYERS_PER_TEAM));
+            } catch (Exception err) {
+                throw new RuntimeException("Error setting SimulationSettings. Details: " + err, err);
+            }
+        }
 
 	public static final int MAX_VELOCITY = 1000;
 	public static final int MAX_DISTANCE = 5000;

@@ -27,7 +27,6 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Vector;
-
 import rollerslam.infrastructure.agent.Effector;
 import rollerslam.infrastructure.agent.Sensor;
 import rollerslam.infrastructure.agent.SensorEffectorManager;
@@ -36,6 +35,9 @@ import rollerslam.infrastructure.discoverer.server.MulticastClientListener;
 import rollerslam.infrastructure.logging.LogEntry;
 import rollerslam.infrastructure.logging.LogRecordingService;
 import rollerslam.infrastructure.logging.LogRecordingServiceImpl;
+import rollerslam.infrastructure.logging.SelectiveLogRecordingServiceDecorator;
+import rollerslam.infrastructure.settings.GeneralSettings;
+import rollerslam.infrastructure.settings.GeneralSettingsImpl;
 
 /**
  * Default implementation for the server facade
@@ -53,6 +55,8 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
     private Sensor envSensor;
     private Effector envEffector;
     private LogRecordingService logRecSrv;
+    private LogRecordingService selLogRecSrv;
+    private GeneralSettings gs;
 
     // local exported objects
     private SensorEffectorManager sem;
@@ -81,14 +85,14 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
         dri = new DisplayRegistryImpl();
         ari = new AgentRegistryImpl();
         sem = new SensorEffectorManagerImpl();
-
+        gs = GeneralSettingsImpl.getInstance();
         try {
             envSensor = sem.getEnvironmentSensor();
             envEffector = sem.getEnvironmentEffector();
         } catch (RemoteException e) {
-        	if (PrintTrace.TracePrint){
-				e.printStackTrace();
-			}
+            if (PrintTrace.TracePrint) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -96,25 +100,25 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
      * @see rollerslam.infrastructure.server.ServerFacade#init(int, rollerslam.infrastructure.server.AutomataAgent)
      */
     public void init(int port, AutomataAgent environmentAgent) throws Exception {
-    	init(port, environmentAgent, null);
+        init(port, environmentAgent, null);
     }
 
     /**
      * @see rollerslam.infrastructure.server.ServerFacade#init(int, rollerslam.infrastructure.server.AutomataAgent)
      */
     public void init(int port, AutomataAgent environmentAgent, LogRecordingService logRecordingService) throws Exception {
-    	
-    	if (logRecordingService == null) {
+
+        if (logRecordingService == null) {
             //initializing log service
-    		logRecordingService = LogRecordingServiceImpl.init();
-    	}
-    	
-    	logRecSrv = getFakeLogger(logRecordingService);
-    	
-    	try {
-        	LocateRegistry.createRegistry(1099);
-        } catch(Exception e) {
-        	
+            logRecordingService = LogRecordingServiceImpl.init();
+        }
+
+        logRecSrv = getFakeLogger(logRecordingService);
+        selLogRecSrv = new SelectiveLogRecordingServiceDecorator(logRecSrv, gs);
+        
+        try {
+            LocateRegistry.createRegistry(1099);
+        } catch (Exception e) {
         }
 
         sai = environmentAgent.getSimulationStateProvider();
@@ -128,9 +132,11 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
 				.exportObject(dri, 0);
         SensorEffectorManager sems = (SensorEffectorManager) UnicastRemoteObject
 				.exportObject(sem, 0);
-
-        //exporting log service
         
+        //exporting general settings
+        UnicastRemoteObject.exportObject(gs, 0);
+        
+        //exporting log service
         UnicastRemoteObject.exportObject(logRecSrv, 0);
 
         exportedObjects.add(sai);
@@ -142,7 +148,8 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
         exportedObjects.add(ars);
         exportedObjects.add(drs);
         exportedObjects.add(sems);
-        
+        exportedObjects.add(gs);
+
         //adding log to exported objs
         exportedObjects.add(logRecSrv);
 
@@ -150,15 +157,16 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
         bind(DisplayRegistry.class.getSimpleName(), drs);
         bind(SimulationAdmin.class.getSimpleName(), sas);
         bind(SensorEffectorManager.class.getSimpleName(), sems);
-        
+        bind(GeneralSettings.class.getSimpleName(), gs);
+
         //binding log service to registry
         try {
-        	bind(LogRecordingService.class.getSimpleName(), logRecSrv);        	
-        } catch(Exception e) {
-        	// ignore this exception
-        	if (PrintTrace.TracePrint){
-				e.printStackTrace();
-			}
+            bind(LogRecordingService.class.getSimpleName(), logRecSrv);
+        } catch (Exception e) {
+            // ignore this exception
+            if (PrintTrace.TracePrint) {
+                e.printStackTrace();
+            }
         }
 
         displayUpdateThread = new DisplayUpdateThread(dri);
@@ -166,7 +174,7 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
 
         // starts multicast listener
         new MulticastClientListener().start();
-        
+
         //http://forum.java.sun.com/thread.jspa?threadID=5161052&tstart=180
         Object o = new Object();
 
@@ -175,28 +183,27 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
         }
     }
 
-    private LogRecordingService getFakeLogger(
-			final LogRecordingService logRecordingService) {
-    	return new LogRecordingService() {
+    private LogRecordingService getFakeLogger(final LogRecordingService logRecordingService) {
+        return new LogRecordingService() {
 
-    		private boolean onError = false;
-			public void addEntry(LogEntry entry) throws RemoteException {
-				if (!onError) {
-					try{
-						logRecordingService.addEntry(entry);
-					} catch(Exception e) {
-						if (PrintTrace.TracePrint) {
-							e.printStackTrace();
-						}
-						onError = true;
-					}					
-				}
-			}
-    		
-    	};
-	}
+            private boolean onError = false;
 
-	/**
+            public void addEntry(LogEntry entry) throws RemoteException {
+                if (!onError) {
+                    try {
+                        logRecordingService.addEntry(entry);
+                    } catch (Exception e) {
+                        if (PrintTrace.TracePrint) {
+                            e.printStackTrace();
+                        }
+                        onError = true;
+                    }
+                }
+            }
+        };
+    }
+
+    /**
      * @see rollerslam.infrastructure.client.ClientFacade#exportObject(java.rmi.Remote)
      */
     public Remote exportObject(Remote obj) throws RemoteException, AlreadyBoundException {
@@ -210,17 +217,17 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
     }
 
     private void bind(String string, Remote ret) throws RemoteException {
-    	try {
-			Naming.rebind(string, ret);
-		} catch (Exception e) {
-			if (PrintTrace.TracePrint){
-				e.printStackTrace();
-			}
-			throw new RemoteException(e.toString());
-		}
-	}
+        try {
+            Naming.rebind(string, ret);
+        } catch (Exception e) {
+            if (PrintTrace.TracePrint) {
+                e.printStackTrace();
+            }
+            throw new RemoteException(e.toString());
+        }
+    }
 
-	/**
+    /**
      * @see rollerslam.infrastructure.server.ServerFacade#getAgentRegistry()
      */
     public AgentRegistry getAgentRegistry() throws RemoteException {
@@ -283,7 +290,11 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
         return sem;
     }
 
-    public LogRecordingService getLogRecordingService() throws RemoteException {
-        return logRecSrv;
+    public LogRecordingService getLogRecordingService() throws RemoteException {        
+        return selLogRecSrv;
+    }
+
+    public GeneralSettings getGeneralSettings() throws RemoteException {
+        return gs;
     }
 }
