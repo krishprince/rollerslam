@@ -329,7 +329,8 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
     }
 
     public void updateSliderBounds(Integer m) {
-        cycleSlider.setMajorTickSpacing(Math.round(m / 5));
+        int spacing = Math.round(m / 5);
+        cycleSlider.setMajorTickSpacing(spacing > 0 ? spacing : 1);
         cycleSlider.setLabelTable(cycleSlider.createStandardLabels(cycleSlider.getMajorTickSpacing()));
         cycleSlider.setMaximum(m);
     }
