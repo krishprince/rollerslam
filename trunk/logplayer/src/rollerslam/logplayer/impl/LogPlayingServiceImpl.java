@@ -27,16 +27,14 @@ import rollerslam.logplayer.LogPlayingService;
  */
 public class LogPlayingServiceImpl implements LogPlayingService {
 
-    private Integer currentCycle;
-    private Integer totalCycles;
-    private Connection conn;
-    @SuppressWarnings("unused")
-    private String user = "sa";
-    @SuppressWarnings("unused")
-    private String password = "";
+    protected Integer currentCycle;
+    protected Integer totalCycles;
+    protected Connection conn;
+    protected String user = "sa";
+    protected String password = "";
     
-    private String readLogForAgentSQL = "SELECT thelog FROM t_log WHERE agent_id = ? AND cycle = ?";
-    private String readAgentsIdsSQL = "SELECT DISTINCT agent_id FROM t_log ORDER BY 1";
+    protected String readLogForAgentSQL = "SELECT thelog FROM t_log WHERE agent_id = ? AND cycle = ?";
+    protected String readAgentsIdsSQL = "SELECT DISTINCT agent_id FROM t_log ORDER BY 1";
     
 
     public LogPlayingServiceImpl() {
@@ -47,7 +45,7 @@ public class LogPlayingServiceImpl implements LogPlayingService {
         try {
             Class.forName("org.hsqldb.jdbcDriver").newInstance();
             String url = "jdbc:hsqldb:" + simDescription + ";shutdown=true";
-            conn = DriverManager.getConnection(url, "sa", "");
+            conn = DriverManager.getConnection(url, user, password);
             Runtime.getRuntime().addShutdownHook(new Thread() {
                 public void run() {
                     LogPlayingServiceImpl.this.terminate();
