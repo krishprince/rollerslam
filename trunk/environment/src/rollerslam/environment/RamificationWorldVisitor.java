@@ -62,11 +62,11 @@ public class RamificationWorldVisitor implements Visitor, RamificationComponent 
 			obj.a = new Vector(0,0).subtract(obj.v).setModulo(obj.v.getModule() / 10);			
 		}
 
-		if(obj.world.goalA.insideGoal(obj.ls.x, obj.s.x, obj.ls.y, obj.s.y))
+		/*if(obj.world.goalA.insideGoal(obj.ls.x, obj.s.x, obj.ls.y, obj.s.y))
 			obj.world.scoreboard.scoreTeamB += 1;
 
 		if(obj.world.goalB.insideGoal(obj.ls.x, obj.s.x, obj.ls.y, obj.s.y))
-			obj.world.scoreboard.scoreTeamA += 1;
+			obj.world.scoreboard.scoreTeamA += 1;*/
 		
 		obj.ls.x = obj.s.x;
 		obj.ls.y = obj.s.y;
