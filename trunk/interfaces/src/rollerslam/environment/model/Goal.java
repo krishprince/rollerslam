@@ -20,7 +20,7 @@ public class Goal extends WorldObject implements Serializable, Visitable {
 		baskets[2] = new Basket(w, this.s.x, this.s.y + (SimulationSettings.DISTANCE_BETWEEN_BASKETS));
 	}
 
-	public boolean insideGoal(int px1, int px2, int py1, int py2){
+	/*public boolean insideGoal(int px1, int px2, int py1, int py2){
 		int bx1 = px1;
 		int bx2 = px2;
 		int by1 = py1;
@@ -35,7 +35,7 @@ public class Goal extends WorldObject implements Serializable, Visitable {
 			return true;
 
 		return false;
-	}
+	}*/
 	
 	public void accept(Visitor visitor) {
 		visitor.visit((Goal)this);
