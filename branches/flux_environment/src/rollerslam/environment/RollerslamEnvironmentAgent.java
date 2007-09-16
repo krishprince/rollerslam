@@ -35,7 +35,7 @@ public class RollerslamEnvironmentAgent extends AutomataAgent {
 			}
 		};
 
-		this.interpretationComponent = new JavaActionInterpretationComponent();
+		this.interpretationComponent = new JavaActionInterpretationComponent(eclipse);
 
 		this.ramificationComponent = new FluxRamificationComponent(eclipse);
 
