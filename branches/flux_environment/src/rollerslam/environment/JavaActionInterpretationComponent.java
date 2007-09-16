@@ -3,10 +3,15 @@ package rollerslam.environment;
 import java.rmi.RemoteException;
 import java.util.Hashtable;
 
+import com.parctechnologies.eclipse.CompoundTerm;
+import com.parctechnologies.eclipse.EclipseConnection;
+
+import rollerslam.environment.model.Ball;
 import rollerslam.environment.model.Fact;
 import rollerslam.environment.model.Player;
 import rollerslam.environment.model.PlayerTeam;
 import rollerslam.environment.model.World;
+import rollerslam.environment.model.WorldObject;
 import rollerslam.environment.model.actions.arm.CountertackleAction;
 import rollerslam.environment.model.actions.ArmAction;
 import rollerslam.environment.model.actions.SentinelAction;
@@ -29,6 +34,10 @@ import rollerslam.environment.model.perceptions.GameStartedPerception;
 import rollerslam.environment.model.utils.MathGeometry;
 import rollerslam.environment.model.utils.Vector;
 import rollerslam.environment.model.SimulationSettings;
+import rollerslam.environment.visitor.JavaPrologWorldVisitor;
+import rollerslam.environment.visitor.PrologJavaWorldVisitor;
+import rollerslam.environment.visitor.SampleJavaPrologWorldVisitor;
+import rollerslam.environment.visitor.SamplePrologJavaWorldVisitor;
 import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.agent.automata.ActionInterpretationComponent;
@@ -41,6 +50,16 @@ public class JavaActionInterpretationComponent implements
 		ActionInterpretationComponent {
 	public ServerFacade facade = ServerFacadeImpl.getInstance();
 
+	private EclipseConnection eclipse;
+
+	private JavaPrologWorldVisitor javaPrologVisitor;
+
+	private PrologJavaWorldVisitor prologJavaVisitor;
+
+	public String Action = null;
+
+	public static Boolean UseFlux = false;
+
 	public Hashtable<Agent, Player> playersMap = new Hashtable<Agent, Player>();
 
 	public Hashtable<Player, Agent> idsMap = new Hashtable<Player, Agent>();
@@ -48,130 +67,182 @@ public class JavaActionInterpretationComponent implements
 	public int nextAgentID = 0;
 
 	private void dash(World w, Player p, Vector vet) {
-		// TODO test if p is in w
-		if (!p.inGround) {
-			p.a = vet.limitModuloTo(p.maxA);
+
+		if (UseFlux) {
+			Action = Action + "dash(" + getIDForObject(p) + ", vector(" + vet.x
+					+ "," + vet.y + ")";
+		} else {
+			// TODO test if p is in w
+			if (!p.inGround) {
+				p.a = vet.limitModuloTo(p.maxA);
+			}
 		}
+
 	}
 
 	private void hit(World w, Player p, Vector vet) {
-		// Body
-		if (!w.ball.withPlayer && !p.inGround) {
-			if (MathGeometry.calculeDistancePoints(w.ball.s.x, p.s.x,
-					w.ball.s.y, p.s.y) < SimulationSettings.MAX_DISTANCE) {
-				double error = Math.random();
+
+		double error = Math.random();
+		if (UseFlux) {
+			Action = Action + "hit(" + getIDForObject(p) + "," + error + ","
+					+ SimulationSettings.MAX_DISTANCE + ")";
+
+		} else {
+			// Body
+			if (!w.ball.withPlayer && !p.inGround) {
+				if (MathGeometry.calculeDistancePoints(w.ball.s.x, p.s.x,
+						w.ball.s.y, p.s.y) < SimulationSettings.MAX_DISTANCE) {
+
+					if (error > 0.3) {
+						error = 0.3;
+					}
+
+					w.ball.a = vet;
+					w.ball.isMoving = true;
+
+					if (error % 2 == 0)
+						w.ball.a.x = (int) Math.floor(w.ball.a.x * error);
+					else
+						w.ball.a.y = (int) Math.floor(w.ball.a.y * error);
+				}
+			}
+		}
+	}
+
+	private void kick(World w, Player p, Vector vet) {
+
+		double error = Math.random();
+		if (UseFlux) {
+			Action = Action + "kick(" + getIDForObject(p) + "," + error + ")";
+
+		} else {
+			// Body
+			if (p.hasBall && !p.inGround) {
 
 				if (error > 0.3) {
 					error = 0.3;
 				}
 
-				w.ball.a = vet;
+				p.hasBall = false;
+				w.playerWithBall = null;
+				w.ball.withPlayer = false;
 				w.ball.isMoving = true;
+
+				w.ball.a = vet.multVector((1 + p.strength) * 1.25);
 
 				if (error % 2 == 0)
 					w.ball.a.x = (int) Math.floor(w.ball.a.x * error);
 				else
 					w.ball.a.y = (int) Math.floor(w.ball.a.y * error);
+
 			}
-		}
-
-	}
-
-	private void kick(World w, Player p, Vector vet) {
-		// Body
-		if (p.hasBall && !p.inGround) {
-			double error = Math.random();
-
-			if (error > 0.3) {
-				error = 0.3;
-			}
-
-			p.hasBall = false;
-			w.playerWithBall = null;
-			w.ball.withPlayer = false;
-			w.ball.isMoving = true;
-
-			w.ball.a = vet.multVector((1 + p.strength) * 1.25);
-
-			if (error % 2 == 0)
-				w.ball.a.x = (int) Math.floor(w.ball.a.x * error);
-			else
-				w.ball.a.y = (int) Math.floor(w.ball.a.y * error);
-
 		}
 	}
 
 	private void countertackle(World w, Player p) {
-		// Body
-		if (!p.inGround) {
-			p.counterTackle = true;
+		if (UseFlux) {
+			Action = Action + "counterTackle(" + getIDForObject(p) + ")";
+
+		} else {
+
+			// Body
+			if (!p.inGround) {
+				p.counterTackle = true;
+			}
 		}
 	}
 
 	private void catchA(World w, Player p) {
-		// Body
-		if (!w.ball.withPlayer && !p.inGround) {
-			if (MathGeometry.calculeDistancePoints(w.ball.s.x, p.s.x,
-					w.ball.s.y, p.s.y) < SimulationSettings.MAX_DISTANCE) {
+		if (UseFlux) {
+			Action = Action + "catchA(" + getIDForObject(p) + ","
+					+ SimulationSettings.MAX_DISTANCE + ")";
 
-				p.hasBall = true;
-				p.world.ball.withPlayer = true;
-				p.world.playerWithBall = p;
-				w.ball.isMoving = false;
+		} else {
+
+			// Body
+			if (!w.ball.withPlayer && !p.inGround) {
+				if (MathGeometry.calculeDistancePoints(w.ball.s.x, p.s.x,
+						w.ball.s.y, p.s.y) < SimulationSettings.MAX_DISTANCE) {
+
+					p.hasBall = true;
+					p.world.ball.withPlayer = true;
+					p.world.playerWithBall = p;
+					w.ball.isMoving = false;
+				}
+
 			}
-
 		}
 	}
 
 	private void release(World w, Player p) {
-		// Body
-		if (p.hasBall && !p.inGround) {
-			p.hasBall = false;
-			w.playerWithBall = null;
-			w.ball.withPlayer = false;
-			w.ball.isMoving = false;
+		if (UseFlux) {
+			Action = Action + "release(" + getIDForObject(p) + ")";
+
+		} else {
+
+			// Body
+			if (p.hasBall && !p.inGround) {
+				p.hasBall = false;
+				w.playerWithBall = null;
+				w.ball.withPlayer = false;
+				w.ball.isMoving = false;
+			}
 		}
 	}
 
 	private void tackle(World w, Player p) {
-		// Body
-		if (w.ball.withPlayer && !p.inGround) {
-			if (MathGeometry.calculeDistancePoints(w.playerWithBall.s.x, p.s.x,
-					w.playerWithBall.s.y, p.s.y) < SimulationSettings.MAX_DISTANCE) {
-				if (!w.playerWithBall.counterTackle) {
-					w.playerWithBall.inGround = true;
-					w.playerWithBall.hasBall = false;
-					w.ball.withPlayer = false;
-					w.playerWithBall = null;
-				} else {
+		if (UseFlux) {
+			Action = Action + "tackle(" + getIDForObject(p) + ","
+					+ getIDForObject(w.playerWithBall) + ","
+					+ SimulationSettings.MAX_DISTANCE + ")";
+
+		} else {
+
+			// Body
+			if (w.ball.withPlayer && !p.inGround) {
+				if (MathGeometry.calculeDistancePoints(w.playerWithBall.s.x,
+						p.s.x, w.playerWithBall.s.y, p.s.y) < SimulationSettings.MAX_DISTANCE) {
+					if (!w.playerWithBall.counterTackle) {
+						w.playerWithBall.inGround = true;
+						w.playerWithBall.hasBall = false;
+						w.ball.withPlayer = false;
+						w.playerWithBall = null;
+					} else {
+					}
 				}
 			}
 		}
 	}
 
 	private void throwA(World w, Player p, Vector a) {
-		// Body
-		if (p.hasBall && !p.inGround) {
-			p.hasBall = false;
-			w.playerWithBall = null;
-			w.ball.withPlayer = false;
-			w.ball.isMoving = true;
+		double error = Math.random();
+		if (UseFlux) {
+			Action = Action + "throwA(" + getIDForObject(p) + "," + error + ")";
 
-			double error = Math.random();
+		} else {
 
-			if (error > 0.15) {
-				error = 0.15;
+			// Body
+			if (p.hasBall && !p.inGround) {
+				p.hasBall = false;
+				w.playerWithBall = null;
+				w.ball.withPlayer = false;
+				w.ball.isMoving = true;
+
+				if (error > 0.15) {
+					error = 0.15;
+				}
+
+				w.ball.a = a.multVector((1 + p.strength) * 0.75);
+				// w.ball.v = p.v.sumVector(a.multVector((1 + p.strength) *
+				// 0.5));
+
+				if (error % 2 == 0)
+					w.ball.a.x = (int) Math.floor(w.ball.a.x * error);
+				else
+					w.ball.a.y = (int) Math.floor(w.ball.a.y * error);
 			}
 
-			w.ball.a = a.multVector((1 + p.strength) * 0.75);
-			// w.ball.v = p.v.sumVector(a.multVector((1 + p.strength) * 0.5));
-
-			if (error % 2 == 0)
-				w.ball.a.x = (int) Math.floor(w.ball.a.x * error);
-			else
-				w.ball.a.y = (int) Math.floor(w.ball.a.y * error);
 		}
-
 	}
 
 	private void sendMsg(World w, Agent agent, Fact f) {
@@ -180,9 +251,15 @@ public class JavaActionInterpretationComponent implements
 	}
 
 	private void standUp(World w, Player p) {
-		// Body
-		if (p.inGround) {
-			p.inGround = false;
+		if (UseFlux) {
+			Action = Action + "standUp(" + getIDForObject(p) + ")";
+
+		} else {
+
+			// Body
+			if (p.inGround) {
+				p.inGround = false;
+			}
 		}
 	}
 
@@ -321,6 +398,44 @@ public class JavaActionInterpretationComponent implements
 			}
 		}
 		return null;
+	}
+
+	// FLUX
+	public static String getIDForObject(WorldObject obj) {
+		if (obj instanceof Ball) {
+			return "ball";
+		} else if (obj instanceof Player) {
+			return "player(" + ((Player) obj).id + ")";
+		} else {
+			return "obj(" + obj.hashCode() + ")";
+		}
+	}
+
+	public JavaActionInterpretationComponent(EclipseConnection eclipse) {
+		this.eclipse = eclipse;
+		this.javaPrologVisitor = new SampleJavaPrologWorldVisitor();
+		this.prologJavaVisitor = new SamplePrologJavaWorldVisitor();
+	}
+
+	public void runFluxAction(EnvironmentStateModel world) {
+		String query = "runAction(["
+				+ javaPrologVisitor.getPrologRepresentation((World) world)
+				+ "]," + Action + "," + "R)";
+
+		System.out.println("query: " + query);
+
+		CompoundTerm ret;
+		try {
+			ret = eclipse.rpc(query);
+
+			// System.out.println("result: "+ret);
+
+			prologJavaVisitor.updateWorldRepresentation((World) world,
+					(String) ret.arg(2));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }
