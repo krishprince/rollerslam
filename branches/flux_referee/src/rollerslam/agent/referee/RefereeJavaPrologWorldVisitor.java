@@ -11,11 +11,13 @@ import rollerslam.environment.model.Scoreboard;
 import rollerslam.environment.model.Trampoline;
 import rollerslam.environment.model.World;
 import rollerslam.environment.model.WorldObject;
-import rollerslam.environment.visitor.JavaPrologWorldVisitor;
+import rollerslam.environment.model.visitor.Visitor;
 
-public class RefereeJavaPrologWorldVisitor implements JavaPrologWorldVisitor {
+public class RefereeJavaPrologWorldVisitor implements Visitor {
 	
 	private java.util.Vector<String> accumulator = new java.util.Vector<String>();
+	private int lastX;
+	private int lastY;
 	
 	public String getPrologRepresentation(World world) {
 		accumulator.clear();
@@ -34,10 +36,10 @@ public class RefereeJavaPrologWorldVisitor implements JavaPrologWorldVisitor {
 
 	public void visit(World obj) {
 		accumulator.add("team(" + obj.goalA.hashCode() + ")");
-		accumulator.add("score(" + obj.scoreboard.scoreTeamA + ", team(" +
+		accumulator.add("score(0, team(" +
 				obj.goalA.hashCode() + "))");
 		accumulator.add("team(" + obj.goalB.hashCode() + ")");
-		accumulator.add("score(" + obj.scoreboard.scoreTeamB + ", team(" +
+		accumulator.add("score(0, team(" +
 				obj.goalB.hashCode() + "))");	
 	}
 
@@ -51,7 +53,14 @@ public class RefereeJavaPrologWorldVisitor implements JavaPrologWorldVisitor {
 
 	public void visit(Ball obj) {
 		accumulator.add("ballPosition(" + obj.s.x + "," + obj.s.y + ")");
-		accumulator.add("lastBallPosition(" + obj.ls.x + "," + obj.ls.y + ")");
+		accumulator.add("lastBallPosition(" + this.lastX + "," + this.lastY + ")");
+		/*if(this.lastX != obj.s.x && this.lastY != obj.s.y)
+			System.out.println("Mudou");
+		else
+			System.out.println("Manteve");*/
+		
+		this.lastX = obj.s.x;
+		this.lastY = obj.s.y;
 	}
 
 	public void visit(OutTrack obj) {

@@ -3,21 +3,22 @@
 :- dynamic current_state/1.
 
 state_update(Z1,lookBall,Z2,[scored(Team)]) :-
-           (holds(score(Score, team(Team2)),Z1),
-            Score2 #= Score + 1,
-            update(Z1,[score(Score2, team(Team2))],[score(Score, team(Team2))],Z2)).
+           holds(score(Score, team(Team)),Z1),
+           Score2 #= Score + 1,
+           update(Z1,[score(Score2, team(Team))],[score(Score, team(Team))],Z2).
 
 
 perform(lookBall, [Y]) :-
            (current_state(Z),
-            holds(ballPosition(X1, Y1), Z),
-            holds(lastBallPosition(X2,Y2), Z),
-            holds(golLine(X3, Y3, X4, Y4, team(Team)), Z),
-            intersect(X1, Y1, X2, Y2, X3, Y3, X4, Y4),
-            Y = scored(Team)
-            ) 
-            ; 
-            (Y = scored(none)).
+           holds(ballPosition(X1, Y1), Z),
+           holds(lastBallPosition(X2,Y2), Z),
+           holds(golLine(X3, Y3, X4, Y4, team(Team)), Z),
+           intersect(X1, Y1, X2, Y2, X3, Y3, X4, Y4),
+           Y = scored(Team)).
+
+
+complex_action(lookBall, Z1, Z2) :- Z2 = Z1.
+
 
 init(Z0) :- Z0 = [team(a), score(0, team(a)), golLine(70, 165, 70, 265, team(a)),
                   team(b), score(0, team(b)), golLine(400, 165, 400, 265, team(b)),
@@ -27,7 +28,7 @@ init(Z0) :- Z0 = [team(a), score(0, team(a)), golLine(70, 165, 70, 265, team(a))
 
 main(FinalState) :-
            init(InitialState),
-           CurrentState = [ballPosition(49, 217)|InitialState],
+           CurrentState = [ballPosition(49, 48)|InitialState],
            retract(current_state(_)),
            assert(current_state(CurrentState)),
            execute(lookBall, CurrentState, FinalState).

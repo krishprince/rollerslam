@@ -1,7 +1,6 @@
 package rollerslam.agent.referee;
 
 import rollerslam.environment.model.actions.UpdateScoreAction;
-import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
 
 public class RefereeWorldModel extends EnvironmentStateModel {

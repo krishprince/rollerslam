@@ -4,14 +4,12 @@ import com.parctechnologies.eclipse.CompoundTerm;
 import com.parctechnologies.eclipse.EclipseConnection;
 
 import rollerslam.environment.model.World;
-import rollerslam.environment.visitor.JavaPrologWorldVisitor;
-import rollerslam.environment.visitor.PrologJavaWorldVisitor;
 import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
 import rollerslam.infrastructure.agent.automata.RamificationComponent;
 
 public class RefereeRamificator  implements RamificationComponent {
 	private EclipseConnection eclipse;
-	private JavaPrologWorldVisitor javaPrologVisitor;
+	private RefereeJavaPrologWorldVisitor javaPrologVisitor;
 	private RefereePrologJavaWorldVisitor prologJavaVisitor;
 	
 	public RefereeRamificator(EclipseConnection eclipse) {
@@ -31,7 +29,7 @@ public class RefereeRamificator  implements RamificationComponent {
 			try {
 				ret = eclipse.rpc(query);
 				//System.out.println("query: "+ query);
-				System.out.println("result: "+ ret.arg(2));
+				//System.out.println("result: "+ ret.arg(2));
 				
 				prologJavaVisitor.updateWorldRepresentation((RefereeWorldModel) refereeWorld, ret.arg(2));
 				

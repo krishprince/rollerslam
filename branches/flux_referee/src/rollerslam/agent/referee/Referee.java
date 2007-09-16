@@ -84,7 +84,7 @@ public class Referee extends AutomataAgent {
     
     private void initializeEclipseConnection() throws Exception {
 	    System.setProperty("eclipse.directory", "C:/Tools/ECLiPSe_5.10");
-	    String folder = "C:/Projetos/rollerslam/environment/flux/";
+	    String folder = "C:/Projetos/rollerslam/referee/flux/";
 
 	    EclipseEngineOptions eclipseEngineOptions = new EclipseEngineOptions();
 	    File eclipseProgram;
