@@ -10,6 +10,7 @@ import rollerslam.environment.model.World;
 import rollerslam.environment.model.actions.arm.CountertackleAction;
 import rollerslam.environment.model.actions.ArmAction;
 import rollerslam.environment.model.actions.SentinelAction;
+import rollerslam.environment.model.actions.UpdateScoreAction;
 import rollerslam.environment.model.actions.arm.CatchAction;
 import rollerslam.environment.model.actions.leg.DashAction;
 import rollerslam.environment.model.actions.leg.HitAction;
@@ -192,6 +193,11 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 		//Body
 		
 	}
+	
+	private void updateScore(World w, UpdateScoreAction action) {
+		w.scoreboard.scoreTeamA += action.getScoreTeamA();
+		w.scoreboard.scoreTeamB += action.getScoreTeamB();
+	}
 		
 	public void processAction(EnvironmentStateModel w, Message m) {
 
@@ -261,6 +267,10 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 				CreatePlayer mt = (CreatePlayer) m;
 				this.createPlayer((World) w, playersMap.get(mt.sender));
 			}
+		}
+		
+		if(m instanceof UpdateScoreAction) {
+			this.updateScore((World)w, (UpdateScoreAction) m);			
 		}
 
 		//TODO: retirar essa gambiarra!
