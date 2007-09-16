@@ -14,16 +14,13 @@ poss(release(Agent),Z1) :- holds(hasBall(Agent),Z1).
 poss(dash(Agent),Z1):- not_holds(inGround(Agent),Z1).
 poss(kick(Agent,Strength),Z1) :- holds(hasBall(Agent), Z1),
                                  not_holds(inGround(Agent),Z1).
-poss(tackle(Agent,AgentB,vector(Xmax, Ymax), MaxDistance),Z1) :- not_holds(inGround(Agent),Z1),
+poss(tackle(Agent,AgentB, MaxDistance),Z1) :- not_holds(inGround(Agent),Z1),
                                                                  holds(hasBall(AgentB), Z1),
-                                                                 not_holds(counterTackle(AgentB),Z1),
-                                                                 closer(Sxa, Sya, Sxb, Syb, MaxDistance).
+                                                                 not_holds(counterTackle(AgentB),Z1).
 poss(counterTackle(Agent),Z1) :- not_holds(inGround(Agent),Z1).
-  poss(hit(Agent,Strength, MaxDistance),Z1) :- not_holds(inGround(Agent), Z1),
-                                               closer(Sxa, Sya, Sxb, Syb, MaxDistance).
+  poss(hit(Agent,Strength, MaxDistance),Z1) :- not_holds(inGround(Agent), Z1).
 poss(catchA(Agent, MaxDistance),Z1) :- not_holds(inGround(Agent),Z1),
-                                       not_holds(hasBall(Agent), Z1),
-                                       closer(Sxa, Sya, Sxb, Syb, MaxDistance).
+                                       not_holds(hasBall(Agent), Z1).
 poss(standUp(Agent),Z1) :- holds(inGround(Agent),Z1).
 poss(ramifySit2, Z1):- holds(isMoving(Ball, Attrition), Z1).
 poss(ramifySit3, Z1):- holds(outBoundary(Object), Z1).
@@ -88,10 +85,11 @@ state_update(Z1,kick(Agent,Strength),Z2,[]) :-
 %% Tackle Action
 %%
 
-state_update(Z1,tackle(Agent,AgentB,vector(Xmax, Ymax), MaxDistance),Z2,[]) :-
+state_update(Z1,tackle(Agent,AgentB, MaxDistance),Z2,[]) :-
   (poss(tackle(Agent,AgentB,vector(Xmax, Ymax), MaxDistance),Z1),
   holds(position(Agent, vector(Sxa,Sya)),Z1),
   holds(position(AgentB, vector(Sxb,Syb)),Z1),
+  closer(Sxa, Sya, Sxb, Syb, MaxDistance),
   update(Z1,[inGround(AgentB)],[hasBall(AgentB)],Z2))
   ;
   (not poss(tackle(Agent,AgentB,vector(Xmax, Ymax), MaxDistance),Z1),
@@ -118,6 +116,7 @@ state_update(Z1,hit(Agent,Strength, MaxDistance),Z2,[]) :-
   (poss(hit(Agent,Strength, MaxDistance),Z1),
   holds(position(Agent, vector(Sxa,Sya)),Z1),
   holds(position(Ball, vector(Sxb,Syb)),Z1),
+  closer(Sxa, Sya, Sxb, Syb, MaxDistance),
   X #= Sxb * Strength,
   Y #= Syb * Strength,
   update(Z1,[position(Ball, vector(X,Y))],[position(Ball, vector(Sxb,Syb))],Z2))
@@ -134,6 +133,7 @@ state_update(Z1,catchA(Agent, MaxDistance),Z2,[]) :-
   (poss(catchA(Agent, MaxDistance),Z1),
   holds(position(Agent, vector(Sxa,Sya)),Z1),
   holds(position(Ball, vector(Sxb,Syb)),Z1),
+  closer(Sxa, Sya, Sxb, Syb, MaxDistance),
   update(Z1,[hasBall(Agent)],[],Z2))
   ;
   (not poss(catchA(Agent, MaxDistance),Z1), 
@@ -159,17 +159,19 @@ state_update(Z1,standUp(Agent),Z2,[]) :-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 processRamifications(InitialState, FinalState) :-
-		runAction(InitialState, ramify, FinalState).
+           retract_all(current_state(_)),
+           assert(current_state(InitialState)),
+           execute(ramifySlam, InitialState, FinalState).
 
 
-state_update(Z1,ramify,Z2,[]) :-
+ramifySlam(Z1,ramify,Z2) :-
 collect_ramifiable_agents(Z1, Agents),
 ramify_objects(Z1, Agents, Z2).
 
 ramify_objects(Z1, [], Z1).
 ramify_objects(Z1, [A|R], Z3) :- ramify_object(Z1,A,Z2), ramify_objects(Z2,R,Z3).
 
-ramify_object(Z1, Agent, Z2) :-
+ramify_object(Z1, Agent, Z2):-
  ( holds(acceleration(Agent, vector(Ax0,Ay0)),Z1),
    holds(speed(Agent, vector(Vx0,Vy0)),Z1),
    holds(position(Agent, vector(Sx0,Sy0)),Z1),
@@ -225,19 +227,9 @@ ramify_object(Z1, Agent, Z2) :-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Initial State and HELPER  Functions %%%
+%%%%%%%%% HELPER  Functions %%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-
-init(Z0) :- Z0 = [acceleration(agent1, vector(0,0)),
-                  speed(agent1, vector(0,0)),
-                  position(agent1, vector(0,0)),
-                  position(ball1, vector(1,2)),
-                  hasBall(agent1),
-                  inGround(agent1)],
-                  duplicate_free(Z0),
-                  consistent(Z0).
 
 runAction(CurrentState, Action, NextState) :- state_update(CurrentState, Action, NextState,[]).
 
@@ -266,7 +258,7 @@ calcDistance(Sxa, Sya, Sxb, Syb, A, B, C) :-
                   C is (Syb - Sya),
                   B is (B * B),
                   C is (C * C),
-                  A is (B + C).   %% raíz
+                  A is ((B + C)^(1/2)).
 
 
 
