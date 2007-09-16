@@ -17,7 +17,6 @@ import java.util.List;
  * @author Weslei
  */
 public interface View {
-    public void loadSimButtonClick(ActionEvent e);
     public void runStopButtonClick(ActionEvent e);
     public void updateCurrentCycleMsg(Integer c, Integer m);
     public void updateSliderBounds(Integer m);
