@@ -65,8 +65,8 @@ public class RollerslamEnvironmentAgent extends AutomataAgent {
 	}
 	
 	private void initializeEclipseConnection() throws Exception {
-	    System.setProperty("eclipse.directory", "G:\\ECLiPSe 5.10");
-	    String folder = "d:\\rollerslam\\environment\\flux\\";
+	    System.setProperty("eclipse.directory", "D:\\ECLiPSe 5.10");
+	    String folder = "C:\\Temp\\maas\\1709\\rollerslam_workspace\\environment\\flux";
 
 	    EclipseEngineOptions eclipseEngineOptions = new EclipseEngineOptions();
 	    File eclipseProgram;
