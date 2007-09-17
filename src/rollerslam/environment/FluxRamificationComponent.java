@@ -36,13 +36,13 @@ public class FluxRamificationComponent implements RamificationComponent {
 				+ javaPrologVisitor.getPrologRepresentation(world)
 				+ "], R)";
 
-		System.out.println("query: "+query);
+//		System.out.println("query: "+query);
 		
 		CompoundTerm ret;
 		try {
 			ret = eclipse.rpc(query);
 			
-			System.out.println("result: "+ret);
+//			System.out.println("result: "+ret);
 			
 			prologJavaVisitor.updateWorldRepresentation(world, ret.arg(2));
 			
