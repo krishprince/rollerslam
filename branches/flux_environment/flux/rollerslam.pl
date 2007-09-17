@@ -23,7 +23,7 @@ poss(tackle(player(A),player(B), _),Z1) :- not_holds(inGround(player(A)),Z1),
 poss(counterTackle(player(X)),Z1) :- not_holds(inGround(player(X)),Z1).
 poss(hit(player(X),_, _),Z1) :- not_holds(inGround(player(X)), Z1).
 poss(catchA(player(X), _),Z1) :- not_holds(inGround(player(X)),Z1),
-                                       not_holds(hasBall(player(X)), Z1).
+                                                     not holds(hasBall(player(A)), Z1).
 poss(standUp(player(X)),Z1) :- holds(inGround(player(X)),Z1).
 
 %% End Pre-Condition Group
@@ -213,7 +213,9 @@ ramify_ball(Z1,  Z3):-
   
   (holds(hasBall(player(A)), Z1),
   holds(position(player(A), vector(Xa,Ya)), Z1),
-  update(Z1, [position(ball, vector(Xa, Ya), position(player(A), vector(Xa, Ya)))], [position(player(A), vector(Xa, Ya))], Z2))
+  holds(position(ball, vector(Xba,Yba)), Z1),
+
+  update(Z1, [position(ball, vector(Xa, Ya))], [position(ball, vector(Xba, Yba))], Z2))
   ; 
   
   (holds(isMoving(ball, _), Z2),
