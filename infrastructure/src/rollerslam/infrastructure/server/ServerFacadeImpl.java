@@ -208,7 +208,7 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
      */
     public Remote exportObject(Remote obj) throws RemoteException, AlreadyBoundException {
         Remote ret = UnicastRemoteObject.exportObject(obj, 0);
-        bind(obj.getClass().getSimpleName() + "_" + obj.hashCode() + "_" + (System.currentTimeMillis()), ret);
+        bind("_" + obj.hashCode() + "_" + (System.currentTimeMillis()), ret);
 
         exportedObjects.add(obj);
         exportedObjects.add(ret);
