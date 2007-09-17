@@ -180,11 +180,12 @@ ramify_animated_object(Z1, Object, Z2):-
    holds(acceleration(Object, vector(Ax0,Ay0)),Z1),
    holds(speed(Object, vector(Vx0,Vy0)),Z1),
    holds(position(Object, vector(Sx0,Sy0)),Z1),
-  
+   holds(maxSpeed(Max),Z1),
   Vx1 is Vx0 + Ax0,
   Vy1 is Vy0 + Ay0,
   Sx1 is Sx0 + Vx0,
   Sy1 is Sy0 + Vy0,
+  checkModule(vector(Vx1, Vy1), Max, VR),
   
   (
   
@@ -195,7 +196,7 @@ ramify_animated_object(Z1, Object, Z2):-
    )
   ;  
   (
-  update(Z1,[ speed(Object, vector(Vx1,Vy1)), position(Object, vector(Sx1,Sy1))],
+  update(Z1,[ speed(Object, VR), position(Object, vector(Sx1,Sy1))],
                     [ speed(Object, vector(Vx0,Vy0)), position(Object, vector(Sx0,Sy0))], Z2)            
    )            
   ).
@@ -293,7 +294,36 @@ isPointNotInEllipse(MajorAxis, F1x, F1y, F2x, F2y, Px, Py) :-
 	Sum is Dist1 + Dist2,
 	Sum > MajorAxis.
 
-sum(vector(X,Y), vector(X1,Y1), vector(XR, YR)) :- XR is X + X1, YR is Y + Y1.           
+sumVector(vector(X,Y), vector(X1,Y1), vector(XR, YR)) :- XR is X + X1, YR is Y + Y1.
+subtractVector(vector(X,Y), vector(X1,Y1), vector(XR, YR)) :- XR is X - X1, YR is Y - Y1.
+multVector(vector(X,Y), Num, vector(XR, YR)):- XR is X * Num, YR is Y * Num.
+
+getModule(vector(X,Y), Result) :- 
+    A is X / 1000,
+    B is Y / 1000,
+    A2 is A * A,
+    B2 is B * B,
+    C is ((A2 + B2)^(1/2)),
+    Result is C * 1000.
+    
+limitModuloTo(vector(X,Y), Max) :- 
+    getModule(vector(X,Y), Result),
+    Max > Result.
+    
+setModule(vector(X,Y), Max, vector(XR, YR)) :- 
+    getModule(vector(X,Y), Result),
+    Ratio is (Max/Result),
+    multVector(vector(X,Y), Ratio, vector(XR, YR)).
+    
+checkModule(V, Max, VR):- 
+	    (limitModuloTo(V, Max), V=VR)
+	    ;
+	    setModule(V, Max, VR).
+    
+      
+    
+    
+               
 
 
 
