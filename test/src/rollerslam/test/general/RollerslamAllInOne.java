@@ -111,6 +111,7 @@ public class RollerslamAllInOne extends JFrame implements ActionListener {
                 jbInstantiateActionPerformed();
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, ex);
+                ex.printStackTrace();
             }
         }
     }
