@@ -11,6 +11,7 @@ import java.io.File;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
@@ -36,7 +37,8 @@ import rollerslam.logplayer.gui.mvc.Controller;
  * @author Weslei
  */
 @SuppressWarnings(value = "serial")
-public class LogPlayerDisplay extends JPanel implements View, ActionListener, ChangeListener {
+public class LogPlayerDisplay extends JPanel implements View, ActionListener, 
+                                            ChangeListener {
 
     private Controller controller = null;
 
@@ -52,13 +54,20 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
     private JButton runStopButton = new JButton("Run");
 
     private JEditorPane jep;
+    private JEditorPane jepNW;
 
     private JComboBox agentTypeCbo;
     private JComboBox messageTypeCbo;
     private JButton btnShowMessages;
+    
+    private JScrollPane scrollPane;
+    
+    private JScrollPane scrollPaneNW;
 
     private GameCanvas game = new GameCanvas(messages);
-
+    private JFrame messagesFrame;
+    private JCheckBox checkNewWindow;
+    
     public LogPlayerDisplay() {
         Model model = new ModelImpl();
         this.controller = new ControllerImpl(this, model);
@@ -94,7 +103,23 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
     
         entries.append("</table>");
         
-        jep.setText(entries.toString());
+        if (checkNewWindow.isSelected()) {
+            jepNW.setText(entries.toString());
+            messagesFrame.setVisible(true);
+        } else {
+            jep.setText(entries.toString());
+            messagesFrame.setVisible(false);
+        }
+    }
+
+    private void checkNewWindowUpdated(ActionEvent e) {
+        if (checkNewWindow.isSelected()) {
+            jep.setText("");
+            scrollPane.setVisible(false);
+        }
+        if (!checkNewWindow.isSelected()) {
+            scrollPane.setVisible(true);
+        }
     }
 
     private void initComponents() {
@@ -182,11 +207,11 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
         messageTypeCbo = new JComboBox(new String[]{"All", "Agent Action", "Goal Update"});
         mPanel.add(messageTypeCbo);
         messageTypeCbo.setBorder(BorderFactory.createTitledBorder("Message Type Filter"));
-        messageTypeCbo.setBounds(135, 15, 120, 50);
+        messageTypeCbo.setBounds(125, 15, 120, 50);
         messageTypeCbo.setEnabled(false);
 
         jep = new JEditorPane();
-        JScrollPane scrollPane = new JScrollPane(jep);
+        scrollPane = new JScrollPane(jep);
 
         jep.setEditable(false);
         jep.setContentType("text/html");
@@ -194,7 +219,15 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
         mPanel.add(scrollPane);
         scrollPane.setBorder(BorderFactory.createTitledBorder("Message Info"));
         scrollPane.setBounds(5, 70, 360, 120);
-
+        
+        checkNewWindow = new JCheckBox("New Window");
+        checkNewWindow.setSelected(false);
+        checkNewWindow.addActionListener(this);
+        mPanel.add(checkNewWindow);
+        checkNewWindow.setBounds(255, 10, 100, 25);
+        checkNewWindow.setEnabled(false);
+       
+        
         btnShowMessages = new JButton("Show");
         mPanel.add(btnShowMessages);
         btnShowMessages.setBounds(270, 35, 70, 25);
@@ -215,6 +248,18 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
         loadSimButton.addActionListener(this);
 
         this.add(down);
+        
+        messagesFrame = new JFrame("Messages Details");
+        messagesFrame.setSize(480, 640);
+        
+        
+        jepNW = new JEditorPane();
+        scrollPaneNW = new JScrollPane(jepNW);
+        jepNW.setEditable(false);
+        jepNW.setContentType("text/html");
+        jepNW.setText("");
+        messagesFrame.getContentPane().add(scrollPaneNW);
+        scrollPaneNW.setBorder(BorderFactory.createTitledBorder("Message Info"));
     }
 
     public void main() {
@@ -232,9 +277,11 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
         } else if (o == runStopButton) {
             runStopButtonClick(e);
             return;
-        }
-        if (o == btnShowMessages) {
+        } else if (o == btnShowMessages) {
             btnShowMessagesClick(e);
+            return;
+        } else if (o == checkNewWindow) {
+            checkNewWindowUpdated(e);
             return;
         }
 
@@ -253,10 +300,10 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
     }
 
     public static void main(String[] args) {
-        LogPlayerDisplay panel = new LogPlayerDisplay();
-
         JFrame jf = new JFrame("Rollerslam Log Player");
 
+        LogPlayerDisplay panel = new LogPlayerDisplay();
+        
         jf.getContentPane().setLayout(new BoxLayout(jf.getContentPane(), BoxLayout.Y_AXIS));
         jf.getContentPane().add(panel);
 
@@ -308,6 +355,7 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
             agentTypeCbo.setEnabled(true);
             messageTypeCbo.setEnabled(true);
             btnShowMessages.setEnabled(true);
+            checkNewWindow.setEnabled(true);
         } catch (Exception e1) {
             showException(e1);
         }
@@ -326,6 +374,7 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
     public void updateCurrentCycleMsg(Integer c, Integer m) {
         this.lblCurrentCycle.setText("Cycle " + c + " of " + m);
         jep.setText("");
+        jepNW.setText("");
     }
 
     public void updateSliderBounds(Integer m) {
@@ -343,8 +392,7 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
         Object source = e.getSource();
         if (source == cycleSlider) {
             this.controller.goTo(cycleSlider.getValue());
-        }
-        if (source == speedSlider) {
+        } else if (source == speedSlider) {
             this.controller.setPlaySpeed(speedSlider.getValue());
         }
     }
@@ -356,5 +404,9 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener, Ch
             agentTypeCbo.addItem(i);
         }
         jep.setText("");
+        jepNW.setText("");
     }
+
+
+    
 }
