@@ -25,6 +25,8 @@ public class RollerslamEnvironmentAgent extends AutomataAgent {
 	public EclipseConnection eclipse;
 	
 	public RollerslamEnvironmentAgent() throws Exception {
+		cycleDuration = 1000;
+		
 		initializeEclipseConnection();
 		
 		this.worldModel = new World();
