@@ -57,7 +57,7 @@ public class SampleJavaPrologWorldVisitor implements JavaPrologWorldVisitor {
 		if (obj.withPlayer) {
 			accumulator.add("withPlayer(" + getIDForObject(obj) + ")");
 		}
-		if (!MathGeometry.isPointInEllipse(
+		if (!MathGeometry.calculePointIntoEllipse(
 				obj.world.outTrack.width, SimulationSettings.FOCUS1X,
 				SimulationSettings.FOCUS1Y, SimulationSettings.FOCUS2X,
 				SimulationSettings.FOCUS2Y, obj.s.x, obj.s.y)) {
@@ -81,7 +81,7 @@ public class SampleJavaPrologWorldVisitor implements JavaPrologWorldVisitor {
 		if (obj.inGround) {
 			accumulator.add("inGround(" + getIDForObject(obj) + ")");
 		}
-		if (!MathGeometry.isPointInEllipse(
+		if (!MathGeometry.calculePointIntoEllipse(
 				obj.world.outTrack.width, SimulationSettings.FOCUS1X,
 				SimulationSettings.FOCUS1Y, SimulationSettings.FOCUS2X,
 				SimulationSettings.FOCUS2Y, obj.s.x, obj.s.y)) {
@@ -90,6 +90,7 @@ public class SampleJavaPrologWorldVisitor implements JavaPrologWorldVisitor {
 		if (obj.counterTackle) {
 			accumulator.add("counterTackle(" + getIDForObject(obj) + ")");
 		}
+		accumulator.add("maxSpeed(" + obj.maxV + ")");
 	}
 
 	public void visit(Basket obj) {

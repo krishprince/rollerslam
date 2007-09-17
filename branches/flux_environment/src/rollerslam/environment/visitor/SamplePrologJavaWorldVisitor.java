@@ -7,6 +7,7 @@ import rollerslam.environment.model.World;
 import rollerslam.environment.model.utils.Vector;
 
 import com.parctechnologies.eclipse.CompoundTerm;
+
 public class SamplePrologJavaWorldVisitor implements PrologJavaWorldVisitor {
 
 	@SuppressWarnings("unchecked")
@@ -115,9 +116,10 @@ public class SamplePrologJavaWorldVisitor implements PrologJavaWorldVisitor {
 	}
 
 	private Vector termToVector(CompoundTerm compoundTerm) {
-		return new Vector((Integer) compoundTerm.arg(1), (Integer) compoundTerm
-				.arg(2));
+
+		return new Vector((int) Double.parseDouble(compoundTerm.arg(1)
+				.toString()), ((int) Double.parseDouble(compoundTerm.arg(2)
+				.toString())));
 	}
 
 }
-
