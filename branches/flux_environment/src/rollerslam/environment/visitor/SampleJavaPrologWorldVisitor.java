@@ -8,11 +8,9 @@ import rollerslam.environment.model.OutTrack;
 import rollerslam.environment.model.Player;
 import rollerslam.environment.model.Ramp;
 import rollerslam.environment.model.Scoreboard;
-import rollerslam.environment.model.SimulationSettings;
 import rollerslam.environment.model.Trampoline;
 import rollerslam.environment.model.World;
 import rollerslam.environment.model.WorldObject;
-import rollerslam.environment.model.utils.MathGeometry;
 import rollerslam.environment.model.utils.Vector;
 
 public class SampleJavaPrologWorldVisitor implements JavaPrologWorldVisitor {
@@ -57,12 +55,6 @@ public class SampleJavaPrologWorldVisitor implements JavaPrologWorldVisitor {
 		if (obj.withPlayer) {
 			accumulator.add("withPlayer(" + getIDForObject(obj) + ")");
 		}
-		if (!MathGeometry.calculePointIntoEllipse(
-				obj.world.outTrack.width, SimulationSettings.FOCUS1X,
-				SimulationSettings.FOCUS1Y, SimulationSettings.FOCUS2X,
-				SimulationSettings.FOCUS2Y, obj.s.x, obj.s.y)) {
-			accumulator.add("outBoundary(" + getIDForObject(obj) + ")");
-		}
 		if (obj.isMoving){
 			accumulator.add("isMoving("+getIDForObject(obj)+")");
 		}
@@ -81,16 +73,11 @@ public class SampleJavaPrologWorldVisitor implements JavaPrologWorldVisitor {
 		if (obj.inGround) {
 			accumulator.add("inGround(" + getIDForObject(obj) + ")");
 		}
-		if (!MathGeometry.calculePointIntoEllipse(
-				obj.world.outTrack.width, SimulationSettings.FOCUS1X,
-				SimulationSettings.FOCUS1Y, SimulationSettings.FOCUS2X,
-				SimulationSettings.FOCUS2Y, obj.s.x, obj.s.y)) {
-			accumulator.add("outBoundary(" + getIDForObject(obj) + ")");
-		}
 		if (obj.counterTackle) {
 			accumulator.add("counterTackle(" + getIDForObject(obj) + ")");
 		}
 		accumulator.add("maxSpeed(" + obj.maxV + ")");
+		accumulator.add("maxAcceleration(" + obj.maxA + ")");
 	}
 
 	public void visit(Basket obj) {
