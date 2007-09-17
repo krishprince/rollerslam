@@ -293,7 +293,7 @@ isPointNotInEllipse(MajorAxis, F1x, F1y, F2x, F2y, Px, Py) :-
 	Sum is Dist1 + Dist2,
 	Sum > MajorAxis.
 
-           
+sum(vector(X,Y), vector(X1,Y1), vector(XR, YR)) :- XR is X + X1, YR is Y + Y1.           
 
 
 
