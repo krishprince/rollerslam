@@ -3,37 +3,29 @@ package rollerslam.environment;
 import java.rmi.RemoteException;
 import java.util.Hashtable;
 
-import com.parctechnologies.eclipse.CompoundTerm;
-import com.parctechnologies.eclipse.EclipseConnection;
-
 import rollerslam.environment.model.Ball;
 import rollerslam.environment.model.Fact;
 import rollerslam.environment.model.Player;
 import rollerslam.environment.model.PlayerTeam;
+import rollerslam.environment.model.SimulationSettings;
 import rollerslam.environment.model.World;
 import rollerslam.environment.model.WorldObject;
-import rollerslam.environment.model.actions.arm.CountertackleAction;
 import rollerslam.environment.model.actions.ArmAction;
-import rollerslam.environment.model.actions.SentinelAction;
-import rollerslam.environment.model.actions.arm.CatchAction;
-import rollerslam.environment.model.actions.leg.DashAction;
-import rollerslam.environment.model.actions.leg.HitAction;
 import rollerslam.environment.model.actions.JoinGameAction;
-import rollerslam.environment.model.actions.leg.KickAction;
-import rollerslam.environment.model.actions.leg.StandUpAction;
 import rollerslam.environment.model.actions.LegAction;
+import rollerslam.environment.model.actions.VoiceAction;
+import rollerslam.environment.model.actions.arm.CatchAction;
+import rollerslam.environment.model.actions.arm.CountertackleAction;
 import rollerslam.environment.model.actions.arm.ReleaseAction;
-import rollerslam.environment.model.actions.sentinel.CheckAliveAction;
-import rollerslam.environment.model.actions.sentinel.CreatePlayer;
-import rollerslam.environment.model.actions.sentinel.KillPlayerAction;
-import rollerslam.environment.model.actions.voice.SendMsgAction;
 import rollerslam.environment.model.actions.arm.TackleAction;
 import rollerslam.environment.model.actions.arm.ThrowAction;
-import rollerslam.environment.model.actions.VoiceAction;
+import rollerslam.environment.model.actions.leg.DashAction;
+import rollerslam.environment.model.actions.leg.HitAction;
+import rollerslam.environment.model.actions.leg.KickAction;
+import rollerslam.environment.model.actions.leg.StandUpAction;
+import rollerslam.environment.model.actions.voice.SendMsgAction;
 import rollerslam.environment.model.perceptions.GameStartedPerception;
-import rollerslam.environment.model.utils.MathGeometry;
 import rollerslam.environment.model.utils.Vector;
-import rollerslam.environment.model.SimulationSettings;
 import rollerslam.environment.visitor.JavaPrologWorldVisitor;
 import rollerslam.environment.visitor.PrologJavaWorldVisitor;
 import rollerslam.environment.visitor.SampleJavaPrologWorldVisitor;
@@ -46,7 +38,10 @@ import rollerslam.infrastructure.server.PrintTrace;
 import rollerslam.infrastructure.server.ServerFacade;
 import rollerslam.infrastructure.server.ServerFacadeImpl;
 
-public class JavaActionInterpretationComponent implements
+import com.parctechnologies.eclipse.CompoundTerm;
+import com.parctechnologies.eclipse.EclipseConnection;
+
+public class FluxActionInterpretationComponent implements
 		ActionInterpretationComponent {
 	public ServerFacade facade = ServerFacadeImpl.getInstance();
 
@@ -56,193 +51,52 @@ public class JavaActionInterpretationComponent implements
 
 	private PrologJavaWorldVisitor prologJavaVisitor;
 
-	public String Action = null;
-
-	public static Boolean UseFlux = false;
-
 	public Hashtable<Agent, Player> playersMap = new Hashtable<Agent, Player>();
 
 	public Hashtable<Player, Agent> idsMap = new Hashtable<Player, Agent>();
 
 	public int nextAgentID = 0;
 
+	private String action;
+	
 	private void dash(World w, Player p, Vector vet) {
-
-		if (UseFlux) {
-			Action = Action + "dash(" + getIDForObject(p) + ", vector(" + vet.x
-					+ "," + vet.y + ")";
-		} else {
-			// TODO test if p is in w
-			if (!p.inGround) {
-				p.a = vet.limitModuloTo(p.maxA);
-			}
-		}
-
+		action = "dash(" + getIDForObject(p) + ", vector(" + vet.x + ","
+				+ vet.y + "))";
 	}
 
 	private void hit(World w, Player p, Vector vet) {
-
 		double error = Math.random();
-		if (UseFlux) {
-			Action = Action + "hit(" + getIDForObject(p) + "," + error + ","
-					+ SimulationSettings.MAX_DISTANCE + ")";
-
-		} else {
-			// Body
-			if (!w.ball.withPlayer && !p.inGround) {
-				if (MathGeometry.calculeDistancePoints(w.ball.s.x, p.s.x,
-						w.ball.s.y, p.s.y) < SimulationSettings.MAX_DISTANCE) {
-
-					if (error > 0.3) {
-						error = 0.3;
-					}
-
-					w.ball.a = vet;
-					w.ball.isMoving = true;
-
-					if (error % 2 == 0)
-						w.ball.a.x = (int) Math.floor(w.ball.a.x * error);
-					else
-						w.ball.a.y = (int) Math.floor(w.ball.a.y * error);
-				}
-			}
-		}
+		action = "hit(" + getIDForObject(p) + "," + error + ","
+				+ SimulationSettings.MAX_DISTANCE + ")";
 	}
 
 	private void kick(World w, Player p, Vector vet) {
-
 		double error = Math.random();
-		if (UseFlux) {
-			Action = Action + "kick(" + getIDForObject(p) + "," + error + ")";
-
-		} else {
-			// Body
-			if (p.hasBall && !p.inGround) {
-
-				if (error > 0.3) {
-					error = 0.3;
-				}
-
-				p.hasBall = false;
-				w.playerWithBall = null;
-				w.ball.withPlayer = false;
-				w.ball.isMoving = true;
-
-				w.ball.a = vet.multVector((1 + p.strength) * 1.25);
-
-				if (error % 2 == 0)
-					w.ball.a.x = (int) Math.floor(w.ball.a.x * error);
-				else
-					w.ball.a.y = (int) Math.floor(w.ball.a.y * error);
-
-			}
-		}
+		action = "kick(" + getIDForObject(p) + "," + error + ")";
 	}
 
 	private void countertackle(World w, Player p) {
-		if (UseFlux) {
-			Action = Action + "counterTackle(" + getIDForObject(p) + ")";
-
-		} else {
-
-			// Body
-			if (!p.inGround) {
-				p.counterTackle = true;
-			}
-		}
+		action = "counterTackle(" + getIDForObject(p) + ")";
 	}
 
 	private void catchA(World w, Player p) {
-		if (UseFlux) {
-			Action = Action + "catchA(" + getIDForObject(p) + ","
-					+ SimulationSettings.MAX_DISTANCE + ")";
-
-		} else {
-
-			// Body
-			if (!w.ball.withPlayer && !p.inGround) {
-				if (MathGeometry.calculeDistancePoints(w.ball.s.x, p.s.x,
-						w.ball.s.y, p.s.y) < SimulationSettings.MAX_DISTANCE) {
-
-					p.hasBall = true;
-					p.world.ball.withPlayer = true;
-					p.world.playerWithBall = p;
-					w.ball.isMoving = false;
-				}
-
-			}
-		}
+		action = "catchA(" + getIDForObject(p) + ","
+				+ SimulationSettings.MAX_DISTANCE + ")";
 	}
 
 	private void release(World w, Player p) {
-		if (UseFlux) {
-			Action = Action + "release(" + getIDForObject(p) + ")";
-
-		} else {
-
-			// Body
-			if (p.hasBall && !p.inGround) {
-				p.hasBall = false;
-				w.playerWithBall = null;
-				w.ball.withPlayer = false;
-				w.ball.isMoving = false;
-			}
-		}
+		action = "release(" + getIDForObject(p) + ")";
 	}
 
 	private void tackle(World w, Player p) {
-		if (UseFlux) {
-			Action = Action + "tackle(" + getIDForObject(p) + ","
-					+ getIDForObject(w.playerWithBall) + ","
-					+ SimulationSettings.MAX_DISTANCE + ")";
-
-		} else {
-
-			// Body
-			if (w.ball.withPlayer && !p.inGround) {
-				if (MathGeometry.calculeDistancePoints(w.playerWithBall.s.x,
-						p.s.x, w.playerWithBall.s.y, p.s.y) < SimulationSettings.MAX_DISTANCE) {
-					if (!w.playerWithBall.counterTackle) {
-						w.playerWithBall.inGround = true;
-						w.playerWithBall.hasBall = false;
-						w.ball.withPlayer = false;
-						w.playerWithBall = null;
-					} else {
-					}
-				}
-			}
-		}
+		action = "tackle(" + getIDForObject(p) + ","
+				+ getIDForObject(w.playerWithBall) + ","
+				+ SimulationSettings.MAX_DISTANCE + ")";
 	}
 
 	private void throwA(World w, Player p, Vector a) {
 		double error = Math.random();
-		if (UseFlux) {
-			Action = Action + "throwA(" + getIDForObject(p) + "," + error + ")";
-
-		} else {
-
-			// Body
-			if (p.hasBall && !p.inGround) {
-				p.hasBall = false;
-				w.playerWithBall = null;
-				w.ball.withPlayer = false;
-				w.ball.isMoving = true;
-
-				if (error > 0.15) {
-					error = 0.15;
-				}
-
-				w.ball.a = a.multVector((1 + p.strength) * 0.75);
-				// w.ball.v = p.v.sumVector(a.multVector((1 + p.strength) *
-				// 0.5));
-
-				if (error % 2 == 0)
-					w.ball.a.x = (int) Math.floor(w.ball.a.x * error);
-				else
-					w.ball.a.y = (int) Math.floor(w.ball.a.y * error);
-			}
-
-		}
+		action = "throwA(" + getIDForObject(p) + "," + error + ")";
 	}
 
 	private void sendMsg(World w, Agent agent, Fact f) {
@@ -251,40 +105,12 @@ public class JavaActionInterpretationComponent implements
 	}
 
 	private void standUp(World w, Player p) {
-		if (UseFlux) {
-			Action = Action + "standUp(" + getIDForObject(p) + ")";
-
-		} else {
-
-			// Body
-			if (p.inGround) {
-				p.inGround = false;
-			}
-		}
-	}
-
-	private void checkAlive(World w, Player p) {
-		// Body
-		// if(){
-
-		// }
-		p.dead = true;
-	}
-
-	private void killPlayer(World w, Player p) {
-		// Body
-		if (p.dead) {
-			p = null;
-		}
-
-	}
-
-	private void createPlayer(World w, Player p) {
-		// Body
-
+		action = "standUp(" + getIDForObject(p) + ")";
 	}
 
 	public void processAction(EnvironmentStateModel w, Message m) {
+		action = null;
+		
 		// Actions of Leg
 		if (m instanceof LegAction) {
 			if (m instanceof DashAction) {
@@ -344,22 +170,12 @@ public class JavaActionInterpretationComponent implements
 		} else if (m instanceof JoinGameAction) {
 			JoinGameAction mt = (JoinGameAction) m;
 			this.joinWorld((World) w, mt.sender, mt.team);
-		} else if (m instanceof SentinelAction) {
-			if (m instanceof CheckAliveAction) {
-				CheckAliveAction mt = (CheckAliveAction) m;
-				this.checkAlive((World) w, playersMap.get(mt.sender));
-			} else if (m instanceof KillPlayerAction) {
-				KillPlayerAction mt = (KillPlayerAction) m;
-				this.killPlayer((World) w, playersMap.get(mt.sender));
-			} else if (m instanceof CreatePlayer) {
-				CreatePlayer mt = (CreatePlayer) m;
-				this.createPlayer((World) w, playersMap.get(mt.sender));
-			}
 		}
 
 		// adds all actions to the world
 		((World) w).newActions.add(m);
 
+		runFluxAction((World) w);
 	}
 
 	public void joinWorld(World worldModel, Agent agent, PlayerTeam playerTeam) {
@@ -411,30 +227,32 @@ public class JavaActionInterpretationComponent implements
 		}
 	}
 
-	public JavaActionInterpretationComponent(EclipseConnection eclipse) {
+	public FluxActionInterpretationComponent(EclipseConnection eclipse) {
 		this.eclipse = eclipse;
 		this.javaPrologVisitor = new SampleJavaPrologWorldVisitor();
 		this.prologJavaVisitor = new SamplePrologJavaWorldVisitor();
 	}
 
 	public void runFluxAction(EnvironmentStateModel world) {
-		String query = "runAction(["
-				+ javaPrologVisitor.getPrologRepresentation((World) world)
-				+ "]," + Action + "," + "R)";
+		if (action != null) {
+			String query = "runAction(["
+					+ javaPrologVisitor.getPrologRepresentation((World) world)
+					+ "]," + action + ", " + "R)";
 
-		System.out.println("query: " + query);
+//			System.out.println("query: " + query);
 
-		CompoundTerm ret;
-		try {
-			ret = eclipse.rpc(query);
+			CompoundTerm ret;
+			try {
+				ret = eclipse.rpc(query);
 
-			// System.out.println("result: "+ret);
+//				System.out.println("result: " + ret);
 
-			prologJavaVisitor.updateWorldRepresentation((World) world,
-					(String) ret.arg(2));
+				prologJavaVisitor.updateWorldRepresentation((World) world,
+						ret.arg(3));
 
-		} catch (Exception e) {
-			e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
