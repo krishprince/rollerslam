@@ -93,7 +93,7 @@ public class ControllerImpl implements Controller, Runnable {
         view.updateCurrentCycleMsg(cycle, max);
         view.updateSlider(cycle);
         LogEntry o = lps.getLogForAgent(-1);
-        if (o != null) {
+        if (o != null && o instanceof EnvironmentStateLogEntry) {
             model.setModel(((EnvironmentStateLogEntry) o).getWorld());
         } else {
             model.setModel(null);
