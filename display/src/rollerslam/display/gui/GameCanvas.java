@@ -115,7 +115,7 @@ public class GameCanvas extends Canvas implements MouseMotionListener {
                             
                             x = translatex(player.s.x) - 15;
                             y = translatey(player.s.y) - 30;
-                            if ((mPoint.x >= x && mPoint.x <= (x + 15))
+                            if (mPoint != null && (mPoint.x >= x && mPoint.x <= (x + 15))
                                 && (mPoint.y >= y && mPoint.y <= (y + 30))) {
                                 agId = "PId: " + player.id;
                                 isRed = true;
@@ -136,7 +136,7 @@ public class GameCanvas extends Canvas implements MouseMotionListener {
                             
                             x = translatex(player.s.x) - 15;
                             y = translatey(player.s.y) - 30;
-                            if ((mPoint.x >= x && mPoint.x <= (x + 15))
+                            if (mPoint != null && (mPoint.x >= x && mPoint.x <= (x + 15))
                                 && (mPoint.y >= y && mPoint.y <= (y + 30))) {
                                 agId = "PId: " + player.id;
                                 isRed = false;
