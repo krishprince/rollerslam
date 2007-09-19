@@ -77,7 +77,7 @@ state_update(Z1,kick(player(A),Strength),Z2,[]) :-
   holds(position(ball, vector(X0, Y0)),Z1),
   X is X0 * Strength,
   Y is Y0 * Strength,
-  update(Z1,[position(ball, vector(X,Y))],[hasBall(player(A)),position(ball, vector(X0, Y0))],Z2))
+  update(Z1,[position(ball, vector(X,Y)), isMoving(ball, _)],[hasBall(player(A)),position(ball, vector(X0, Y0))],Z2))
   ;
   (not poss(kick(player(A),Strength),Z1), 
   Z2=Z1
@@ -211,17 +211,18 @@ ramify_ball(Z1,  Z3):-
   
   (
   
-  (holds(hasBall(player(A)), Z1),
-  holds(position(player(A), vector(Xa,Ya)), Z1),
-  holds(position(ball, vector(Xba,Yba)), Z1),
+  (holds(hasBall(player(A)), Z2),
+  holds(position(player(A), vector(Xa,Ya)), Z2),
+  holds(position(ball, vector(Xba,Yba)), Z2),
 
-  update(Z1, [position(ball, vector(Xa, Ya))], [position(ball, vector(Xba, Yba))], Z2))
+  update(Z2, [position(ball, vector(Xa, Ya))], [position(ball, vector(Xba, Yba))], Z3))
   ; 
   
   (holds(isMoving(ball, _), Z2),
   holds(position(ball, vector(X,Y)), Z2),
-  X1 is X / Attrition,
-  Y1 is Y / Attrition,  
+  holds(attrition(Attr), Z2),
+  X1 is X / Attr,
+  Y1 is Y / Attr,  
   update(Z2, [position(ball, vector(X1, Y1))], [position(ball, vector(X, Y))], Z3))
   
   ;
