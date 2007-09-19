@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<node uin="-tdsqjuf6rcbg7b-nonewy">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2Actor"/>
+		<property name="mod__extends" value="uml20.usecases.Actor"/>
+		<link uin="ieje0rf6rceqns-bibt4p">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="stereotype" value="extension"/>
+			<property name="mod__cachedBaseName" value="uml20.usecases.Actor"/>
+			<participant referencedUin="design:node:::-tdsqjuf6rcbg7b-nonewy" role="Client"></participant>
+			<participant referencedUin="ecore:e_class:bin:uml20.usecases.Actor" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="-tdsqjuf6rcbkzi-r85r2j">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2UseCase"/>
+		<property name="mod__extends" value="uml20.usecases.UseCase"/>
+		<link uin="ieje0rf6rcfqf7m5mujr">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="stereotype" value="extension"/>
+			<property name="mod__cachedBaseName" value="uml20.usecases.UseCase"/>
+			<participant referencedUin="design:node:::-tdsqjuf6rcbkzi-r85r2j" role="Client"></participant>
+			<participant referencedUin="ecore:e_class:bin:uml20.usecases.UseCase" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="-tdsqjuf6rcbpjnob4yab">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2UCInclude"/>
+		<property name="mod__extends" value="uml20.usecases.Include"/>
+		<link uin="ieje0rf6rcfuqzk8pcwe">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="stereotype" value="extension"/>
+			<property name="mod__cachedBaseName" value="uml20.usecases.Include"/>
+			<participant referencedUin="design:node:::-tdsqjuf6rcbpjnob4yab" role="Client"></participant>
+			<participant referencedUin="ecore:e_class:bin:uml20.usecases.Include" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="-tdsqjuf6rcbujchsqc89">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2ActorUCAssoc"/>
+		<property name="mod__extends" value="uml.kernel.Association"/>
+		<link uin="ieje0rf6rcfxqck63g19">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="stereotype" value="extension"/>
+			<property name="mod__cachedBaseName" value="uml.kernel.Association"/>
+			<participant referencedUin="design:node:::-tdsqjuf6rcbujchsqc89" role="Client"></participant>
+			<participant referencedUin="ecore:e_class:bin:uml.kernel.Association" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="-tdsqjuf6rcbzj18a5gzo">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2ActorGen"/>
+		<property name="mod__extends" value="uml20.kernel.Generalization"/>
+		<link uin="ieje0rf6rcg0re-t3olox">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="stereotype" value="extension"/>
+			<property name="mod__cachedBaseName" value="uml20.kernel.Generalization"/>
+			<participant referencedUin="design:node:::-tdsqjuf6rcbzj18a5gzo" role="Client"></participant>
+			<participant referencedUin="ecore:e_class:bin:uml20.kernel.Generalization" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="-tdsqjuf6rcc4ob-d9vezl">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2UCGen"/>
+		<property name="mod__extends" value="uml20.kernel.Generalization"/>
+		<link uin="ieje0rf6rcg3lhmvxix0">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="stereotype" value="extension"/>
+			<property name="mod__cachedBaseName" value="uml20.kernel.Generalization"/>
+			<participant referencedUin="design:node:::-tdsqjuf6rcc4ob-d9vezl" role="Client"></participant>
+			<participant referencedUin="ecore:e_class:bin:uml20.kernel.Generalization" role="Supplier"></participant>
+		</link>
+	</node>
+</nodeSet>

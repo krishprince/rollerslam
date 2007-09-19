@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<node uin="-tdsqjuf6rchl594k1klx">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2Protoc"/>
+	</node>
+	<node uin="-tdsqjuf6rchpvi4t8ifh">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2PseudoState"/>
+	</node>
+	<node uin="-tdsqjuf6rchvbm-zbq1ly">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2PseudoStateKind"/>
+	</node>
+	<node uin="-tdsqjuf6rci0wqpla8wv">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2State"/>
+	</node>
+	<node uin="-tdsqjuf6rci69igl2zh8">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2FinalState"/>
+	</node>
+	<node uin="-tdsqjuf6rcibwb4vye0y">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2ProtocTrans"/>
+	</node>
+	<node uin="-tdsqjuf6rcihij-t24903">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2StateInvar"/>
+	</node>
+	<node uin="-tdsqjuf6rcimq1wl7agw">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2TransPre"/>
+	</node>
+	<node uin="-tdsqjuf6rciry3-tt3g7w">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2TransPost"/>
+	</node>
+	<node uin="-tdsqjuf6rcixlz-aajcwb">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2I"/>
+	</node>
+	<node uin="-tdsqjuf6rcj2f0-e73cnz">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2TransOp"/>
+	</node>
+	<node uin="-tdsqjuf6rcj79fop6i6i">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2ProtocConform"/>
+	</node>
+	<node uin="-tdsqjuf6rcjdhnd4hqrk">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2ConstrExp"/>
+	</node>
+</nodeSet>
