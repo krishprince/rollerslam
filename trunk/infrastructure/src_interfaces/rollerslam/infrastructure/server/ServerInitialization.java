@@ -1,5 +1,7 @@
 package rollerslam.infrastructure.server;
 
+import com.parctechnologies.eclipse.EclipseConnection;
+
 import rollerslam.infrastructure.agent.automata.AutomataAgent;
 import rollerslam.infrastructure.logging.LogRecordingService;
 
@@ -17,5 +19,8 @@ public interface ServerInitialization {
 	 */
 	void init(int port, AutomataAgent environmentAgent) throws Exception;
 
-    void init(int port, AutomataAgent environmentAgent, LogRecordingService logRecordingService) throws Exception; 
+    void init(int port, AutomataAgent environmentAgent, LogRecordingService logRecordingService) throws Exception;
+    	
+	EclipseConnection getEclipseConnection();
+    
 }

@@ -21,6 +21,7 @@
 
 package rollerslam.infrastructure.client;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.rmi.AlreadyBoundException;
@@ -32,12 +33,14 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Set;
 import java.util.Vector;
+
 import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.Effector;
 import rollerslam.infrastructure.agent.Sensor;
 import rollerslam.infrastructure.agent.SensorEffectorManager;
 import rollerslam.infrastructure.discoverer.client.MulticastServerDiscoverer;
 import rollerslam.infrastructure.discoverer.client.ServiceDiscoverer;
+import rollerslam.infrastructure.eclipse.EclipsePrologHandlerImpl;
 import rollerslam.infrastructure.logging.LogRecordingService;
 import rollerslam.infrastructure.logging.SelectiveLogRecordingServiceDecorator;
 import rollerslam.infrastructure.server.AgentRegistry;
@@ -45,6 +48,10 @@ import rollerslam.infrastructure.server.DisplayRegistry;
 import rollerslam.infrastructure.server.PrintTrace;
 import rollerslam.infrastructure.server.SimulationAdmin;
 import rollerslam.infrastructure.settings.GeneralSettings;
+
+import com.parctechnologies.eclipse.EclipseConnection;
+import com.parctechnologies.eclipse.EclipseEngineOptions;
+import com.parctechnologies.eclipse.EmbeddedEclipse;
 
 /**
  * Default implementation for the client facade
@@ -234,4 +241,9 @@ public final class ClientFacadeImpl implements ClientFacade, ClientInitializatio
     public GeneralSettings getGeneralSettings() throws RemoteException {
         return gs;
     }
+
+	public EclipseConnection getEclipseConnection() {
+		return EclipsePrologHandlerImpl.getInstance().getEclipseConnection();
+	}
+
 }
