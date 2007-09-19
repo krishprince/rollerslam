@@ -32,72 +32,77 @@ public class AgentActionGenerator implements
 	public AgentActionGenerator() {
 	}
 
-	public Message computeAction(EnvironmentStateModel w) {
+	public Message computeAction(EnvironmentStateModel w) {			
 		AgentWorldModel model = (AgentWorldModel) w;
 		Message m = null;
 		
-		ClientFacade facade = ClientFacadeImpl.getInstance();
-		SimulationState state = SimulationState.STOPPED;
-		
-		try {
-			state = facade.getSimulationAdmin().getState();
-		} catch (RemoteException e) {
-			if (PrintTrace.TracePrint){
-				e.printStackTrace();
-			}
-		}	
-		
-		if(state == SimulationState.STOPPED){
-			return null;			
-		}
-		
-		if(model.currentGoal == AgentGoal.JOIN_GAME){
-			m = joinGame(model);
-		}else if (model.currentGoal == AgentGoal.WAIT_JOIN_GAME) {
-			//Do nothing
-		}else if(model.currentGoal == AgentGoal.INITIALIZATION) {
-			m = initialization(model);
-		}else if(model.currentGoal == AgentGoal.SET_ROLES) {
-			m = setRoles(model);
-		} else if (model.currentGoal == AgentGoal.GO_TO_BALL) {
-			m = goToBall(model);
-		} else if (model.currentGoal == AgentGoal.GO_TO_INIT_COORD){
-			m = goToInitCoord(model);
-		} else if (model.currentGoal == AgentGoal.STOP){
-			m = stop(model);
-		} else if (model.currentGoal == AgentGoal.GO_TO_GOAL) {
-			m = goToGoal(model);
-		} else if (model.currentGoal == AgentGoal.CATCH_BALL) {
-			m = catchBall(model);
-		} else if (model.currentGoal == AgentGoal.TACKLE_PLAYER) {
-			m = tacklePlayer(model);
-		} else if (model.currentGoal == AgentGoal.STAND_UP) {
-			m = standUp(model);
-		} else if (model.currentGoal == AgentGoal.THROW_BALL) {
-			m = throwBall(model);
-        } else if(model.currentGoal == AgentGoal.KICK_BALL){
-        	m = kickBall(model);
-        } else if(model.currentGoal == AgentGoal.COUNTER_TACKLE){
-        	m = counterTackle(model);
-        }
+		if (model != null && model.changed) {
+			ClientFacade facade = ClientFacadeImpl.getInstance();
+			SimulationState state = SimulationState.STOPPED;
 
-		try {
-			int cycle = 0;
-			if (m != null && (World) model.environmentStateModel != null && model.myID != -1){
-				cycle = ((World) model.environmentStateModel).currentCycle;
-				
-				AgentActionLogEntry envLog = new AgentActionLogEntry(cycle, model.myID, m);
-
-				facade.getLogRecordingService().addEntry(envLog);
+			try {
+				state = facade.getSimulationAdmin().getState();
+			} catch (RemoteException e) {
+				if (PrintTrace.TracePrint) {
+					e.printStackTrace();
+				}
 			}
 
-		} catch (RemoteException e) {
-			if (PrintTrace.TracePrint){
-				e.printStackTrace();
+			if (state == SimulationState.STOPPED) {
+				return null;
 			}
-			return m;
-		}
-		
+
+			if (model.currentGoal == AgentGoal.JOIN_GAME) {
+				m = joinGame(model);
+			} else if (model.currentGoal == AgentGoal.WAIT_JOIN_GAME) {
+				// Do nothing
+			} else if (model.currentGoal == AgentGoal.INITIALIZATION) {
+				m = initialization(model);
+			} else if (model.currentGoal == AgentGoal.SET_ROLES) {
+				m = setRoles(model);
+			} else if (model.currentGoal == AgentGoal.GO_TO_BALL) {
+				m = goToBall(model);
+			} else if (model.currentGoal == AgentGoal.GO_TO_INIT_COORD) {
+				m = goToInitCoord(model);
+			} else if (model.currentGoal == AgentGoal.STOP) {
+				m = stop(model);
+			} else if (model.currentGoal == AgentGoal.GO_TO_GOAL) {
+				m = goToGoal(model);
+			} else if (model.currentGoal == AgentGoal.CATCH_BALL) {
+				m = catchBall(model);
+			} else if (model.currentGoal == AgentGoal.TACKLE_PLAYER) {
+				m = tacklePlayer(model);
+			} else if (model.currentGoal == AgentGoal.STAND_UP) {
+				m = standUp(model);
+			} else if (model.currentGoal == AgentGoal.THROW_BALL) {
+				m = throwBall(model);
+			} else if (model.currentGoal == AgentGoal.KICK_BALL) {
+				m = kickBall(model);
+			} else if (model.currentGoal == AgentGoal.COUNTER_TACKLE) {
+				m = counterTackle(model);
+			}
+
+			model.changed = false;
+			
+			try {
+				int cycle = 0;
+				if (m != null && (World) model.environmentStateModel != null
+						&& model.myID != -1) {
+					cycle = ((World) model.environmentStateModel).currentCycle;
+
+					AgentActionLogEntry envLog = new AgentActionLogEntry(cycle,
+							model.myID, m);
+
+					facade.getLogRecordingService().addEntry(envLog);
+				}
+
+			} catch (RemoteException e) {
+				if (PrintTrace.TracePrint) {
+					e.printStackTrace();
+				}
+				return m;
+			}
+		}		
 		return m;
 	}
 	

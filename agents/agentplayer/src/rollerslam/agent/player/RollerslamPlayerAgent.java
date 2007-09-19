@@ -11,6 +11,7 @@ import rollerslam.infrastructure.agent.StateMessage;
 import rollerslam.infrastructure.agent.automata.ActionInterpretationComponent;
 import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
 import rollerslam.infrastructure.agent.automata.ModelInitializationComponent;
+import rollerslam.infrastructure.agent.automata.RamificationComponent;
 import rollerslam.infrastructure.agent.goalbased.GoalBasedAgent;
 import rollerslam.infrastructure.agent.goalbased.GoalBasedEnvironmentStateModel;
 import rollerslam.infrastructure.agent.goalbased.GoalInitializationComponent;
@@ -52,18 +53,25 @@ public class RollerslamPlayerAgent extends GoalBasedAgent {
 		};
 		
 		this.interpretationComponent = new ActionInterpretationComponent() {
-			public void processAction(EnvironmentStateModel w, Message m) {			
+			public void processAction(EnvironmentStateModel w, Message m) {
 				if (m instanceof StateMessage) {
 					((AgentWorldModel)w).environmentStateModel = ((StateMessage)m).model;
+					((AgentWorldModel)w).changed = true;
 				} else if (m instanceof GameStartedPerception) {
 					if (((GameStartedPerception)m).receiver.equals(remoteThis)) {
 						((AgentWorldModel)w).myID = ((GameStartedPerception)m).playerID;
 					}
+					((AgentWorldModel)w).changed = true;
 				}
 			}			
 		};
 		
-		this.ramificationComponent = new AgentRamificator();
+		this.ramificationComponent = new RamificationComponent() {
+			public void processRamifications(EnvironmentStateModel world) {
+				
+			}
+
+		};
 		
 		this.strategyComponent = new AgentActionGenerator();
 		
