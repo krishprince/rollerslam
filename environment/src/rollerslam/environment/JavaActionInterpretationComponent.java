@@ -127,8 +127,10 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 		//Body
 		if(w.ball.withPlayer && !p.inGround){
 			if(MathGeometry.calculeDistancePoints(w.playerWithBall.s.x, p.s.x, w.playerWithBall.s.y, p.s.y) < SimulationSettings.MAX_DISTANCE){
-				if(!w.playerWithBall.counterTackle){
+				if(!w.playerWithBall.counterTackle || p.tacke_penality == 0){
 					w.playerWithBall.inGround = true;
+					w.playerWithBall.ground_penalty = SimulationSettings.GROUND_PENALTY;
+					p.tacke_penality = SimulationSettings.TACKLE_PENALTY;
 					w.playerWithBall.hasBall = false;
 					w.ball.withPlayer = false;
 					w.playerWithBall = null;
@@ -168,7 +170,7 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 	
 	private void standUp(World w, Player p){
 		//Body
-		if(p.inGround){
+		if(p.inGround && p.ground_penalty == 0){
 			p.inGround = false;
 		}
 	}
