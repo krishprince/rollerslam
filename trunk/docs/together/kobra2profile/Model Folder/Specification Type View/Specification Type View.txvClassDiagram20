@@ -7,12 +7,12 @@
 		<property name="#invoke_inplace" value="com.tssap.selena.model.ui.navigator.view"/>
 		<property name="$name" value="Specification Type View"/>
 		<reference referencedUin="design:node:::88lh7f6r93dku-vdg3ik">
-			<property name="bounds" value="3,575,199,80"/>
+			<property name="bounds" value="13,575,190,80"/>
 			<property name="location_set_by_user" value="true"/>
 			<property name="$shortcutReference" value="true"/>
 			<reference referencedUin="design:link:::ieje0rf6rb0h4o-ijyroo:88lh7f6r93dku-vdg3ik">
-				<property name="sourceAnchor" value="4,660"/>
-				<property name="targetAnchor" value="297,1120"/>
+				<property name="sourceAnchor" value="10,660"/>
+				<property name="targetAnchor" value="329,1120"/>
 				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6rb0h4o-ijyroo:88lh7f6r93dku-vdg3ik">
 					<property name="bounds" value="0,0,0,0"/>
 				</reference>
@@ -22,7 +22,7 @@
 			</reference>
 			<reference referencedUin="design:link:::ieje0rf6rb0enx-te9xu:88lh7f6r93dku-vdg3ik">
 				<property name="sourceAnchor" value="10,660"/>
-				<property name="targetAnchor" value="291,1020"/>
+				<property name="targetAnchor" value="313,1020"/>
 				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rb0enx-te9xu:88lh7f6r93dku-vdg3ik">
 					<property name="bounds" value="0,0,0,0"/>
 				</reference>
@@ -42,7 +42,7 @@
 			</reference>
 			<reference referencedUin="design:link:::ieje0rf6rb05jo8tgss2:88lh7f6r93dku-vdg3ik">
 				<property name="sourceAnchor" value="77,660"/>
-				<property name="targetAnchor" value="280,742"/>
+				<property name="targetAnchor" value="307,745"/>
 				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rb05jo8tgss2:88lh7f6r93dku-vdg3ik">
 					<property name="bounds" value="0,0,0,0"/>
 				</reference>
@@ -52,7 +52,7 @@
 			</reference>
 			<reference referencedUin="design:link:::ieje0rf6rb07o6-vdgq0l:88lh7f6r93dku-vdg3ik">
 				<property name="sourceAnchor" value="35,660"/>
-				<property name="targetAnchor" value="280,829"/>
+				<property name="targetAnchor" value="307,831"/>
 				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6rb07o6-vdgq0l:88lh7f6r93dku-vdg3ik">
 					<property name="bounds" value="0,0,0,0"/>
 				</reference>
@@ -71,7 +71,7 @@
 				</reference>
 			</reference>
 			<reference referencedUin="design:link:::ieje0rf6rb00vebfvpgl:88lh7f6r93dku-vdg3ik">
-				<property name="sourceAnchor" value="79,590"/>
+				<property name="sourceAnchor" value="198,590"/>
 				<property name="targetAnchor" value="280,590"/>
 				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rb00vebfvpgl:88lh7f6r93dku-vdg3ik">
 					<property name="bounds" value="0,0,0,0"/>
@@ -105,7 +105,7 @@
 				<property name="targetAnchor" value="1069,72"/>
 			</reference>
 			<reference referencedUin="design:link:::ieje0rf6razpmx-njlmy3:88lh7f6r93dku-vdg3ik">
-				<property name="sourceAnchor" value="3,580"/>
+				<property name="sourceAnchor" value="9,580"/>
 				<property name="targetAnchor" value="298,100"/>
 				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6razpmx-njlmy3:88lh7f6r93dku-vdg3ik">
 					<property name="bounds" value="0,0,0,0"/>
@@ -115,18 +115,18 @@
 				</reference>
 			</reference>
 			<reference referencedUin="design:link:::ieje0rf6rb0jg4-b13zfi:88lh7f6r93dku-vdg3ik">
-				<property name="sourceAnchor" value="0,660"/>
-				<property name="targetAnchor" value="301,1220"/>
-				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rb0jg4-b13zfi:88lh7f6r93dku-vdg3ik">
+				<property name="sourceAnchor" value="10,660"/>
+				<property name="targetAnchor" value="332,1220"/>
+				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6rb0jg4-b13zfi:88lh7f6r93dku-vdg3ik">
 					<property name="bounds" value="0,0,0,0"/>
 				</reference>
-				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6rb0jg4-b13zfi:88lh7f6r93dku-vdg3ik">
+				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rb0jg4-b13zfi:88lh7f6r93dku-vdg3ik">
 					<property name="bounds" value="0,0,0,0"/>
 				</reference>
 			</reference>
 			<reference referencedUin="design:link:::ieje0rf6rb03em-igokm8:88lh7f6r93dku-vdg3ik">
-				<property name="sourceAnchor" value="79,640"/>
-				<property name="targetAnchor" value="279,640"/>
+				<property name="sourceAnchor" value="198,640"/>
+				<property name="targetAnchor" value="307,640"/>
 				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6rb03em-igokm8:88lh7f6r93dku-vdg3ik">
 					<property name="bounds" value="0,0,0,0"/>
 				</reference>
@@ -136,7 +136,7 @@
 			</reference>
 			<reference referencedUin="design:link:::ieje0rf6rb0c9zj9w66z:88lh7f6r93dku-vdg3ik">
 				<property name="sourceAnchor" value="19,660"/>
-				<property name="targetAnchor" value="282,920"/>
+				<property name="targetAnchor" value="308,922"/>
 				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rb0c9zj9w66z:88lh7f6r93dku-vdg3ik">
 					<property name="bounds" value="0,0,0,0"/>
 				</reference>
@@ -146,81 +146,134 @@
 			</reference>
 		</reference>
 		<reference referencedUin="design:node:::-tdsqjuf6rawvkg-8oaql7">
-			<property name="bounds" value="275,15,87,80"/>
+			<property name="bounds" value="285,15,80,80"/>
 			<property name="location_set_by_user" value="true"/>
 			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="design:link:::ieje0rf6rb2scd-tbesqe:-tdsqjuf6rawvkg-8oaql7">
+				<property name="sourceAnchor" value="360,60"/>
+				<property name="targetAnchor" value="645,60"/>
+			</reference>
 		</reference>
 		<reference referencedUin="design:node:::-tdsqjuf6rax1c9vvx3c3">
 			<property name="bounds" value="274,115,89,80"/>
 			<property name="location_set_by_user" value="true"/>
 			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="design:link:::ieje0rf6rb2yz1-sr320:-tdsqjuf6rax1c9vvx3c3">
+				<property name="sourceAnchor" value="321,120"/>
+				<property name="targetAnchor" value="321,100"/>
+			</reference>
 		</reference>
 		<reference referencedUin="design:node:::-tdsqjuf6rax5mds54dcs">
-			<property name="bounds" value="275,215,87,80"/>
+			<property name="bounds" value="285,215,80,80"/>
 			<property name="location_set_by_user" value="true"/>
 			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="design:link:::ieje0rf6rb3dpt-9ehb7e:-tdsqjuf6rax5mds54dcs">
+				<property name="sourceAnchor" value="360,260"/>
+				<property name="targetAnchor" value="635,260"/>
+			</reference>
 		</reference>
 		<reference referencedUin="design:node:::-tdsqjuf6raxb82-9fc2kj">
-			<property name="bounds" value="275,315,87,80"/>
+			<property name="bounds" value="285,315,80,80"/>
 			<property name="location_set_by_user" value="true"/>
 			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="design:link:::ieje0rf6rb3thucucg0v:-tdsqjuf6raxb82-9fc2kj">
+				<property name="sourceAnchor" value="360,360"/>
+				<property name="targetAnchor" value="626,360"/>
+			</reference>
 		</reference>
 		<reference referencedUin="design:node:::-tdsqjuf6raxg3vduo8ht">
-			<property name="bounds" value="275,415,87,80"/>
+			<property name="bounds" value="285,415,80,80"/>
 			<property name="location_set_by_user" value="true"/>
 			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="design:link:::ieje0rf6rb43s32ati12:-tdsqjuf6raxg3vduo8ht">
+				<property name="sourceAnchor" value="360,460"/>
+				<property name="targetAnchor" value="608,460"/>
+			</reference>
 		</reference>
 		<reference referencedUin="design:node:::-tdsqjuf6raxmj1f2gqiq">
-			<property name="bounds" value="275,515,87,80"/>
+			<property name="bounds" value="285,515,80,80"/>
 			<property name="location_set_by_user" value="true"/>
 			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="design:link:::ieje0rf6rb4patkmlkd:-tdsqjuf6raxmj1f2gqiq">
+				<property name="sourceAnchor" value="360,559"/>
+				<property name="targetAnchor" value="637,559"/>
+			</reference>
 		</reference>
 		<reference referencedUin="design:node:::-tdsqjuf6raxrfemp7r3w">
 			<property name="bounds" value="302,615,90,80"/>
 			<property name="location_set_by_user" value="true"/>
 			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="design:link:::ieje0rf6rb4x42-wto1fm:-tdsqjuf6raxrfemp7r3w">
+				<property name="sourceAnchor" value="333,620"/>
+				<property name="targetAnchor" value="333,600"/>
+			</reference>
 		</reference>
 		<reference referencedUin="design:node:::-tdsqjuf6raxw02urzotp">
-			<property name="bounds" value="303,715,87,80"/>
+			<property name="bounds" value="313,715,80,80"/>
 			<property name="location_set_by_user" value="true"/>
 			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="design:link:::ieje0rf6rb6018-upt82v:-tdsqjuf6raxw02urzotp">
+				<property name="sourceAnchor" value="388,760"/>
+				<property name="targetAnchor" value="637,760"/>
+			</reference>
 		</reference>
 		<reference referencedUin="design:node:::-tdsqjuf6ray1l7l6trss">
 			<property name="bounds" value="303,815,87,80"/>
 			<property name="location_set_by_user" value="true"/>
 			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="design:link:::ieje0rf6rb661eups7ce:-tdsqjuf6ray1l7l6trss">
+				<property name="sourceAnchor" value="349,820"/>
+				<property name="targetAnchor" value="349,800"/>
+			</reference>
 		</reference>
 		<reference referencedUin="design:node:::-tdsqjuf6ray73t-4miu7j">
-			<property name="bounds" value="303,915,87,80"/>
+			<property name="bounds" value="313,915,80,80"/>
 			<property name="location_set_by_user" value="true"/>
 			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="design:link:::ieje0rf6rb6qoe-50cuz9:-tdsqjuf6ray73t-4miu7j">
+				<property name="sourceAnchor" value="388,960"/>
+				<property name="targetAnchor" value="615,960"/>
+			</reference>
 		</reference>
 		<reference referencedUin="design:node:::-tdsqjuf6raybsoabavlz">
-			<property name="bounds" value="303,1015,87,80"/>
+			<property name="bounds" value="313,1015,80,80"/>
 			<property name="location_set_by_user" value="true"/>
 			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="design:link:::ieje0rf6rb76se-hmvb8l:-tdsqjuf6raybsoabavlz">
+				<property name="sourceAnchor" value="388,1060"/>
+				<property name="targetAnchor" value="621,1060"/>
+			</reference>
 		</reference>
 		<reference referencedUin="design:node:::-tdsqjuf6raygsnxsrg0d">
-			<property name="bounds" value="303,1115,87,80"/>
+			<property name="bounds" value="313,1115,80,80"/>
 			<property name="location_set_by_user" value="true"/>
 			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="design:link:::ieje0rf6rb7l4p7f65by:-tdsqjuf6raygsnxsrg0d">
+				<property name="sourceAnchor" value="388,1160"/>
+				<property name="targetAnchor" value="650,1160"/>
+			</reference>
 		</reference>
 		<reference referencedUin="design:node:::-tdsqjuf6rayml0mj65ek">
-			<property name="bounds" value="303,1215,87,80"/>
+			<property name="bounds" value="313,1215,80,80"/>
 			<property name="location_set_by_user" value="true"/>
 			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="design:link:::ieje0rf6rb7npc-56mxd3:-tdsqjuf6rayml0mj65ek">
+				<property name="sourceAnchor" value="388,1248"/>
+				<property name="targetAnchor" value="649,1174"/>
+			</reference>
 		</reference>
 		<reference referencedUin="ecore:e_class:bin:uml20.classes.Class">
 			<property name="bounds" value="640,15,113,80"/>
 			<property name="location_set_by_user" value="true"/>
 			<property name="$shortcutReference" value="true"/>
 			<reference referencedUin="ecore:l_ast:bin:uml20.classes.Class.ownedAttributes">
-				<property name="sourceAnchor" value="576,100"/>
-				<property name="targetAnchor" value="576,506"/>
-				<reference referencedUin="label:$associationRoleSupplierInplace:ecore:l_ast:bin:uml20.classes.Class.ownedAttributes">
+				<property name="sourceAnchor" value="701,100"/>
+				<property name="targetAnchor" value="701,506"/>
+				<property name="$hidden" value="true"/>
+				<reference referencedUin="label:supplierCardinality:ecore:l_ast:bin:uml20.classes.Class.ownedAttributes">
 					<property name="bounds" value="0,0,0,0"/>
 				</reference>
-				<reference referencedUin="label:supplierCardinality:ecore:l_ast:bin:uml20.classes.Class.ownedAttributes">
+				<reference referencedUin="label:$associationRoleSupplierInplace:ecore:l_ast:bin:uml20.classes.Class.ownedAttributes">
 					<property name="bounds" value="0,0,0,0"/>
 				</reference>
 				<reference referencedUin="label:$associationEnd20SupplierPropertiesInplace:ecore:l_ast:bin:uml20.classes.Class.ownedAttributes">
@@ -236,8 +289,9 @@
 			<property name="location_set_by_user" value="true"/>
 			<property name="$shortcutReference" value="true"/>
 			<reference referencedUin="ecore:l_ast:bin:uml20.kernel.DataType.ownedAttributes">
-				<property name="sourceAnchor" value="584,300"/>
-				<property name="targetAnchor" value="584,506"/>
+				<property name="sourceAnchor" value="709,300"/>
+				<property name="targetAnchor" value="709,506"/>
+				<property name="$hidden" value="true"/>
 				<reference referencedUin="label:$associationEnd20SupplierPropertiesInplace:ecore:l_ast:bin:uml20.kernel.DataType.ownedAttributes">
 					<property name="bounds" value="0,0,0,0"/>
 				</reference>
@@ -257,12 +311,14 @@
 			<property name="location_set_by_user" value="true"/>
 			<property name="$shortcutReference" value="true"/>
 			<reference referencedUin="ecore:l_gnt:bin:uml20.kernel.Enumeration#uml20.kernel.DataType">
-				<property name="sourceAnchor" value="576,320"/>
-				<property name="targetAnchor" value="576,300"/>
+				<property name="sourceAnchor" value="701,320"/>
+				<property name="targetAnchor" value="701,300"/>
+				<property name="$hidden" value="true"/>
 			</reference>
 			<reference referencedUin="ecore:l_ast:bin:uml20.kernel.Enumeration.ownedLiterals">
-				<property name="sourceAnchor" value="576,400"/>
-				<property name="targetAnchor" value="576,420"/>
+				<property name="sourceAnchor" value="701,400"/>
+				<property name="targetAnchor" value="701,420"/>
+				<property name="$hidden" value="true"/>
 				<reference referencedUin="label:supplierCardinality:ecore:l_ast:bin:uml20.kernel.Enumeration.ownedLiterals">
 					<property name="bounds" value="0,0,0,0"/>
 				</reference>
@@ -283,7 +339,7 @@
 			<property name="$shortcutReference" value="true"/>
 		</reference>
 		<reference referencedUin="ecore:e_class:bin:uml20.kernel.Property">
-			<property name="bounds" value="632,501,129,108"/>
+			<property name="bounds" value="642,501,129,92"/>
 			<property name="location_set_by_user" value="true"/>
 			<property name="$shortcutReference" value="true"/>
 		</reference>
@@ -297,8 +353,9 @@
 			<property name="location_set_by_user" value="true"/>
 			<property name="$shortcutReference" value="true"/>
 			<reference referencedUin="ecore:l_gnt:bin:uml20.kernel.AssociationClass#uml20.classes.Class">
-				<property name="sourceAnchor" value="584,920"/>
-				<property name="targetAnchor" value="584,100"/>
+				<property name="sourceAnchor" value="709,920"/>
+				<property name="targetAnchor" value="709,100"/>
+				<property name="$hidden" value="true"/>
 			</reference>
 		</reference>
 		<reference referencedUin="ecore:e_class:bin:uml20.kernel.Generalization">
@@ -315,6 +372,10 @@
 			<property name="bounds" value="580,1235,48,25"/>
 			<property name="location_set_by_user" value="true"/>
 			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="design:link:::ieje0rf6rb7uhuff7yz6:1g64yf6rb7ptkb5e5bs">
+				<property name="sourceAnchor" value="604,1240"/>
+				<property name="targetAnchor" value="583,1192"/>
+			</reference>
 		</reference>
 	</view>
 </nodeSet>

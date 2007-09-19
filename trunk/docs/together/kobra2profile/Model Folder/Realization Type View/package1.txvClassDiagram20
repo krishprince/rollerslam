@@ -6,5 +6,8 @@
 		<property name="$defaultDiagram" value="true"/>
 		<property name="$metaclass" value="ClassDiagram20"/>
 		<property name="$name" value="Realization Type View"/>
+		<reference referencedUin="design:view:::V1hexuhf6rvrkjucc1328">
+			<property name="$shortcutReference" value="true"/>
+		</reference>
 	</view>
 </nodeSet>

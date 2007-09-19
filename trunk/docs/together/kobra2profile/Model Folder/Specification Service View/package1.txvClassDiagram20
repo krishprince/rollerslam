@@ -24,10 +24,10 @@
 			<property name="location_set_by_user" value="true"/>
 		</reference>
 		<reference referencedUin="design:node:::-tdsqjuf6ra1gnrfpv88h">
-			<property name="bounds" value="22,143,87,80"/>
+			<property name="bounds" value="22,143,80,80"/>
 			<property name="location_set_by_user" value="true"/>
 			<reference referencedUin="design:link:::ieje0rf6ravryttvp5uv:-tdsqjuf6ra1gnrfpv88h">
-				<property name="sourceAnchor" value="114,183"/>
+				<property name="sourceAnchor" value="107,183"/>
 				<property name="targetAnchor" value="115,183"/>
 			</reference>
 		</reference>
@@ -52,7 +52,7 @@
 			<property name="location_set_by_user" value="true"/>
 		</reference>
 		<reference referencedUin="design:node:::-tdsqjuf6ra2vfn7sym8o">
-			<property name="bounds" value="170,221,87,80"/>
+			<property name="bounds" value="170,221,80,80"/>
 			<property name="location_set_by_user" value="true"/>
 		</reference>
 		<reference referencedUin="design:node:::-tdsqjuf6ra316cbp90m5">

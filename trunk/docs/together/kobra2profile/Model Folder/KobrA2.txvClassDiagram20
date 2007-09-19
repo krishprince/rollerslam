@@ -7,22 +7,56 @@
 		<property name="$metaclass" value="ClassDiagram20"/>
 		<reference referencedUin="design:view:::120x4f6r932yc-hjeoxa">
 			<property name="$shortcutReference" value="true"/>
+			<property name="bounds" value="443,418,172,284"/>
+			<property name="location_set_by_user" value="true"/>
 		</reference>
 		<reference referencedUin="design:view:::V1hexuhf6ravctu-atkxm">
+			<property name="bounds" value="247,287,144,255"/>
+			<property name="location_set_by_user" value="true"/>
 		</reference>
 		<reference referencedUin="design:view:::V1hexuhf6rb86vry157jd">
+			<property name="bounds" value="274,641,166,242"/>
+			<property name="location_set_by_user" value="true"/>
 		</reference>
 		<reference referencedUin="design:view:::V1hexuhf6rbuapky9txvv">
+			<property name="bounds" value="653,0,147,164"/>
+			<property name="location_set_by_user" value="true"/>
 		</reference>
 		<reference referencedUin="design:view:::V1hexuhf6rbvdjzj4g40b">
+			<property name="bounds" value="653,183,149,60"/>
+			<property name="location_set_by_user" value="true"/>
 		</reference>
 		<reference referencedUin="design:view:::V1hexuhf6rbvt7a4fp9dl">
+			<property name="bounds" value="443,339,135,60"/>
+			<property name="location_set_by_user" value="true"/>
 		</reference>
 		<reference referencedUin="design:view:::V1hexuhf6rbw76skasxmu">
+			<property name="bounds" value="115,641,151,60"/>
+			<property name="location_set_by_user" value="true"/>
 		</reference>
 		<reference referencedUin="design:view:::V1hexuhf6rbwt7l-gvgb9r">
+			<property name="bounds" value="653,262,172,60"/>
+			<property name="location_set_by_user" value="true"/>
 		</reference>
 		<reference referencedUin="design:view:::V1hexuhf6rbxcwy8za34j">
+			<property name="bounds" value="653,341,172,60"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:view:::V1hexuhf6r9wzgo-w93isr">
+			<property name="bounds" value="247,0,158,268"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:view:::V1hexuhf6rbo83df7ale8">
+			<property name="bounds" value="443,0,172,320"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:view:::V1hexuhf6rbumf0wc198k">
+			<property name="bounds" value="68,348,169,255"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:view:::V1hexuhf6r9266lnuxxaz">
+			<property name="bounds" value="5,9,223,320"/>
+			<property name="location_set_by_user" value="true"/>
 		</reference>
 	</view>
 </nodeSet>
