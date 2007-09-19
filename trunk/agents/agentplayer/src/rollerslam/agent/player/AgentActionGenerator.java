@@ -65,8 +65,6 @@ public class AgentActionGenerator implements
 			m = goToInitCoord(model);
 		} else if (model.currentGoal == AgentGoal.STOP){
 			m = stop(model);
-		} else if (model.currentGoal == AgentGoal.NOTHING){
-			m = null;
 		} else if (model.currentGoal == AgentGoal.GO_TO_GOAL) {
 			m = goToGoal(model);
 		} else if (model.currentGoal == AgentGoal.CATCH_BALL) {

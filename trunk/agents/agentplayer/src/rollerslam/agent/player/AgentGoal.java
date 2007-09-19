@@ -16,6 +16,5 @@ public enum AgentGoal {
     STAND_UP,
     THROW_BALL,
     KICK_BALL,
-    COUNTER_TACKLE,
-    NOTHING;
+    COUNTER_TACKLE;
 }
