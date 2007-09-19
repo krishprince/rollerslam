@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<view uin="V1hexuhf6rcgtdh-jrvhrw">
+		<property name="$metaclass" value="ClassDiagram20"/>
+		<property name="#invoke_inplace" value="com.tssap.selena.model.ui.navigator.view"/>
+		<property name="$name" value="Specification Life Cycle View"/>
+		<reference referencedUin="design:node:::7hdxaf6r93dkk1ctzd5">
+			<property name="bounds" value="0,315,200,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rchl594k1klx">
+			<property name="bounds" value="275,35,87,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rchpvi4t8ifh">
+			<property name="bounds" value="275,134,88,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rchvbm-zbq1ly">
+			<property name="bounds" value="263,234,112,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rci0wqpla8wv">
+			<property name="bounds" value="276,335,87,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rci69igl2zh8">
+			<property name="bounds" value="281,435,87,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rcibwb4vye0y">
+			<property name="bounds" value="280,534,87,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rcihij-t24903">
+			<property name="bounds" value="414,35,87,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rcimq1wl7agw">
+			<property name="bounds" value="414,134,87,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rciry3-tt3g7w">
+			<property name="bounds" value="414,236,87,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rcixlz-aajcwb">
+			<property name="bounds" value="414,335,87,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rcj2f0-e73cnz">
+			<property name="bounds" value="414,435,87,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rcj79fop6i6i">
+			<property name="bounds" value="407,534,101,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rcjdhnd4hqrk">
+			<property name="bounds" value="560,35,87,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+		</reference>
+	</view>
+</nodeSet>

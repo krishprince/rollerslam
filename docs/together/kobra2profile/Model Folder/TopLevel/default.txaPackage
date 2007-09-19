@@ -1,0 +1,1064 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<node uin="hexytf6r93dku-vsiq19">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2View"/>
+		<property name="mod__extends" value="uml.kernel.packages.Package"/>
+		<link uin="ie3npf6r93dkusuk58y">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="stereotype" value="extension"/>
+			<property name="mod__cachedBaseName" value="uml.kernel.packages.Package"/>
+			<participant referencedUin="design:node:::hexytf6r93dku-vsiq19" role="Client"></participant>
+			<participant referencedUin="ecore:e_class:bin:uml.kernel.packages.Package" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="4l6plf6r93dku-kj4qsi">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2TopView"/>
+		<property name="mod__extends" value="K2View"/>
+		<link uin="h3p9rf6r93dku9cphhf">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="mod__cachedBaseName" value="K2View"/>
+			<participant referencedUin="design:node:::4l6plf6r93dku-kj4qsi" role="Client"></participant>
+			<participant referencedUin="design:node:::hexytf6r93dku-vsiq19" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6r9acg6c9uhsy">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="clientCardinality" value=" "/>
+			<property name="supplierCardinality" value=" "/>
+			<participant referencedUin="design:node:::4l6plf6r93dku-kj4qsi" role="Client"></participant>
+			<participant referencedUin="design:node:::68h55f6r93dkutn0qz3" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6r9amq568s1s9">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="1..*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::4l6plf6r93dku-kj4qsi" role="Client"></participant>
+			<participant referencedUin="design:node:::f9mkxf6r93dkkiuxi41" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="68h55f6r93dkutn0qz3">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2SpecificationView"/>
+		<property name="mod__extends" value="K2View"/>
+		<link uin="i696cf6r93dkua5rm1i">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="mod__cachedBaseName" value="K2View"/>
+			<participant referencedUin="design:node:::68h55f6r93dkutn0qz3" role="Client"></participant>
+			<participant referencedUin="design:node:::hexytf6r93dku-vsiq19" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6r9egim3eq3ik">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="clientCardinality" value=" "/>
+			<property name="supplierCardinality" value=" "/>
+			<participant referencedUin="design:node:::68h55f6r93dkutn0qz3" role="Client"></participant>
+			<participant referencedUin="design:node:::hcxurf6r93dku-8secvf" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6r9f0j3-63t8nh">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="clientCardinality" value=" "/>
+			<property name="supplierCardinality" value=" "/>
+			<participant referencedUin="design:node:::68h55f6r93dkutn0qz3" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6r9d7tml9vl0d" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="88lh7f6r93dku-vdg3ik">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2Specification TypeView"/>
+		<property name="mod__extends" value="K2View"/>
+		<link uin="276gmf6r93dkujqxanw">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="mod__cachedBaseName" value="K2View"/>
+			<participant referencedUin="design:node:::88lh7f6r93dku-vdg3ik" role="Client"></participant>
+			<participant referencedUin="design:node:::hexytf6r93dku-vsiq19" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6razpmx-njlmy3">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="clientCardinality" value=" "/>
+			<property name="supplierCardinality" value="1..*"/>
+			<participant referencedUin="design:node:::88lh7f6r93dku-vdg3ik" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rawvkg-8oaql7" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6razrk6-frhy9s">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::88lh7f6r93dku-vdg3ik" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rax1c9vvx3c3" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6razt61-88iyzn">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::88lh7f6r93dku-vdg3ik" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rax5mds54dcs" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6razv9fi58tk">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::88lh7f6r93dku-vdg3ik" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6raxb82-9fc2kj" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6razxlz-jeyysf">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::88lh7f6r93dku-vdg3ik" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6raxg3vduo8ht" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rb00vebfvpgl">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="clientCardinality" value=" "/>
+			<property name="supplierCardinality" value="1..*"/>
+			<participant referencedUin="design:node:::88lh7f6r93dku-vdg3ik" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6raxmj1f2gqiq" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rb03em-igokm8">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::88lh7f6r93dku-vdg3ik" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6raxrfemp7r3w" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rb05jo8tgss2">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::88lh7f6r93dku-vdg3ik" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6raxw02urzotp" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rb07o6-vdgq0l">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::88lh7f6r93dku-vdg3ik" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6ray1l7l6trss" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rb0c9zj9w66z">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::88lh7f6r93dku-vdg3ik" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6ray73t-4miu7j" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rb0enx-te9xu">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::88lh7f6r93dku-vdg3ik" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6raybsoabavlz" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rb0h4o-ijyroo">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::88lh7f6r93dku-vdg3ik" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6raygsnxsrg0d" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rb0jg4-b13zfi">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::88lh7f6r93dku-vdg3ik" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rayml0mj65ek" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="hcxurf6r93dku-8secvf">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2Specification StructuralView"/>
+		<property name="mod__extends" value="K2View"/>
+		<link uin="8en7qf6r93dku-6cl9u0">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="mod__cachedBaseName" value="K2View"/>
+			<participant referencedUin="design:node:::hcxurf6r93dku-8secvf" role="Client"></participant>
+			<participant referencedUin="design:node:::hexytf6r93dku-vsiq19" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6r9iacg-on06y6">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::hcxurf6r93dku-8secvf" role="Client"></participant>
+			<participant referencedUin="design:node:::eayk5f6r93dkkd0y3vh" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6r9ig5nsj4nfh">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::hcxurf6r93dku-8secvf" role="Client"></participant>
+			<participant referencedUin="design:node:::88lh7f6r93dku-vdg3ik" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6r9ikv2tu0sgc">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="1..*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::hcxurf6r93dku-8secvf" role="Client"></participant>
+			<participant referencedUin="design:node:::5975kf6r93dkk-oz74ut" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="5975kf6r93dkk-oz74ut">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2Specification ServiceView"/>
+		<property name="mod__extends" value="K2View"/>
+		<link uin="a2ut3f6r93dkk-u8xfz1">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="mod__cachedBaseName" value="K2View"/>
+			<participant referencedUin="design:node:::5975kf6r93dkk-oz74ut" role="Client"></participant>
+			<participant referencedUin="design:node:::hexytf6r93dku-vsiq19" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6ra55rd-twmcis">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="clientCardinality" value=" "/>
+			<property name="supplierCardinality" value=" "/>
+			<participant referencedUin="design:node:::5975kf6r93dkk-oz74ut" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6ra0tjg-97t40m" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6ra58n4-cnujcm">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="clientCardinality" value=" "/>
+			<property name="supplierCardinality" value="1..*"/>
+			<participant referencedUin="design:node:::5975kf6r93dkk-oz74ut" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6ra0zr3-n10rf6" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6ra5atauo6e6y">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="clientCardinality" value=" "/>
+			<property name="supplierCardinality" value="2..*"/>
+			<participant referencedUin="design:node:::5975kf6r93dkk-oz74ut" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6ra14qtvqislh" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6ra5cv03fqobc">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::5975kf6r93dkk-oz74ut" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6ra1gnrfpv88h" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6ra5eoo-86jzis">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::5975kf6r93dkk-oz74ut" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6ra1t3m-4wsa8d" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6ra5l6m5wuo6g">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::5975kf6r93dkk-oz74ut" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6ra2422-svcktk" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6ra5np08x1b8f">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::5975kf6r93dkk-oz74ut" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6ra2eylnt869" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6ra5qfh3v5yh9">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::5975kf6r93dkk-oz74ut" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6ra2k5s-l8pz4g" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6ra5s6n-mzy7l6">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::5975kf6r93dkk-oz74ut" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6ra2q4a-yyapsd" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6ra5uv6wzclbm">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::5975kf6r93dkk-oz74ut" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6ra2vfn7sym8o" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6ra5xhh-nkadkv">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::5975kf6r93dkk-oz74ut" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6ra316cbp90m5" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6ra60c4-kxbj09">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::5975kf6r93dkk-oz74ut" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6ra37cmvepauy" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6ra63fo-m0gkzs">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::5975kf6r93dkk-oz74ut" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6ra3d0i8irrjh" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6ra65z6mldn1a">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::5975kf6r93dkk-oz74ut" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6ra3jo1p9dki4" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="fvjpof6r93dkk-gsdbth">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2Specification OperationView"/>
+		<property name="mod__extends" value="K2View"/>
+		<link uin="flbhuf6r93dkkmgp3ds">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="mod__cachedBaseName" value="K2View"/>
+			<participant referencedUin="design:node:::fvjpof6r93dkk-gsdbth" role="Client"></participant>
+			<participant referencedUin="design:node:::hexytf6r93dku-vsiq19" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rbtyw8-8upc0r">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="clientCardinality" value=" "/>
+			<property name="supplierCardinality" value="1..*"/>
+			<participant referencedUin="design:node:::fvjpof6r93dkk-gsdbth" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rbqh8svm6dve" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rbyyywcr2zc8">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="clientCardinality" value=" "/>
+			<property name="supplierCardinality" value="1..*"/>
+			<participant referencedUin="design:node:::fvjpof6r93dkk-gsdbth" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rbqqn2-pbhvcn" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rbz2mhrs07hf">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="clientCardinality" value=" "/>
+			<property name="supplierCardinality" value="1..*"/>
+			<participant referencedUin="design:node:::fvjpof6r93dkk-gsdbth" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rbqvbn-71dci6" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rbz4imizc7h0">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::fvjpof6r93dkk-gsdbth" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rbr149-v91z2j" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rbz6j8-tgvb3p">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::fvjpof6r93dkk-gsdbth" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rbr89lmf1opl" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rbz9swiv2e1e">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::fvjpof6r93dkk-gsdbth" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rbrils3276vr" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rbzbw0wc07nc">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::fvjpof6r93dkk-gsdbth" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rbrsa2-dne6m7" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rbze7q-tghhne">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::fvjpof6r93dkk-gsdbth" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rbrxytz5200h" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rbzg5k-sjpt0o">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::fvjpof6r93dkk-gsdbth" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rbs6uf-5zcieu" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rbzizd-w8mrhl">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::fvjpof6r93dkk-gsdbth" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rbscq4xjif4m" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rbzlj6-1afz3f">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::fvjpof6r93dkk-gsdbth" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rbsi4k9h0aie" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rbzpz4ohzulw">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::fvjpof6r93dkk-gsdbth" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rbsnjun7lojq" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rbzsdd-9kqv1v">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::fvjpof6r93dkk-gsdbth" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rbst6n4nyaki" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rbzunp-83bbtt">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::fvjpof6r93dkk-gsdbth" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rbszir-lg2wq0" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rbzx50-jdfkpj">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::fvjpof6r93dkk-gsdbth" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rbt4s681xuu6" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rbzzrl2leqsc">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::fvjpof6r93dkk-gsdbth" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rbtb86-t9umhg" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rc02ly-gf15id">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::fvjpof6r93dkk-gsdbth" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rbtgt1-tujo7g" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rc059xld0y0h">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::fvjpof6r93dkk-gsdbth" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rbtmgx-gt98sd" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="7hdxaf6r93dkk1ctzd5">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2Specification LifeCycleView"/>
+		<property name="mod__extends" value="K2View"/>
+		<link uin="7oqmf6r93dkkvuptqb">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="mod__cachedBaseName" value="K2View"/>
+			<participant referencedUin="design:node:::7hdxaf6r93dkk1ctzd5" role="Client"></participant>
+			<participant referencedUin="design:node:::hexytf6r93dku-vsiq19" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="eayk5f6r93dkkd0y3vh">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2Specification InstanceView"/>
+		<property name="mod__extends" value="K2View"/>
+		<link uin="eoc8xf6r93dkk-mkgmqv">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="mod__cachedBaseName" value="K2View"/>
+			<participant referencedUin="design:node:::eayk5f6r93dkkd0y3vh" role="Client"></participant>
+			<participant referencedUin="design:node:::hexytf6r93dku-vsiq19" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rbe0cw-sl8p29">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="clientCardinality" value=" "/>
+			<property name="supplierCardinality" value=" "/>
+			<participant referencedUin="design:node:::eayk5f6r93dkkd0y3vh" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rbb2wvn7eebj" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rbe26j-wf6ewb">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="clientCardinality" value=" "/>
+			<property name="supplierCardinality" value="1..*"/>
+			<participant referencedUin="design:node:::eayk5f6r93dkkd0y3vh" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rbb8jewtbw4u" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rbe475-j84489">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::eayk5f6r93dkkd0y3vh" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rbbgjbuz4loi" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rbe5ya-z703bf">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::eayk5f6r93dkkd0y3vh" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rbbmi26k2md7" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rbe7zg-dhvkw1">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::eayk5f6r93dkkd0y3vh" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rbbu7eq79slo" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rbeauxt9s74z">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::eayk5f6r93dkkd0y3vh" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rbbzc4yoqjde" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rbedk0-4bi90q">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::eayk5f6r93dkkd0y3vh" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rbc4lk-4l5awt" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rbegcg-5cbxkc">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::eayk5f6r93dkkd0y3vh" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rbccam450irz" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rbei4pe49sg2">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::eayk5f6r93dkkd0y3vh" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rbchfb-djzmnz" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rbek65agu7b">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::eayk5f6r93dkkd0y3vh" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rbcmo7-icdjef" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rbemhvvkawni">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::eayk5f6r93dkkd0y3vh" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rbcrvz-7bkvdy" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rbeoym7sfnwl">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::eayk5f6r93dkkd0y3vh" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rbcwy6-yyrah9" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="27zxif6r93dkk-ctvgpb">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2Specification FunctionallView"/>
+		<property name="mod__extends" value="K2View"/>
+		<link uin="5656sf6r93dkkd8lnpm">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="mod__cachedBaseName" value="K2View"/>
+			<participant referencedUin="design:node:::27zxif6r93dkk-ctvgpb" role="Client"></participant>
+			<participant referencedUin="design:node:::hexytf6r93dku-vsiq19" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6r9lafw-9atwnf">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="1..*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::27zxif6r93dkk-ctvgpb" role="Client"></participant>
+			<participant referencedUin="design:node:::fvjpof6r93dkk-gsdbth" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6r9lgw6-f1d2ae">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::27zxif6r93dkk-ctvgpb" role="Client"></participant>
+			<participant referencedUin="design:node:::830gf6r93dkknmvn31" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6r9v0tbu1on6k">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::27zxif6r93dkk-ctvgpb" role="Client"></participant>
+			<participant referencedUin="design:node:::5vu3zf6r93dkk-gr7j5u" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="830gf6r93dkknmvn31">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2Specification CollaborationView"/>
+		<property name="mod__extends" value="K2View"/>
+		<link uin="5mi7vf6r93dkk95lboc">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="mod__cachedBaseName" value="K2View"/>
+			<participant referencedUin="design:node:::830gf6r93dkknmvn31" role="Client"></participant>
+			<participant referencedUin="design:node:::hexytf6r93dku-vsiq19" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="jfclvf6r93dkk-xsx0am">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2Specification AlgorithmicView"/>
+		<property name="mod__extends" value="K2View"/>
+		<link uin="jnj3rf6r93dkk3gvkxd">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="mod__cachedBaseName" value="K2View"/>
+			<participant referencedUin="design:node:::jfclvf6r93dkk-xsx0am" role="Client"></participant>
+			<participant referencedUin="design:node:::hexytf6r93dku-vsiq19" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="5vu3zf6r93dkk-gr7j5u">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2Specification ActorView"/>
+		<property name="mod__extends" value="K2View"/>
+		<link uin="b0ruwf6r93dkk12ntpa">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="mod__cachedBaseName" value="K2View"/>
+			<participant referencedUin="design:node:::5vu3zf6r93dkk-gr7j5u" role="Client"></participant>
+			<participant referencedUin="design:node:::hexytf6r93dku-vsiq19" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rccrxm9ekl7r">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="clientCardinality" value=" "/>
+			<property name="supplierCardinality" value="1..*"/>
+			<participant referencedUin="design:node:::5vu3zf6r93dkk-gr7j5u" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rcbg7b-nonewy" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rcczox-8kfuon">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="clientCardinality" value=" "/>
+			<property name="supplierCardinality" value="1..*"/>
+			<participant referencedUin="design:node:::5vu3zf6r93dkk-gr7j5u" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rcbkzi-r85r2j" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rcd267-fwkkjr">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::5vu3zf6r93dkk-gr7j5u" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rcbpjnob4yab" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rcd4s829p85u">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="clientCardinality" value=" "/>
+			<property name="supplierCardinality" value="1..*"/>
+			<participant referencedUin="design:node:::5vu3zf6r93dkk-gr7j5u" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rcbujchsqc89" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rcd70m-ar34q">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="clientCardinality" value=" "/>
+			<property name="supplierCardinality" value=" "/>
+			<participant referencedUin="design:node:::5vu3zf6r93dkk-gr7j5u" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rcbzj18a5gzo" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6rcdaht-8mw1kq">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="clientCardinality" value=" "/>
+			<property name="supplierCardinality" value=" "/>
+			<participant referencedUin="design:node:::5vu3zf6r93dkk-gr7j5u" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rcc4ob-d9vezl" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="f9mkxf6r93dkkiuxi41">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2RealizationView"/>
+		<property name="mod__extends" value="K2View"/>
+		<link uin="jev06f6r93dkk-iag2ms">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="mod__cachedBaseName" value="K2View"/>
+			<participant referencedUin="design:node:::f9mkxf6r93dkkiuxi41" role="Client"></participant>
+			<participant referencedUin="design:node:::hexytf6r93dku-vsiq19" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6r9eoll-25ee7s">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="clientCardinality" value=" "/>
+			<property name="supplierCardinality" value=" "/>
+			<participant referencedUin="design:node:::f9mkxf6r93dkkiuxi41" role="Client"></participant>
+			<participant referencedUin="design:node:::hcxurf6r93dku-8secvf" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6r9f82v3vfome">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="clientCardinality" value=" "/>
+			<property name="supplierCardinality" value=" "/>
+			<participant referencedUin="design:node:::f9mkxf6r93dkkiuxi41" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6r9d7tml9vl0d" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6r9k0xz-a1u6u2">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::f9mkxf6r93dkkiuxi41" role="Client"></participant>
+			<participant referencedUin="design:node:::27zxif6r93dkk-ctvgpb" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="diqd3f6r93dkk-7fndsk">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2Component"/>
+		<property name="mod__extends" value="uml.kernel.PackageableElement"/>
+		<link uin="2mksrf6r93dkkk7jm8s">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="stereotype" value="extension"/>
+			<property name="mod__cachedBaseName" value="uml.kernel.PackageableElement"/>
+			<participant referencedUin="design:node:::diqd3f6r93dkk-7fndsk" role="Client"></participant>
+			<participant referencedUin="ecore:e_class:bin:uml.kernel.PackageableElement" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6r982ht-bfpme2">
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value=" "/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::diqd3f6r93dkk-7fndsk" role="Client"></participant>
+			<participant referencedUin="design:node:::4l6plf6r93dku-kj4qsi" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="-tdsqjuf6r9d7tml9vl0d">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2Specification BehavioralView"/>
+		<property name="mod__extends" value="K2View"/>
+		<link uin="ieje0rf6r9dirt-kj0edt">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="mod__cachedBaseName" value="K2View"/>
+			<participant referencedUin="design:node:::-tdsqjuf6r9d7tml9vl0d" role="Client"></participant>
+			<participant referencedUin="design:node:::hexytf6r93dku-vsiq19" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6r9mit7-cmr3e1">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::-tdsqjuf6r9d7tml9vl0d" role="Client"></participant>
+			<participant referencedUin="design:node:::jfclvf6r93dkk-xsx0am" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6r9w5p5-m57b0l">
+			<property name="associatesType" value="composition"/>
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="composition" value=""/>
+			<property name="aggregation" value=""/>
+			<property name="supplierCardinality" value="*"/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::-tdsqjuf6r9d7tml9vl0d" role="Client"></participant>
+			<participant referencedUin="design:node:::7hdxaf6r93dkk1ctzd5" role="Supplier"></participant>
+		</link>
+	</node>
+</nodeSet>
