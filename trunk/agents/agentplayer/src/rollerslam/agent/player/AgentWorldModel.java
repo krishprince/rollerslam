@@ -23,6 +23,8 @@ public class AgentWorldModel extends GoalBasedEnvironmentStateModel {
 	public int cycleLastMsg = -1;
 	public int myMaxArea = PositionCoord.maxArea;
 		
+	public boolean changed = false;
+	
 	public AgentWorldModel(EnvironmentStateModel model) {
 		super(model);
 	}

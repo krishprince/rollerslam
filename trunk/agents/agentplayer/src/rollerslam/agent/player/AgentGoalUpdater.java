@@ -28,66 +28,70 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 	public void updateGoal(GoalBasedEnvironmentStateModel goal) {
 		AgentWorldModel model = (AgentWorldModel) goal;
 		
-		ClientFacade facade = ClientFacadeImpl.getInstance();
-		SimulationState state = SimulationState.STOPPED;
+		if (model != null && model.changed) {
 
-		logMsg = "";
-		
-		try {
-			state = facade.getSimulationAdmin().getState();
-		} catch (RemoteException e) {
-			if (PrintTrace.TracePrint){
-				if (PrintTrace.TracePrint){
-					e.printStackTrace();
+			ClientFacade facade = ClientFacadeImpl.getInstance();
+			SimulationState state = SimulationState.STOPPED;
+
+			logMsg = "";
+
+			try {
+				state = facade.getSimulationAdmin().getState();
+			} catch (RemoteException e) {
+				if (PrintTrace.TracePrint) {
+					if (PrintTrace.TracePrint) {
+						e.printStackTrace();
+					}
 				}
 			}
-		}	
-		
-		if(model != null && model.environmentStateModel != null){
-			calculeMaxArea(model);
-		}
-		
-		if(state == SimulationState.STOPPED){
-			//Stop reasoning			
-		} else if (model.currentGoal == AgentGoal.JOIN_GAME) {
-			joinGame(model);
-		} else if (model.currentGoal == AgentGoal.WAIT_JOIN_GAME) {
-			waitJoinGame(model);
-		} else if (model.currentGoal == AgentGoal.INITIALIZATION){
-			initialization(model);
-		} else if (model.currentGoal == AgentGoal.SET_ROLES) {
-			setRoles(model);
-		} else if (model.currentGoal == AgentGoal.GO_TO_INIT_COORD){
-			goToInitCoord(model);
-		} else if (model.currentGoal == AgentGoal.STOP) {
-			stop(model);
-		} else if (model.currentGoal == AgentGoal.WAIT_MOVIMENT) {
-			waitMoviment(model);
-		} else if (model.currentGoal == AgentGoal.GO_TO_BALL) {
-			goToBall(model);
-	    } else if (model.currentGoal == AgentGoal.CATCH_BALL){
-	    	catchBall(model);
-	    } else if (model.currentGoal == AgentGoal.TACKLE_PLAYER) {
-	    	tacklePlayer(model);
-	    } else if (model.currentGoal == AgentGoal.STAND_UP) {
-	    	standUp(model);
-	    } else if (model.currentGoal == AgentGoal.GO_TO_GOAL){
-	    	goToGoal(model);
-	    } else if (model.currentGoal == AgentGoal.THROW_BALL){
-	    	throwBall(model);
-	    } else if(model.currentGoal == AgentGoal.KICK_BALL){
-	    	kickBall(model);
-	    } else if(model.currentGoal == AgentGoal.COUNTER_TACKLE){
-	    	counterTackle(model);
-	    }
-		
-		if(id != -1){
-			try {
-				GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(cycle, id, logMsg);
-				facade.getLogRecordingService().addEntry(envLog);
-			} catch (RemoteException e) {
-				if (PrintTrace.TracePrint){
-					e.printStackTrace();
+
+			if (model != null && model.environmentStateModel != null) {
+				calculeMaxArea(model);
+			}
+
+			if (state == SimulationState.STOPPED) {
+				// Stop reasoning
+			} else if (model.currentGoal == AgentGoal.JOIN_GAME) {
+				joinGame(model);
+			} else if (model.currentGoal == AgentGoal.WAIT_JOIN_GAME) {
+				waitJoinGame(model);
+			} else if (model.currentGoal == AgentGoal.INITIALIZATION) {
+				initialization(model);
+			} else if (model.currentGoal == AgentGoal.SET_ROLES) {
+				setRoles(model);
+			} else if (model.currentGoal == AgentGoal.GO_TO_INIT_COORD) {
+				goToInitCoord(model);
+			} else if (model.currentGoal == AgentGoal.STOP) {
+				stop(model);
+			} else if (model.currentGoal == AgentGoal.WAIT_MOVIMENT) {
+				waitMoviment(model);
+			} else if (model.currentGoal == AgentGoal.GO_TO_BALL) {
+				goToBall(model);
+			} else if (model.currentGoal == AgentGoal.CATCH_BALL) {
+				catchBall(model);
+			} else if (model.currentGoal == AgentGoal.TACKLE_PLAYER) {
+				tacklePlayer(model);
+			} else if (model.currentGoal == AgentGoal.STAND_UP) {
+				standUp(model);
+			} else if (model.currentGoal == AgentGoal.GO_TO_GOAL) {
+				goToGoal(model);
+			} else if (model.currentGoal == AgentGoal.THROW_BALL) {
+				throwBall(model);
+			} else if (model.currentGoal == AgentGoal.KICK_BALL) {
+				kickBall(model);
+			} else if (model.currentGoal == AgentGoal.COUNTER_TACKLE) {
+				counterTackle(model);
+			}
+
+			if (id != -1) {
+				try {
+					GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(cycle,
+							id, logMsg);
+					facade.getLogRecordingService().addEntry(envLog);
+				} catch (RemoteException e) {
+					if (PrintTrace.TracePrint) {
+						e.printStackTrace();
+					}
 				}
 			}
 		}
@@ -638,6 +642,12 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 	
 	private void calculeMaxArea(AgentWorldModel model){
 		Player me = model.getMe();
+		
+		if(me == null){
+			model.myMaxArea = PositionCoord.maxArea;
+			return;
+		}
+		
 		Player[] enemyTeam = null;
 		Player[] allyTeam = null;
 		int qtdEnemyPlayers = 0;
