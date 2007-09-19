@@ -4,6 +4,8 @@ import java.rmi.AlreadyBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+import com.parctechnologies.eclipse.EclipseConnection;
+
 public interface ClientInitialization {
 	/**
 	 * Call this method before any other method.
@@ -17,6 +19,8 @@ public interface ClientInitialization {
 	 * Tries to locate the simulation  
 	 */
 	void init();
+	
+	EclipseConnection getEclipseConnection();
 	
 	/**
 	 * Helps clients on registering remote objects. Every object that is supposed to be

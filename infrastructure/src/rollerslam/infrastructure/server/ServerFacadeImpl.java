@@ -27,11 +27,15 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Vector;
+
+import com.parctechnologies.eclipse.EclipseConnection;
+
 import rollerslam.infrastructure.agent.Effector;
 import rollerslam.infrastructure.agent.Sensor;
 import rollerslam.infrastructure.agent.SensorEffectorManager;
 import rollerslam.infrastructure.agent.automata.AutomataAgent;
 import rollerslam.infrastructure.discoverer.server.MulticastClientListener;
+import rollerslam.infrastructure.eclipse.EclipsePrologHandlerImpl;
 import rollerslam.infrastructure.logging.LogEntry;
 import rollerslam.infrastructure.logging.LogRecordingService;
 import rollerslam.infrastructure.logging.LogRecordingServiceImpl;
@@ -297,4 +301,9 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
     public GeneralSettings getGeneralSettings() throws RemoteException {
         return gs;
     }
+
+	public EclipseConnection getEclipseConnection() {
+		return EclipsePrologHandlerImpl.getInstance().getEclipseConnection();
+	}
+    
 }
