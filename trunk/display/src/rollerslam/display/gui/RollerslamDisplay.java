@@ -128,15 +128,26 @@ public class RollerslamDisplay extends JPanel implements View, ActionListener {
             this.showException(e2);
         }
 
-        JComboBox jcb = new JComboBox(options);
-        jcb.setEditable(true);
+        String addr = null;
 
-        int opt = JOptionPane.showConfirmDialog(this, jcb, "Select or inform server URI", JOptionPane.OK_CANCEL_OPTION);
-        if (opt != JOptionPane.OK_OPTION) {
-            return;
+        System.out.println("options = " + options);
+        if (options.size() == 2) {
+        	addr = options.elementAt(1);
+        } else {
+        	JComboBox jcb = new JComboBox(options);
+			jcb.setEditable(true);
+
+			int opt = JOptionPane
+					.showConfirmDialog(this, jcb,
+							"Select or inform server URI",
+							JOptionPane.OK_CANCEL_OPTION);
+			if (opt != JOptionPane.OK_OPTION) {
+				return;
+			}
+			
+			addr = (String) jcb.getSelectedItem();
         }
 
-        String addr = (String) jcb.getSelectedItem();
         System.out.println("CONNECTING TO " + addr);
 
         try {
