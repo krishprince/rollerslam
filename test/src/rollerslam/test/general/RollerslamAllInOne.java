@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import rollerslam.agent.referee.RefereeAgent;
 import rollerslam.display.gui.RollerslamDisplay;
 import rollerslam.display.gui.RollerslamMobileDisplay;
 import rollerslam.environment.gui.ServerDisplay;
@@ -47,6 +48,13 @@ public class RollerslamAllInOne extends JFrame implements ActionListener {
 			logger = null;
 		}     	
     	sd = new ServerDisplay(logger);
+    	try {
+			new RefereeAgent();
+		} catch (Exception e) {
+			if (PrintTrace.TracePrint) {
+				e.printStackTrace();
+			}
+		}
         initComponents();
     }
 
