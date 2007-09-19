@@ -7,6 +7,9 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferStrategy;
 import java.text.NumberFormat;
 import javax.swing.JLabel;
@@ -26,7 +29,7 @@ import rollerslam.infrastructure.server.PrintTrace;
  * @author Weslei
  */
 @SuppressWarnings(value = "serial")
-public class GameCanvas extends Canvas {
+public class GameCanvas extends Canvas implements MouseMotionListener {
 
     /** The stragey that allows us to use accelerate page flipping */
     private BufferStrategy strategy;
@@ -42,6 +45,8 @@ public class GameCanvas extends Canvas {
     private Sprite scoreBoardA;
     private Sprite scoreBoardB;
     private GameField gameField;
+    
+    public Point mPoint;
 
     public GameCanvas(JLabel messages) {
         gameField = new GameField(4);
@@ -58,6 +63,8 @@ public class GameCanvas extends Canvas {
         background = new Sprite(gameField.getImage());
         scoreBoardA = new Sprite(gameField.getScoreboardA());
         scoreBoardB = new Sprite(gameField.getScoreboardB());
+        
+        this.addMouseMotionListener(this);
     }
 
     public void init() {
@@ -79,7 +86,12 @@ public class GameCanvas extends Canvas {
 
                 String tmp;
                 Graphics2D g;
+                String agId;
+                boolean isRed = true;
+                int x;
+                int y;
                 while (true) {
+                    agId = "";
                     g = (Graphics2D) strategy.getDrawGraphics();
 
                     g.setColor(Color.GREEN);
@@ -100,7 +112,15 @@ public class GameCanvas extends Canvas {
                             } else {
                                 s = ss.getSprite(SpriteKind.RED_PLAYER);
                             }
-                            s.draw(g, translatex(player.s.x) - 15, translatey(player.s.y) - 30);
+                            
+                            x = translatex(player.s.x) - 15;
+                            y = translatey(player.s.y) - 30;
+                            if ((mPoint.x >= x && mPoint.x <= (x + 15))
+                                && (mPoint.y >= y && mPoint.y <= (y + 30))) {
+                                agId = "PId: " + player.id;
+                                isRed = true;
+                            }
+                            s.draw(g, x, y);
                         }
 
                         for (Player player : world.playersB) {
@@ -113,7 +133,16 @@ public class GameCanvas extends Canvas {
                             } else {
                                 s = ss.getSprite(SpriteKind.BLUE_PLAYER);
                             }
-                            s.draw(g, translatex(player.s.x) - 15, translatey(player.s.y) - 30);
+                            
+                            x = translatex(player.s.x) - 15;
+                            y = translatey(player.s.y) - 30;
+                            if ((mPoint.x >= x && mPoint.x <= (x + 15))
+                                && (mPoint.y >= y && mPoint.y <= (y + 30))) {
+                                agId = "PId: " + player.id;
+                                isRed = false;
+                            }
+                            
+                            s.draw(g, x, y);
                         }
 
                         if (freeBall) {
@@ -141,6 +170,9 @@ public class GameCanvas extends Canvas {
 
                         g.setColor(Color.WHITE);
                         g.drawString(tmp, scoreBoardB.getWidth(), (int) (scoreBoardB.getHeight() / 1.3));
+                        
+                        g.setColor(isRed ? Color.RED : Color.BLUE);
+                        g.drawString(agId, 10, 50);
 
                         messagesLabel.setText(MessageHandler.getCurrentMessage());
                     }
@@ -171,4 +203,11 @@ public class GameCanvas extends Canvas {
     public void setModel(Model model) {
         this.model = model;
     }
+
+    public void mouseMoved(MouseEvent e) {
+        this.mPoint = e.getPoint();
+    }
+
+    public void mouseDragged(MouseEvent e) {}
+    
 }
