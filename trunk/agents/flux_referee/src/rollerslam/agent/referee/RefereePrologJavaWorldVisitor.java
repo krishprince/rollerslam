@@ -9,6 +9,7 @@ import rollerslam.environment.model.World;
 public class RefereePrologJavaWorldVisitor {
 	private enum TEAM {TEAM_A, TEAM_B};
 	
+	@SuppressWarnings("unchecked")
 	public void updateWorldRepresentation(RefereeWorldModel refereeWorld, Object worldState) {
 		if (worldState instanceof Collection) {
 			Collection stateCol = (Collection) worldState;
