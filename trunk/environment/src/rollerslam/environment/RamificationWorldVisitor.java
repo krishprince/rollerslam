@@ -88,6 +88,18 @@ public class RamificationWorldVisitor implements Visitor, RamificationComponent 
 			obj.v = new Vector(0, 0);
 		}
 		
+		if (obj.tacke_penality > 0) {
+			obj.tacke_penality --;
+		} else {
+			obj.tacke_penality = 0;
+		}
+
+		if (obj.ground_penalty > 0) {
+			obj.ground_penalty --;
+		} else {
+			obj.ground_penalty = 0;
+		}
+
 		obj.counterTackle = false;
 		
 	}
