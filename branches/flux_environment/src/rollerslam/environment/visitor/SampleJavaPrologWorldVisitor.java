@@ -56,7 +56,9 @@ public class SampleJavaPrologWorldVisitor implements JavaPrologWorldVisitor {
 			accumulator.add("withPlayer(" + getIDForObject(obj) + ")");
 		}
 		if (obj.isMoving){
+			double error = Math.random();
 			accumulator.add("isMoving("+getIDForObject(obj)+")");
+			accumulator.add("attrition("+error+")");
 		}
 	}
 

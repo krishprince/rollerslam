@@ -12,10 +12,12 @@ public class SamplePrologJavaWorldVisitor implements PrologJavaWorldVisitor {
 
 	@SuppressWarnings("unchecked")
 	public void updateWorldRepresentation(World world, Object worldState) {
-		// System.out.println("obj: " + worldState);
+		System.out.println("obj: " + worldState);
 
 		// if it's not there anymore it should be false...
 		world.ball.withPlayer = false;
+		world.ball.isMoving = false;
+		setPropertiesPlayer(world);
 
 		if (worldState instanceof Collection) {
 			Collection stateCol = (Collection) worldState;
@@ -23,7 +25,7 @@ public class SamplePrologJavaWorldVisitor implements PrologJavaWorldVisitor {
 			for (Object object : stateCol) {
 				if (object instanceof CompoundTerm) {
 					CompoundTerm term = (CompoundTerm) object;
-
+					// System.out.print("a: " + term.toString() + "\n ");
 					if (term.functor().equals("position")) {
 						if (((CompoundTerm) term.arg(1)).functor().equals(
 								"ball")) {
@@ -113,6 +115,21 @@ public class SamplePrologJavaWorldVisitor implements PrologJavaWorldVisitor {
 			}
 		}
 		return null;
+	}
+
+	private void setPropertiesPlayer(World world) {
+		for (Player player : world.playersA) {
+			player.counterTackle = false;
+			player.hasBall = false;
+			player.inGround = false;
+			player.counterTackle = false;
+		}
+		for (Player player : world.playersB) {
+			player.counterTackle = false;
+			player.hasBall = false;
+			player.inGround = false;
+			player.counterTackle = false;
+		}
 	}
 
 	private Vector termToVector(CompoundTerm compoundTerm) {
