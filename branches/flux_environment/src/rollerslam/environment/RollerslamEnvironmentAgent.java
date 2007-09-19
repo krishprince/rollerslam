@@ -67,23 +67,10 @@ public class RollerslamEnvironmentAgent extends AutomataAgent {
 	}
 	
 	private void initializeEclipseConnection() throws Exception {
-	    System.setProperty("eclipse.directory", "D:\\ECLiPSe 5.10");
-	    String folder = "C:\\Temp\\maas\\1709\\rollerslam_workspace\\environment\\flux\\";
-
-	    EclipseEngineOptions eclipseEngineOptions = new EclipseEngineOptions();
-	    File eclipseProgram;
-	    
-	    eclipseEngineOptions.setUseQueues(false);
-	    eclipse = EmbeddedEclipse.getInstance(eclipseEngineOptions);
-	    
-	    eclipseProgram = new File(folder+"flux.pl");
-	    eclipse.compile(eclipseProgram);
-	    
-	    eclipseProgram = new File(folder+"fluent.chr");
-	    eclipse.compile(eclipseProgram);
-	    
-	    eclipseProgram = new File(folder+"rollerslam.pl");
-	    eclipse.compile(eclipseProgram);
+		String folder = "c:\\temp\\maas\\1909\\rollerslam_workspace\\environment\\flux\\";
+	    eclipse = ServerFacadeImpl.getInstance().getServerInitialization().getEclipseConnection();	    	    	    
+	    File eclipseProgram = new File(folder + "rollerslam.pl");
+	    eclipse.compile(eclipseProgram);	    
 	}
 
 	/**

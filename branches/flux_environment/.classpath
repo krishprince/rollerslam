@@ -4,6 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/infrastructure"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/interfaces"/>
-	<classpathentry kind="lib" path="lib/eclipse.jar"/>
+	<classpathentry kind="lib" path="/lib/eclipse.jar"/>
 	<classpathentry kind="output" path="build"/>
 </classpath>
