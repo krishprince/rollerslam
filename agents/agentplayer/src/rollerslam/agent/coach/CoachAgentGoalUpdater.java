@@ -49,12 +49,14 @@ public class CoachAgentGoalUpdater implements GoalUpdateComponent {
 			listening(model);
 		} 
 		
-		try {
-			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(cycle, id, logMsg);
-			facade.getLogRecordingService().addEntry(envLog);
-		} catch (RemoteException e) {
-			if (PrintTrace.TracePrint){
-				e.printStackTrace();
+		if (id != -1){
+			try {
+				GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(cycle, id, logMsg);
+				facade.getLogRecordingService().addEntry(envLog);
+			} catch (RemoteException e) {
+				if (PrintTrace.TracePrint){
+					e.printStackTrace();
+				}
 			}
 		}
 
@@ -95,7 +97,7 @@ public class CoachAgentGoalUpdater implements GoalUpdateComponent {
 						if(!model.playersToSetPosition.contains(Integer.parseInt(f.sender))){
 							model.playersToSetPosition.add(Integer.parseInt(f.sender));
 							
-							logMsg += "\nRECEIVE INITIALIZE MESSAGE - AGENT " + Integer.parseInt(f.sender);
+							logMsg += " -- RECEIVED INITIALIZE MESSAGE - AGENT " + Integer.parseInt(f.sender);
 						}
 					}
 				}
@@ -109,7 +111,7 @@ public class CoachAgentGoalUpdater implements GoalUpdateComponent {
 				model.lastPosition = model.playersPosition.get(model.playersToSetPosition.get(0));
 				model.playersToSetPosition.remove(0); 
 				
-				logMsg += "\nSETTING AGENT POSITION - AGENT " + model.lastPlayers + "; POSITION " + model.lastPosition;
+				logMsg += " -- SETTING AGENT POSITION - AGENT " + model.lastPlayers + "; POSITION " + model.lastPosition;
 			}else {
 				model.playersPosition.put(model.playersToSetPosition.get(0), model.positionToSet.get(0));
 				model.lastPlayers = model.playersToSetPosition.get(0);
@@ -117,10 +119,10 @@ public class CoachAgentGoalUpdater implements GoalUpdateComponent {
 				model.playersToSetPosition.remove(0); 
 				model.positionToSet.remove(0);
 				
-				logMsg += "\nSETTING AGENT POSITION - AGENT " + model.lastPlayers + "; POSITION " + model.lastPosition;
+				logMsg += " -- SETTING AGENT POSITION - AGENT " + model.lastPlayers + "; POSITION " + model.lastPosition;
 			}
 			
-			logMsg += "\nSENDING POSITION TO AGENT " + model.lastPlayers;
+			logMsg += " -- SENDING POSITION TO AGENT " + model.lastPlayers;
 		}		
 	}
 	
