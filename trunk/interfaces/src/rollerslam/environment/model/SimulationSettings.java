@@ -40,5 +40,8 @@ public class SimulationSettings {
 	public static final int MAX_VELOCITY = 1000;
 	public static final int MAX_DISTANCE = 5000;
 	public static final int MAX_ACCELERATION = 300;
+
+	public static final int GROUND_PENALTY = 20;
+	public static final int TACKLE_PENALTY = 20;
 	
 }
