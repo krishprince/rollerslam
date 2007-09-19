@@ -9,6 +9,9 @@ public class Player extends AnimatedObject {
 	
 	private static int id_gen = 0;
 	
+	public int tacke_penality;
+	public int ground_penalty;
+	
 	public PlayerTeam team;	
 	public int id = id_gen ++;
 	
