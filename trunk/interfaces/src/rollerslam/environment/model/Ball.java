@@ -18,8 +18,8 @@ public class Ball extends AnimatedObject implements Visitable {
 	
 	public Ball(World w, int psx, int psy) {
 		super(w, 0, 0, SimulationSettings.BALL_WIDTH, SimulationSettings.BALL_HEIGHT);
-		maxA = SimulationSettings.MAX_ACCELERATION * 5;
-		maxV = SimulationSettings.MAX_VELOCITY * 5;
+		maxA = SimulationSettings.MAX_ACCELERATION * 7;
+		maxV = SimulationSettings.MAX_VELOCITY * 7;
 	}
 	
 	@Override
