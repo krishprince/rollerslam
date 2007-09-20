@@ -15,15 +15,22 @@ public class KickAction extends LegAction {
 		super(a);
 		this.ax = ax;
 		this.ay = ay;
+		this.acceleration = new Vector(ax,ay);
 	}
 	
 	public KickAction(Agent a, Vector acceleration){
 		super(a);
 		this.acceleration = acceleration;
+		this.ax = acceleration.x;
+		this.ay = acceleration.y;
 	}
 	
 	public KickAction(Vector acceleration){
 		this.acceleration = acceleration;
 	}
+	
+	public String toString() {
+		return "KickBall("+acceleration+")";
+	}
+	
 }
-

@@ -16,4 +16,9 @@ public class SendMsgAction extends VoiceAction {
 	public SendMsgAction(Fact f){
 		subject = f;
 	}
+	
+	public String toString() {
+		return "SendMsg("+subject+")";
+	}
+	
 }

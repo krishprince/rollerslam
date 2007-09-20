@@ -15,15 +15,23 @@ public class ThrowAction extends ArmAction {
 		super(a);
 		this.ax = ax;
 		this.ay = ay;
+		this.acceleration = new Vector(ax,ay);
 	}
 	
 	public ThrowAction(Agent a, Vector acceleration){
 		super(a);
 		this.acceleration = acceleration;
+		this.ax = acceleration.x;
+		this.ay = acceleration.y;
 	}
 	
 	public ThrowAction(Vector acceleration){
 		this.acceleration = acceleration;
 	}
+	
+	public String toString() {
+		return "ThrowBall("+acceleration+")";
+	}
+	
 }
 

@@ -5,7 +5,7 @@ import rollerslam.infrastructure.agent.Message;
 
 
 @SuppressWarnings("serial")
-public class VoiceAction extends Message {
+public abstract class VoiceAction extends Message {
 	public VoiceAction(Agent a) {
 		super(a);
 	}

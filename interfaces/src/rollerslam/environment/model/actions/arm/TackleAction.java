@@ -12,4 +12,9 @@ public class TackleAction extends ArmAction {
 	public TackleAction(){
 		
 	}
+	
+	public String toString() {
+		return "Tackle()";
+	}
+	
 }

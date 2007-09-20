@@ -17,4 +17,9 @@ public class HitAction extends KickAction {
 	public HitAction(Vector acceleration){
 		super(acceleration);
 	}
+
+	public String toString() {
+		return "HitBall("+acceleration+")";
+	}
+	
 }

@@ -12,4 +12,8 @@ public class CatchAction extends ArmAction {
 	public CatchAction(){
 		
 	}
+	
+	public String toString() {
+		return "CatchBall()";
+	}
 }
