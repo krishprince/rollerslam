@@ -1,5 +1,7 @@
 package rollerslam.environment.model.perceptions;
 
+import java.rmi.RemoteException;
+
 import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.Message;
 
@@ -18,4 +20,13 @@ public class GameStartedPerception extends Message {
 		this.receiver = receiver;
 		this.playerID = playerID;
 	}
+	
+	public String toString() {
+		try {
+			return "GameStarted(agent="+receiver.getName()+"," + playerID + ")";
+		} catch (RemoteException e) {
+			return "GameStarted(agent=??," + playerID + ")";
+		}
+	}
+	
 }

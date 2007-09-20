@@ -12,4 +12,9 @@ public class StandUpAction extends LegAction {
 	public StandUpAction(){
 		
 	}
+
+	public String toString() {
+		return "StandUp()";
+	}
+	
 }

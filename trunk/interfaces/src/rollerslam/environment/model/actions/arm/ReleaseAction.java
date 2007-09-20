@@ -12,4 +12,9 @@ public class ReleaseAction extends ArmAction {
 	public ReleaseAction(){
 		
 	}
+
+	public String toString() {
+		return "ReleaseBall()";
+	}
+	
 }

@@ -27,6 +27,9 @@ public class UpdateScoreAction extends Message {
 		this.scoreTeamB = scoreTeamB;
 	}
 
+	public String toString() {
+		return "UpdateScore("+scoreTeamA+ ","+scoreTeamB+")";
+	}
 
 
 }

@@ -17,4 +17,9 @@ public class DashAction extends LegAction {
 	public DashAction(Vector acceleration){
 		this.acceleration = acceleration;
 	}
+	
+	public String toString() {
+		return "Dash("+acceleration+")";
+	}
+	
 }

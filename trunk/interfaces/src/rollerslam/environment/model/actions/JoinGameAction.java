@@ -16,4 +16,8 @@ public class JoinGameAction extends Message {
 	public JoinGameAction(PlayerTeam team){
 		this.team = team;
 	}
+	
+	public String toString() {
+		return "JoinGame("+team+")";
+	}
 }

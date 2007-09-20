@@ -12,4 +12,8 @@ public class CountertackleAction extends ArmAction {
 	public CountertackleAction(){
 		
 	}
+	
+	public String toString() {
+		return "CounterTackle()";
+	}	
 }
