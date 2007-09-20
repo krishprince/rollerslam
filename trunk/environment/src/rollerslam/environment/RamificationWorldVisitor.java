@@ -42,6 +42,7 @@ public class RamificationWorldVisitor implements Visitor, RamificationComponent 
 		Vector new_v;
 		
 		new_v = obj.v.sumVector(obj.a).limitModuloTo(obj.maxV);
+		obj.a = obj.a.limitModuloTo(obj.maxA);
 		
 		if (MathGeometry.calculePointIntoEllipse(obj.world.outTrack.width,
 				SimulationSettings.FOCUS1X, SimulationSettings.FOCUS1Y,
