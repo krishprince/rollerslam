@@ -177,9 +177,9 @@ public class AgentActionGenerator implements
 		World world = (World)model.environmentStateModel;
 			        	
     	if(me.team == PlayerTeam.TEAM_A){
-    		return new KickAction(world.goalB.s.subtract(me.s).multVector(2));
+    		return new KickAction(world.goalB.s.subtract(me.s).multVector(10));
 		}else{
-			return new KickAction(world.goalA.s.subtract(me.s).multVector(2));
+			return new KickAction(world.goalA.s.subtract(me.s).multVector(10));
 		}
 	}
 	
