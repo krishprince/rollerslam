@@ -2,7 +2,9 @@ package rollerslam.agent.referee;
 
 import java.io.File;
 
+import rollerslam.environment.model.Fact;
 import rollerslam.environment.model.actions.UpdateScoreAction;
+import rollerslam.environment.model.actions.voice.SendMsgAction;
 import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.agent.StateMessage;
@@ -61,8 +63,21 @@ public class RefereeAgent extends AutomataAgent {
 			public Message computeAction(EnvironmentStateModel w) {
 				try {
 					if(w instanceof RefereeWorldModel) {
-						RefereeWorldModel refereeWorld = (RefereeWorldModel)w;
-						return refereeWorld.getMessage();						
+						
+						RefereeWorldModel refereeWorld = (RefereeWorldModel)w;												
+						if (refereeWorld.needsToSayGoal) {
+							refereeWorld.needsToSayGoal = false;
+							return refereeWorld.getMessage();													
+						} else {
+							if (refereeWorld.goalFact != null) {
+								Fact fact = refereeWorld.goalFact;
+								refereeWorld.goalFact = null;
+								
+								return new SendMsgAction(fact);									
+							} else {
+								return null;
+							}
+						}
 					}
 					return null;
 				} catch (Exception e) {
