@@ -21,6 +21,7 @@ import rollerslam.infrastructure.server.SimulationState;
 import rollerslam.logging.GoalUpdateLogEntry;
 
 public class AgentGoalUpdater implements GoalUpdateComponent {
+	private static final String LOG_MSG_SEPARATOR = "<BR>";
 	String logMsg = "";
 	int cycle = 0;
 	int id = -1;
@@ -105,9 +106,9 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 	
 	private void waitJoinGame(AgentWorldModel model){
         if (model.gameStarted) {
-        	logMsg += " -- " + AgentGoalLogMessages.LAST_GOAL.getValue() + AgentGoalLogMessages.WAIT_JOIN_GAME.getValue(); 
+        	logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.LAST_GOAL.getValue() + AgentGoalLogMessages.WAIT_JOIN_GAME.getValue(); 
         	
-			logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.INITIALIZATION.getValue();
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.INITIALIZATION.getValue();
 			
 			cycle = ((World)model.environmentStateModel).currentCycle;
 			id = model.getMe().id;
@@ -121,9 +122,9 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 	}
 	
 	private void initialization(AgentWorldModel model){
-		logMsg += " -- " + AgentGoalLogMessages.LAST_GOAL.getValue() + AgentGoalLogMessages.INITIALIZATION.getValue();
+		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.LAST_GOAL.getValue() + AgentGoalLogMessages.INITIALIZATION.getValue();
 		
-		logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.SET_ROLES.getValue();
+		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.SET_ROLES.getValue();
 		cycle = ((World)model.environmentStateModel).currentCycle;
 		id = model.getMe().id;
 
@@ -134,7 +135,7 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 	private void setRoles(AgentWorldModel model){
 		Vector<Message> acts = ((World)model.environmentStateModel).actions;
 
-		logMsg += " -- " + AgentGoalLogMessages.LAST_GOAL.getValue() + AgentGoalLogMessages.SET_ROLES.getValue();
+		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.LAST_GOAL.getValue() + AgentGoalLogMessages.SET_ROLES.getValue();
 		
 		cycle = ((World)model.environmentStateModel).currentCycle;
 		id = model.getMe().id;
@@ -155,9 +156,9 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 							model.posCoord.y *= -1;
 						}
 
-						logMsg += " -- " + AgentGoalLogMessages.ROLES_RECEIVED.getValue().replace("%POS%", model.position.toString()).replace("%ROLE%", model.role.toString());
+						logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.ROLES_RECEIVED.getValue().replace("%POS%", model.position.toString()).replace("%ROLE%", model.role.toString());
 
-						logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD;
+						logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD;
 						model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
 					}
 				}
@@ -165,9 +166,9 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 		}	
 		
 		if(model.cycleLastMsg != -1 && ((World)model.environmentStateModel).currentCycle - model.cycleLastMsg > 10){
-			logMsg += " -- " + AgentGoalLogMessages.NOT_RECEIVE_COACH_MESG.getValue();
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NOT_RECEIVE_COACH_MESG.getValue();
 			
-			logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.INITIALIZATION.getValue();
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.INITIALIZATION.getValue();
 			model.currentGoal = AgentGoal.INITIALIZATION;
 		}
 	}
@@ -175,29 +176,29 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 	private void goToInitCoord(AgentWorldModel model){
 		Player me = model.getMe();
 
-		logMsg += " -- " + AgentGoalLogMessages.LAST_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
+		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.LAST_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
 		cycle = ((World)model.environmentStateModel).currentCycle;
 		id = me.id;
 		
 		if(me.inGround){
-			logMsg += " -- " + AgentGoalLogMessages.IN_GROUND;
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.IN_GROUND;
 
-			logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.STAND_UP.getValue();
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.STAND_UP.getValue();
 			model.currentGoal = AgentGoal.STAND_UP;
 		} else if(me.hasBall){
-			logMsg += " -- " + AgentGoalLogMessages.HAS_BALL.getValue();
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.HAS_BALL.getValue();
 
-			logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_GOAL.getValue();
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_GOAL.getValue();
 			model.currentGoal = AgentGoal.GO_TO_GOAL;
 		} else if(nearBall(model)){
-			logMsg += " -- " + AgentGoalLogMessages.NEAR_BALL.getValue();
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEAR_BALL.getValue();
 
-			logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_BALL.getValue();
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_BALL.getValue();
 			model.currentGoal = AgentGoal.GO_TO_BALL;
 		} else if(MathGeometry.calculeDistancePoints(me.s.x, model.posCoord.x, me.s.y, model.posCoord.y) < model.myMaxArea * 0.10) {
-			logMsg += " -- " + AgentGoalLogMessages.IN_AREA.getValue();
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.IN_AREA.getValue();
 
-			logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.STOP.getValue();
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.STOP.getValue();
 			model.currentGoal = AgentGoal.STOP;
 		}
 	}
@@ -205,35 +206,35 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 	private void stop(AgentWorldModel model){
 		Player me = model.getMe();
 
-		logMsg += " -- " + AgentGoalLogMessages.LAST_GOAL.getValue() + AgentGoalLogMessages.STOP.getValue();
+		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.LAST_GOAL.getValue() + AgentGoalLogMessages.STOP.getValue();
 		
 		cycle = ((World)model.environmentStateModel).currentCycle;
 		id = me.id;
 
 		//It only will stop to dash with a = -v when v = 0 and a = 0, but, he is near the ball, he go to catch it
 		if(nearBall(model)){
-			logMsg += " -- " + AgentGoalLogMessages.NEAR_BALL.getValue();
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEAR_BALL.getValue();
 
-			logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_BALL.getValue();
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_BALL.getValue();
 			model.currentGoal = AgentGoal.GO_TO_BALL;
 		} else if(me.v.getModule() == 0 && me.a.getModule() == 0 ){
-			logMsg += " -- " + AgentGoalLogMessages.IN_AREA.getValue();
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.IN_AREA.getValue();
 
-			logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.WAIT_MOVIMENT.getValue();
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.WAIT_MOVIMENT.getValue();
 			model.currentGoal = AgentGoal.WAIT_MOVIMENT;
 		}
 	}
 	
 	private void waitMoviment(AgentWorldModel model){
 		//if(MathGeometry.calculeDistancePoints(me.world.ball.s.x, model.posCoord.x, me.world.ball.s.y, model.posCoord.y) < model.myMaxArea) {
-		logMsg += " -- " + AgentGoalLogMessages.LAST_GOAL.getValue() + AgentGoalLogMessages.WAIT_MOVIMENT.getValue();
+		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.LAST_GOAL.getValue() + AgentGoalLogMessages.WAIT_MOVIMENT.getValue();
 		cycle = ((World)model.environmentStateModel).currentCycle;
 		id = model.getMe().id;
 
 		if(nearBall(model)){
-			logMsg += " -- " + AgentGoalLogMessages.NEAR_BALL.getValue();
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEAR_BALL.getValue();
 
-			logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_BALL.getValue();
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_BALL.getValue();
 			model.currentGoal = AgentGoal.GO_TO_BALL;
 		}
 	}
@@ -241,44 +242,44 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 	private void goToBall(AgentWorldModel model){
 		Player me = model.getMe();
 
-		logMsg += " -- " + AgentGoalLogMessages.LAST_GOAL.getValue() + AgentGoalLogMessages.GO_TO_BALL.getValue();
+		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.LAST_GOAL.getValue() + AgentGoalLogMessages.GO_TO_BALL.getValue();
 		cycle = ((World)model.environmentStateModel).currentCycle;
 		id = me.id;
 		
 		if(!me.inGround){
-			logMsg += " -- " + AgentGoalLogMessages.NOT_IN_GROUND.getValue();
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NOT_IN_GROUND.getValue();
         	//if(MathGeometry.calculeDistancePoints(me.s.x, model.posCoord.x, me.s.y, model.posCoord.y) > model.myMaxArea) {
         	if(!nearBall(model)){
-        		logMsg += " -- " + AgentGoalLogMessages.FAR_BALL.getValue();
+        		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.FAR_BALL.getValue();
         		
-        		logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
+        		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
     			model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
     		} else if (MathGeometry.calculeDistancePoints(me.s.x, me.world.ball.s.x, me.s.y, me.world.ball.s.y) < 5000) {
-    			logMsg += " -- " + AgentGoalLogMessages.VERY_NEAR_BALL.getValue();
+    			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.VERY_NEAR_BALL.getValue();
                 if(!me.world.ball.withPlayer){
-                	logMsg += " -- " + AgentGoalLogMessages.BALL_WITH_NOBODY.getValue();
+                	logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.BALL_WITH_NOBODY.getValue();
                 	
-                	logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.CATCH_BALL.getValue();
+                	logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.CATCH_BALL.getValue();
                     model.currentGoal = AgentGoal.CATCH_BALL;				
                 }else if(me.world.playerWithBall != null){
-                	logMsg += " -- " + AgentGoalLogMessages.BALL_WITH_ANYBODY.getValue();
+                	logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.BALL_WITH_ANYBODY.getValue();
                 	if(me.world.playerWithBall.team == me.team){
-                		logMsg += " -- " + AgentGoalLogMessages.BALL_WITH_TEAM.getValue();
+                		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.BALL_WITH_TEAM.getValue();
                 		
-                		logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
+                		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
                 		model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
                 	}else{
-                		logMsg += " -- " + AgentGoalLogMessages.BALL_WITH_OPPONENT.getValue();
+                		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.BALL_WITH_OPPONENT.getValue();
                 		
-                		logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.TACKLE_PLAYER.getValue();
+                		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.TACKLE_PLAYER.getValue();
                 		model.currentGoal = AgentGoal.TACKLE_PLAYER;
                 	}
                 }
             }
         } else {
-        	logMsg += " -- " + AgentGoalLogMessages.IN_GROUND.getValue();
+        	logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.IN_GROUND.getValue();
         	
-        	logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.STAND_UP.getValue();
+        	logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.STAND_UP.getValue();
         	model.currentGoal = AgentGoal.STAND_UP;
         }
 	}
@@ -286,12 +287,13 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 	private void catchBall(AgentWorldModel model){
 		Player me = model.getMe();
 
-		logMsg += " -- " + AgentGoalLogMessages.LAST_GOAL.getValue() + AgentGoalLogMessages.CATCH_BALL.getValue();
+		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.LAST_GOAL.getValue() + AgentGoalLogMessages.CATCH_BALL.getValue();
 		cycle = ((World)model.environmentStateModel).currentCycle;
 		id = me.id;
 
 		if(me.hasBall){
-			logMsg += " -- " + AgentGoalLogMessages.IN_AREA.getValue();
+			// XXX: MUDEI AQUI! 
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.HAS_BALL.getValue();
 			
         	boolean nearOpponent = false;
         	
@@ -310,35 +312,35 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
         	}
         	
         	if(nearOpponent){
-        		logMsg += " -- " + AgentGoalLogMessages.NEAR_OPPONENT.getValue();
+        		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEAR_OPPONENT.getValue();
         		
-        		logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.COUNTER_TACKLE.getValue();
+        		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.COUNTER_TACKLE.getValue();
                 model.currentGoal = AgentGoal.COUNTER_TACKLE;
         	}else{
-        		logMsg += " -- " + AgentGoalLogMessages.FAR_OPPONENT.getValue();
+        		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.FAR_OPPONENT.getValue();
         		
-        		logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_GOAL.getValue();
+        		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_GOAL.getValue();
                 model.currentGoal = AgentGoal.GO_TO_GOAL;
         	}
         }else{
-        	logMsg += " -- " + AgentGoalLogMessages.DOESNT_HAVE_BALL.getValue();
+        	logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.DOESNT_HAVE_BALL.getValue();
         	if(me.world.playerWithBall != null && me.world.playerWithBall.team == me.team){
-        		logMsg += " -- " + AgentGoalLogMessages.BALL_WITH_TEAM.getValue();
+        		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.BALL_WITH_TEAM.getValue();
         		
-        		logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
+        		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
         		model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
             }else{
-            	logMsg += " -- " + AgentGoalLogMessages.BALL_WITHOUT_TEAM.getValue();
+            	logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.BALL_WITHOUT_TEAM.getValue();
         		        		
         		if(!nearBall(model)){
-        			logMsg += " -- " + AgentGoalLogMessages.FAR_BALL.getValue();
+        			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.FAR_BALL.getValue();
         			
-        			logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
+        			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
         			model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
         		} else {
-        			logMsg += " -- " + AgentGoalLogMessages.NEAR_BALL.getValue();
+        			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEAR_BALL.getValue();
         			
-        			logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_BALL.getValue();
+        			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_BALL.getValue();
         			model.currentGoal = AgentGoal.GO_TO_BALL;
         		}
             }
@@ -348,27 +350,27 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 	private void tacklePlayer(AgentWorldModel model){
 		Player me = model.getMe();
         
-		logMsg += " -- " + AgentGoalLogMessages.LAST_GOAL.getValue() + AgentGoalLogMessages.TACKLE_PLAYER.getValue();
+		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.LAST_GOAL.getValue() + AgentGoalLogMessages.TACKLE_PLAYER.getValue();
 		cycle = ((World)model.environmentStateModel).currentCycle;
 		id = me.id;
 		
 		if(me.world.playerWithBall != null && me.world.playerWithBall.team == me.team){
-			logMsg += " -- " + AgentGoalLogMessages.BALL_WITH_TEAM.getValue();
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.BALL_WITH_TEAM.getValue();
     		
-			logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
     		model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
         }else{
-        	logMsg += " -- " + AgentGoalLogMessages.BALL_WITHOUT_TEAM.getValue();
+        	logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.BALL_WITHOUT_TEAM.getValue();
     		
     		if(!nearBall(model)){
-    			logMsg += " -- " + AgentGoalLogMessages.FAR_BALL.getValue();
+    			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.FAR_BALL.getValue();
     			
-    			logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
+    			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
     			model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
     		} else {
-    			logMsg += " -- " + AgentGoalLogMessages.NEAR_BALL.getValue();
+    			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEAR_BALL.getValue();
     			
-    			logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_BALL.getValue();
+    			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_BALL.getValue();
     			model.currentGoal = AgentGoal.GO_TO_BALL;
     		}
         }		
@@ -377,27 +379,27 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 	private void standUp(AgentWorldModel model){
 		Player me = model.getMe();
 		
-		logMsg += " -- " + AgentGoalLogMessages.LAST_GOAL.getValue() + AgentGoalLogMessages.STAND_UP.getValue();
+		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.LAST_GOAL.getValue() + AgentGoalLogMessages.STAND_UP.getValue();
 		cycle = ((World)model.environmentStateModel).currentCycle;
 		id = me.id;
 
 		if(me.world.playerWithBall != null && me.world.playerWithBall.team == me.team){
-			logMsg += " -- " + AgentGoalLogMessages.BALL_WITH_TEAM.getValue();
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.BALL_WITH_TEAM.getValue();
     		
-			logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
 			model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
         }else{
-        	logMsg += " -- " + AgentGoalLogMessages.BALL_WITHOUT_TEAM.getValue();
+        	logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.BALL_WITHOUT_TEAM.getValue();
     		
     		if(!nearBall(model)){
-    			logMsg += " -- AGENT FAR THE BALL";
+    			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.FAR_BALL.getValue();
     			
-    			logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
+    			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
     			model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
     		} else {
-    			logMsg += " -- " + AgentGoalLogMessages.NEAR_BALL.getValue();
+    			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEAR_BALL.getValue();
     			
-    			logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_BALL.getValue();
+    			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_BALL.getValue();
     			model.currentGoal = AgentGoal.GO_TO_BALL;
     		}
         }
@@ -406,59 +408,59 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 	private void goToGoal(AgentWorldModel model){
 		Player me = model.getMe();
 		
-		logMsg += " -- " + AgentGoalLogMessages.LAST_GOAL.getValue() + AgentGoalLogMessages.GO_TO_GOAL.getValue();
+		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.LAST_GOAL.getValue() + AgentGoalLogMessages.GO_TO_GOAL.getValue();
 		cycle = ((World)model.environmentStateModel).currentCycle;
 		id = me.id;
 
     	if(me.inGround){
-    		logMsg += " -- " + AgentGoalLogMessages.IN_GROUND.getValue();
+    		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.IN_GROUND.getValue();
 
-    		logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.STAND_UP.getValue();    		
+    		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.STAND_UP.getValue();    		
     		model.currentGoal = AgentGoal.STAND_UP;
     	} else if (me.hasBall) {
-    		logMsg += " -- " + AgentGoalLogMessages.HAS_BALL.getValue();
+    		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.HAS_BALL.getValue();
     		
     		if(shootBall(model)){
-    			logMsg += " -- " + AgentGoalLogMessages.MANY_OPPONENTS_NEAR.getValue();
+    			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.MANY_OPPONENTS_NEAR.getValue();
     			
-    			logMsg += " -- " + AgentGoalLogMessages.KICK_BALL.getValue();
+    			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.KICK_BALL.getValue();
     			model.currentGoal = AgentGoal.KICK_BALL;
     		} else if(me.team == PlayerTeam.TEAM_A){
 				if(MathGeometry.calculeDistancePoints(me.s.x, me.world.goalB.s.x, me.s.y, me.world.goalB.s.y) < 30000) {
-					logMsg += " -- " + AgentGoalLogMessages.NEAR_GOAL.getValue();
+					logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEAR_GOAL.getValue();
 					
-					logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.THROW_BALL.getValue();
+					logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.THROW_BALL.getValue();
 	        		model.currentGoal = AgentGoal.THROW_BALL;
 				}else if(MathGeometry.calculeDistancePoints(me.s.x, me.world.goalB.s.x, me.s.y, me.world.goalB.s.y) < 50000) {
-					logMsg += " -- " + AgentGoalLogMessages.NEAR_GOAL.getValue();
+					logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEAR_GOAL.getValue();
 					
-					logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.KICK_BALL.getValue();
+					logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.KICK_BALL.getValue();
 	        		model.currentGoal = AgentGoal.KICK_BALL;
 				}
 			}else{
 				if(MathGeometry.calculeDistancePoints(me.s.x, me.world.goalA.s.x, me.s.y, me.world.goalA.s.y) < 30000) {
-					logMsg += " -- " + AgentGoalLogMessages.NEAR_GOAL.getValue();
+					logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEAR_GOAL.getValue();
 					
-					logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.THROW_BALL.getValue();
+					logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.THROW_BALL.getValue();
 	        		model.currentGoal = AgentGoal.THROW_BALL;    					
 				}if(MathGeometry.calculeDistancePoints(me.s.x, me.world.goalA.s.x, me.s.y, me.world.goalA.s.y) < 50000) {
-					logMsg += " -- " + AgentGoalLogMessages.NEAR_GOAL.getValue();
+					logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEAR_GOAL.getValue();
 					
-					logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.KICK_BALL.getValue();
+					logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.KICK_BALL.getValue();
 	        		model.currentGoal = AgentGoal.KICK_BALL;
 				}
 			}        	
     	} else {
-			logMsg += " -- " + AgentGoalLogMessages.DOESNT_HAVE_BALL.getValue();
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.DOESNT_HAVE_BALL.getValue();
     		if(!nearBall(model)){
-    			logMsg += " -- " + AgentGoalLogMessages.FAR_BALL.getValue();
+    			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.FAR_BALL.getValue();
     			
-    			logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
+    			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
     			model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
     		} else {
-    			logMsg += " -- " + AgentGoalLogMessages.NEAR_BALL.getValue();
+    			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEAR_BALL.getValue();
     			
-    			logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_BALL.getValue();
+    			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_BALL.getValue();
     			model.currentGoal = AgentGoal.GO_TO_BALL;
     		}
     	}
@@ -467,42 +469,42 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 	private void throwBall(AgentWorldModel model){
 		Player me = model.getMe();
 
-		logMsg += " -- " + AgentGoalLogMessages.LAST_GOAL.getValue() + AgentGoalLogMessages.THROW_BALL.getValue();
+		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.LAST_GOAL.getValue() + AgentGoalLogMessages.THROW_BALL.getValue();
 		cycle = ((World)model.environmentStateModel).currentCycle;
 		id = me.id;
 		
 	    if(me.inGround){
-	    	logMsg += " -- " + AgentGoalLogMessages.IN_GROUND.getValue();
+	    	logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.IN_GROUND.getValue();
 
-	    	logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.STAND_UP.getValue();
+	    	logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.STAND_UP.getValue();
 	   		model.currentGoal = AgentGoal.STAND_UP;
     	} else {      		
     		if(me.world.ball.withPlayer && me.world.playerWithBall.team == me.team){
-    			logMsg += " -- " + AgentGoalLogMessages.BALL_WITH_TEAM.getValue();
+    			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.BALL_WITH_TEAM.getValue();
     			
     			if(me.hasBall){
-    				logMsg += " -- " + AgentGoalLogMessages.HAS_BALL.getValue();
+    				logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.HAS_BALL.getValue();
     				
-    				logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_GOAL.getValue();
+    				logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_GOAL.getValue();
     				model.currentGoal = AgentGoal.GO_TO_GOAL;
     			} else {
-    				logMsg += " -- " + AgentGoalLogMessages.DOESNT_HAVE_BALL.getValue();
+    				logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.DOESNT_HAVE_BALL.getValue();
     				
-    				logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
+    				logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
     				model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
     			}
     		}else{
-    			logMsg += " -- " + AgentGoalLogMessages.BALL_WITHOUT_TEAM.getValue();
+    			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.BALL_WITHOUT_TEAM.getValue();
 
 	       		if(!nearBall(model)) {
-	       			logMsg += " -- " + AgentGoalLogMessages.FAR_BALL.getValue();
+	       			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.FAR_BALL.getValue();
 	       			
-	       			logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
+	       			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
 	    			model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
 	    		} else {
-	    			logMsg += " -- " + AgentGoalLogMessages.NEAR_BALL.getValue();
+	    			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEAR_BALL.getValue();
 	    			
-	    			logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_BALL.getValue();
+	    			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_BALL.getValue();
 	    			model.currentGoal = AgentGoal.GO_TO_BALL;
 	    		}
     		}
@@ -512,42 +514,42 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 	private void kickBall(AgentWorldModel model){
 		Player me = model.getMe();
 
-		logMsg += " -- " + AgentGoalLogMessages.LAST_GOAL.getValue() + AgentGoalLogMessages.KICK_BALL.getValue();
+		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.LAST_GOAL.getValue() + AgentGoalLogMessages.KICK_BALL.getValue();
 		cycle = ((World)model.environmentStateModel).currentCycle;
 		id = me.id;
 		
 	    if(me.inGround){
-	    	logMsg += " -- " + AgentGoalLogMessages.IN_GROUND.getValue();
+	    	logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.IN_GROUND.getValue();
 
-	    	logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.STAND_UP.getValue();
+	    	logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.STAND_UP.getValue();
 	   		model.currentGoal = AgentGoal.STAND_UP;
     	} else {      		
-    		if(me.world.ball.withPlayer && me.world.playerWithBall.team == me.team){
-    			logMsg += " -- " + AgentGoalLogMessages.BALL_WITH_TEAM.getValue();
+    		if(me.world.playerWithBall != null && me.world.ball.withPlayer && me.world.playerWithBall.team == me.team){
+    			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.BALL_WITH_TEAM.getValue();
     			
     			if(me.hasBall){
-    				logMsg += " -- " + AgentGoalLogMessages.HAS_BALL.getValue();
+    				logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.HAS_BALL.getValue();
     				
-    				logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_GOAL.getValue();
+    				logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_GOAL.getValue();
     				model.currentGoal = AgentGoal.GO_TO_GOAL;
     			} else {
-    				logMsg += " -- " + AgentGoalLogMessages.DOESNT_HAVE_BALL.getValue();
+    				logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.DOESNT_HAVE_BALL.getValue();
     				
-    				logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
+    				logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
     				model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
     			}
     		}else{
-    			logMsg += " -- " + AgentGoalLogMessages.BALL_WITHOUT_TEAM.getValue();
+    			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.BALL_WITHOUT_TEAM.getValue();
 
 	       		if(!nearBall(model)) {
-	       			logMsg += " -- " + AgentGoalLogMessages.FAR_BALL.getValue();
+	       			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.FAR_BALL.getValue();
 	       			
-	       			logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
+	       			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
 	    			model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
 	    		} else {
-	    			logMsg += " -- " + AgentGoalLogMessages.NEAR_BALL.getValue();
+	    			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEAR_BALL.getValue();
 	    			
-	    			logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_BALL.getValue();
+	    			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_BALL.getValue();
 	    			model.currentGoal = AgentGoal.GO_TO_BALL;
 	    		}
     		}
@@ -557,32 +559,32 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 	private void counterTackle(AgentWorldModel model){
 		Player me = model.getMe();
 
-		logMsg += " -- " + AgentGoalLogMessages.LAST_GOAL.getValue() + AgentGoalLogMessages.COUNTER_TACKLE.getValue();
+		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.LAST_GOAL.getValue() + AgentGoalLogMessages.COUNTER_TACKLE.getValue();
 		cycle = ((World)model.environmentStateModel).currentCycle;
 		id = me.id;
 
 		if(me.inGround){
-    		logMsg += " -- " + AgentGoalLogMessages.IN_GROUND.getValue();
+    		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.IN_GROUND.getValue();
     		
-    		logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.STAND_UP.getValue();
+    		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.STAND_UP.getValue();
      		model.currentGoal = AgentGoal.STAND_UP;
      	} else if(me.hasBall){
-     		logMsg += " -- " + AgentGoalLogMessages.HAS_BALL.getValue();
+     		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.HAS_BALL.getValue();
      		
-     		logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_GOAL.getValue();
+     		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_GOAL.getValue();
      		model.currentGoal = AgentGoal.GO_TO_GOAL;
      	} else {
-     		logMsg += " -- " + AgentGoalLogMessages.DOESNT_HAVE_BALL.getValue();
+     		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.DOESNT_HAVE_BALL.getValue();
 
     		if(!nearBall(model)) {
-    			logMsg += " -- " + AgentGoalLogMessages.FAR_BALL.getValue();
+    			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.FAR_BALL.getValue();
     			
-    			logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
+    			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
     			model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
     		} else {
-    			logMsg += " -- " + AgentGoalLogMessages.NEAR_BALL.getValue();
+    			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEAR_BALL.getValue();
     			
-    			logMsg += " -- " + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_BALL.getValue();
+    			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_BALL.getValue();
     			model.currentGoal = AgentGoal.GO_TO_BALL;
     		}
      	}		
