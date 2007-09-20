@@ -6,30 +6,26 @@ import java.util.Hashtable;
 import rollerslam.environment.model.Fact;
 import rollerslam.environment.model.Player;
 import rollerslam.environment.model.PlayerTeam;
+import rollerslam.environment.model.SimulationSettings;
 import rollerslam.environment.model.World;
-import rollerslam.environment.model.actions.arm.CountertackleAction;
 import rollerslam.environment.model.actions.ArmAction;
-import rollerslam.environment.model.actions.SentinelAction;
-import rollerslam.environment.model.actions.UpdateScoreAction;
-import rollerslam.environment.model.actions.arm.CatchAction;
-import rollerslam.environment.model.actions.leg.DashAction;
-import rollerslam.environment.model.actions.leg.HitAction;
 import rollerslam.environment.model.actions.JoinGameAction;
-import rollerslam.environment.model.actions.leg.KickAction;
-import rollerslam.environment.model.actions.leg.StandUpAction;
 import rollerslam.environment.model.actions.LegAction;
+import rollerslam.environment.model.actions.UpdateScoreAction;
+import rollerslam.environment.model.actions.VoiceAction;
+import rollerslam.environment.model.actions.arm.CatchAction;
+import rollerslam.environment.model.actions.arm.CountertackleAction;
 import rollerslam.environment.model.actions.arm.ReleaseAction;
-import rollerslam.environment.model.actions.sentinel.CheckAliveAction;
-import rollerslam.environment.model.actions.sentinel.CreatePlayer;
-import rollerslam.environment.model.actions.sentinel.KillPlayerAction;
-import rollerslam.environment.model.actions.voice.SendMsgAction;
 import rollerslam.environment.model.actions.arm.TackleAction;
 import rollerslam.environment.model.actions.arm.ThrowAction;
-import rollerslam.environment.model.actions.VoiceAction;
+import rollerslam.environment.model.actions.leg.DashAction;
+import rollerslam.environment.model.actions.leg.HitAction;
+import rollerslam.environment.model.actions.leg.KickAction;
+import rollerslam.environment.model.actions.leg.StandUpAction;
+import rollerslam.environment.model.actions.voice.SendMsgAction;
 import rollerslam.environment.model.perceptions.GameStartedPerception;
 import rollerslam.environment.model.utils.MathGeometry;
 import rollerslam.environment.model.utils.Vector;
-import rollerslam.environment.model.SimulationSettings;
 import rollerslam.infrastructure.agent.Agent;
 import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.agent.automata.ActionInterpretationComponent;
@@ -174,28 +170,7 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 			p.inGround = false;
 		}
 	}
-	
-	private void checkAlive(World w, Player p){
-		//Body
-		//if(){
-			
-		//}
-		p.dead= true;
-	}
-	
-	private void killPlayer(World w, Player p){
-		//Body
-		if (p.dead){
-			p = null;
-		}
 		
-	}
-	
-	private void createPlayer(World w, Player p){
-		//Body
-		
-	}
-	
 	private void updateScore(World w, UpdateScoreAction action) {
 		w.scoreboard.scoreTeamA += action.getScoreTeamA();
 		w.scoreboard.scoreTeamB += action.getScoreTeamB();
@@ -258,17 +233,6 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 		} else if (m instanceof JoinGameAction) {
 			JoinGameAction mt = (JoinGameAction) m;
 			this.joinWorld((World)w, mt.sender, mt.team);
-		} else if (m instanceof SentinelAction){
-			if (m instanceof CheckAliveAction){
-				CheckAliveAction mt = (CheckAliveAction) m;
-				this.checkAlive((World) w, playersMap.get(mt.sender));
-			}else if (m instanceof KillPlayerAction){
-				KillPlayerAction mt = (KillPlayerAction) m;
-				this.killPlayer((World) w, playersMap.get(mt.sender));
-			}else if (m instanceof CreatePlayer){
-				CreatePlayer mt = (CreatePlayer) m;
-				this.createPlayer((World) w, playersMap.get(mt.sender));
-			}
 		}
 		
 		if(m instanceof UpdateScoreAction) {
