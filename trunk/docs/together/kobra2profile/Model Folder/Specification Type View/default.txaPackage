@@ -171,7 +171,7 @@
 	<node uin="1g64yf6rb7ptkb5e5bs">
 		<property name="$metaclass" value="Note"/>
 		<property name="$name" value="Note1"/>
-		<property name="$note_text" value="????"/>
+		<property name="$note_text" value="ExpressionInOCL = Constraint"/>
 		<link uin="ieje0rf6rb7uhuff7yz6">
 			<property name="$metaclass" value="Note Link"/>
 			<participant referencedUin="design:node:::1g64yf6rb7ptkb5e5bs" role="Client"></participant>

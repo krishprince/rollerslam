@@ -119,4 +119,14 @@
 			<participant referencedUin="ecore:e_class:bin:uml.ocl.Constraint" role="Supplier"></participant>
 		</link>
 	</node>
+	<node uin="1g64yf6ujwc68-a8t4rl">
+		<property name="$metaclass" value="Note"/>
+		<property name="$name" value="Note1"/>
+		<property name="$note_text" value="ExpressionInOCL = Constraint"/>
+		<link uin="ieje0rf6ujwlu8n5kism">
+			<property name="$metaclass" value="Note Link"/>
+			<participant referencedUin="design:node:::1g64yf6ujwc68-a8t4rl" role="Client"></participant>
+			<participant referencedUin="design:link:::ieje0rf6rwqomo-nhyq9j:-tdsqjuf6rwlsd5-qczcwz" role="Supplier"></participant>
+		</link>
+	</node>
 </nodeSet>

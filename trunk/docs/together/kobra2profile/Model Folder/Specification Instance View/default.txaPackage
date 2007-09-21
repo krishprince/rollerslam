@@ -57,40 +57,16 @@
 		<property name="$metaclass" value="Class20"/>
 		<property name="stereotype" value="stereotype"/>
 		<property name="$name" value="K2Bool"/>
-		<property name="mod__extends" value="uml20.kernel.UMLPrimitiveType"/>
-		<link uin="ieje0rf6rbljpdoj5g38">
-			<property name="$metaclass" value="Generalization20"/>
-			<property name="stereotype" value="extension"/>
-			<property name="mod__cachedBaseName" value="uml20.kernel.UMLPrimitiveType"/>
-			<participant referencedUin="design:node:::-tdsqjuf6rbbu7eq79slo" role="Client"></participant>
-			<participant referencedUin="ecore:e_class:bin:uml20.kernel.UMLPrimitiveType" role="Supplier"></participant>
-		</link>
 	</node>
 	<node uin="-tdsqjuf6rbbzc4yoqjde">
 		<property name="$metaclass" value="Class20"/>
 		<property name="stereotype" value="stereotype"/>
 		<property name="$name" value="K2Int"/>
-		<property name="mod__extends" value="uml20.kernel.UMLPrimitiveType"/>
-		<link uin="ieje0rf6rbllo1-g2mt8u">
-			<property name="$metaclass" value="Generalization20"/>
-			<property name="stereotype" value="extension"/>
-			<property name="mod__cachedBaseName" value="uml20.kernel.UMLPrimitiveType"/>
-			<participant referencedUin="design:node:::-tdsqjuf6rbbzc4yoqjde" role="Client"></participant>
-			<participant referencedUin="ecore:e_class:bin:uml20.kernel.UMLPrimitiveType" role="Supplier"></participant>
-		</link>
 	</node>
 	<node uin="-tdsqjuf6rbc4lk-4l5awt">
 		<property name="$metaclass" value="Class20"/>
 		<property name="stereotype" value="stereotype"/>
 		<property name="$name" value="K2Inf"/>
-		<property name="mod__extends" value="uml20.kernel.UMLPrimitiveType"/>
-		<link uin="ieje0rf6rblntnjhwmqh">
-			<property name="$metaclass" value="Generalization20"/>
-			<property name="stereotype" value="extension"/>
-			<property name="mod__cachedBaseName" value="uml20.kernel.UMLPrimitiveType"/>
-			<participant referencedUin="design:node:::-tdsqjuf6rbc4lk-4l5awt" role="Client"></participant>
-			<participant referencedUin="ecore:e_class:bin:uml20.kernel.UMLPrimitiveType" role="Supplier"></participant>
-		</link>
 	</node>
 	<node uin="-tdsqjuf6rbccam450irz">
 		<property name="$metaclass" value="Class20"/>
@@ -109,27 +85,11 @@
 		<property name="$metaclass" value="Class20"/>
 		<property name="stereotype" value="stereotype"/>
 		<property name="$name" value="K2Str"/>
-		<property name="mod__extends" value="uml20.kernel.UMLPrimitiveType"/>
-		<link uin="ieje0rf6rbmmhkujbazm">
-			<property name="$metaclass" value="Generalization20"/>
-			<property name="stereotype" value="extension"/>
-			<property name="mod__cachedBaseName" value="uml20.kernel.UMLPrimitiveType"/>
-			<participant referencedUin="design:node:::-tdsqjuf6rbchfb-djzmnz" role="Client"></participant>
-			<participant referencedUin="ecore:e_class:bin:uml20.kernel.UMLPrimitiveType" role="Supplier"></participant>
-		</link>
 	</node>
 	<node uin="-tdsqjuf6rbcmo7-icdjef">
 		<property name="$metaclass" value="Class20"/>
 		<property name="stereotype" value="stereotype"/>
 		<property name="$name" value="K2Null"/>
-		<property name="mod__extends" value="uml20.kernel.UMLPrimitiveType"/>
-		<link uin="ieje0rf6rbmpdv-s35eol">
-			<property name="$metaclass" value="Generalization20"/>
-			<property name="stereotype" value="extension"/>
-			<property name="mod__cachedBaseName" value="uml20.kernel.UMLPrimitiveType"/>
-			<participant referencedUin="design:node:::-tdsqjuf6rbcmo7-icdjef" role="Client"></participant>
-			<participant referencedUin="ecore:e_class:bin:uml20.kernel.UMLPrimitiveType" role="Supplier"></participant>
-		</link>
 	</node>
 	<node uin="-tdsqjuf6rbcrvz-7bkvdy">
 		<property name="$metaclass" value="Class20"/>
@@ -160,11 +120,16 @@
 	<node uin="1g64yf6rblqbi-do9j08">
 		<property name="$metaclass" value="Note"/>
 		<property name="$name" value="Note1"/>
-		<property name="$note_text" value="Colocar OCL"/>
-		<link uin="ieje0rf6rbluty-j638wc">
+		<property name="$note_text" value="ExpressionInOCL = Constraint"/>
+		<link uin="ieje0rf6ujgydsnb27gx">
 			<property name="$metaclass" value="Note Link"/>
 			<participant referencedUin="design:node:::1g64yf6rblqbi-do9j08" role="Client"></participant>
-			<participant referencedUin="ecore:e_class:bin:uml20.kernel.UMLPrimitiveType" role="Supplier"></participant>
+			<participant referencedUin="design:link:::ieje0rf6rbmdp9-2uhy5h:-tdsqjuf6rbccam450irz" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6ujh2ms-zg02pr">
+			<property name="$metaclass" value="Note Link"/>
+			<participant referencedUin="design:node:::1g64yf6rblqbi-do9j08" role="Client"></participant>
+			<participant referencedUin="design:link:::ieje0rf6rbnqm5a8sy11:-tdsqjuf6rbcwy6-yyrah9" role="Supplier"></participant>
 		</link>
 	</node>
 </nodeSet>
