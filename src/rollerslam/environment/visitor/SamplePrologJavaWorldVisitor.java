@@ -12,7 +12,7 @@ public class SamplePrologJavaWorldVisitor implements PrologJavaWorldVisitor {
 
 	@SuppressWarnings("unchecked")
 	public void updateWorldRepresentation(World world, Object worldState) {
-		System.out.println("obj: " + worldState);
+		//System.out.println("obj: " + worldState);
 
 		// if it's not there anymore it should be false...
 		world.ball.withPlayer = false;
