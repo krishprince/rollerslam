@@ -171,12 +171,17 @@ public class GameCanvas extends Canvas implements MouseMotionListener {
                         g.setColor(Color.WHITE);
                         g.drawString(tmp, scoreBoardB.getWidth(), (int) (scoreBoardB.getHeight() / 1.3));
                         
+                        g.setColor(Color.BLACK);
+                        g.drawString("Sim cycle: " + world.currentCycle, 5, 50);
+                        
                         g.setColor(isRed ? Color.RED : Color.BLUE);
-                        g.drawString(agId, 10, 50);
+                        g.drawString(agId, 5, 70);
+                        
+                        
 
                         messagesLabel.setText(MessageHandler.getCurrentMessage());
                     }
-
+                    
                     g.dispose();
                     strategy.show();
 
