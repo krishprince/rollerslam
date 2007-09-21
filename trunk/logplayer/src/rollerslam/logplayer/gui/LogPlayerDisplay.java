@@ -67,6 +67,7 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener,
     private GameCanvas game = new GameCanvas(messages);
     private JFrame messagesFrame;
     private JCheckBox checkNewWindow;
+    private JCheckBox checkAutoUpdate;
     
     public LogPlayerDisplay() {
         Model model = new ModelImpl();
@@ -121,6 +122,15 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener,
             scrollPane.setVisible(true);
         }
     }
+    
+    private void checkAutoUpdateUpdated(ActionEvent e) {
+        if (checkAutoUpdate.isSelected()) {
+            this.btnShowMessagesClick(null);
+        } else {
+            jep.setText("");
+            jepNW.setText("");
+        }
+    }
 
     private void initComponents() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -170,7 +180,7 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener,
         controls.add(cycleSlider);
         cycleSlider.setBounds(5, 40, 360, 64);
 
-        speedSlider = new JSlider(JSlider.HORIZONTAL, 50, 1050, 200);
+        speedSlider = new JSlider(JSlider.HORIZONTAL, 0, 1050, 200);
         speedSlider.addChangeListener(this);
         speedSlider.setMajorTickSpacing(250);
         speedSlider.setMinorTickSpacing(50);
@@ -224,15 +234,22 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener,
         checkNewWindow.setSelected(false);
         checkNewWindow.addActionListener(this);
         mPanel.add(checkNewWindow);
-        checkNewWindow.setBounds(255, 10, 100, 25);
+        checkNewWindow.setBounds(255, 9, 100, 22);
         checkNewWindow.setEnabled(false);
        
         
         btnShowMessages = new JButton("Show");
         mPanel.add(btnShowMessages);
-        btnShowMessages.setBounds(270, 35, 70, 25);
+        btnShowMessages.setBounds(270, 46, 70, 22);
         btnShowMessages.setEnabled(false);
         btnShowMessages.addActionListener(this);
+        
+        checkAutoUpdate = new JCheckBox("Auto Update");
+        checkAutoUpdate.setSelected(false);
+        checkAutoUpdate.addActionListener(this);
+        mPanel.add(checkAutoUpdate);
+        checkAutoUpdate.setBounds(255, 26, 100, 22);
+        checkAutoUpdate.setEnabled(false);
 
 
         pMiddle.add(mPanel);
@@ -282,6 +299,9 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener,
             return;
         } else if (o == checkNewWindow) {
             checkNewWindowUpdated(e);
+            return;
+        } else if (o == checkAutoUpdate) {
+            checkAutoUpdateUpdated(e);
             return;
         }
 
@@ -356,6 +376,7 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener,
             messageTypeCbo.setEnabled(true);
             btnShowMessages.setEnabled(true);
             checkNewWindow.setEnabled(true);
+            checkAutoUpdate.setEnabled(true);
         } catch (Exception e1) {
             showException(e1);
         }
@@ -373,8 +394,12 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener,
 
     public void updateCurrentCycleMsg(Integer c, Integer m) {
         this.lblCurrentCycle.setText("Cycle " + c + " of " + m);
-        jep.setText("");
-        jepNW.setText("");
+        if (!checkAutoUpdate.isSelected()) {
+            jep.setText("");
+            jepNW.setText("");
+        } else {
+            btnShowMessagesClick(null);
+        }
     }
 
     public void updateSliderBounds(Integer m) {
@@ -406,7 +431,6 @@ public class LogPlayerDisplay extends JPanel implements View, ActionListener,
         jep.setText("");
         jepNW.setText("");
     }
-
-
     
 }
+
