@@ -95,14 +95,14 @@ public class GameField {
         fillOval(g, translate_x(CENTER1[0]), translate_y(CENTER1[1]), translate_x(CENTER1[2]), translate_y(CENTER1[3]));
         drawOval(g, translate_x(CENTER2[0]), translate_y(CENTER2[1]), translate_x(CENTER2[2]), translate_y(CENTER2[3]));
         
-        g.setColor(0x0000ff); // blue
-        g.fillRect(translate_x(SCOREBOARD[0]), translate_y(SCOREBOARD[1]), translate_x(SCOREBOARD[2]), translate_y(SCOREBOARD[3]));
-        g.setColor(0xff0000); // red
-        g.fillRect(translate_x(SCOREBOARD[0]), translate_y(SCOREBOARD[1]), translate_x(SCOREBOARD[2]) / 2, translate_y(SCOREBOARD[3]));
+//        g.setColor(0x0000ff); // blue
+//        g.fillRect(translate_x(SCOREBOARD[0]), translate_y(SCOREBOARD[1]), translate_x(SCOREBOARD[2]), translate_y(SCOREBOARD[3]));
+//        g.setColor(0xff0000); // red
+//        g.fillRect(translate_x(SCOREBOARD[0]), translate_y(SCOREBOARD[1]), translate_x(SCOREBOARD[2]) / 2, translate_y(SCOREBOARD[3]));
         
-        g.setColor(0); //black
-        g.drawRect(translate_x(SCOREBOARD[0]), translate_y(SCOREBOARD[1]), translate_x(SCOREBOARD[2]), translate_y(SCOREBOARD[3]));
-        g.drawRect(translate_x(SCOREBOARD[0]), translate_y(SCOREBOARD[1]), translate_x(SCOREBOARD[2]) / 2, translate_y(SCOREBOARD[3]));
+//        g.setColor(0); //black
+//        g.drawRect(translate_x(SCOREBOARD[0]), translate_y(SCOREBOARD[1]), translate_x(SCOREBOARD[2]), translate_y(SCOREBOARD[3]));
+//        g.drawRect(translate_x(SCOREBOARD[0]), translate_y(SCOREBOARD[1]), translate_x(SCOREBOARD[2]) / 2, translate_y(SCOREBOARD[3]));
         
     }
     
