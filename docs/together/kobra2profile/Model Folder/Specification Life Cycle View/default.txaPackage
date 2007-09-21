@@ -166,7 +166,7 @@
 	<node uin="1g64yf6ruofcu-1uyxte">
 		<property name="$metaclass" value="Note"/>
 		<property name="$name" value="Note1"/>
-		<property name="$note_text" value="Together não tem ProtocolStateMachine"/>
+		<property name="$note_text" value="ProtocolStateMachine = StateMachine"/>
 		<link uin="ieje0rf6ruqseq-qtvonc">
 			<property name="$metaclass" value="Note Link"/>
 			<participant referencedUin="design:node:::1g64yf6ruofcu-1uyxte" role="Client"></participant>
@@ -176,7 +176,7 @@
 	<node uin="1g64yf6ruqxfu-5j038i">
 		<property name="$metaclass" value="Note"/>
 		<property name="$name" value="Note2"/>
-		<property name="$note_text" value="Together não tem ProtocolTransition&#10;"/>
+		<property name="$note_text" value="ProtocolTransition = Transition"/>
 		<link uin="ieje0rf6rurgpm4alunu">
 			<property name="$metaclass" value="Note Link"/>
 			<participant referencedUin="design:node:::1g64yf6ruqxfu-5j038i" role="Client"></participant>
@@ -186,11 +186,11 @@
 	<node uin="1g64yf6ruz0o3-hbpt5o">
 		<property name="$metaclass" value="Note"/>
 		<property name="$name" value="Note3"/>
-		<property name="$note_text" value="?????"/>
-		<link uin="ieje0rf6ruz793-81kdq4">
+		<property name="$note_text" value="ExpressionInOCL = Constraint"/>
+		<link uin="ieje0rf6ujoog0-f6fknr">
 			<property name="$metaclass" value="Note Link"/>
 			<participant referencedUin="design:node:::1g64yf6ruz0o3-hbpt5o" role="Client"></participant>
-			<participant referencedUin="design:node:::-tdsqjuf6rcj79fop6i6i" role="Supplier"></participant>
+			<participant referencedUin="design:link:::ieje0rf6ruxuak-xqjs40:-tdsqjuf6rcjdhnd4hqrk" role="Supplier"></participant>
 		</link>
 	</node>
 </nodeSet>
