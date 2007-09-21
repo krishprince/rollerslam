@@ -212,7 +212,12 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 		id = me.id;
 
 		//It only will stop to dash with a = -v when v = 0 and a = 0, but, he is near the ball, he go to catch it
-		if(nearBall(model)){
+		if(me.inGround){
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.IN_GROUND;
+
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.STAND_UP.getValue();
+			model.currentGoal = AgentGoal.STAND_UP;
+		}else if(nearBall(model)){
 			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEAR_BALL.getValue();
 
 			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_BALL.getValue();
@@ -230,8 +235,14 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.LAST_GOAL.getValue() + AgentGoalLogMessages.WAIT_MOVIMENT.getValue();
 		cycle = ((World)model.environmentStateModel).currentCycle;
 		id = model.getMe().id;
+		Player me = model.getMe();
 
-		if(nearBall(model)){
+		if(me.inGround){
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.IN_GROUND;
+
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.STAND_UP.getValue();
+			model.currentGoal = AgentGoal.STAND_UP;
+		}else if(nearBall(model)){
 			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEAR_BALL.getValue();
 
 			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_BALL.getValue();
@@ -291,7 +302,12 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 		cycle = ((World)model.environmentStateModel).currentCycle;
 		id = me.id;
 
-		if(me.hasBall){
+		if(me.inGround){
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.IN_GROUND;
+
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.STAND_UP.getValue();
+			model.currentGoal = AgentGoal.STAND_UP;
+		} else if(me.hasBall){
 			// XXX: MUDEI AQUI! 
 			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.HAS_BALL.getValue();
 			
@@ -354,7 +370,12 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 		cycle = ((World)model.environmentStateModel).currentCycle;
 		id = me.id;
 		
-		if(me.world.playerWithBall != null && me.world.playerWithBall.team == me.team){
+		if(me.inGround){
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.IN_GROUND;
+
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.STAND_UP.getValue();
+			model.currentGoal = AgentGoal.STAND_UP;
+		} else if(me.world.playerWithBall != null && me.world.playerWithBall.team == me.team){
 			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.BALL_WITH_TEAM.getValue();
     		
 			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
@@ -383,7 +404,12 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 		cycle = ((World)model.environmentStateModel).currentCycle;
 		id = me.id;
 
-		if(me.world.playerWithBall != null && me.world.playerWithBall.team == me.team){
+		if(me.inGround){
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.IN_GROUND;
+
+			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.STAND_UP.getValue();
+			model.currentGoal = AgentGoal.STAND_UP;
+		} else if(me.world.playerWithBall != null && me.world.playerWithBall.team == me.team){
 			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.BALL_WITH_TEAM.getValue();
     		
 			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
