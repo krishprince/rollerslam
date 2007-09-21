@@ -75,7 +75,7 @@ public class RollerslamMobileDisplay {
         }
 
         private int[] getWorldRepresentation() {
-            int[] data = new int[2 + 1 + currentWorld.playersA.length * 2 + 1 + currentWorld.playersB.length * 2];
+            int[] data = new int[2 + 1 + currentWorld.playersA.length * 2 + 1 + currentWorld.playersB.length * 2 + 2];
 
             int pos = 0;
 
@@ -83,19 +83,20 @@ public class RollerslamMobileDisplay {
             data[pos++] = currentWorld.ball.s.y;
 
             data[pos++] = currentWorld.playersA.length;
-
             for (int i = 0; i < currentWorld.playersA.length; ++i) {
                 data[pos++] = currentWorld.playersA[i].s.x;
                 data[pos++] = currentWorld.playersA[i].s.y;
             }
 
             data[pos++] = currentWorld.playersB.length;
-
             for (int i = 0; i < currentWorld.playersB.length; ++i) {
                 data[pos++] = currentWorld.playersB[i].s.x;
                 data[pos++] = currentWorld.playersB[i].s.y;
             }
 
+            data[pos++] = currentWorld.scoreboard.scoreTeamA;
+            data[pos++] = currentWorld.scoreboard.scoreTeamB;
+            
             return data;
         }
     }
