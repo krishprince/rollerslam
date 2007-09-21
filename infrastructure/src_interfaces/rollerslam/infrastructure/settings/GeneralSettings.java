@@ -22,6 +22,9 @@ public interface GeneralSettings extends Remote {
     public static final String LOG_CLASS = "LOG_CLASS";
     public static final String DB_URL = "DB_URL";
     
+    public static final String ECLIPSE_HOME = "ECLIPSE_HOME";
+    public static final String FLUX_CODE_HOME = "FLUX_CODE_HOME";
+    
     public Object getSetting(String settingId) throws RemoteException;
 
 }

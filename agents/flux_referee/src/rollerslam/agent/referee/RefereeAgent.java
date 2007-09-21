@@ -1,7 +1,6 @@
 package rollerslam.agent.referee;
 
 import java.io.File;
-
 import rollerslam.environment.model.Fact;
 import rollerslam.environment.model.actions.UpdateScoreAction;
 import rollerslam.environment.model.actions.voice.SendMsgAction;
@@ -17,24 +16,26 @@ import rollerslam.infrastructure.client.ClientFacade;
 import rollerslam.infrastructure.client.ClientFacadeImpl;
 import rollerslam.infrastructure.client.ClientInitialization;
 import rollerslam.infrastructure.server.PrintTrace;
-
 import com.parctechnologies.eclipse.EclipseConnection;
+import rollerslam.infrastructure.settings.GeneralSettings;
+import rollerslam.infrastructure.settings.GeneralSettingsImpl;
 
 public class RefereeAgent extends AutomataAgent {
-	public ClientFacade facade = null;
+
+    public ClientFacade facade = null;
     public Agent remoteThis = null;
-    
+
     public EclipseConnection eclipse;
 
-    public RefereeAgent() throws Exception {    	
+    public RefereeAgent() throws Exception {
         facade = ClientFacadeImpl.getInstance();
-    	
+
         ClientInitialization clientInitialization = facade.getClientInitialization();
         clientInitialization.init();
 
         initializeEclipseConnection();
         remoteThis = (Agent) clientInitialization.exportObject(this);
-        
+
         facade.getAgentRegistry().register(remoteThis);
 
         this.sensor = facade.getAgentSensor(remoteThis);
@@ -42,9 +43,10 @@ public class RefereeAgent extends AutomataAgent {
 
         this.worldModel = new RefereeWorldModel(null);
 
-       this.initializationComponent = new ModelInitializationComponent() {
+        this.initializationComponent = new ModelInitializationComponent() {
+
             public void initialize(EnvironmentStateModel model) {
-                ((RefereeWorldModel)worldModel).setMessage(new UpdateScoreAction(remoteThis));
+                ((RefereeWorldModel) worldModel).setMessage(new UpdateScoreAction(remoteThis));
             }
         };
 
@@ -52,7 +54,7 @@ public class RefereeAgent extends AutomataAgent {
 
             public void processAction(EnvironmentStateModel w, Message m) {
                 if (m instanceof StateMessage) {
-                    ((RefereeWorldModel) w).setEnvironmentStateModel( ((StateMessage) m).model );
+                    ((RefereeWorldModel) w).setEnvironmentStateModel(((StateMessage) m).model);
                 }
             }
         };
@@ -60,50 +62,49 @@ public class RefereeAgent extends AutomataAgent {
         this.ramificationComponent = new RefereeRamificator(eclipse);
 
         this.strategyComponent = new ModelBasedBehaviorStrategyComponent() {
-			public Message computeAction(EnvironmentStateModel w) {
-				try {
-					if(w instanceof RefereeWorldModel) {
-						
-						RefereeWorldModel refereeWorld = (RefereeWorldModel)w;												
-						if (refereeWorld.needsToSayGoal) {
-							refereeWorld.needsToSayGoal = false;
-							return refereeWorld.getMessage();													
-						} else {
-							if (refereeWorld.goalFact != null) {
-								Fact fact = refereeWorld.goalFact;
-								refereeWorld.goalFact = null;
-								
-								return new SendMsgAction(fact);									
-							} else {
-								return null;
-							}
-						}
-					}
-					return null;
-				} catch (Exception e) {
-					if (PrintTrace.TracePrint){
-						e.printStackTrace();
-					}
-					
-				}
-				return null;
-			}
-		};
+
+            public Message computeAction(EnvironmentStateModel w) {
+                try {
+                    if (w instanceof RefereeWorldModel) {
+
+                        RefereeWorldModel refereeWorld = (RefereeWorldModel) w;
+                        if (refereeWorld.needsToSayGoal) {
+                            refereeWorld.needsToSayGoal = false;
+                            return refereeWorld.getMessage();
+                        } else {
+                            if (refereeWorld.goalFact != null) {
+                                Fact fact = refereeWorld.goalFact;
+                                refereeWorld.goalFact = null;
+
+                                return new SendMsgAction(fact);
+                            } else {
+                                return null;
+                            }
+                        }
+                    }
+                    return null;
+                } catch (Exception e) {
+                    if (PrintTrace.TracePrint) {
+                        e.printStackTrace();
+                    }
+                }
+                return null;
+            }
+        };
 
         this.run();
         startSimulation();
     }
-    
+
     private void initializeEclipseConnection() throws Exception {
-		String folder = "c:\\temp\\maas\\1909\\rollerslam_workspace\\referee\\flux\\";
-	    eclipse = facade.getClientInitialization().getEclipseConnection();	    	    	    
-	    File eclipseProgram = new File(folder + "referee.pl");
-	    eclipse.compile(eclipseProgram);	    
-	}
-
-    public static void main(String[] args) throws Exception {
-    	new RefereeAgent();
-
+        String folder = (String)GeneralSettingsImpl.getInstance().getSetting(GeneralSettings.FLUX_CODE_HOME); 
+        
+        eclipse = facade.getClientInitialization().getEclipseConnection();
+        File eclipseProgram = new File(folder + "referee.pl");
+        eclipse.compile(eclipseProgram);
     }
 
+    public static void main(String[] args) throws Exception {
+        new RefereeAgent();
+    }
 }
