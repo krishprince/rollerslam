@@ -67,12 +67,15 @@ public class FluxActionInterpretationComponent implements
 	private void hit(World w, Player p, Vector vet) {
 		double error = Math.random();
 		action = "hit(" + getIDForObject(p) + "," + error + ","
-				+ SimulationSettings.MAX_DISTANCE + ")";
+				+ SimulationSettings.MAX_DISTANCE + ", vector(" + vet.x + ","
+				+ vet.y + "))";
 	}
 
 	private void kick(World w, Player p, Vector vet) {
 		double error = Math.random();
-		action = "kick(" + getIDForObject(p) + "," + error + ")";
+		action = "kick(" + getIDForObject(p) + "," + error + ","
+		+ ", vector(" + vet.x + ","
+		+ vet.y + ")," + p.strength + ")";
 	}
 
 	private void countertackle(World w, Player p) {
@@ -94,9 +97,11 @@ public class FluxActionInterpretationComponent implements
 				+ SimulationSettings.MAX_DISTANCE + ")";
 	}
 
-	private void throwA(World w, Player p, Vector a) {
+	private void throwA(World w, Player p, Vector vet) {
 		double error = Math.random();
-		action = "throwA(" + getIDForObject(p) + "," + error + ")";
+		action = "throwA(" + getIDForObject(p) + "," + error + ","
+		+ ", vector(" + vet.x + ","
+		+ vet.y + ")," + p.strength + ")";
 	}
 
 	private void sendMsg(World w, Agent agent, Fact f) {
@@ -239,7 +244,7 @@ public class FluxActionInterpretationComponent implements
 					+ javaPrologVisitor.getPrologRepresentation((World) world)
 					+ "]," + action + ", " + "R)";
 
-//			System.out.println("query: " + query);
+			System.out.println("action: " + action);
 
 			CompoundTerm ret;
 			try {
