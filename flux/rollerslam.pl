@@ -47,11 +47,11 @@ state_update(Z1,dash(player(A), New_Acc),Z2,[]) :-
 %% Throw Action
 %%
 
-state_update(Z1,throwA(player(A),Error, vector(Ax, Ay), Strength),Z2,[]) :-
+state_update(Z1,throwA(player(A),Error, vector(Ax, Ay), Strength, ResultModule),Z2,[]) :-
   (poss(throwA(player(A),Strength),Z1),
   holds(acceleration(ball, vector(X0, Y0)),Z1),
   validateError(Error, 0.15, ErrorR),
-  moduleFlux(ErrorR, ResultX, ResultY),
+  moduleFlux(ErrorR,ResultModule, ResultX, ResultY),
   Num is ((1 + Strength) * 1.25),
   multVector(vector(Ax,Ay), Num , vector(XR, YR)),
   X is XR * ResultX,
@@ -78,11 +78,11 @@ state_update(Z1,release(player(X)),Z2,[]) :-
 %% Kick Action
 %%
 
-state_update(Z1,kick(player(A),Error, vector(Ax, Ay), Strength),Z2,[]) :-
+state_update(Z1,kick(player(A),Error, vector(Ax, Ay), Strength, ResultModule),Z2,[]) :-
   (poss(kick(player(A),Error),Z1),
   holds(acceleration(ball, vector(Sxb,Syb)),Z1),
-  validateError(Error, 0.3, ErrorR),
-  moduleFlux(ErrorR, ResultX, ResultY),
+  validateError(Error,0.3, ErrorR),
+  moduleFlux(ErrorR, ResultModule,ResultX, ResultY),
   Num is ((1 + Strength) * 1.25),
   multVector(vector(Ax,Ay), Num , vector(XR, YR)),
   X is XR * ResultX,
@@ -124,17 +124,17 @@ state_update(Z1,counterTackle(player(X)),Z2,[]) :-
 %% Hit Action
 %%
 
-state_update(Z1,hit(player(A),Error, MaxDistance, vector(Ax, Ay)),Z2,[]) :-
+state_update(Z1,hit(player(A),Error, MaxDistance, vector(Ax, Ay), ResultModule),Z2,[]) :-
   (poss(hit(player(A),Error, MaxDistance),Z1),
   holds(position(player(A), vector(Sxa,Sya)),Z1),
   holds(position(ball, vector(Sxc,Syc)),Z1),
   holds(acceleration(ball, vector(Sxb,Syb)),Z1),
   closer(Sxa, Sya, Sxc, Syc, MaxDistance),
   validateError(Error, 0.3, ErrorR),
-  moduleFlux(ErrorR, ResultX, ResultY),
+  moduleFlux(ErrorR,ResultModule, ResultX, ResultY),
   X is Ax * ResultX,
   Y is Ay * ResultY,
-  update(Z1,[position(acceleration, vector(X,Y)), isMoving(ball, _)],[acceleration(ball, vector(Sxb,Syb))],Z2))
+  update(Z1,[acceleration(ball, vector(X,Y)), isMoving(ball, _)],[acceleration(ball, vector(Sxb,Syb))],Z2))
   ;
   (not poss(hit(player(A),Error, MaxDistance),Z1),
   Z2=Z1
@@ -351,11 +351,11 @@ validateError(Error, Num, Result):-
 %%----------------------
 
 checkModule(Param):-
-       A is (Param mod 2),
-       A = 0.
+       Param = 0.
+%% Is there any way to use mod with decimals?       
 
-moduleFlux(Strength, ResultX, ResultY):-
-       (checkModule(Strength),
+moduleFlux(Strength,ModResult, ResultX, ResultY):-
+       (checkModule(ModResult),
        ResultX is Strength,
        ResultY is 1)
        ;
