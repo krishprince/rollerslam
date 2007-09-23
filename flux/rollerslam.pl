@@ -10,7 +10,8 @@
 
 poss(throwA(player(X),_),Z1) :- holds(hasBall(player(X)), Z1),
                                    not_holds(inGround(player(X)),Z1).
-poss(release(player(X)),Z1) :- holds(hasBall(player(X)),Z1).
+poss(release(player(X)),Z1) :- holds(hasBall(player(X)),Z1),
+                               not_holds(inGround(player(X)),Z1).
 poss(dash(player(X)),Z1):- not_holds(inGround(player(X)),Z1).
 poss(kick(player(X),_),Z1) :- holds(hasBall(player(X)), Z1),
                                              not_holds(inGround(player(X)),Z1).
@@ -21,7 +22,8 @@ poss(tackle(player(A),player(B), _),Z1) :- not_holds(inGround(player(A)),Z1),
                                                                  not_holds(counterTackle(player(B)),Z1).
                                                                  
 poss(counterTackle(player(X)),Z1) :- not_holds(inGround(player(X)),Z1).
-poss(hit(player(X),_, _),Z1) :- not_holds(inGround(player(X)), Z1).
+poss(hit(player(X),_, _),Z1) :- not_holds(inGround(player(X)), Z1),
+                                not_holds(hasBall(player(X)), Z1).
 poss(catchA(player(X), _),Z1) :- not_holds(inGround(player(X)),Z1),
                                                      not holds(hasBall(player(A)), Z1).
 poss(standUp(player(X)),Z1) :- holds(inGround(player(X)),Z1).
@@ -45,12 +47,16 @@ state_update(Z1,dash(player(A), New_Acc),Z2,[]) :-
 %% Throw Action
 %%
 
-state_update(Z1,throwA(player(A),Strength),Z2,[]) :-
+state_update(Z1,throwA(player(A),Error, vector(Ax, Ay), Strength),Z2,[]) :-
   (poss(throwA(player(A),Strength),Z1),
-  holds(position(ball, vector(X0, Y0)),Z1),
-  X is X0 * Strength,
-  Y is Y0 * Strength,
-  update(Z1,[position(ball, vector(X,Y))],[hasBall(player(A)),position(ball, vector(X0, Y0))],Z2))
+  holds(acceleration(ball, vector(X0, Y0)),Z1),
+  validateError(Error, 0.15, ErrorR),
+  moduleFlux(ErrorR, ResultX, ResultY),
+  Num is ((1 + Strength) * 1.25),
+  multVector(vector(Ax,Ay), Num , vector(XR, YR)),
+  X is XR * ResultX,
+  Y is YR * ResultY,
+  update(Z1,[acceleration(ball, vector(X,Y)),isMoving(ball, _)],[hasBall(player(A)),acceleration(ball, vector(X0, Y0))],Z2))
   ;
   (not poss(throwA(player(A),Strength),Z1), 
   Z2=Z1
@@ -72,12 +78,16 @@ state_update(Z1,release(player(X)),Z2,[]) :-
 %% Kick Action
 %%
 
-state_update(Z1,kick(player(A),Strength),Z2,[]) :-
-  (poss(kick(player(A),Strength),Z1),
-  holds(position(ball, vector(X0, Y0)),Z1),
-  X is X0 * Strength,
-  Y is Y0 * Strength,
-  update(Z1,[position(ball, vector(X,Y)), isMoving(ball, _)],[hasBall(player(A)),position(ball, vector(X0, Y0))],Z2))
+state_update(Z1,kick(player(A),Error, vector(Ax, Ay), Strength),Z2,[]) :-
+  (poss(kick(player(A),Error),Z1),
+  holds(acceleration(ball, vector(Sxb,Syb)),Z1),
+  validateError(Error, 0.3, ErrorR),
+  moduleFlux(ErrorR, ResultX, ResultY),
+  Num is ((1 + Strength) * 1.25),
+  multVector(vector(Ax,Ay), Num , vector(XR, YR)),
+  X is XR * ResultX,
+  Y is YR * ResultY,
+  update(Z1,[acceleration(ball, vector(X,Y)), isMoving(ball, _)],[hasBall(player(A)),acceleration(ball, vector(Sxb, Syb))],Z2))
   ;
   (not poss(kick(player(A),Strength),Z1), 
   Z2=Z1
@@ -114,16 +124,19 @@ state_update(Z1,counterTackle(player(X)),Z2,[]) :-
 %% Hit Action
 %%
 
-state_update(Z1,hit(player(A),Strength, MaxDistance),Z2,[]) :-
-  (poss(hit(player(A),Strength, MaxDistance),Z1),
+state_update(Z1,hit(player(A),Error, MaxDistance, vector(Ax, Ay)),Z2,[]) :-
+  (poss(hit(player(A),Error, MaxDistance),Z1),
   holds(position(player(A), vector(Sxa,Sya)),Z1),
-  holds(position(ball, vector(Sxb,Syb)),Z1),
-  closer(Sxa, Sya, Sxb, Syb, MaxDistance),
-  X is Sxb * Strength,
-  Y is Syb * Strength,
-  update(Z1,[position(ball, vector(X,Y))],[position(ball, vector(Sxb,Syb))],Z2))
+  holds(position(ball, vector(Sxc,Syc)),Z1),
+  holds(acceleration(ball, vector(Sxb,Syb)),Z1),
+  closer(Sxa, Sya, Sxc, Syc, MaxDistance),
+  validateError(Error, 0.3, ErrorR),
+  moduleFlux(ErrorR, ResultX, ResultY),
+  X is Ax * ResultX,
+  Y is Ay * ResultY,
+  update(Z1,[position(acceleration, vector(X,Y)), isMoving(ball, _)],[acceleration(ball, vector(Sxb,Syb))],Z2))
   ;
-  (not poss(hit(player(A),Strength, MaxDistance),Z1),
+  (not poss(hit(player(A),Error, MaxDistance),Z1),
   Z2=Z1
   ).
 
@@ -324,6 +337,32 @@ checkModule(V, Max, VR):-
 	    (limitModuloTo(V, Max), V=VR)
 	    ;
 	    setModule(V, Max, VR).
+
+%%------------------------	    
+checkError(Error, Num):-
+        Error > Num.
+        
+validateError(Error, Num, Result):-
+        (checkError(Error, Num),
+         Result is Num)
+        ; 
+        (Result is Error).  
+        
+%%----------------------
+
+checkModule(Param):-
+       A is (Param mod 2),
+       A = 0.
+
+moduleFlux(Strength, ResultX, ResultY):-
+       (checkModule(Strength),
+       ResultX is Strength,
+       ResultY is 1)
+       ;
+       (ResultX is 1,
+       ResultY is Strength).              	    
+       
+%%---------------------       
     
       
     
