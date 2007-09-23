@@ -58,7 +58,7 @@ public class FluxActionInterpretationComponent implements
 	public int nextAgentID = 0;
 
 	private String action;
-	
+
 	private void dash(World w, Player p, Vector vet) {
 		action = "dash(" + getIDForObject(p) + ", vector(" + vet.x + ","
 				+ vet.y + "))";
@@ -66,16 +66,17 @@ public class FluxActionInterpretationComponent implements
 
 	private void hit(World w, Player p, Vector vet) {
 		double error = Math.random();
+		double result = error % 2;
 		action = "hit(" + getIDForObject(p) + "," + error + ","
 				+ SimulationSettings.MAX_DISTANCE + ", vector(" + vet.x + ","
-				+ vet.y + "))";
+				+ vet.y + ")," + result + ")";
 	}
 
 	private void kick(World w, Player p, Vector vet) {
 		double error = Math.random();
-		action = "kick(" + getIDForObject(p) + "," + error + ","
-		+ ", vector(" + vet.x + ","
-		+ vet.y + ")," + p.strength + ")";
+		double result = error % 2;
+		action = "kick(" + getIDForObject(p) + "," + error + ", vector("
+				+ vet.x + "," + vet.y + ")," + p.strength + "," + result + ")";
 	}
 
 	private void countertackle(World w, Player p) {
@@ -99,9 +100,10 @@ public class FluxActionInterpretationComponent implements
 
 	private void throwA(World w, Player p, Vector vet) {
 		double error = Math.random();
+		double result = error % 2;
 		action = "throwA(" + getIDForObject(p) + "," + error + ","
-		+ ", vector(" + vet.x + ","
-		+ vet.y + ")," + p.strength + ")";
+				+ ", vector(" + vet.x + "," + vet.y + ")," + p.strength + ","
+				+ result + ")";
 	}
 
 	private void sendMsg(World w, Agent agent, Fact f) {
@@ -115,7 +117,7 @@ public class FluxActionInterpretationComponent implements
 
 	public void processAction(EnvironmentStateModel w, Message m) {
 		action = null;
-		
+
 		// Actions of Leg
 		if (m instanceof LegAction) {
 			if (m instanceof DashAction) {
@@ -250,10 +252,10 @@ public class FluxActionInterpretationComponent implements
 			try {
 				ret = eclipse.rpc(query);
 
-//				System.out.println("result: " + ret);
+				// System.out.println("result: " + ret);
 
-				prologJavaVisitor.updateWorldRepresentation((World) world,
-						ret.arg(3));
+				prologJavaVisitor.updateWorldRepresentation((World) world, ret
+						.arg(3));
 
 			} catch (Exception e) {
 				e.printStackTrace();
