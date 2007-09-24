@@ -48,20 +48,18 @@ public class SampleJavaPrologWorldVisitor implements JavaPrologWorldVisitor {
 				+ vectorToString(obj.a) + ")");
 		accumulator.add("speed(" + getIDForObject(obj) + ","
 				+ vectorToString(obj.v) + ")");
+		accumulator.add("maxSpeed(" + getIDForObject(obj) + "," + obj.maxV
+				+ ")");
+		accumulator.add("maxAcceleration(" + getIDForObject(obj) + ","
+				+ obj.maxA + ")");
 	}
 
 	public void visit(Ball obj) {
 		visit((AnimatedObject) obj);
-		if (obj.withPlayer) {
+		if (obj.withPlayer()) {
 			accumulator.add("withPlayer(" + getIDForObject(obj) + ")");
 		}
-		if (obj.isMoving){
-			double error = Math.random();
-			accumulator.add("isMoving("+getIDForObject(obj)+")");
-			accumulator.add("attrition("+error+")");
-		}
-		accumulator.add("maxSpeed(" + obj.maxV + ")");
-		accumulator.add("maxAcceleration(" + obj.maxA + ")");
+		accumulator.add("attrition(" + 10 + ")");
 	}
 
 	public void visit(OutTrack obj) {
@@ -71,7 +69,7 @@ public class SampleJavaPrologWorldVisitor implements JavaPrologWorldVisitor {
 
 	public void visit(Player obj) {
 		visit((AnimatedObject) obj);
-		if (obj.hasBall) {
+		if (obj.hasBall()) {
 			accumulator.add("hasBall(" + getIDForObject(obj) + ")");
 		}
 		if (obj.inGround) {
@@ -81,8 +79,6 @@ public class SampleJavaPrologWorldVisitor implements JavaPrologWorldVisitor {
 			accumulator.add("counterTackle(" + getIDForObject(obj) + ")");
 		}
 
-		accumulator.add("maxSpeed(" + obj.maxV + ")");
-		accumulator.add("maxAcceleration(" + obj.maxA + ")");
 	}
 
 	public void visit(Basket obj) {

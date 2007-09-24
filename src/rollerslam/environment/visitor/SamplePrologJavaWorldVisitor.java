@@ -12,11 +12,11 @@ public class SamplePrologJavaWorldVisitor implements PrologJavaWorldVisitor {
 
 	@SuppressWarnings("unchecked")
 	public void updateWorldRepresentation(World world, Object worldState) {
-		//System.out.println("obj: " + worldState);
+		// System.out.println("obj: " + worldState);
 
 		// if it's not there anymore it should be false...
-		world.ball.withPlayer = false;
-		world.ball.isMoving = false;
+
+		world.playerWithBall = null;
 		setPropertiesPlayer(world);
 
 		if (worldState instanceof Collection) {
@@ -31,7 +31,8 @@ public class SamplePrologJavaWorldVisitor implements PrologJavaWorldVisitor {
 								"ball")) {
 							world.ball.s = termToVector(((CompoundTerm) term
 									.arg(2)));
-							//System.out.print("\n" + "position "+ world.ball.s.toString());
+							System.out.print("\n" + "position "
+									+ world.ball.s.toString());
 						} else if (((CompoundTerm) term.arg(1)).functor()
 								.equals("player")) {
 							int id = (Integer) ((CompoundTerm) term.arg(1))
@@ -63,18 +64,14 @@ public class SamplePrologJavaWorldVisitor implements PrologJavaWorldVisitor {
 							Player p = getPlayerFromID(world, id);
 							p.v = termToVector(((CompoundTerm) term.arg(2)));
 						}
-					} else if (term.functor().equals("withPlayer")) {
-						if (((CompoundTerm) term.arg(1)).functor().equals(
-								"ball")) {
-							world.ball.withPlayer = true;
-						}
 					} else if (term.functor().equals("hasBall")) {
 						if (((CompoundTerm) term.arg(1)).functor().equals(
 								"player")) {
 							int id = (Integer) ((CompoundTerm) term.arg(1))
 									.arg(1);
 							Player p = getPlayerFromID(world, id);
-							p.hasBall = true;
+							world.playerWithBall = p;
+
 						}
 					} else if (term.functor().equals("inGround")) {
 						if (((CompoundTerm) term.arg(1)).functor().equals(
@@ -91,11 +88,6 @@ public class SamplePrologJavaWorldVisitor implements PrologJavaWorldVisitor {
 									.arg(1);
 							Player p = getPlayerFromID(world, id);
 							p.counterTackle = true;
-						}
-					} else if (term.functor().equals("isMoving")) {
-						if (((CompoundTerm) term.arg(1)).functor().equals(
-								"ball")) {
-							world.ball.isMoving = true;
 						}
 					}
 				}
@@ -121,13 +113,11 @@ public class SamplePrologJavaWorldVisitor implements PrologJavaWorldVisitor {
 	private void setPropertiesPlayer(World world) {
 		for (Player player : world.playersA) {
 			player.counterTackle = false;
-			player.hasBall = false;
 			player.inGround = false;
 			player.counterTackle = false;
 		}
 		for (Player player : world.playersB) {
 			player.counterTackle = false;
-			player.hasBall = false;
 			player.inGround = false;
 			player.counterTackle = false;
 		}
