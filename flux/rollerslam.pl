@@ -9,22 +9,22 @@
 %%%%%%%%%%%%%%%%%%%%
 
 poss(throwA(player(X),_),Z1) :- holds(hasBall(player(X)), Z1),
-                                   not_holds(inGround(player(X)),Z1).
+                                   not holds(inGround(player(X)),Z1).
 poss(release(player(X)),Z1) :- holds(hasBall(player(X)),Z1),
-                               not_holds(inGround(player(X)),Z1).
-poss(dash(player(X)),Z1):- not_holds(inGround(player(X)),Z1).
+                               not holds(inGround(player(X)),Z1).
+poss(dash(player(X)),Z1):- not holds(inGround(player(X)),Z1).
 poss(kick(player(X),_),Z1) :- holds(hasBall(player(X)), Z1),
-                                             not_holds(inGround(player(X)),Z1).
+                                             not holds(inGround(player(X)),Z1).
                                              
 %% dizer que A e B são diferentes!!!                                             
 poss(tackle(player(A),player(B), _),Z1) :- not_holds(inGround(player(A)),Z1),
                                                                  holds(hasBall(player(B)), Z1),
-                                                                 not_holds(counterTackle(player(B)),Z1).
+                                                                 not holds(counterTackle(player(B)),Z1).
                                                                  
-poss(counterTackle(player(X)),Z1) :- not_holds(inGround(player(X)),Z1).
-poss(hit(player(X),_, _),Z1) :- not_holds(inGround(player(X)), Z1),
-                                not_holds(hasBall(player(X)), Z1).
-poss(catchA(player(X), _),Z1) :- not_holds(inGround(player(X)),Z1),
+poss(counterTackle(player(X)),Z1) :- not holds(inGround(player(X)),Z1).
+poss(hit(player(X),_, _),Z1) :- not holds(inGround(player(X)), Z1),
+                                not holds(hasBall(player(X)), Z1).
+poss(catchA(player(X), _),Z1) :- not holds(inGround(player(X)),Z1),
                                                      not holds(hasBall(player(A)), Z1).
 poss(standUp(player(X)),Z1) :- holds(inGround(player(X)),Z1).
 
@@ -266,8 +266,9 @@ ramify_cantmove(Z1,Object,Z2) :-
 %%%%%%%%% RAMIFICATION %%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%            
 
-ramify_object(Z1, ball, Z3):- ramify_ball(Z1, Z2), ramify_cantmove(Z2,ball, Z3). 
-ramify_object(Z1, player(P), Z3):- Player = player(P), ramify_animated_object(Z1, Player, Z2), ramify_cantmove(Z2,Player, Z3). 
+ramify_object(Z1, Object, Z2):- (Object = player(_), ramify_object_player(Z1,Object, Z2)); (Object = ball, ramify_object_ball(Z1,Object, Z2)).
+ramify_object_ball(Z1, ball, Z3):- ramify_ball(Z1, Z2), ramify_cantmove(Z2,ball, Z3). 
+ramify_object_player(Z1, player(P), Z3):- Player = player(P), ramify_animated_object(Z1, Player, Z2), ramify_cantmove(Z2,Player, Z3). 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%% HELPER  Functions %%%%%%%%%%%%%%%%
