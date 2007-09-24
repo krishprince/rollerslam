@@ -66,7 +66,7 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 			Player me = model.getMe();
             if(!me.inGround){
                 if (MathGeometry.calculeDistancePoints(me.s.x, me.world.ball.s.x, me.s.y, me.world.ball.s.y) < 5000) {
-                    if(!me.world.ball.withPlayer){
+                    if(!me.world.ball.withPlayer()){
                 		try {
                 			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Catch the ball");
                 			facade.getLogRecordingService().addEntry(envLog);
@@ -112,7 +112,7 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
             }
         } else if(model.currentGoal == AgentGoal.CATCH_BALL){
 			Player me = model.getMe();
-            if(me.hasBall){
+            if(me.hasBall()){
             	boolean nearOpponent = false;
             	
             	if(me.team == PlayerTeam.TEAM_A){
@@ -290,7 +290,7 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
         		}
          		model.currentGoal = AgentGoal.STAND_UP;
          	} else {      		
-         		if(me.world.ball.withPlayer && me.world.playerWithBall != null && me.world.playerWithBall.team != me.team){
+         		if(me.world.ball.withPlayer() && me.world.playerWithBall != null && me.world.playerWithBall.team != me.team){
 	        		try {
 	        			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Go to ball");
 	        			facade.getLogRecordingService().addEntry(envLog);
@@ -315,7 +315,7 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
         		}
          		model.currentGoal = AgentGoal.STAND_UP;
          	} else {
-         		if(me.world.playerWithBall != null && me.world.ball.withPlayer && me.world.playerWithBall.team != me.team){
+         		if(me.world.playerWithBall != null && me.world.ball.withPlayer() && me.world.playerWithBall.team != me.team){
 	        		try {
 	        			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Go to ball");
 	        			facade.getLogRecordingService().addEntry(envLog);
@@ -339,7 +339,7 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
     				}
         		}
          		model.currentGoal = AgentGoal.STAND_UP;
-         	} else if(me.hasBall){
+         	} else if(me.hasBall()){
         		try {
         			GoalUpdateLogEntry envLog = new GoalUpdateLogEntry(me.world.currentCycle, me.id, "Go to ball");
         			facade.getLogRecordingService().addEntry(envLog);
@@ -361,6 +361,10 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
          		model.currentGoal = AgentGoal.GO_TO_BALL;
          	}
          }
+        try{
+		Player me = model.getMe();
+		System.err.println((me!=null?me.id+"":"??") + " GOAL: "+ model.currentGoal);
+        }catch(Exception e) {};
 	}
 	
 }
