@@ -7,9 +7,7 @@ import rollerslam.environment.model.SimulationSettings;
 
 @SuppressWarnings("serial")
 public class Ball extends AnimatedObject implements Visitable {
-        
-    public boolean withPlayer = false;
-    public boolean isMoving = false;
+    
     
     //Last position
     public Vector ls = new Vector(0, 0);
@@ -26,4 +24,9 @@ public class Ball extends AnimatedObject implements Visitable {
 	public void accept(Visitor visitor) {
 		visitor.visit((Ball)this);
 	}	
+
+    public boolean withPlayer() {
+		return world.playerWithBall != null;
+	}
+	
 }

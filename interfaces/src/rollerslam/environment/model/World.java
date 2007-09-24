@@ -106,7 +106,6 @@ public class World extends EnvironmentStateModel implements Serializable, Visita
 		sw.ball.ls = null;
 		sw.ball.s = this.ball.s;
 		sw.ball.v = null;
-		sw.ball.withPlayer = this.ball.withPlayer;
 		sw.ball.world = null;
 		sw.playerWithBall = null;
 		
@@ -114,7 +113,6 @@ public class World extends EnvironmentStateModel implements Serializable, Visita
 			sw.playersA[i].a = null;
 			sw.playersA[i].counterTackle = this.playersA[i].counterTackle;
 			sw.playersA[i].dead = this.playersA[i].dead;
-			sw.playersA[i].hasBall = this.playersA[i].hasBall;
 			sw.playersA[i].id = this.playersA[i].id;
 			sw.playersA[i].inGround = this.playersA[i].inGround;
 			sw.playersA[i].s = this.playersA[i].s;
@@ -122,13 +120,15 @@ public class World extends EnvironmentStateModel implements Serializable, Visita
 			sw.playersA[i].team = this.playersA[i].team;
 			sw.playersA[i].v = null;
 			sw.playersA[i].world = null;
+			if (this.playerWithBall == this.playersA[i]){
+				sw.playerWithBall = sw.playersA[i];
+			}
 		}
 
 		for(int i = 0; i < this.playersB.length; ++i){
 			sw.playersB[i].a = null;
 			sw.playersB[i].counterTackle = this.playersB[i].counterTackle;
 			sw.playersB[i].dead = this.playersB[i].dead;
-			sw.playersB[i].hasBall = this.playersB[i].hasBall;
 			sw.playersB[i].id = this.playersB[i].id;
 			sw.playersB[i].inGround = this.playersB[i].inGround;
 			sw.playersB[i].s = this.playersB[i].s;
@@ -136,6 +136,9 @@ public class World extends EnvironmentStateModel implements Serializable, Visita
 			sw.playersB[i].team = this.playersB[i].team;
 			sw.playersB[i].v = null;
 			sw.playersB[i].world = null;
+			if (this.playerWithBall == this.playersB[i]){
+				sw.playerWithBall = sw.playersB[i];
+			}
 		}
 		
 		sw.goalA.world = null;

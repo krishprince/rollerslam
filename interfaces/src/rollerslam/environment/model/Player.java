@@ -15,7 +15,9 @@ public class Player extends AnimatedObject {
 	public PlayerTeam team;	
 	public int id = id_gen ++;
 	
-	public boolean hasBall = false;
+	public boolean hasBall(){
+		return world.playerWithBall == this;
+	} 
         
     public boolean inGround = false;
 	
