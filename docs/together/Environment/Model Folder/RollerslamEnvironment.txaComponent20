@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<node uin="ba089nf6xzr3lnytcfy8">
+		<property name="$metaclass" value="Component20"/>
+		<property name="$name" value="RollerslamEnvironment"/>
+		<link uin="ieje0rf6xzs8xh-if69d">
+			<property name="$metaclass" value="RequiredInterface20"/>
+			<participant referencedUin="design:node:::ba089nf6xzr3lnytcfy8" role="Client"></participant>
+			<participant referencedUin="design:node:::-amcqg9f6xzrnba-x30whn" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6xzscqn-fe5qsu">
+			<property name="$metaclass" value="RequiredInterface20"/>
+			<participant referencedUin="design:node:::ba089nf6xzr3lnytcfy8" role="Client"></participant>
+			<participant referencedUin="design:node:::-amcqg9f6xzs0fi4p87ro" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6xzsygbt22nxi">
+			<property name="$metaclass" value="ProvidedInterface20"/>
+			<participant referencedUin="design:node:::ba089nf6xzr3lnytcfy8" role="Client"></participant>
+			<participant referencedUin="design:node:::-amcqg9f6xzsq96osa5eg" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6xztli6-485z0q">
+			<property name="$metaclass" value="RequiredInterface20"/>
+			<participant referencedUin="design:node:::ba089nf6xzr3lnytcfy8" role="Client"></participant>
+			<participant referencedUin="design:node:::-amcqg9f6xzter4vp1tqx" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6xzu9kiubq3hg">
+			<property name="$metaclass" value="RequiredInterface20"/>
+			<participant referencedUin="design:node:::ba089nf6xzr3lnytcfy8" role="Client"></participant>
+			<participant referencedUin="design:node:::-amcqg9f6xzu2l7-g9ecm6" role="Supplier"></participant>
+		</link>
+	</node>
+</nodeSet>

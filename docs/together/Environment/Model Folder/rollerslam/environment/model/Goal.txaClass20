@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<node uin="a82a3f6xwe2cyricsew">
+		<property name="$metaclass" value="Class20"/>
+		<property name="$name" value="Goal"/>
+		<property name="mod__extends" value="WorldObject"/>
+		<node uin="8haf4f6xwe2cywlt9gb">
+			<property name="$metaclass" value="Property20"/>
+			<property name="mod__typeReferencedElement" value="design:node:::PrimitiveType.Integer"/>
+			<property name="mod__type" value="Integer"/>
+			<property name="mod_Visibility" value="$public"/>
+			<property name="lower" value="1"/>
+			<property name="upper" value="1"/>
+			<property name="multiplicity" value="1"/>
+			<property name="$name" value="WIDTH"/>
+			<property name="mod__initialValue" value="7000{readonly}"/>
+			<link uin="8ozxif6xwe2cy-muyh0t">
+				<property name="$metaclass" value="TypeLink"/>
+				<participant referencedUin="design:node:::8haf4f6xwe2cywlt9gb:a82a3f6xwe2cyricsew" role="Client"></participant>
+				<participant referencedUin="design:node:::PrimitiveType.Integer" role="Supplier"></participant>
+			</link>
+		</node>
+		<node uin="bm88lf6xwe2cyxwj6op">
+			<property name="$metaclass" value="Property20"/>
+			<property name="mod__typeReferencedElement" value="design:node:::PrimitiveType.Integer"/>
+			<property name="mod__type" value="Integer"/>
+			<property name="mod_Visibility" value="$public"/>
+			<property name="lower" value="1"/>
+			<property name="upper" value="1"/>
+			<property name="multiplicity" value="1"/>
+			<property name="$name" value="HEIGHT"/>
+			<property name="mod__initialValue" value="200{readonly}"/>
+			<link uin="f8p8df6xwe2cy-kxd1sh">
+				<property name="$metaclass" value="TypeLink"/>
+				<participant referencedUin="design:node:::bm88lf6xwe2cyxwj6op:a82a3f6xwe2cyricsew" role="Client"></participant>
+				<participant referencedUin="design:node:::PrimitiveType.Integer" role="Supplier"></participant>
+			</link>
+		</node>
+		<node uin="gcdohf6xwe2cykgb2ap">
+			<property name="$metaclass" value="Operation20"/>
+			<property name="mod_Visibility" value="$public"/>
+			<property name="$name" value="accept"/>
+			<property name="__aggregationEnd_formalParameter" value="1wri7f6xwe2cykw0in9"/>
+			<node uin="1wri7f6xwe2cykw0in9">
+				<property name="$metaclass" value="Parameter"/>
+				<property name="$name" value="visitor"/>
+				<property name="mod__type" value="Visitor"/>
+			</node>
+		</node>
+		<link uin="ieje0rf6xwkreh-gu2iz4">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="mod__cachedBaseName" value="WorldObject"/>
+			<participant referencedUin="design:node:::a82a3f6xwe2cyricsew" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6xveknk-3rxgvl" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6xyr6jaonz9po">
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="supplierCardinality" value="3"/>
+			<property name="supplierRole" value="baskets"/>
+			<participant referencedUin="design:node:::a82a3f6xwe2cyricsew" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6xw016r-3krydo" role="Supplier"></participant>
+		</link>
+	</node>
+</nodeSet>
