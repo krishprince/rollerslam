@@ -41,7 +41,18 @@ public class SensorEffectorManagerImpl implements SensorEffectorManager {
 			public void doAction(Message m) throws RemoteException {
 				synchronized (envMessages) {
 					m.sender = agent;
-					envMessages.add(m);
+					
+					boolean found = false;
+					for (Message msg : envMessages) {
+						if (msg.sender == agent) {
+							found = true;
+							break;
+						}
+					}
+					
+					if (!found) {
+						envMessages.add(m);
+					}
 				}
 			}			
 		};
