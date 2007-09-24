@@ -9,23 +9,23 @@
 %%%%%%%%%%%%%%%%%%%%
 
 poss(throwA(player(X),_),Z1) :- holds(hasBall(player(X)), Z1),
-                                   not holds(inGround(player(X)),Z1).
+                                   not_holds(inGround(player(X)),Z1).
 poss(release(player(X)),Z1) :- holds(hasBall(player(X)),Z1),
-                               not holds(inGround(player(X)),Z1).
-poss(dash(player(X)),Z1):- not holds(inGround(player(X)),Z1).
+                               not_holds(inGround(player(X)),Z1).
+poss(dash(player(X)),Z1):- not_holds(inGround(player(X)),Z1).
 poss(kick(player(X),_),Z1) :- holds(hasBall(player(X)), Z1),
-                                             not holds(inGround(player(X)),Z1).
+                                             not_holds(inGround(player(X)),Z1).
                                              
 %% dizer que A e B são diferentes!!!                                             
 poss(tackle(player(A),player(B), _),Z1) :- not_holds(inGround(player(A)),Z1),
                                                                  holds(hasBall(player(B)), Z1),
-                                                                 not holds(counterTackle(player(B)),Z1).
+                                                                 not_holds(counterTackle(player(B)),Z1).
                                                                  
-poss(counterTackle(player(X)),Z1) :- not holds(inGround(player(X)),Z1).
-poss(hit(player(X),_, _),Z1) :- not holds(inGround(player(X)), Z1),
-                                not holds(hasBall(player(X)), Z1).
-poss(catchA(player(X), _),Z1) :- not holds(inGround(player(X)),Z1),
-                                                     not holds(hasBall(player(A)), Z1).
+poss(counterTackle(player(X)),Z1) :- not_holds(inGround(player(X)),Z1).
+poss(hit(player(X),_, _),Z1) :- not_holds(inGround(player(X)), Z1),
+                                not_holds(hasBall(player(X)), Z1).
+poss(catchA(player(X), _),Z1) :- not_holds(inGround(player(X)),Z1),
+                                                     not holds(hasBall(player(_)), Z1).
 poss(standUp(player(X)),Z1) :- holds(inGround(player(X)),Z1).
 
 %% End Pre-Condition Group
@@ -39,7 +39,7 @@ poss(standUp(player(X)),Z1) :- holds(inGround(player(X)),Z1).
 %%
 state_update(Z1,dash(player(A), New_Acc),Z2,[]) :-
   holds(acceleration(player(A), Old_Acc),Z1),  
-  holds(maxAcceleration(Max),Z1),
+  holds(maxAcceleration(player(A), Max),Z1),
   checkModule(New_Acc, Max, New_New_Acc),
   update(Z1,[acceleration(player(A), New_New_Acc)],[acceleration(player(A), Old_Acc)],Z2).
 
@@ -56,7 +56,7 @@ state_update(Z1,throwA(player(A),Error, vector(Ax, Ay), Strength, ResultModule),
   multVector(vector(Ax,Ay), Num , vector(XR, YR)),
   X is XR * ResultX,
   Y is YR * ResultY,
-  update(Z1,[acceleration(ball, vector(X,Y)),isMoving(ball, _)],[hasBall(player(A)),acceleration(ball, vector(X0, Y0))],Z2))
+  update(Z1,[acceleration(ball, vector(X,Y))],[hasBall(player(A)),acceleration(ball, vector(X0, Y0))],Z2))
   ;
   (not poss(throwA(player(A),Strength),Z1), 
   Z2=Z1
@@ -68,7 +68,7 @@ state_update(Z1,throwA(player(A),Error, vector(Ax, Ay), Strength, ResultModule),
 
 state_update(Z1,release(player(X)),Z2,[]) :-
   (poss(release(player(X)),Z1),
-  update(Z1,[],[hasBall(player(X))],Z2))
+  update(Z1,[acceleration(ball, vector(0,0))],[hasBall(player(X))],Z2))
   ;
   (not poss(release(player(X)),Z1), 
   Z2=Z1
@@ -87,7 +87,7 @@ state_update(Z1,kick(player(A),Error, vector(Ax, Ay), Strength, ResultModule),Z2
   multVector(vector(Ax,Ay), Num , vector(XR, YR)),
   X is XR * ResultX,
   Y is YR * ResultY,
-  update(Z1,[acceleration(ball, vector(X,Y)), isMoving(ball, _)],[hasBall(player(A)),acceleration(ball, vector(Sxb, Syb))],Z2))
+  update(Z1,[acceleration(ball, vector(X,Y))],[hasBall(player(A)),acceleration(ball, vector(Sxb, Syb))],Z2))
   ;
   (not poss(kick(player(A),Strength),Z1), 
   Z2=Z1
@@ -134,7 +134,7 @@ state_update(Z1,hit(player(A),Error, MaxDistance, vector(Ax, Ay), ResultModule),
   moduleFlux(ErrorR,ResultModule, ResultX, ResultY),
   X is Ax * ResultX,
   Y is Ay * ResultY,
-  update(Z1,[acceleration(ball, vector(X,Y)), isMoving(ball, _)],[acceleration(ball, vector(Sxb,Syb))],Z2))
+  update(Z1,[acceleration(ball, vector(X,Y))],[acceleration(ball, vector(Sxb,Syb))],Z2))
   ;
   (not poss(hit(player(A),Error, MaxDistance),Z1),
   Z2=Z1
@@ -195,7 +195,7 @@ ramify_animated_object(Z1, Object, Z2):-
    holds(acceleration(Object, vector(Ax0,Ay0)),Z1),
    holds(speed(Object, vector(Vx0,Vy0)),Z1),
    holds(position(Object, vector(Sx0,Sy0)),Z1),
-   holds(maxSpeed(Max),Z1),
+   holds(maxSpeed(Object, Max),Z1),
   Vx1 is Vx0 + Ax0,
   Vy1 is Vy0 + Ay0,
   Sx1 is Sx0 + Vx0,
@@ -205,7 +205,7 @@ ramify_animated_object(Z1, Object, Z2):-
   (
   
   (
-     isPointNotInEllipse(188000, -63835, 0, 0, 63835, Sx1, Sy1),
+     isPointNotInEllipse(188000, -63835, 0,  63835, 0, Sx1, Sy1),
     update(Z1,[acceleration(Object, vector(0,0)), speed(Object, vector(0,0))],
                       [acceleration(Object, vector(Ax0,Ay0)), speed(Object, vector(Vx0,Vy0))],Z2)
    )
@@ -231,12 +231,14 @@ ramify_ball(Z1,  Z3):-
   update(Z2, [position(ball, vector(Xa, Ya))], [position(ball, vector(Xba, Yba))], Z3))
   ; 
   
-  (holds(isMoving(ball, _), Z2),
-  holds(position(ball, vector(X,Y)), Z2),
+  (not holds(hasBall(player(_)), Z2),
+  holds(speed(ball, vector(X,Y)), Z2),
+  getModule(vector(X,Y), VR),
+  VR > 0,
   holds(attrition(Attr), Z2),
-  X1 is X / Attr,
-  Y1 is Y / Attr,  
-  update(Z2, [position(ball, vector(X1, Y1))], [position(ball, vector(X, Y))], Z3))
+  X2 is X / 1,
+  Y2 is Y / 1,  
+  update(Z2, [speed(ball, vector(X2, Y2))], [speed(ball, vector(X, Y))], Z3))
   
   ;
   
@@ -261,6 +263,11 @@ ramify_cantmove(Z1,Object,Z2) :-
 	(object_cantmove(Object,Z1), stop_object(Z1,Object,Z2)) 
 	; 	
 	(Z1=Z2). 
+ramify_tackle(Z1, Object, Z2):- 
+      (holds(counterTackle(Object), Z1),
+      update(Z1,[],[counterTackle(Object)],Z2))
+      ; 	
+	(Z1=Z2).	
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%% RAMIFICATION %%%%%%%%%%%%%%%
@@ -268,7 +275,7 @@ ramify_cantmove(Z1,Object,Z2) :-
 
 ramify_object(Z1, Object, Z2):- (Object = player(_), ramify_object_player(Z1,Object, Z2)); (Object = ball, ramify_object_ball(Z1,Object, Z2)).
 ramify_object_ball(Z1, ball, Z3):- ramify_ball(Z1, Z2), ramify_cantmove(Z2,ball, Z3). 
-ramify_object_player(Z1, player(P), Z3):- Player = player(P), ramify_animated_object(Z1, Player, Z2), ramify_cantmove(Z2,Player, Z3). 
+ramify_object_player(Z1, player(P), Z4):- Player = player(P), ramify_animated_object(Z1, Player, Z2), ramify_cantmove(Z2,Player, Z3), ramify_tackle(Z3, Player, Z4). 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%% HELPER  Functions %%%%%%%%%%%%%%%%

@@ -225,13 +225,16 @@ public class FluxActionInterpretationComponent implements
 
 	// FLUX
 	public static String getIDForObject(WorldObject obj) {
-		if (obj instanceof Ball) {
+		if (obj == null) {
+			return "null";
+		} else if (obj instanceof Ball) {
 			return "ball";
 		} else if (obj instanceof Player) {
 			return "player(" + ((Player) obj).id + ")";
 		} else {
 			return "obj(" + obj.hashCode() + ")";
 		}
+
 	}
 
 	public FluxActionInterpretationComponent(EclipseConnection eclipse) {
