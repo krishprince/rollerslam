@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<view uin="V1hexuhf6xvfj3lr1u78k">
+		<property name="$defaultDiagram" value="true"/>
+		<property name="$metaclass" value="ClassDiagram20"/>
+		<reference referencedUin="design:node:::-amcqg9f6xvft86-2xovun">
+			<property name="bounds" value="35,55,90,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="view_as_class" value="true"/>
+			<reference referencedUin="label:$name:design:node:::-amcqg9f6xvft86-2xovun">
+				<property name="bounds" value="-9,30,39,13"/>
+			</reference>
+			<reference referencedUin="design:node:::tq87glf6xvrrad-9tjkib:-amcqg9f6xvft86-2xovun">
+				<property name="bounds" value="78,35,0,0"/>
+			</reference>
+		</reference>
+		<reference referencedUin="design:node:::-amcqg9f6xvpw70-iwx62e">
+			<property name="bounds" value="235,55,80,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="view_as_class" value="true"/>
+			<reference referencedUin="label:$name:design:node:::-amcqg9f6xvpw70-iwx62e">
+				<property name="bounds" value="-4,30,29,13"/>
+			</reference>
+		</reference>
+	</view>
+</nodeSet>

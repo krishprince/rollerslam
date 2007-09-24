@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<node uin="-tdsqjuf6wjkn3ckr8i6m">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="Agent"/>
+		<property name="mod__extends" value="TopLevel.K2Component"/>
+		<link uin="ieje0rf6wpv6ska6jn2t">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="mod__cachedBaseName" value="TopLevel.K2Component"/>
+			<participant referencedUin="design:node:::-tdsqjuf6wjkn3ckr8i6m" role="Client"></participant>
+			<participant referencedUin="design:node:::diqd3f6r93dkk-7fndsk" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="-tdsqjuf6wjl2c8nq3t4d">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="AutomataAgent"/>
+		<property name="mod__extends" value="Agent"/>
+		<link uin="ieje0rf6wk9ay15umvmv">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="mod__cachedBaseName" value="Agent"/>
+			<participant referencedUin="design:node:::-tdsqjuf6wjl2c8nq3t4d" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6wjkn3ckr8i6m" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="-tdsqjuf6wjlszq-szvfkt">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="GoalBasedAgent"/>
+		<property name="mod__extends" value="AutomataAgent"/>
+		<link uin="ieje0rf6wk9da0-7i6bss">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="mod__cachedBaseName" value="AutomataAgent"/>
+			<participant referencedUin="design:node:::-tdsqjuf6wjlszq-szvfkt" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6wjl2c8nq3t4d" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="-tdsqjuf6wjm40u-eqyvak">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="Sensor"/>
+		<property name="mod__extends" value="Realization Declarative View.K2Interface"/>
+		<link uin="ieje0rf6wk9ka6n2dxwu">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="mod__cachedBaseName" value="Realization Declarative View.K2Interface"/>
+			<participant referencedUin="design:node:::-tdsqjuf6wjm40u-eqyvak" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rwkf8i-z3q7t3" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6wkhdto6apc8j">
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="inspector_group" value="AgentProfile"/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="clientCardinality" value=" "/>
+			<property name="supplierCardinality" value=" "/>
+			<property name="clientRole" value="actionTYpe"/>
+			<participant referencedUin="design:node:::-tdsqjuf6wjm40u-eqyvak" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rwky7f-hsuzof" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="-tdsqjuf6wjmm24-u0hcyx">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="Effector"/>
+		<property name="mod__extends" value="Realization Declarative View.K2Interface"/>
+		<link uin="ieje0rf6wk9n1j-xbp81u">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="mod__cachedBaseName" value="Realization Declarative View.K2Interface"/>
+			<participant referencedUin="design:node:::-tdsqjuf6wjmm24-u0hcyx" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rwkf8i-z3q7t3" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6wkhhpk-gxmk1w">
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="inspector_group" value="AgentProfile"/>
+			<property name="clientCardinality" value=" "/>
+			<property name="supplierCardinality" value=" "/>
+			<property name="supplierNavigability" value="$supplierNavigableExplicitly"/>
+			<property name="clientRole" value="actionType"/>
+			<participant referencedUin="design:node:::-tdsqjuf6wjmm24-u0hcyx" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6rwky7f-hsuzof" role="Supplier"></participant>
+		</link>
+	</node>
+</nodeSet>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<node uin="-amcqg9f6xvft86-2xovun">
+		<property name="$metaclass" value="Interface20"/>
+		<property name="$name" value="Visitable"/>
+		<node uin="tq87glf6xvrrad-9tjkib">
+			<property name="$metaclass" value="Operation20"/>
+			<property name="mod_Visibility" value="$public"/>
+			<property name="$name" value="accept"/>
+			<property name="__aggregationEnd_formalParameter" value="-5kd6yff6xvssvo-oqri0m"/>
+			<node uin="-5kd6yff6xvssvo-oqri0m">
+				<property name="$metaclass" value="Parameter"/>
+				<property name="$name" value="visitor"/>
+				<property name="mod__typeReferencedElement" value="design:node:::-amcqg9f6xvpw70-iwx62e"/>
+				<property name="mod__type" value="Visitor"/>
+				<property name="defaultValue" value=""/>
+				<link uin="ieje0rf6xvsswzipfl9s">
+					<property name="$metaclass" value="TypeLink"/>
+					<participant referencedUin="design:node:::-5kd6yff6xvssvo-oqri0m:tq87glf6xvrrad-9tjkib:-amcqg9f6xvft86-2xovun" role="Client"></participant>
+					<participant referencedUin="design:node:::-amcqg9f6xvpw70-iwx62e" role="Supplier"></participant>
+				</link>
+			</node>
+		</node>
+	</node>
+</nodeSet>

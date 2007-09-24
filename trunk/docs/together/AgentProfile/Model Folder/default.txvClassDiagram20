@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<view uin="V1hexuhf6wixbt1-oumhdh">
+		<property name="$defaultDiagram" value="true"/>
+		<property name="$metaclass" value="ClassDiagram20"/>
+		<property name="profile_type" value="uml20"/>
+		<property name="visibility" value="public"/>
+		<reference referencedUin="design:view:::V1hexuhf6wjaedu-os2l9c">
+			<property name="bounds" value="5,5,80,60"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="collapsedCompartments" value="Class20"/>
+		</reference>
+		<reference referencedUin="design:view:::V1hexuhf6wmb0rg-x6897y">
+			<property name="bounds" value="5,95,80,60"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="collapsedCompartments" value="Class20"/>
+		</reference>
+	</view>
+</nodeSet>

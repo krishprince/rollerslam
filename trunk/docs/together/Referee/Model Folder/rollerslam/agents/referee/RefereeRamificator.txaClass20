@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<node uin="-tdsqjuf6y69grx-yilcoj">
+		<property name="$metaclass" value="Class20"/>
+		<property name="$name" value="RefereeRamificator"/>
+	</node>
+</nodeSet>
