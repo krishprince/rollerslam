@@ -59,7 +59,7 @@ public class RamificationWorldVisitor implements Visitor, RamificationComponent 
 	public void visit(Ball obj) {
 		this.visit((AnimatedObject)obj);
 
-		if (!obj.withPlayer && obj.v.getModule() > 0) {
+		if (!obj.withPlayer() && obj.v.getModule() > 0) {
 			obj.a = new Vector(0,0).subtract(obj.v).setModulo(obj.v.getModule() / 10);			
 		}
 
@@ -73,7 +73,7 @@ public class RamificationWorldVisitor implements Visitor, RamificationComponent 
 	public void visit(Player obj) {
 		this.visit((AnimatedObject) obj);
 
-		if (obj.hasBall) {
+		if (obj.hasBall()) {
 			obj.world.ball.s = obj.s;
 		}
 

@@ -51,7 +51,7 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 	
 	private void hit(World w, Player p, Vector vet){
 		//Body
-		if(!w.ball.withPlayer && !p.inGround){
+		if(!w.ball.withPlayer() && !p.inGround){
 			if(MathGeometry.calculeDistancePoints(w.ball.s.x, p.s.x, w.ball.s.y, p.s.y) < SimulationSettings.MAX_DISTANCE){
 				double error = Math.random();
 				
@@ -71,16 +71,16 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 
 	private void kick(World w, Player p, Vector vet){
 		//Body
-		if(p.hasBall && !p.inGround){
+		if(p.hasBall() && !p.inGround){
 			double error = Math.random();
 			
 			if(error > 0.3){
 				error = 0.3;
 			}
 			
-			p.hasBall = false;
+			
 			w.playerWithBall = null;
-			w.ball.withPlayer = false;
+			
 			
 			w.ball.a = vet.multVector((1 + p.strength) * 1.25);
 			
@@ -100,11 +100,9 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 	
 	private void catchA(World w, Player p){
 		//Body
-		if(!w.ball.withPlayer && !p.inGround){
+		if(!w.ball.withPlayer() && !p.inGround){
 			if(MathGeometry.calculeDistancePoints(w.ball.s.x, p.s.x, w.ball.s.y, p.s.y) < SimulationSettings.MAX_DISTANCE){
 
-				p.hasBall = true;
-				p.world.ball.withPlayer = true;
 				p.world.playerWithBall = p;
 			}
 		}
@@ -112,23 +110,21 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 	
 	private void release(World w, Player p){
 		//Body
-		if(p.hasBall && !p.inGround){
-			p.hasBall = false;
+		if(p.hasBall() && !p.inGround){
+			
 			w.playerWithBall = null;
-			w.ball.withPlayer = false;
+			
 		}
 	}
 	
 	private void tackle(World w, Player p){
 		//Body
-		if(w.ball.withPlayer && !p.inGround){
+		if(w.ball.withPlayer() && !p.inGround){
 			if(MathGeometry.calculeDistancePoints(w.playerWithBall.s.x, p.s.x, w.playerWithBall.s.y, p.s.y) < SimulationSettings.MAX_DISTANCE){
 				if(!w.playerWithBall.counterTackle || p.tacke_penality == 0){
 					w.playerWithBall.inGround = true;
 					w.playerWithBall.ground_penalty = SimulationSettings.GROUND_PENALTY;
 					p.tacke_penality = SimulationSettings.TACKLE_PENALTY;
-					w.playerWithBall.hasBall = false;
-					w.ball.withPlayer = false;
 					w.playerWithBall = null;
 				}else{
 				}
@@ -138,10 +134,10 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 	
 	private void throwA(World w, Player p, Vector a){
 		//Body
-		if(p.hasBall && !p.inGround){
-			p.hasBall = false;
+		if(p.hasBall() && !p.inGround){
+			
 			w.playerWithBall = null;
-			w.ball.withPlayer = false;
+			
 
 			double error = Math.random();
 			
@@ -240,9 +236,9 @@ public class JavaActionInterpretationComponent implements ActionInterpretationCo
 		}
 
 		//TODO: retirar essa gambiarra!
-		if (((World)w).playerWithBall == null) {
+		/*if (((World)w).playerWithBall == null) {
 			((World)w).ball.withPlayer = false;
-		}
+		}*/
 		
 		// adds all actions to the world
 		((World)w).newActions.add(m);
