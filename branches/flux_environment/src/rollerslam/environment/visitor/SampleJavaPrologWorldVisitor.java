@@ -60,6 +60,8 @@ public class SampleJavaPrologWorldVisitor implements JavaPrologWorldVisitor {
 			accumulator.add("isMoving("+getIDForObject(obj)+")");
 			accumulator.add("attrition("+error+")");
 		}
+		accumulator.add("maxSpeed(" + obj.maxV + ")");
+		accumulator.add("maxAcceleration(" + obj.maxA + ")");
 	}
 
 	public void visit(OutTrack obj) {
@@ -78,6 +80,7 @@ public class SampleJavaPrologWorldVisitor implements JavaPrologWorldVisitor {
 		if (obj.counterTackle) {
 			accumulator.add("counterTackle(" + getIDForObject(obj) + ")");
 		}
+
 		accumulator.add("maxSpeed(" + obj.maxV + ")");
 		accumulator.add("maxAcceleration(" + obj.maxA + ")");
 	}

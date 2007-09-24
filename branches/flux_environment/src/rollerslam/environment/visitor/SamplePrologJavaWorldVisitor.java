@@ -31,6 +31,7 @@ public class SamplePrologJavaWorldVisitor implements PrologJavaWorldVisitor {
 								"ball")) {
 							world.ball.s = termToVector(((CompoundTerm) term
 									.arg(2)));
+							//System.out.print("\n" + "position "+ world.ball.s.toString());
 						} else if (((CompoundTerm) term.arg(1)).functor()
 								.equals("player")) {
 							int id = (Integer) ((CompoundTerm) term.arg(1))
