@@ -185,7 +185,7 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 
 			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.STAND_UP.getValue();
 			model.currentGoal = AgentGoal.STAND_UP;
-		} else if(me.hasBall){
+		} else if(me.hasBall()){
 			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.HAS_BALL.getValue();
 
 			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_GOAL.getValue();
@@ -267,7 +267,7 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
     			model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
     		} else if (MathGeometry.calculeDistancePoints(me.s.x, me.world.ball.s.x, me.s.y, me.world.ball.s.y) < 5000) {
     			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.VERY_NEAR_BALL.getValue();
-                if(!me.world.ball.withPlayer){
+                if(!me.world.ball.withPlayer()){
                 	logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.BALL_WITH_NOBODY.getValue();
                 	
                 	logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.CATCH_BALL.getValue();
@@ -307,7 +307,7 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 
 			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.STAND_UP.getValue();
 			model.currentGoal = AgentGoal.STAND_UP;
-		} else if(me.hasBall){
+		} else if(me.hasBall()){
 			// XXX: MUDEI AQUI! 
 			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.HAS_BALL.getValue();
 			
@@ -443,7 +443,7 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 
     		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.STAND_UP.getValue();    		
     		model.currentGoal = AgentGoal.STAND_UP;
-    	} else if (me.hasBall) {
+    	} else if (me.hasBall()) {
     		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.HAS_BALL.getValue();
     		
     		if(shootBall(model)){
@@ -505,10 +505,10 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 	    	logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.STAND_UP.getValue();
 	   		model.currentGoal = AgentGoal.STAND_UP;
     	} else {      		
-    		if(me.world.ball.withPlayer && me.world.playerWithBall.team == me.team){
+    		if(me.world.ball.withPlayer() && me.world.playerWithBall.team == me.team){
     			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.BALL_WITH_TEAM.getValue();
     			
-    			if(me.hasBall){
+    			if(me.hasBall()){
     				logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.HAS_BALL.getValue();
     				
     				logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_GOAL.getValue();
@@ -550,10 +550,10 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 	    	logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.STAND_UP.getValue();
 	   		model.currentGoal = AgentGoal.STAND_UP;
     	} else {      		
-    		if(me.world.playerWithBall != null && me.world.ball.withPlayer && me.world.playerWithBall.team == me.team){
+    		if(me.world.playerWithBall != null && me.world.ball.withPlayer() && me.world.playerWithBall.team == me.team){
     			logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.BALL_WITH_TEAM.getValue();
     			
-    			if(me.hasBall){
+    			if(me.hasBall()){
     				logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.HAS_BALL.getValue();
     				
     				logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_GOAL.getValue();
@@ -594,7 +594,7 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
     		
     		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.STAND_UP.getValue();
      		model.currentGoal = AgentGoal.STAND_UP;
-     	} else if(me.hasBall){
+     	} else if(me.hasBall()){
      		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.HAS_BALL.getValue();
      		
      		logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_GOAL.getValue();
