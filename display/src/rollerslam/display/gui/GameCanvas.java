@@ -104,7 +104,7 @@ public class GameCanvas extends Canvas implements MouseMotionListener {
                         boolean freeBall = true;
                         for (Player player : world.playersA) {
                             Sprite s = null;
-                            if (player.hasBall) {
+                            if (player.hasBall()) {
                                 s = ss.getSprite(SpriteKind.RED_PLAYER_WITH_BALL);
                                 freeBall = false;
                             } else if (player.inGround) {
@@ -125,7 +125,7 @@ public class GameCanvas extends Canvas implements MouseMotionListener {
 
                         for (Player player : world.playersB) {
                             Sprite s = null;
-                            if (player.hasBall) {
+                            if (player.hasBall()) {
                                 s = ss.getSprite(SpriteKind.BLUE_PLAYER_WITH_BALL);
                                 freeBall = false;
                             } else if (player.inGround) {
