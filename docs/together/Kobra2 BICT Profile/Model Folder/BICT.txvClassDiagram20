@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<view uin="V1hexuhf733odf0-sjy61s">
+		<property name="$metaclass" value="ClassDiagram20"/>
+		<property name="$name" value="BICT"/>
+		<property name="horizontal_guide" value="&lt;p&gt;&lt;p n=&quot;position&quot; v=&quot;387&quot;/&gt;&lt;/p&gt;"/>
+		<reference referencedUin="ecore:e_class:bin:uml20.components.Interface">
+			<property name="bounds" value="431,234,166,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf733qdn5a12uui">
+			<property name="bounds" value="90,234,97,82"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="design:node:::tq87glf733tflc-2e4378:-tdsqjuf733qdn5a12uui">
+				<property name="bounds" value="14,-14,0,0"/>
+			</reference>
+			<reference referencedUin="design:link:::ieje0rf733rc75gj7ve7:-tdsqjuf733qdn5a12uui">
+				<property name="sourceAnchor" value="192,279"/>
+				<property name="targetAnchor" value="436,279"/>
+				<reference referencedUin="label:$stereotypesInplace:design:link:::ieje0rf733rc75gj7ve7:-tdsqjuf733qdn5a12uui">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+			</reference>
+			<reference referencedUin="design:node:::tq87glf733r4144icy9p:-tdsqjuf733qdn5a12uui">
+				<property name="bounds" value="47,4,0,0"/>
+			</reference>
+		</reference>
+		<reference referencedUin="ecore:e_class:bin:uml20.kernel.Enumeration">
+			<property name="bounds" value="431,80,151,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf733s04o-ob1i3t">
+			<property name="bounds" value="95,95,87,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="design:link:::ieje0rf733xiicjtwcm3:-tdsqjuf733s04o-ob1i3t">
+				<property name="sourceAnchor" value="143,180"/>
+				<property name="targetAnchor" value="143,239"/>
+				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf733xiicjtwcm3:-tdsqjuf733s04o-ob1i3t">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf733xiicjtwcm3:-tdsqjuf733s04o-ob1i3t">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+			</reference>
+			<reference referencedUin="design:link:::ieje0rf733s9ruqjfs2w:-tdsqjuf733s04o-ob1i3t">
+				<property name="sourceAnchor" value="187,132"/>
+				<property name="targetAnchor" value="436,132"/>
+				<reference referencedUin="label:$stereotypesInplace:design:link:::ieje0rf733s9ruqjfs2w:-tdsqjuf733s04o-ob1i3t">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+			</reference>
+		</reference>
+		<reference referencedUin="ecore:e_class:bin:uml20.components.Component">
+			<property name="bounds" value="448,380,178,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf733yneq-qaix1u">
+			<property name="bounds" value="95,395,90,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="design:link:::ieje0rf733ytljcbfpj7:-tdsqjuf733yneq-qaix1u">
+				<property name="sourceAnchor" value="190,432"/>
+				<property name="targetAnchor" value="453,432"/>
+				<reference referencedUin="label:$stereotypesInplace:design:link:::ieje0rf733ytljcbfpj7:-tdsqjuf733yneq-qaix1u">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+			</reference>
+			<reference referencedUin="design:link:::ieje0rf733yxvdwj5aqc:-tdsqjuf733yneq-qaix1u">
+				<property name="sourceAnchor" value="145,400"/>
+				<property name="targetAnchor" value="145,321"/>
+				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf733yxvdwj5aqc:-tdsqjuf733yneq-qaix1u">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf733yxvdwj5aqc:-tdsqjuf733yneq-qaix1u">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+			</reference>
+			<reference referencedUin="design:node:::tq87glf733zhhe-7b9zbg:-tdsqjuf733yneq-qaix1u">
+				<property name="bounds" value="48,4,0,0"/>
+			</reference>
+		</reference>
+	</view>
+</nodeSet>
