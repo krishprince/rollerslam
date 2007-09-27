@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<view uin="V1hexuhf6rw1gxe-r53p0n">
+		<property name="$metaclass" value="ClassDiagram20"/>
+		<property name="$name" value="Realization Instance View"/>
+		<reference referencedUin="design:node:::eayk5f6r93dkkd0y3vh">
+			<property name="bounds" value="15,615,200,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="design:link:::ieje0rf6rw7241-r7k86i:eayk5f6r93dkkd0y3vh">
+				<property name="sourceAnchor" value="203,620"/>
+				<property name="targetAnchor" value="288,579"/>
+				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6rw7241-r7k86i:eayk5f6r93dkkd0y3vh">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rw7241-r7k86i:eayk5f6r93dkkd0y3vh">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+			</reference>
+			<reference referencedUin="design:link:::ieje0rf6rw7lyoe4f36j:eayk5f6r93dkkd0y3vh">
+				<property name="sourceAnchor" value="136,700"/>
+				<property name="targetAnchor" value="311,1120"/>
+				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rw7lyoe4f36j:eayk5f6r93dkkd0y3vh">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6rw7lyoe4f36j:eayk5f6r93dkkd0y3vh">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+			</reference>
+			<reference referencedUin="design:link:::ieje0rf6rw7bxblxgldg:eayk5f6r93dkkd0y3vh">
+				<property name="sourceAnchor" value="148,700"/>
+				<property name="targetAnchor" value="299,920"/>
+				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rw7bxblxgldg:eayk5f6r93dkkd0y3vh">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6rw7bxblxgldg:eayk5f6r93dkkd0y3vh">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+			</reference>
+			<reference referencedUin="design:link:::ieje0rf6rw6y1g-tdtbzv:eayk5f6r93dkkd0y3vh">
+				<property name="sourceAnchor" value="161,620"/>
+				<property name="targetAnchor" value="288,497"/>
+				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rw6y1g-tdtbzv:eayk5f6r93dkkd0y3vh">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6rw6y1g-tdtbzv:eayk5f6r93dkkd0y3vh">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+			</reference>
+			<reference referencedUin="design:link:::ieje0rf6rw6u5ilbk6x5:eayk5f6r93dkkd0y3vh">
+				<property name="sourceAnchor" value="140,620"/>
+				<property name="targetAnchor" value="306,300"/>
+				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6rw6u5ilbk6x5:eayk5f6r93dkkd0y3vh">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rw6u5ilbk6x5:eayk5f6r93dkkd0y3vh">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+			</reference>
+			<reference referencedUin="design:link:::ieje0rf6rw7ol9-bc6uqb:eayk5f6r93dkkd0y3vh">
+				<property name="sourceAnchor" value="133,700"/>
+				<property name="targetAnchor" value="314,1220"/>
+				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rw7ol9-bc6uqb:eayk5f6r93dkkd0y3vh">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6rw7ol9-bc6uqb:eayk5f6r93dkkd0y3vh">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+			</reference>
+			<reference referencedUin="design:link:::ieje0rf6rw798s-np2tvf:eayk5f6r93dkkd0y3vh">
+				<property name="sourceAnchor" value="161,700"/>
+				<property name="targetAnchor" value="293,820"/>
+				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rw798s-np2tvf:eayk5f6r93dkkd0y3vh">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6rw798s-np2tvf:eayk5f6r93dkkd0y3vh">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+			</reference>
+			<reference referencedUin="design:link:::ieje0rf6rw6w4gibdn1q:eayk5f6r93dkkd0y3vh">
+				<property name="sourceAnchor" value="148,620"/>
+				<property name="targetAnchor" value="299,400"/>
+				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6rw6w4gibdn1q:eayk5f6r93dkkd0y3vh">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rw6w4gibdn1q:eayk5f6r93dkkd0y3vh">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+			</reference>
+			<reference referencedUin="design:link:::ieje0rf6rw771ijdd381:eayk5f6r93dkkd0y3vh">
+				<property name="sourceAnchor" value="203,700"/>
+				<property name="targetAnchor" value="292,740"/>
+				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rw771ijdd381:eayk5f6r93dkkd0y3vh">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6rw771ijdd381:eayk5f6r93dkkd0y3vh">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+			</reference>
+			<reference referencedUin="design:link:::ieje0rf6rw7jryx0bj53:eayk5f6r93dkkd0y3vh">
+				<property name="sourceAnchor" value="140,700"/>
+				<property name="targetAnchor" value="307,1019"/>
+				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rw7jryx0bj53:eayk5f6r93dkkd0y3vh">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6rw7jryx0bj53:eayk5f6r93dkkd0y3vh">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+			</reference>
+			<reference referencedUin="design:link:::ieje0rf6rw6no4n1evnr:eayk5f6r93dkkd0y3vh">
+				<property name="sourceAnchor" value="133,620"/>
+				<property name="targetAnchor" value="313,100"/>
+				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rw6no4n1evnr:eayk5f6r93dkkd0y3vh">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6rw6no4n1evnr:eayk5f6r93dkkd0y3vh">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+			</reference>
+			<reference referencedUin="design:link:::ieje0rf6rw6s89-82q8ff:eayk5f6r93dkkd0y3vh">
+				<property name="sourceAnchor" value="136,620"/>
+				<property name="targetAnchor" value="310,200"/>
+				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rw6s89-82q8ff:eayk5f6r93dkkd0y3vh">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6rw6s89-82q8ff:eayk5f6r93dkkd0y3vh">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+			</reference>
+			<reference referencedUin="design:link:::ieje0rf6rw74n0ltt58g:eayk5f6r93dkkd0y3vh">
+				<property name="sourceAnchor" value="220,660"/>
+				<property name="targetAnchor" value="293,660"/>
+				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6rw74n0ltt58g:eayk5f6r93dkkd0y3vh">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rw74n0ltt58g:eayk5f6r93dkkd0y3vh">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+			</reference>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rw2uqt-ulqmav">
+			<property name="bounds" value="266,15,113,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<property name="bounds_setted_by_user" value="true"/>
+			<reference referencedUin="design:link:::ieje0rf6rwa6z3tt9o5q:-tdsqjuf6rw2uqt-ulqmav">
+				<property name="sourceAnchor" value="327,100"/>
+				<property name="targetAnchor" value="327,120"/>
+			</reference>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rw2zpe-3wd1jd">
+			<property name="bounds" value="266,115,113,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<property name="bounds_setted_by_user" value="true"/>
+			<reference referencedUin="design:link:::ieje0rf6rwf3kbr1soyu:-tdsqjuf6rw2zpe-3wd1jd">
+				<property name="sourceAnchor" value="384,160"/>
+				<property name="targetAnchor" value="520,160"/>
+				<reference referencedUin="label:$stereotypesInplace:design:link:::ieje0rf6rwf3kbr1soyu:-tdsqjuf6rw2zpe-3wd1jd">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+			</reference>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rw36ffs2akvg">
+			<property name="bounds" value="266,215,113,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<property name="bounds_setted_by_user" value="true"/>
+			<reference referencedUin="design:link:::ieje0rf6rwadfx-i80m7l:-tdsqjuf6rw36ffs2akvg">
+				<property name="sourceAnchor" value="331,300"/>
+				<property name="targetAnchor" value="331,320"/>
+			</reference>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rw3d69-mjn8vr">
+			<property name="bounds" value="283,315,87,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="design:link:::ieje0rf6rwf5rl59z7tw:-tdsqjuf6rw3d69-mjn8vr">
+				<property name="sourceAnchor" value="375,360"/>
+				<property name="targetAnchor" value="520,360"/>
+				<reference referencedUin="label:$stereotypesInplace:design:link:::ieje0rf6rwf5rl59z7tw:-tdsqjuf6rw3d69-mjn8vr">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+			</reference>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rw3r1l-e2f1e5">
+			<property name="bounds" value="283,414,87,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="design:link:::ieje0rf6rwfdr86xyxrj:-tdsqjuf6rw3r1l-e2f1e5">
+				<property name="sourceAnchor" value="375,443"/>
+				<property name="targetAnchor" value="520,393"/>
+				<reference referencedUin="label:$stereotypesInplace:design:link:::ieje0rf6rwfdr86xyxrj:-tdsqjuf6rw3r1l-e2f1e5">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+			</reference>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rw3vxy63oabn">
+			<property name="bounds" value="283,515,87,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="design:link:::ieje0rf6rwffsn-8obz5t:-tdsqjuf6rw3vxy63oabn">
+				<property name="sourceAnchor" value="375,560"/>
+				<property name="targetAnchor" value="541,560"/>
+				<reference referencedUin="label:$stereotypesInplace:design:link:::ieje0rf6rwffsn-8obz5t:-tdsqjuf6rw3vxy63oabn">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+			</reference>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rw40xow3x6qx">
+			<property name="bounds" value="288,615,87,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rw46cys17tsp">
+			<property name="bounds" value="288,715,87,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rw4bcnnpi9pw">
+			<property name="bounds" value="288,815,87,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rw4g86mwuoka">
+			<property name="bounds" value="288,915,87,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="design:link:::ieje0rf6rwfzqweh22dr:-tdsqjuf6rw4g86mwuoka">
+				<property name="sourceAnchor" value="380,960"/>
+				<property name="targetAnchor" value="580,960"/>
+				<reference referencedUin="label:$stereotypesInplace:design:link:::ieje0rf6rwfzqweh22dr:-tdsqjuf6rw4g86mwuoka">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+			</reference>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rw4ldgxr58g0">
+			<property name="bounds" value="288,1014,87,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rw4urf1amu9t">
+			<property name="bounds" value="288,1115,87,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rw4zvl-anuuzp">
+			<property name="bounds" value="288,1215,87,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="design:link:::ieje0rf6rwgfxf31mjnw:-tdsqjuf6rw4zvl-anuuzp">
+				<property name="sourceAnchor" value="375,1220"/>
+				<property name="targetAnchor" value="592,1000"/>
+				<reference referencedUin="label:$stereotypesInplace:design:link:::ieje0rf6rwgfxf31mjnw:-tdsqjuf6rw4zvl-anuuzp">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+			</reference>
+		</reference>
+		<reference referencedUin="ecore:e_class:bin:uml.kernel.PackageableElement">
+			<property name="bounds" value="515,115,183,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+		</reference>
+		<reference referencedUin="ecore:e_class:bin:uml20.kernel.instances.InstanceSpecification">
+			<property name="bounds" value="515,315,200,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="ecore:e_field:bin:uml20.kernel.instances.InstanceSpecification.specification">
+				<property name="bounds" value="-4,6,198,13"/>
+			</reference>
+			<reference referencedUin="ecore:l_gnt:bin:uml20.kernel.instances.InstanceSpecification#uml.kernel.PackageableElement">
+				<property name="sourceAnchor" value="611,320"/>
+				<property name="targetAnchor" value="611,200"/>
+				<property name="$hidden" value="true"/>
+			</reference>
+			<reference referencedUin="ecore:l_ast:bin:uml20.kernel.instances.InstanceSpecification.slots">
+				<property name="sourceAnchor" value="620,400"/>
+				<property name="targetAnchor" value="620,419"/>
+				<property name="$hidden" value="true"/>
+				<reference referencedUin="label:$associationEnd20SupplierPropertiesInplace:ecore:l_ast:bin:uml20.kernel.instances.InstanceSpecification.slots">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+				<reference referencedUin="label:$name:ecore:l_ast:bin:uml20.kernel.instances.InstanceSpecification.slots">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+				<reference referencedUin="label:supplierCardinality:ecore:l_ast:bin:uml20.kernel.instances.InstanceSpecification.slots">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+				<reference referencedUin="label:$associationRoleSupplierInplace:ecore:l_ast:bin:uml20.kernel.instances.InstanceSpecification.slots">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+			</reference>
+		</reference>
+		<reference referencedUin="ecore:e_class:bin:uml20.kernel.instances.Slot">
+			<property name="bounds" value="536,515,158,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<property name="collapsedCompartments" value="Property20"/>
+		</reference>
+		<reference referencedUin="ecore:e_class:bin:uml.ocl.Constraint">
+			<property name="bounds" value="575,915,104,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="ecore:l_gnt:bin:uml.ocl.Constraint#uml.kernel.PackageableElement">
+				<property name="sourceAnchor" value="632,920"/>
+				<property name="targetAnchor" value="632,200"/>
+				<property name="$hidden" value="true"/>
+			</reference>
+		</reference>
+		<reference referencedUin="design:node:::1g64yf6rwflq0-ym0u2u">
+			<property name="bounds" value="429,815,174,25"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="design:link:::ieje0rf6ujur0k-xoja5d:1g64yf6rwflq0-ym0u2u">
+				<property name="sourceAnchor" value="521,845"/>
+				<property name="targetAnchor" value="521,960"/>
+			</reference>
+			<reference referencedUin="design:link:::ieje0rf6rwfr14-ln6quc:1g64yf6rwflq0-ym0u2u">
+				<property name="sourceAnchor" value="480,845"/>
+				<property name="targetAnchor" value="537,1055"/>
+			</reference>
+		</reference>
+	</view>
+</nodeSet>
