@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<node uin="-tdsqjuf733qdn5a12uui">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="mod__extends" value="uml20.components.Interface"/>
+		<property name="$name" value="TestingInterface"/>
+		<node uin="tq87glf733r4144icy9p">
+			<property name="$metaclass" value="Operation20"/>
+			<property name="mod_Visibility" value="$public"/>
+			<property name="$name" value="setToState"/>
+			<property name="__aggregationEnd_formalParameter" value="-5kd6yff733svzl-pk5d16"/>
+			<node uin="ttifwdf733r4av-yx6pi6">
+				<property name="$metaclass" value="Constraint"/>
+				<property name="$name" value="postcondition"/>
+				<node uin="ul14qaf733r4av-5v7svx">
+					<property name="$metaclass" value="ValueSpecification"/>
+					<property name="$name" value="ValueSpecification1"/>
+					<property name="language" value="ocl"/>
+				</node>
+			</node>
+			<node uin="ttifwdf733r4b52gl2kv">
+				<property name="$metaclass" value="Constraint"/>
+				<property name="$name" value="bodyCondition"/>
+				<node uin="ul14qaf733r4b5t3wheq">
+					<property name="$metaclass" value="ValueSpecification"/>
+					<property name="$name" value="ValueSpecification1"/>
+					<property name="language" value="ocl"/>
+				</node>
+			</node>
+			<node uin="ttifwdf733r4b5-anp5vn">
+				<property name="$metaclass" value="Constraint"/>
+				<property name="$name" value="precondition"/>
+				<node uin="ul14qaf733r4bfpnmn13">
+					<property name="$metaclass" value="ValueSpecification"/>
+					<property name="$name" value="ValueSpecification1"/>
+					<property name="language" value="ocl"/>
+				</node>
+			</node>
+			<node uin="ttifwdf733r4bf-opbnjn">
+				<property name="$metaclass" value="Constraint"/>
+				<property name="$name" value="ownedRuleAggregation"/>
+				<node uin="ul14qaf733r4bflbh6m1">
+					<property name="$metaclass" value="ValueSpecification"/>
+					<property name="$name" value="ValueSpecification1"/>
+				</node>
+			</node>
+			<node uin="-5kd6yff733svzl-pk5d16">
+				<property name="$metaclass" value="Parameter"/>
+				<property name="$name" value="state"/>
+				<property name="mod__typeReferencedElement" value="design:node:::-tdsqjuf733s04o-ob1i3t"/>
+				<property name="mod__type" value="BITState"/>
+				<link uin="ieje0rf733sw0f-4qsczq">
+					<property name="$metaclass" value="TypeLink"/>
+					<participant referencedUin="design:node:::-5kd6yff733svzl-pk5d16:tq87glf733r4144icy9p:-tdsqjuf733qdn5a12uui" role="Client"></participant>
+					<participant referencedUin="design:node:::-tdsqjuf733s04o-ob1i3t" role="Supplier"></participant>
+				</link>
+			</node>
+		</node>
+		<link uin="ieje0rf733rc75gj7ve7">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="stereotype" value="extension"/>
+			<property name="mod__cachedBaseName" value="uml20.components.Interface"/>
+			<participant referencedUin="design:node:::-tdsqjuf733qdn5a12uui" role="Client"></participant>
+			<participant referencedUin="ecore:e_class:bin:uml20.components.Interface" role="Supplier"></participant>
+		</link>
+		<node uin="tq87glf733tflc-2e4378">
+			<property name="$metaclass" value="Operation20"/>
+			<property name="mod_Visibility" value="$public"/>
+			<property name="$name" value="isInState"/>
+			<property name="__aggregationEnd_formalParameter" value="-5kd6yff733txuejmc3e0"/>
+			<property name="mod__returnType" value="boolean"/>
+			<property name="__aggregationEnd_returnResult" value="-5kd6yff733txuy-qwkozf"/>
+			<node uin="ttifwdf733tft4z0usmq">
+				<property name="$metaclass" value="Constraint"/>
+				<property name="$name" value="postcondition"/>
+				<node uin="ul14qaf733tft4-ulmhmg">
+					<property name="$metaclass" value="ValueSpecification"/>
+					<property name="$name" value="ValueSpecification1"/>
+					<property name="language" value="ocl"/>
+				</node>
+			</node>
+			<node uin="ttifwdf733tfte-eui9nl">
+				<property name="$metaclass" value="Constraint"/>
+				<property name="$name" value="bodyCondition"/>
+				<node uin="ul14qaf733tfteenf7ly">
+					<property name="$metaclass" value="ValueSpecification"/>
+					<property name="$name" value="ValueSpecification1"/>
+					<property name="language" value="ocl"/>
+				</node>
+			</node>
+			<node uin="ttifwdf733tftei71b43">
+				<property name="$metaclass" value="Constraint"/>
+				<property name="$name" value="precondition"/>
+				<node uin="ul14qaf733tftorh5wmb">
+					<property name="$metaclass" value="ValueSpecification"/>
+					<property name="$name" value="ValueSpecification1"/>
+					<property name="language" value="ocl"/>
+				</node>
+			</node>
+			<node uin="ttifwdf733tfto4u43co">
+				<property name="$metaclass" value="Constraint"/>
+				<property name="$name" value="ownedRuleAggregation"/>
+				<node uin="ul14qaf733tftoxjl0kk">
+					<property name="$metaclass" value="ValueSpecification"/>
+					<property name="$name" value="ValueSpecification1"/>
+				</node>
+			</node>
+			<node uin="-5kd6yff733txuejmc3e0">
+				<property name="$metaclass" value="Parameter"/>
+				<property name="$name" value="state"/>
+				<property name="mod__typeReferencedElement" value="design:node:::-tdsqjuf733s04o-ob1i3t"/>
+				<property name="mod__type" value="BITState"/>
+				<link uin="ieje0rf733txueqx1z5q">
+					<property name="$metaclass" value="TypeLink"/>
+					<participant referencedUin="design:node:::-5kd6yff733txuejmc3e0:tq87glf733tflc-2e4378:-tdsqjuf733qdn5a12uui" role="Client"></participant>
+					<participant referencedUin="design:node:::-tdsqjuf733s04o-ob1i3t" role="Supplier"></participant>
+				</link>
+			</node>
+			<node uin="-5kd6yff733txuy-qwkozf">
+				<property name="$metaclass" value="Parameter"/>
+				<property name="$name" value="Parameter1"/>
+				<property name="mod__type" value="boolean"/>
+				<property name="direction" value="$return"/>
+			</node>
+		</node>
+	</node>
+	<node uin="-tdsqjuf733s04o-ob1i3t">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="mod__extends" value="uml20.kernel.Enumeration"/>
+		<property name="$name" value="BITState"/>
+		<link uin="ieje0rf733s9ruqjfs2w">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="stereotype" value="extension"/>
+			<property name="mod__cachedBaseName" value="uml20.kernel.Enumeration"/>
+			<participant referencedUin="design:node:::-tdsqjuf733s04o-ob1i3t" role="Client"></participant>
+			<participant referencedUin="ecore:e_class:bin:uml20.kernel.Enumeration" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf733xiicjtwcm3">
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="supplierCardinality" value=" "/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::-tdsqjuf733s04o-ob1i3t" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf733qdn5a12uui" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="-tdsqjuf733yneq-qaix1u">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="ServerTest"/>
+		<property name="mod__extends" value="uml20.components.Component"/>
+		<link uin="ieje0rf733ytljcbfpj7">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="stereotype" value="extension"/>
+			<property name="mod__cachedBaseName" value="uml20.components.Component"/>
+			<participant referencedUin="design:node:::-tdsqjuf733yneq-qaix1u" role="Client"></participant>
+			<participant referencedUin="ecore:e_class:bin:uml20.components.Component" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf733yxvdwj5aqc">
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="supplierCardinality" value=" "/>
+			<property name="clientCardinality" value=" "/>
+			<participant referencedUin="design:node:::-tdsqjuf733yneq-qaix1u" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf733qdn5a12uui" role="Supplier"></participant>
+		</link>
+		<node uin="tq87glf733zhhe-7b9zbg">
+			<property name="$metaclass" value="Operation20"/>
+			<property name="mod_Visibility" value="$public"/>
+			<property name="$name" value="setServer"/>
+			<property name="__aggregationEnd_formalParameter" value="-5kd6yff733zojn-n7wzbw"/>
+			<node uin="ttifwdf733zhs9-k3a4tp">
+				<property name="$metaclass" value="Constraint"/>
+				<property name="$name" value="postcondition"/>
+				<node uin="ul14qaf733zhs9-b22q4c">
+					<property name="$metaclass" value="ValueSpecification"/>
+					<property name="$name" value="ValueSpecification1"/>
+					<property name="language" value="ocl"/>
+				</node>
+			</node>
+			<node uin="ttifwdf733zhs9-kcnl6n">
+				<property name="$metaclass" value="Constraint"/>
+				<property name="$name" value="bodyCondition"/>
+				<node uin="ul14qaf733zhs9-e790gx">
+					<property name="$metaclass" value="ValueSpecification"/>
+					<property name="$name" value="ValueSpecification1"/>
+					<property name="language" value="ocl"/>
+				</node>
+			</node>
+			<node uin="ttifwdf733zhsj-8w3q4e">
+				<property name="$metaclass" value="Constraint"/>
+				<property name="$name" value="precondition"/>
+				<node uin="ul14qaf733zhsjwu9vy4">
+					<property name="$metaclass" value="ValueSpecification"/>
+					<property name="$name" value="ValueSpecification1"/>
+					<property name="language" value="ocl"/>
+				</node>
+			</node>
+			<node uin="ttifwdf733zhsjce6xg1">
+				<property name="$metaclass" value="Constraint"/>
+				<property name="$name" value="ownedRuleAggregation"/>
+				<node uin="ul14qaf733zhsjtpijrj">
+					<property name="$metaclass" value="ValueSpecification"/>
+					<property name="$name" value="ValueSpecification1"/>
+				</node>
+			</node>
+			<node uin="-5kd6yff733zojn-n7wzbw">
+				<property name="$metaclass" value="Parameter"/>
+				<property name="$name" value="server"/>
+				<property name="mod__type" value="Component"/>
+			</node>
+		</node>
+	</node>
+</nodeSet>
