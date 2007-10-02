@@ -12,7 +12,7 @@
 			<property name="stereotype" value="extension"/>
 			<property name="mod__cachedBaseName" value="uml20.usecases.Actor"/>
 			<participant referencedUin="design:node:::-tdsqjuf6rcbg7b-nonewy" role="Client"></participant>
-			<participant referencedUin="ecore:e_class:bin:uml20.usecases.Actor" role="Supplier"></participant>
+			<participant referencedUin="ecore:e_class:bin:uml20.usecases.Actor:http#//www.borland.com/together/uml20" role="Supplier"></participant>
 		</link>
 	</node>
 	<node uin="-tdsqjuf6rcbkzi-r85r2j">
@@ -25,7 +25,7 @@
 			<property name="stereotype" value="extension"/>
 			<property name="mod__cachedBaseName" value="uml20.usecases.UseCase"/>
 			<participant referencedUin="design:node:::-tdsqjuf6rcbkzi-r85r2j" role="Client"></participant>
-			<participant referencedUin="ecore:e_class:bin:uml20.usecases.UseCase" role="Supplier"></participant>
+			<participant referencedUin="ecore:e_class:bin:uml20.usecases.UseCase:http#//www.borland.com/together/uml20" role="Supplier"></participant>
 		</link>
 	</node>
 	<node uin="-tdsqjuf6rcbpjnob4yab">
@@ -38,7 +38,7 @@
 			<property name="stereotype" value="extension"/>
 			<property name="mod__cachedBaseName" value="uml20.usecases.Include"/>
 			<participant referencedUin="design:node:::-tdsqjuf6rcbpjnob4yab" role="Client"></participant>
-			<participant referencedUin="ecore:e_class:bin:uml20.usecases.Include" role="Supplier"></participant>
+			<participant referencedUin="ecore:e_class:bin:uml20.usecases.Include:http#//www.borland.com/together/uml20" role="Supplier"></participant>
 		</link>
 	</node>
 	<node uin="-tdsqjuf6rcbujchsqc89">
@@ -51,7 +51,7 @@
 			<property name="stereotype" value="extension"/>
 			<property name="mod__cachedBaseName" value="uml.kernel.Association"/>
 			<participant referencedUin="design:node:::-tdsqjuf6rcbujchsqc89" role="Client"></participant>
-			<participant referencedUin="ecore:e_class:bin:uml.kernel.Association" role="Supplier"></participant>
+			<participant referencedUin="ecore:e_class:bin:uml.kernel.Association:http#//www.borland.com/together/uml" role="Supplier"></participant>
 		</link>
 	</node>
 	<node uin="-tdsqjuf6rcbzj18a5gzo">
@@ -64,7 +64,7 @@
 			<property name="stereotype" value="extension"/>
 			<property name="mod__cachedBaseName" value="uml20.kernel.Generalization"/>
 			<participant referencedUin="design:node:::-tdsqjuf6rcbzj18a5gzo" role="Client"></participant>
-			<participant referencedUin="ecore:e_class:bin:uml20.kernel.Generalization" role="Supplier"></participant>
+			<participant referencedUin="ecore:e_class:bin:uml20.kernel.Generalization:http#//www.borland.com/together/uml20" role="Supplier"></participant>
 		</link>
 	</node>
 	<node uin="-tdsqjuf6rcc4ob-d9vezl">
@@ -77,7 +77,7 @@
 			<property name="stereotype" value="extension"/>
 			<property name="mod__cachedBaseName" value="uml20.kernel.Generalization"/>
 			<participant referencedUin="design:node:::-tdsqjuf6rcc4ob-d9vezl" role="Client"></participant>
-			<participant referencedUin="ecore:e_class:bin:uml20.kernel.Generalization" role="Supplier"></participant>
+			<participant referencedUin="ecore:e_class:bin:uml20.kernel.Generalization:http#//www.borland.com/together/uml20" role="Supplier"></participant>
 		</link>
 	</node>
 </nodeSet>

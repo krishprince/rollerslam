@@ -5,8 +5,87 @@
 	<view uin="V1hexuhf6rbo83df7ale8">
 		<property name="$defaultDiagram" value="true"/>
 		<property name="$metaclass" value="ClassDiagram20"/>
+		<property name="__options" value="option.nlayout.recursive=true"/>
 		<reference referencedUin="design:view:::V1hexuhf6rbp2d9fhw8ao">
 			<property name="$shortcutReference" value="true"/>
+			<property name="bounds" value="5,485,201,871"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rbtmgx-gt98sd">
+			<property name="bounds" value="105,365,162,80"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rbr149-v91z2j">
+			<property name="bounds" value="5,245,103,80"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rbs6uf-5zcieu">
+			<property name="bounds" value="205,5,95,80"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rbst6n4nyaki">
+			<property name="bounds" value="320,5,80,80"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rbqh8svm6dve">
+			<property name="bounds" value="128,245,147,80"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rbqqn2-pbhvcn">
+			<property name="bounds" value="295,285,166,80"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rbtb86-t9umhg">
+			<property name="bounds" value="5,5,80,80"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rbt4s681xuu6">
+			<property name="bounds" value="148,125,95,80"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rbtgt1-tujo7g">
+			<property name="bounds" value="5,365,80,80"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rbrils3276vr">
+			<property name="bounds" value="402,405,133,80"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rbrxytz5200h">
+			<property name="bounds" value="341,525,95,80"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rbszir-lg2wq0">
+			<property name="bounds" value="105,5,80,80"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rbr89lmf1opl">
+			<property name="bounds" value="420,5,120,80"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rbrsa2-dne6m7">
+			<property name="bounds" value="226,525,95,80"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:view:::V1hexuhf79ox990-k022hg">
+			<property name="bounds" value="295,125,82,121"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rbqvbn-71dci6">
+			<property name="bounds" value="5,125,123,80"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rbsi4k9h0aie">
+			<property name="bounds" value="397,125,99,80"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rbscq4xjif4m">
+			<property name="bounds" value="287,405,95,80"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:node:::-tdsqjuf6rbsnjun7lojq">
+			<property name="bounds" value="456,525,80,80"/>
+			<property name="location_set_by_user" value="true"/>
 		</reference>
 	</view>
 </nodeSet>
