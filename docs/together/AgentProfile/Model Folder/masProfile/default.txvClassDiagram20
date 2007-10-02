@@ -47,11 +47,11 @@
 				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6wkhdto6apc8j:-tdsqjuf6wjm40u-eqyvak">
 					<property name="bounds" value="550,314,7,17"/>
 				</reference>
-				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6wkhdto6apc8j:-tdsqjuf6wjm40u-eqyvak">
-					<property name="bounds" value="550,263,7,17"/>
-				</reference>
 				<reference referencedUin="label:$association20RoleClientInplace:design:link:::ieje0rf6wkhdto6apc8j:-tdsqjuf6wjm40u-eqyvak">
 					<property name="bounds" value="479,273,65,17"/>
+				</reference>
+				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6wkhdto6apc8j:-tdsqjuf6wjm40u-eqyvak">
+					<property name="bounds" value="550,263,7,17"/>
 				</reference>
 			</reference>
 			<reference referencedUin="design:link:::ieje0rf6wk9ka6n2dxwu:-tdsqjuf6wjm40u-eqyvak">
@@ -72,14 +72,14 @@
 				<property name="sourceAnchor" value="726,260"/>
 				<property name="targetAnchor" value="726,341"/>
 				<property name="bendpoints" value=""/>
-				<reference referencedUin="label:$association20RoleClientInplace:design:link:::ieje0rf6wkhhpk-gxmk1w:-tdsqjuf6wjmm24-u0hcyx">
-					<property name="bounds" value="658,273,65,17"/>
-				</reference>
 				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6wkhhpk-gxmk1w:-tdsqjuf6wjmm24-u0hcyx">
 					<property name="bounds" value="729,263,7,17"/>
 				</reference>
 				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6wkhhpk-gxmk1w:-tdsqjuf6wjmm24-u0hcyx">
 					<property name="bounds" value="729,314,7,17"/>
+				</reference>
+				<reference referencedUin="label:$association20RoleClientInplace:design:link:::ieje0rf6wkhhpk-gxmk1w:-tdsqjuf6wjmm24-u0hcyx">
+					<property name="bounds" value="658,273,65,17"/>
 				</reference>
 			</reference>
 		</reference>
@@ -91,6 +91,10 @@
 		<reference referencedUin="design:node:::-tdsqjuf6rwky7f-hsuzof">
 			<property name="$shortcutReference" value="true"/>
 			<property name="bounds" value="535,336,200,80"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:view:::V1hexuhf79pwz49-7h59v5">
+			<property name="bounds" value="5,5,82,121"/>
 			<property name="location_set_by_user" value="true"/>
 		</reference>
 	</view>

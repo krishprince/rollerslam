@@ -6,7 +6,11 @@
 		<property name="$defaultDiagram" value="true"/>
 		<property name="$metaclass" value="ClassDiagram20"/>
 		<reference referencedUin="design:view:::V1hexuhf6wmm7cg-4fmif8">
-			<property name="bounds" value="5,5,82,73"/>
+			<property name="bounds" value="5,5,82,89"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:view:::V1hexuhf79ozpdrhd99ex">
+			<property name="bounds" value="5,5,82,121"/>
 			<property name="location_set_by_user" value="true"/>
 		</reference>
 	</view>

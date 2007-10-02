@@ -8,7 +8,7 @@
 		<property name="$name" value="Realization Service View"/>
 		<reference referencedUin="design:view:::V1hexuhf6rv0buc-w7qltv">
 			<property name="$shortcutReference" value="true"/>
-			<property name="bounds" value="186,0,188,456"/>
+			<property name="bounds" value="-5,155,204,916"/>
 			<property name="location_set_by_user" value="true"/>
 		</reference>
 		<reference referencedUin="design:node:::-tdsqjuf6rv3d24r2cmie">
@@ -28,7 +28,7 @@
 			<property name="location_set_by_user" value="true"/>
 		</reference>
 		<reference referencedUin="design:node:::-tdsqjuf6rv2iss7c5twk">
-			<property name="bounds" value="5,9,162,80"/>
+			<property name="bounds" value="217,218,162,80"/>
 			<property name="location_set_by_user" value="true"/>
 		</reference>
 		<reference referencedUin="design:node:::-tdsqjuf6rv2zlt-9xk64z">
@@ -40,7 +40,7 @@
 			<property name="location_set_by_user" value="true"/>
 		</reference>
 		<reference referencedUin="design:node:::-tdsqjuf6rv3ice-h55hol">
-			<property name="bounds" value="597,0,95,80"/>
+			<property name="bounds" value="597,0,99,80"/>
 			<property name="location_set_by_user" value="true"/>
 		</reference>
 		<reference referencedUin="design:node:::-tdsqjuf6rv15bv-3jtdpt">
@@ -48,7 +48,7 @@
 			<property name="location_set_by_user" value="true"/>
 		</reference>
 		<reference referencedUin="design:node:::-tdsqjuf6rv1mlw6bgcba">
-			<property name="bounds" value="75,494,166,80"/>
+			<property name="bounds" value="215,395,166,80"/>
 			<property name="location_set_by_user" value="true"/>
 		</reference>
 		<reference referencedUin="design:node:::-tdsqjuf6rv1rit-h6x5jy">
@@ -60,7 +60,7 @@
 			<property name="location_set_by_user" value="true"/>
 		</reference>
 		<reference referencedUin="design:node:::-tdsqjuf6rv2tzubgtwaf">
-			<property name="bounds" value="412,297,87,80"/>
+			<property name="bounds" value="412,297,80,80"/>
 			<property name="location_set_by_user" value="true"/>
 		</reference>
 		<reference referencedUin="design:node:::-tdsqjuf6rv1blr-bxbay8">
@@ -72,11 +72,15 @@
 			<property name="location_set_by_user" value="true"/>
 		</reference>
 		<reference referencedUin="design:node:::-tdsqjuf6rv2oh8-ble7dl">
-			<property name="bounds" value="97,108,87,80"/>
+			<property name="bounds" value="175,46,154,80"/>
 			<property name="location_set_by_user" value="true"/>
 		</reference>
 		<reference referencedUin="design:node:::-tdsqjuf6rv2db9-qjwr4g">
 			<property name="bounds" value="412,0,120,80"/>
+			<property name="location_set_by_user" value="true"/>
+		</reference>
+		<reference referencedUin="design:view:::V1hexuhf79ox8upgfd6hi">
+			<property name="bounds" value="5,5,82,121"/>
 			<property name="location_set_by_user" value="true"/>
 		</reference>
 	</view>

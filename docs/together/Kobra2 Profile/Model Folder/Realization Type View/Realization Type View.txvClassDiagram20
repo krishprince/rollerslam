@@ -12,30 +12,20 @@
 			<reference referencedUin="design:link:::ieje0rf6rvv0h9wye94s:88lh7f6r93dku-vdg3ik">
 				<property name="sourceAnchor" value="111,660"/>
 				<property name="targetAnchor" value="307,200"/>
-				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rvv0h9wye94s:88lh7f6r93dku-vdg3ik">
+				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6rvv0h9wye94s:88lh7f6r93dku-vdg3ik">
 					<property name="bounds" value="0,0,0,0"/>
 				</reference>
-				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6rvv0h9wye94s:88lh7f6r93dku-vdg3ik">
+				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rvv0h9wye94s:88lh7f6r93dku-vdg3ik">
 					<property name="bounds" value="0,0,0,0"/>
 				</reference>
 			</reference>
 			<reference referencedUin="design:link:::ieje0rf6rvuy45-riejxf:88lh7f6r93dku-vdg3ik">
 				<property name="sourceAnchor" value="109,660"/>
 				<property name="targetAnchor" value="310,100"/>
-				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rvuy45-riejxf:88lh7f6r93dku-vdg3ik">
-					<property name="bounds" value="0,0,0,0"/>
-				</reference>
 				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6rvuy45-riejxf:88lh7f6r93dku-vdg3ik">
 					<property name="bounds" value="0,0,0,0"/>
 				</reference>
-			</reference>
-			<reference referencedUin="design:link:::ieje0rf6rvvm31-9htm6j:88lh7f6r93dku-vdg3ik">
-				<property name="sourceAnchor" value="120,740"/>
-				<property name="targetAnchor" value="299,1019"/>
-				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rvvm31-9htm6j:88lh7f6r93dku-vdg3ik">
-					<property name="bounds" value="0,0,0,0"/>
-				</reference>
-				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6rvvm31-9htm6j:88lh7f6r93dku-vdg3ik">
+				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rvuy45-riejxf:88lh7f6r93dku-vdg3ik">
 					<property name="bounds" value="0,0,0,0"/>
 				</reference>
 			</reference>
@@ -46,6 +36,16 @@
 					<property name="bounds" value="0,0,0,0"/>
 				</reference>
 				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rvvd0668fdn0:88lh7f6r93dku-vdg3ik">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+			</reference>
+			<reference referencedUin="design:link:::ieje0rf6rvvm31-9htm6j:88lh7f6r93dku-vdg3ik">
+				<property name="sourceAnchor" value="120,740"/>
+				<property name="targetAnchor" value="299,1019"/>
+				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6rvvm31-9htm6j:88lh7f6r93dku-vdg3ik">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rvvm31-9htm6j:88lh7f6r93dku-vdg3ik">
 					<property name="bounds" value="0,0,0,0"/>
 				</reference>
 			</reference>
@@ -69,6 +69,16 @@
 					<property name="bounds" value="0,0,0,0"/>
 				</reference>
 			</reference>
+			<reference referencedUin="design:link:::ieje0rf6rvv5i2y2gxzf:88lh7f6r93dku-vdg3ik">
+				<property name="sourceAnchor" value="122,660"/>
+				<property name="targetAnchor" value="297,399"/>
+				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6rvv5i2y2gxzf:88lh7f6r93dku-vdg3ik">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rvv5i2y2gxzf:88lh7f6r93dku-vdg3ik">
+					<property name="bounds" value="0,0,0,0"/>
+				</reference>
+			</reference>
 			<reference referencedUin="design:link:::ieje0rf6rvv2sf-4kawrg:88lh7f6r93dku-vdg3ik">
 				<property name="sourceAnchor" value="115,660"/>
 				<property name="targetAnchor" value="304,300"/>
@@ -79,43 +89,33 @@
 					<property name="bounds" value="0,0,0,0"/>
 				</reference>
 			</reference>
-			<reference referencedUin="design:link:::ieje0rf6rvv5i2y2gxzf:88lh7f6r93dku-vdg3ik">
-				<property name="sourceAnchor" value="122,660"/>
-				<property name="targetAnchor" value="297,399"/>
-				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rvv5i2y2gxzf:88lh7f6r93dku-vdg3ik">
-					<property name="bounds" value="0,0,0,0"/>
-				</reference>
-				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6rvv5i2y2gxzf:88lh7f6r93dku-vdg3ik">
-					<property name="bounds" value="0,0,0,0"/>
-				</reference>
-			</reference>
 			<reference referencedUin="design:link:::ieje0rf6rvv839hbklcj:88lh7f6r93dku-vdg3ik">
 				<property name="sourceAnchor" value="133,660"/>
 				<property name="targetAnchor" value="293,499"/>
-				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6rvv839hbklcj:88lh7f6r93dku-vdg3ik">
+				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rvv839hbklcj:88lh7f6r93dku-vdg3ik">
 					<property name="bounds" value="0,0,0,0"/>
 				</reference>
-				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rvv839hbklcj:88lh7f6r93dku-vdg3ik">
+				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6rvv839hbklcj:88lh7f6r93dku-vdg3ik">
 					<property name="bounds" value="0,0,0,0"/>
 				</reference>
 			</reference>
 			<reference referencedUin="design:link:::ieje0rf6rvvhak-ket4mh:88lh7f6r93dku-vdg3ik">
 				<property name="sourceAnchor" value="152,740"/>
 				<property name="targetAnchor" value="285,831"/>
-				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rvvhak-ket4mh:88lh7f6r93dku-vdg3ik">
+				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6rvvhak-ket4mh:88lh7f6r93dku-vdg3ik">
 					<property name="bounds" value="0,0,0,0"/>
 				</reference>
-				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6rvvhak-ket4mh:88lh7f6r93dku-vdg3ik">
+				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rvvhak-ket4mh:88lh7f6r93dku-vdg3ik">
 					<property name="bounds" value="0,0,0,0"/>
 				</reference>
 			</reference>
 			<reference referencedUin="design:link:::ieje0rf6rvvjo9xtksc6:88lh7f6r93dku-vdg3ik">
 				<property name="sourceAnchor" value="130,740"/>
 				<property name="targetAnchor" value="289,919"/>
-				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rvvjo9xtksc6:88lh7f6r93dku-vdg3ik">
+				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6rvvjo9xtksc6:88lh7f6r93dku-vdg3ik">
 					<property name="bounds" value="0,0,0,0"/>
 				</reference>
-				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf6rvvjo9xtksc6:88lh7f6r93dku-vdg3ik">
+				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf6rvvjo9xtksc6:88lh7f6r93dku-vdg3ik">
 					<property name="bounds" value="0,0,0,0"/>
 				</reference>
 			</reference>
@@ -243,11 +243,11 @@
 				</reference>
 			</reference>
 		</reference>
-		<reference referencedUin="ecore:e_class:bin:uml20.classes.Class">
+		<reference referencedUin="ecore:e_class:bin:uml20.classes.Class:http#//www.borland.com/together/uml20">
 			<property name="bounds" value="557,15,113,80"/>
 			<property name="location_set_by_user" value="true"/>
 			<property name="$shortcutReference" value="true"/>
-			<reference referencedUin="ecore:l_ast:bin:uml20.classes.Class.ownedAttributes">
+			<reference referencedUin="ecore:l_ast:bin:uml20.classes.Class.ownedAttributes:http#//www.borland.com/together/uml20">
 				<property name="sourceAnchor" value="621,100"/>
 				<property name="targetAnchor" value="621,413"/>
 				<property name="$hidden" value="true"/>
@@ -257,19 +257,19 @@
 				<reference referencedUin="label:$associationRoleSupplierInplace:ecore:l_ast:bin:uml20.classes.Class.ownedAttributes">
 					<property name="bounds" value="0,0,0,0"/>
 				</reference>
-				<reference referencedUin="label:$associationEnd20SupplierPropertiesInplace:ecore:l_ast:bin:uml20.classes.Class.ownedAttributes">
+				<reference referencedUin="label:$name:ecore:l_ast:bin:uml20.classes.Class.ownedAttributes">
 					<property name="bounds" value="0,0,0,0"/>
 				</reference>
-				<reference referencedUin="label:$name:ecore:l_ast:bin:uml20.classes.Class.ownedAttributes">
+				<reference referencedUin="label:$associationEnd20SupplierPropertiesInplace:ecore:l_ast:bin:uml20.classes.Class.ownedAttributes">
 					<property name="bounds" value="0,0,0,0"/>
 				</reference>
 			</reference>
 		</reference>
-		<reference referencedUin="ecore:e_class:bin:uml20.kernel.DataType">
+		<reference referencedUin="ecore:e_class:bin:uml20.kernel.DataType:http#//www.borland.com/together/uml20">
 			<property name="bounds" value="546,215,134,80"/>
 			<property name="location_set_by_user" value="true"/>
 			<property name="$shortcutReference" value="true"/>
-			<reference referencedUin="ecore:l_ast:bin:uml20.kernel.DataType.ownedAttributes">
+			<reference referencedUin="ecore:l_ast:bin:uml20.kernel.DataType.ownedAttributes:http#//www.borland.com/together/uml20">
 				<property name="sourceAnchor" value="613,300"/>
 				<property name="targetAnchor" value="613,413"/>
 				<property name="$hidden" value="true"/>
@@ -287,27 +287,27 @@
 				</reference>
 			</reference>
 		</reference>
-		<reference referencedUin="ecore:e_class:bin:uml20.kernel.EnumerationLiteral">
+		<reference referencedUin="ecore:e_class:bin:uml20.kernel.EnumerationLiteral:http#//www.borland.com/together/uml20">
 			<property name="bounds" value="520,314,187,80"/>
 			<property name="location_set_by_user" value="true"/>
 			<property name="$shortcutReference" value="true"/>
 		</reference>
-		<reference referencedUin="ecore:e_class:bin:uml20.kernel.Property">
+		<reference referencedUin="ecore:e_class:bin:uml20.kernel.Property:http#//www.borland.com/together/uml20">
 			<property name="bounds" value="549,408,129,108"/>
 			<property name="location_set_by_user" value="true"/>
 			<property name="$shortcutReference" value="true"/>
 		</reference>
-		<reference referencedUin="ecore:e_class:bin:uml20.kernel.Generalization">
+		<reference referencedUin="ecore:e_class:bin:uml20.kernel.Generalization:http#//www.borland.com/together/uml20">
 			<property name="bounds" value="533,815,161,80"/>
 			<property name="location_set_by_user" value="true"/>
 			<property name="$shortcutReference" value="true"/>
 		</reference>
-		<reference referencedUin="ecore:e_class:bin:uml.kernel.Association">
+		<reference referencedUin="ecore:e_class:bin:uml.kernel.Association:http#//www.borland.com/together/uml">
 			<property name="bounds" value="548,615,130,80"/>
 			<property name="location_set_by_user" value="true"/>
 			<property name="$shortcutReference" value="true"/>
 		</reference>
-		<reference referencedUin="ecore:e_class:bin:uml.ocl.Constraint">
+		<reference referencedUin="ecore:e_class:bin:uml.ocl.Constraint:http#//www.borland.com/together/uml">
 			<property name="bounds" value="561,911,104,80"/>
 			<property name="location_set_by_user" value="true"/>
 			<property name="$shortcutReference" value="true"/>
