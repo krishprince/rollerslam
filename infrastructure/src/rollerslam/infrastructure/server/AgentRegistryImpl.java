@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import rollerslam.infrastructure.agent.Agent;
+import rollerslam.infrastructure.agent.SensorEffectorManager;
 
 /**
  * Default implementation for the AgentRegistry.
@@ -34,15 +35,19 @@ import rollerslam.infrastructure.agent.Agent;
 public class AgentRegistryImpl implements AgentRegistryServer {
 
 	private Set<Agent> agents = new HashSet<Agent>();
+	private SensorEffectorManager sensorEffectorManager = null;;
 		
+	public AgentRegistryImpl(SensorEffectorManager sem) {
+		this.sensorEffectorManager  = sem;
+	}
+
 	/**
 	 * @throws RemoteException 
 	 * @see rollerslam.infrastructure.server.AgentRegistry#register(rollerslam.agents.Agent)
 	 */
 	public void register(Agent a) throws RemoteException {
 			agents.add(a);
-		ServerFacadeImpl.getInstance().getSensorEffectorManager()
-				.registerAgent(a);
+			sensorEffectorManager.registerAgent(a);
 	}
 
 	/**
@@ -51,7 +56,7 @@ public class AgentRegistryImpl implements AgentRegistryServer {
 	public void unregister(Agent a) {
 		agents.remove(a);
 		try {
-			ServerFacadeImpl.getInstance().getSensorEffectorManager().unregisterAgent(a);
+			sensorEffectorManager.unregisterAgent(a);
 		} catch (RemoteException e) {
 			if (PrintTrace.TracePrint){
 				e.printStackTrace();

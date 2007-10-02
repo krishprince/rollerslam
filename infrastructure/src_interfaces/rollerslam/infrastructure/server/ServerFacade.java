@@ -20,12 +20,10 @@
  */
 package rollerslam.infrastructure.server;
 
-import java.rmi.AlreadyBoundException;
-import java.rmi.Remote;
 import java.rmi.RemoteException;
+
 import rollerslam.infrastructure.agent.Effector;
 import rollerslam.infrastructure.agent.Sensor;
-import rollerslam.infrastructure.agent.SensorEffectorManager;
 import rollerslam.infrastructure.logging.LogRecordingService;
 import rollerslam.infrastructure.settings.GeneralSettings;
 
@@ -36,18 +34,6 @@ import rollerslam.infrastructure.settings.GeneralSettings;
  * @author maas
  */
 public interface ServerFacade {
-
-    /**
-     * @return the DisplayRegistry port.
-     * @throws RemoteException
-     */
-    DisplayRegistry getDisplayRegistry() throws RemoteException;
-
-    /**
-     * @return the AgentRegistry port.
-     * @throws RemoteException
-     */
-    AgentRegistry getAgentRegistry() throws RemoteException;
 
     /**
      * @return the SimulationAdmin port.
@@ -80,26 +66,9 @@ public interface ServerFacade {
     ServerInitialization getServerInitialization() throws RemoteException;
 
     /**
-     * @return
-     * @throws RemoteException
-     */
-    SimulationStateProvider getSimulationStateProvider() throws RemoteException;
-
-    /**
-     * @param e
-     * @throws RemoteException
-     */
-    void setSimulationStateProvider(SimulationStateProvider e) throws RemoteException;
-
-    /**
      * @return the general settings provider
      * @throws RemoteException
      */
     GeneralSettings getGeneralSettings() throws RemoteException;
-
-    // this should be visible only IN the server component...
-    SensorEffectorManager getSensorEffectorManager() throws RemoteException;
-
-    // this should be visible only IN the server component...
-    Remote exportObject(Remote obj) throws RemoteException, AlreadyBoundException;
+    
 }

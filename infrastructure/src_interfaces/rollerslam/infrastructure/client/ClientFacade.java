@@ -91,6 +91,8 @@ public interface ClientFacade {
     ServiceDiscoverer getServiceDiscoverer() throws RemoteException;
     
     /**
+     * THIS IS NOT PART OF THE PIM! 
+     * 
      * @return the general settings provider
      * @throws RemoteException
      */

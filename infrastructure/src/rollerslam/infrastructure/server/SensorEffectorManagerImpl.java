@@ -15,6 +15,7 @@ import rollerslam.infrastructure.agent.SensorEffectorManager;
 
 public class SensorEffectorManagerImpl implements SensorEffectorManager {
 	private static int namesAgent = 1;
+	private ObjectExporter objectExporter = null;
 	
 	private class AgentData {
 		public Agent		agent    = null;
@@ -94,6 +95,10 @@ public class SensorEffectorManagerImpl implements SensorEffectorManager {
 		}		
 	};
 	
+	public SensorEffectorManagerImpl(ObjectExporter oe) {
+		this.objectExporter = oe;
+	}
+
 	public void registerAgent(Agent ag) throws RemoteException {		
 		if (buckets.get(ag) == null) {
 			AgentData data = new AgentData(ag);
@@ -103,7 +108,7 @@ public class SensorEffectorManagerImpl implements SensorEffectorManager {
 			ag.setName(namesAgent++);
 
 			try {
-				data.effector = (Effector) ServerFacadeImpl.getInstance().exportObject(data.effector);
+				data.effector = (Effector) objectExporter.exportObject(data.effector);
 			} catch (AlreadyBoundException e) {
 				if (PrintTrace.TracePrint){
 					e.printStackTrace();
@@ -111,7 +116,7 @@ public class SensorEffectorManagerImpl implements SensorEffectorManager {
 			}
 
 			try {
-				data.sensor   = (Sensor) ServerFacadeImpl.getInstance().exportObject(data.sensor);
+				data.sensor   = (Sensor) objectExporter.exportObject(data.sensor);
 			} catch (AlreadyBoundException e) {
 				if (PrintTrace.TracePrint){
 					e.printStackTrace();
