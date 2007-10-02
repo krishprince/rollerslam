@@ -1,5 +1,9 @@
 package rollerslam.infrastructure.server;
 
+import java.rmi.AlreadyBoundException;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
 import com.parctechnologies.eclipse.EclipseConnection;
 
 import rollerslam.infrastructure.agent.automata.AutomataAgent;
@@ -22,5 +26,5 @@ public interface ServerInitialization {
     void init(int port, AutomataAgent environmentAgent, LogRecordingService logRecordingService) throws Exception;
     	
 	EclipseConnection getEclipseConnection();
-    
+	
 }

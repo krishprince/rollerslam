@@ -37,15 +37,18 @@ import rollerslam.infrastructure.display.Display;
 public class DisplayUpdateThread extends Thread {
 	private long DISPLAY_UPDATE_INTERVAL = 100;
 	private DisplayRegistryExtended displayRegistry = null;
+	private SimulationStateProvider simulationStateProvider = null;
 	
 	/**
 	 * Default constructor
 	 * 
 	 * @param environment the environment Agent
 	 * @param dri 
+	 * @param ssp 
 	 */
-	public DisplayUpdateThread(DisplayRegistryExtended dri) {
+	public DisplayUpdateThread(DisplayRegistryExtended dri, SimulationStateProvider ssp) {
 		this.displayRegistry = dri;
+		this.simulationStateProvider  = ssp;
 	}
 
 	/**
@@ -58,7 +61,7 @@ public class DisplayUpdateThread extends Thread {
 		while(true) {
 			Message state = null;			
 			try {
-				state = ServerFacadeImpl.getInstance().getSimulationStateProvider().getEnvironmentState();
+				state = simulationStateProvider.getEnvironmentState();
 			} catch (RemoteException e1) {
 				if (PrintTrace.TracePrint){
 					e1.printStackTrace();

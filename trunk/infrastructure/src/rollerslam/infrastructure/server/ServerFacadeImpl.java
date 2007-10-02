@@ -48,7 +48,7 @@ import rollerslam.infrastructure.settings.GeneralSettingsImpl;
  *
  * @author maas
  */
-public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
+public class ServerFacadeImpl implements ServerFacade, ServerInitialization, ObjectExporter {
 
     private static ServerFacade instance = null;
 
@@ -87,8 +87,8 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
 
     private ServerFacadeImpl() {
         dri = new DisplayRegistryImpl();
-        ari = new AgentRegistryImpl();
-        sem = new SensorEffectorManagerImpl();
+        sem = new SensorEffectorManagerImpl((ObjectExporter)this);
+        ari = new AgentRegistryImpl(sem);
         gs = GeneralSettingsImpl.getInstance();
         try {
             envSensor = sem.getEnvironmentSensor();
@@ -173,7 +173,7 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
             }
         }
 
-        displayUpdateThread = new DisplayUpdateThread(dri);
+        displayUpdateThread = new DisplayUpdateThread(dri, envStateProvider);
         displayUpdateThread.start();
 
         // starts multicast listener
@@ -232,20 +232,6 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
     }
 
     /**
-     * @see rollerslam.infrastructure.server.ServerFacade#getAgentRegistry()
-     */
-    public AgentRegistry getAgentRegistry() throws RemoteException {
-        return ari;
-    }
-
-    /**
-     * @see rollerslam.infrastructure.server.ServerFacade#getDisplayRegistry()
-     */
-    public DisplayRegistry getDisplayRegistry() throws RemoteException {
-        return dri;
-    }
-
-    /**
      * @see rollerslam.infrastructure.server.ServerFacade#getSimulationAdmin()
      */
     public SimulationAdmin getSimulationAdmin() throws RemoteException {
@@ -273,37 +259,16 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization {
         return this;
     }
 
-    /**
-     * @see rollerslam.infrastructure.server.ServerFacade#getSimulationStateProvider()
-     */
-    public SimulationStateProvider getSimulationStateProvider() throws RemoteException {
-        return envStateProvider;
-    }
-
-    /**
-     * @see rollerslam.infrastructure.server.ServerFacade#setSimulationStateProvider(rollerslam.infrastructure.server.SimulationStateProvider)
-     */
-    public void setSimulationStateProvider(SimulationStateProvider e) throws RemoteException {
-        this.envStateProvider = e;
-    }
-
-    /**
-     * @see rollerslam.infrastructure.server.ServerFacade#getSensorEffectorManager()
-     */
-    public SensorEffectorManager getSensorEffectorManager() throws RemoteException {
-        return sem;
-    }
-
     public LogRecordingService getLogRecordingService() throws RemoteException {        
         return selLogRecSrv;
-    }
-
-    public GeneralSettings getGeneralSettings() throws RemoteException {
-        return gs;
     }
 
 	public EclipseConnection getEclipseConnection() {
 		return EclipsePrologHandlerImpl.getInstance().getEclipseConnection();
 	}
+    
+    public GeneralSettings getGeneralSettings() throws RemoteException {
+        return gs;
+    }
     
 }
