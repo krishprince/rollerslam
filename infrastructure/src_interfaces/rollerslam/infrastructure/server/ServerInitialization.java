@@ -1,13 +1,9 @@
 package rollerslam.infrastructure.server;
 
-import java.rmi.AlreadyBoundException;
-import java.rmi.Remote;
-import java.rmi.RemoteException;
-
-import com.parctechnologies.eclipse.EclipseConnection;
-
 import rollerslam.infrastructure.agent.automata.AutomataAgent;
 import rollerslam.infrastructure.logging.LogRecordingService;
+
+import com.parctechnologies.eclipse.EclipseConnection;
 
 
 public interface ServerInitialization {
@@ -17,13 +13,12 @@ public interface ServerInitialization {
 	 * The passed agent will never be available to garbage collection.
 	 * This method does not return.
 	 * 
-	 * @param port the name server port
 	 * @param environmentAgent the environment agent
 	 * @throws Exception
 	 */
-	void init(int port, AutomataAgent environmentAgent) throws Exception;
+	void init(AutomataAgent environmentAgent) throws Exception;
 
-    void init(int port, AutomataAgent environmentAgent, LogRecordingService logRecordingService) throws Exception;
+    void init(AutomataAgent environmentAgent, LogRecordingService logRecordingService) throws Exception;
     	
 	EclipseConnection getEclipseConnection();
 	

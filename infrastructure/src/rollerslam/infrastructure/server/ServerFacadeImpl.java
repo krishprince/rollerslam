@@ -103,14 +103,14 @@ public class ServerFacadeImpl implements ServerFacade, ServerInitialization, Obj
     /**
      * @see rollerslam.infrastructure.server.ServerFacade#init(int, rollerslam.infrastructure.server.AutomataAgent)
      */
-    public void init(int port, AutomataAgent environmentAgent) throws Exception {
-        init(port, environmentAgent, null);
+    public void init(AutomataAgent environmentAgent) throws Exception {
+        init(environmentAgent, null);
     }
 
     /**
      * @see rollerslam.infrastructure.server.ServerFacade#init(int, rollerslam.infrastructure.server.AutomataAgent)
      */
-    public void init(int port, AutomataAgent environmentAgent, LogRecordingService logRecordingService) throws Exception {
+    public void init(AutomataAgent environmentAgent, LogRecordingService logRecordingService) throws Exception {
 
         if (logRecordingService == null) {
             //initializing log service
