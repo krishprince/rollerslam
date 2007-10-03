@@ -1,15 +1,29 @@
 package rollerslam.agent.coach;
 
 import java.rmi.RemoteException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.NavigableMap;
+import java.util.Random;
+import java.util.Set;
+import java.util.TreeMap;
 import java.util.Vector;
+import java.util.Map.Entry;
+
+import com.sun.xml.internal.ws.model.Mode;
 
 import rollerslam.environment.model.Fact;
+import rollerslam.environment.model.Player;
 import rollerslam.environment.model.PlayerTeam;
 import rollerslam.environment.model.World;
 import rollerslam.environment.model.actions.voice.SendMsgAction;
 import rollerslam.environment.model.strategy.InitializationFact;
+import rollerslam.environment.model.strategy.PositionCoord;
 import rollerslam.environment.model.strategy.Receivers;
+import rollerslam.environment.model.utils.MathGeometry;
 import rollerslam.infrastructure.agent.Message;
+import rollerslam.infrastructure.agent.automata.ModelBasedBehaviorStrategyComponent;
 import rollerslam.infrastructure.agent.goalbased.GoalBasedEnvironmentStateModel;
 import rollerslam.infrastructure.agent.goalbased.GoalUpdateComponent;
 import rollerslam.infrastructure.client.ClientFacade;
@@ -47,7 +61,15 @@ public class CoachAgentGoalUpdater implements GoalUpdateComponent {
 			waitJoinGame(model);
 		} else if (model.currentGoal == CoachAgentGoal.LISTENING) {
 			listening(model);
-		} 
+		} else if (model.currentGoal == CoachAgentGoal.SET_POSITION) {
+			setPosition(model);
+		} else if (model.currentGoal == CoachAgentGoal.CHANGE_DEFENSIVE_POSITION) {
+			changeDefensivePosition(model);
+		} else if (model.currentGoal == CoachAgentGoal.CHANGE_OFFENSIVE_POSITION) {
+			changeOffensivePosition(model);
+		} else if (model.currentGoal == CoachAgentGoal.GO_TO_BALL) {
+			goToBall(model);
+		}
 		
 		if (id != -1){
 			try {
@@ -123,7 +145,138 @@ public class CoachAgentGoalUpdater implements GoalUpdateComponent {
 			}
 			
 			logMsg += " -- SENDING POSITION TO AGENT " + model.lastPlayers;
-		}		
+			
+			model.currentGoal = CoachAgentGoal.SET_POSITION;
+			
+			return;
+		}
+		
+		Random rand = new Random();
+		
+		double variant = rand.nextDouble() + 1;
+		
+		if(model.myTeam == PlayerTeam.TEAM_A){
+			if(((World)model.environmentStateModel).scoreboard.scoreTeamA - ((World)model.environmentStateModel).scoreboard.scoreTeamB > (variant * PositionCoord.GOALDIFFERENCE)){
+				if(!model.defensivePosition){
+					model.defensivePosition = true;
+					model.offensivePosition = false;
+					model.currentGoal = CoachAgentGoal.CHANGE_DEFENSIVE_POSITION;
+				}
+				
+			} else if(((World)model.environmentStateModel).scoreboard.scoreTeamB - ((World)model.environmentStateModel).scoreboard.scoreTeamA > (variant * PositionCoord.GOALDIFFERENCE)){
+				if(!model.offensivePosition){
+					model.offensivePosition = true;
+					model.defensivePosition = false;
+					model.currentGoal = CoachAgentGoal.CHANGE_OFFENSIVE_POSITION;
+				}
+			}
+		} else {
+			if(((World)model.environmentStateModel).scoreboard.scoreTeamB - ((World)model.environmentStateModel).scoreboard.scoreTeamA > (variant * PositionCoord.GOALDIFFERENCE)){
+				if(!model.defensivePosition){
+					model.defensivePosition = true;
+					model.offensivePosition = false;
+					model.currentGoal = CoachAgentGoal.CHANGE_DEFENSIVE_POSITION;
+				}
+			} else if(((World)model.environmentStateModel).scoreboard.scoreTeamA - ((World)model.environmentStateModel).scoreboard.scoreTeamB > (variant * PositionCoord.GOALDIFFERENCE)){
+				if(!model.offensivePosition){
+					model.offensivePosition = true;
+					model.defensivePosition = false;
+					model.currentGoal = CoachAgentGoal.CHANGE_OFFENSIVE_POSITION;
+				}
+			}
+		}
+		
+		if(model.currentGoal == CoachAgentGoal.CHANGE_DEFENSIVE_POSITION || model.currentGoal == CoachAgentGoal.CHANGE_OFFENSIVE_POSITION){
+			model.playersToChangePosition.clear();
+			Iterator<Integer> iterator = model.playersPosition.keySet().iterator(); 
+			while(iterator.hasNext()){
+				model.playersToChangePosition.add(iterator.next());
+			}
+			
+			return;
+		}
+		
+		if(model.playersToGoBall.size() > 0 || (model.playersToGoBall = verifyHowMuchGoBall(model)).size() > 0){
+			model.currentGoal = CoachAgentGoal.GO_TO_BALL;
+		}
+		
+	}
+	
+	private void setPosition(CoachAgentWorldModel model){
+		model.currentGoal = CoachAgentGoal.LISTENING;
+	}
+	
+	private void goToBall(CoachAgentWorldModel model){
+		model.currentGoal = CoachAgentGoal.LISTENING;
+	}
+	
+	private void changeOffensivePosition(CoachAgentWorldModel model){
+		if(model.playersToChangePosition.size() == 0){
+			model.currentGoal = CoachAgentGoal.LISTENING;
+		}
+	}
+
+	private void changeDefensivePosition(CoachAgentWorldModel model){
+		if(model.playersToChangePosition.size() == 0){
+			model.currentGoal = CoachAgentGoal.LISTENING;
+		}	
+	}
+
+	private Vector<Integer> verifyHowMuchGoBall(CoachAgentWorldModel model){
+		Player[] enemyTeam = null;
+		Player[] allyTeam = null;
+		int qtdEnemyPlayers = 0;
+		int qtdAllyPlayers = 0;
+		
+		TreeMap<Double, Integer> players = new TreeMap<Double, Integer>();
+		
+		World world = (World)model.environmentStateModel;	
+
+		if(world.playerWithBall != null && model.myTeam == world.playerWithBall.team){
+			if(model.myTeam == PlayerTeam.TEAM_A){
+				enemyTeam = ((World)model.environmentStateModel).playersB;
+			}else{
+				enemyTeam = ((World)model.environmentStateModel).playersA;
+			}
+
+			for(Player enemy : enemyTeam){
+				if(MathGeometry.calculeDistancePoints(enemy.s.x, world.ball.s.x, enemy.s.y, world.ball.s.y) < model.myMaxArea){
+					qtdEnemyPlayers++;
+				}
+			}
+
+			if(model.myTeam == PlayerTeam.TEAM_A){
+				allyTeam = ((World)model.environmentStateModel).playersA;
+			}else{
+				allyTeam = ((World)model.environmentStateModel).playersB;
+			}
+			
+			for(Player ally : allyTeam){
+				double distance = MathGeometry.calculeDistancePoints(ally.s.x, world.ball.s.x, ally.s.y, world.ball.s.y);
+				players.put(distance, ally.id);
+				
+				if(distance < model.myMaxArea){
+					players.remove(distance);
+					qtdAllyPlayers++;
+				}
+			}
+			
+			if(qtdEnemyPlayers - qtdAllyPlayers > 0){
+				Vector<Integer> a = new Vector<Integer>();
+				
+				java.util.Iterator<Map.Entry<Double, Integer>> iterator = players.entrySet().iterator();
+				int i = 0;
+				
+				while(iterator.hasNext() && i < qtdEnemyPlayers - qtdAllyPlayers){
+					a.add(iterator.next().getValue());
+					i++;
+				}
+				
+				return a;
+			}
+		}
+
+		return new Vector<Integer>();
 	}
 	
 

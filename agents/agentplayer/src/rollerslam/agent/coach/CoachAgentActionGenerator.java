@@ -7,7 +7,11 @@ import rollerslam.environment.model.PlayerTeam;
 import rollerslam.environment.model.World;
 import rollerslam.environment.model.actions.voice.SendMsgAction;
 import rollerslam.environment.model.strategy.AgentRole;
+import rollerslam.environment.model.strategy.ChangeRoleFact;
+import rollerslam.environment.model.strategy.DefensivePositionCoord;
 import rollerslam.environment.model.strategy.DefineRoleFact;
+import rollerslam.environment.model.strategy.GoToBallRole;
+import rollerslam.environment.model.strategy.OffensivePositionCoord;
 import rollerslam.environment.model.strategy.PlayerPosition;
 import rollerslam.environment.model.strategy.PositionCoord;
 import rollerslam.environment.model.strategy.Receivers;
@@ -44,13 +48,21 @@ public class CoachAgentActionGenerator implements
 		if (model.currentGoal == CoachAgentGoal.WAIT_JOIN_GAME) {
 			//Do nothing
 		}else if (model.currentGoal == CoachAgentGoal.LISTENING) {
-			m = listening(model);
+			m = null;
+		}else if (model.currentGoal == CoachAgentGoal.SET_POSITION) {
+			m = setPosition(model);
+		}else if (model.currentGoal == CoachAgentGoal.GO_TO_BALL) {
+			m = goToBall(model);
+		}else if (model.currentGoal == CoachAgentGoal.CHANGE_DEFENSIVE_POSITION) {
+			m = changeDefensivePosition(model);
+		}else if (model.currentGoal == CoachAgentGoal.CHANGE_OFFENSIVE_POSITION) {
+			m = changeOffensivePosition(model);
 		}
 		
 		return m;
 	}
 	
-	public Message listening(CoachAgentWorldModel model){
+	private Message setPosition(CoachAgentWorldModel model){
 		if(model.lastPosition != null){
 			Fact f = new Fact();
 			DefineRoleFact mesg = new DefineRoleFact();
@@ -87,5 +99,70 @@ public class CoachAgentActionGenerator implements
 			return null;
 		}
 		
+	}
+
+	private Message changeDefensivePosition(CoachAgentWorldModel model){
+		Fact f = new Fact();
+		ChangeRoleFact mesg = new ChangeRoleFact();
+		f.cycle = ((World)model.environmentStateModel).currentCycle;
+		
+		if(model.myTeam == PlayerTeam.TEAM_A)
+			f.sender = Receivers.COACH_A.getValue();
+		else
+			f.sender = Receivers.COACH_B.getValue();
+
+		f.receiver = model.playersToChangePosition.get(0).toString();
+		
+		mesg.posCoord = DefensivePositionCoord.getCoord(model.playersPosition.get(model.playersToChangePosition.get(0)));
+
+		f.message = mesg;
+		
+		model.playersToChangePosition.remove(0);
+		
+		return new SendMsgAction(f);		
+	}
+
+	private Message changeOffensivePosition(CoachAgentWorldModel model){
+		Fact f = new Fact();
+		ChangeRoleFact mesg = new ChangeRoleFact();
+		f.cycle = ((World)model.environmentStateModel).currentCycle;
+		
+		if(model.myTeam == PlayerTeam.TEAM_A)
+			f.sender = Receivers.COACH_A.getValue();
+		else
+			f.sender = Receivers.COACH_B.getValue();
+
+		f.receiver = model.playersToChangePosition.get(0).toString();
+		
+		mesg.posCoord = OffensivePositionCoord.getCoord(model.playersPosition.get(model.playersToChangePosition.get(0)));
+
+		f.message = mesg;
+		
+		model.playersToChangePosition.remove(0);
+		
+		return new SendMsgAction(f);		
+	}
+
+	private Message goToBall(CoachAgentWorldModel model){
+		if(model.playersToGoBall.size() > 0){
+			Fact f = new Fact();
+			GoToBallRole mesg = new GoToBallRole();
+			f.cycle = ((World)model.environmentStateModel).currentCycle;
+			
+			if(model.myTeam == PlayerTeam.TEAM_A)
+				f.sender = Receivers.COACH_A.getValue();
+			else
+				f.sender = Receivers.COACH_B.getValue();
+
+			f.receiver = model.playersToGoBall.get(0).toString();
+			
+			model.playersToGoBall.remove(0);
+			
+			f.message = mesg;
+			
+			return new SendMsgAction(f);
+		} else {
+			return null;
+		}
 	}
 }
