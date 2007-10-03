@@ -44,4 +44,5 @@ public class SimulationSettings {
 	public static final int GROUND_PENALTY = 20;
 	public static final int TACKLE_PENALTY = 20;
 	
+	
 }
