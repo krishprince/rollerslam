@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import rollerslam.environment.model.PlayerTeam;
 import rollerslam.environment.model.strategy.PlayerPosition;
+import rollerslam.environment.model.strategy.PositionCoord;
 import rollerslam.infrastructure.agent.automata.EnvironmentStateModel;
 import rollerslam.infrastructure.agent.goalbased.GoalBasedEnvironmentStateModel;
 
@@ -13,12 +14,20 @@ public class CoachAgentWorldModel extends GoalBasedEnvironmentStateModel {
 	public CoachAgentGoal currentGoal;
 	public boolean gameStarted = false;
 	public PlayerTeam myTeam;
+	public int myMaxArea = PositionCoord.maxArea;
 	
 	public HashMap<Integer, PlayerPosition> playersPosition = new HashMap<Integer, PlayerPosition>();
 	public Vector<Integer> playersToSetPosition = new Vector<Integer>();
 	public Vector<PlayerPosition> positionToSet = new Vector<PlayerPosition>();
 	public PlayerPosition lastPosition = null;
 	public Integer lastPlayers = null;
+	
+	public boolean defensivePosition = false;
+	public boolean offensivePosition = false;
+	
+	public Vector<Integer> playersToChangePosition = new Vector<Integer>();
+
+	public Vector<Integer> playersToGoBall = new Vector<Integer>();
 		
 	public CoachAgentWorldModel(EnvironmentStateModel model) {
 		super(model);
