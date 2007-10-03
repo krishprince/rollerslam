@@ -65,8 +65,8 @@ public class RollerslamEnvironmentAgent extends AutomataAgent {
 	}
 	
 	private void initializeEclipseConnection() throws Exception {
-	    System.setProperty("eclipse.directory", "C:\\Documents and Settings\\cmor\\My Documents\\ECLiPSe 5.10");
-	    String folder = "C:\\Temp\\rollerslam\\environment\\flux\\";
+	    System.setProperty("eclipse.directory", "D:\\ECLiPSe 5.10");
+	    String folder = "C:\\Users\\Cleyton Rodrigues\\RollerSlam\\environment\\flux\\";
 
 	    EclipseEngineOptions eclipseEngineOptions = new EclipseEngineOptions();
 	    File eclipseProgram;
@@ -81,6 +81,12 @@ public class RollerslamEnvironmentAgent extends AutomataAgent {
 	    eclipse.compile(eclipseProgram);
 	    
 	    eclipseProgram = new File(folder+"rollerslam.pl");
+	    eclipse.compile(eclipseProgram);
+	    
+	    eclipseProgram = new File(folder+"util.pl");
+	    eclipse.compile(eclipseProgram);
+	    
+	    eclipseProgram = new File(folder+"ramification.pl");
 	    eclipse.compile(eclipseProgram);
 	}
 
