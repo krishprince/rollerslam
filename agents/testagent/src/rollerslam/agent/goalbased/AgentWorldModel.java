@@ -20,6 +20,11 @@ public class AgentWorldModel extends GoalBasedEnvironmentStateModel {
 
 	
 	public Player getMe() {
+		
+		if(environmentStateModel == null){
+			return null;
+		}
+		
 		for (Player player : ((World)environmentStateModel).playersA) {
 			if (player.id == myID) {
                	return player;
