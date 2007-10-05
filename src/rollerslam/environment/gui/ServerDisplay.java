@@ -89,7 +89,7 @@ public class ServerDisplay extends JPanel implements ActionListener {
 
             public void run() {
                 try {
-                    serverFacade.getServerInitialization().init(1099, new RollerslamEnvironmentAgent(), logger);
+                    serverFacade.getServerInitialization().init(new RollerslamEnvironmentAgent(), logger);
                 } catch (Exception ex) {
                     throw new RuntimeException("Error obtaining remote data... Details:\n\n" + ex);
                 }
