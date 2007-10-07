@@ -4,13 +4,14 @@
 <nodeSet  version="1.1">
 	<node uin="-tdsqjuf733qdn5a12uui">
 		<property name="$metaclass" value="Class20"/>
-		<property name="stereotype" value="stereotype"/>
+		<property name="@stereotype" value="stereotype"/>
 		<property name="mod__extends" value="uml20.components.Interface"/>
 		<property name="$name" value="TestingInterface"/>
 		<node uin="tq87glf733r4144icy9p">
 			<property name="$metaclass" value="Operation20"/>
 			<property name="mod_Visibility" value="$public"/>
 			<property name="$name" value="setToState"/>
+			<property name="__aggregationEnd_formalParameter" value="-5kd6yff733svzl-pk5d16"/>
 			<property name="__aggregationEnd_formalParameter" value="-5kd6yff733svzl-pk5d16"/>
 			<node uin="ttifwdf733r4av-yx6pi6">
 				<property name="$metaclass" value="Constraint"/>
@@ -61,7 +62,7 @@
 		</node>
 		<link uin="ieje0rf733rc75gj7ve7">
 			<property name="$metaclass" value="Generalization20"/>
-			<property name="stereotype" value="extension"/>
+			<property name="@stereotype" value="extension"/>
 			<property name="mod__cachedBaseName" value="uml20.components.Interface"/>
 			<participant referencedUin="design:node:::-tdsqjuf733qdn5a12uui" role="Client"></participant>
 			<participant referencedUin="ecore:e_class:bin:uml20.components.Interface:http#//www.borland.com/together/uml20" role="Supplier"></participant>
@@ -72,6 +73,8 @@
 			<property name="$name" value="isInState"/>
 			<property name="__aggregationEnd_formalParameter" value="-5kd6yff733txuejmc3e0"/>
 			<property name="mod__returnType" value="boolean"/>
+			<property name="__aggregationEnd_returnResult" value="-5kd6yff733txuy-qwkozf"/>
+			<property name="__aggregationEnd_formalParameter" value="-5kd6yff733txuejmc3e0"/>
 			<property name="__aggregationEnd_returnResult" value="-5kd6yff733txuy-qwkozf"/>
 			<node uin="ttifwdf733tft4z0usmq">
 				<property name="$metaclass" value="Constraint"/>
@@ -129,40 +132,40 @@
 	</node>
 	<node uin="-tdsqjuf733s04o-ob1i3t">
 		<property name="$metaclass" value="Class20"/>
-		<property name="stereotype" value="stereotype"/>
+		<property name="@stereotype" value="stereotype"/>
 		<property name="mod__extends" value="uml20.kernel.Enumeration"/>
 		<property name="$name" value="BITState"/>
 		<link uin="ieje0rf733s9ruqjfs2w">
 			<property name="$metaclass" value="Generalization20"/>
-			<property name="stereotype" value="extension"/>
+			<property name="@stereotype" value="extension"/>
 			<property name="mod__cachedBaseName" value="uml20.kernel.Enumeration"/>
 			<participant referencedUin="design:node:::-tdsqjuf733s04o-ob1i3t" role="Client"></participant>
 			<participant referencedUin="ecore:e_class:bin:uml20.kernel.Enumeration:http#//www.borland.com/together/uml20" role="Supplier"></participant>
 		</link>
 		<link uin="ieje0rf733xiicjtwcm3">
 			<property name="$metaclass" value="KernelAssociation20"/>
-			<property name="supplierCardinality" value=" "/>
-			<property name="clientCardinality" value=" "/>
+			<property name="@supplierCardinality" value=" "/>
+			<property name="@clientCardinality" value=" "/>
 			<participant referencedUin="design:node:::-tdsqjuf733s04o-ob1i3t" role="Client"></participant>
 			<participant referencedUin="design:node:::-tdsqjuf733qdn5a12uui" role="Supplier"></participant>
 		</link>
 	</node>
 	<node uin="-tdsqjuf733yneq-qaix1u">
 		<property name="$metaclass" value="Class20"/>
-		<property name="stereotype" value="stereotype"/>
+		<property name="@stereotype" value="stereotype"/>
 		<property name="$name" value="ServerTest"/>
 		<property name="mod__extends" value="uml20.components.Component"/>
 		<link uin="ieje0rf733ytljcbfpj7">
 			<property name="$metaclass" value="Generalization20"/>
-			<property name="stereotype" value="extension"/>
+			<property name="@stereotype" value="extension"/>
 			<property name="mod__cachedBaseName" value="uml20.components.Component"/>
 			<participant referencedUin="design:node:::-tdsqjuf733yneq-qaix1u" role="Client"></participant>
 			<participant referencedUin="ecore:e_class:bin:uml20.components.Component:http#//www.borland.com/together/uml20" role="Supplier"></participant>
 		</link>
 		<link uin="ieje0rf733yxvdwj5aqc">
 			<property name="$metaclass" value="KernelAssociation20"/>
-			<property name="supplierCardinality" value=" "/>
-			<property name="clientCardinality" value=" "/>
+			<property name="@supplierCardinality" value=" "/>
+			<property name="@clientCardinality" value=" "/>
 			<participant referencedUin="design:node:::-tdsqjuf733yneq-qaix1u" role="Client"></participant>
 			<participant referencedUin="design:node:::-tdsqjuf733qdn5a12uui" role="Supplier"></participant>
 		</link>
@@ -170,6 +173,7 @@
 			<property name="$metaclass" value="Operation20"/>
 			<property name="mod_Visibility" value="$public"/>
 			<property name="$name" value="setServer"/>
+			<property name="__aggregationEnd_formalParameter" value="-5kd6yff733zojn-n7wzbw"/>
 			<property name="__aggregationEnd_formalParameter" value="-5kd6yff733zojn-n7wzbw"/>
 			<node uin="ttifwdf733zhs9-k3a4tp">
 				<property name="$metaclass" value="Constraint"/>
