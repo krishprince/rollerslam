@@ -81,6 +81,8 @@
 			<property name="mod__returnTypeReferencedElement" value="design:node:::PrimitiveType.Boolean"/>
 			<property name="mod__returnType" value="Boolean"/>
 			<property name="__aggregationEnd_returnResult" value="-5kd6yff6xvncvo-wrytdo"/>
+			<property name="__aggregationEnd_formalParameter" value="-5kd6yff6xvncv9leg8ou"/>
+			<property name="__aggregationEnd_returnResult" value="-5kd6yff6xvncvo-wrytdo"/>
 			<node uin="-5kd6yff6xvncv9leg8ou">
 				<property name="$metaclass" value="Parameter"/>
 				<property name="$name" value="obj"/>

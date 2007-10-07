@@ -3,6 +3,7 @@
 	<name>Environment</name>
 	<comment></comment>
 	<projects>
+		<project>Rollerslam</project>
 	</projects>
 	<buildSpec>
 	</buildSpec>
@@ -11,11 +12,4 @@
 		<nature>com.borland.selena.uml20.uml20_nature</nature>
 		<nature>com.tssap.selena.model.design_nature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>Suspended Root</name>
-			<type>2</type>
-			<locationURI>SuspendedRootVariable</locationURI>
-		</link>
-	</linkedResources>
 </projectDescription>

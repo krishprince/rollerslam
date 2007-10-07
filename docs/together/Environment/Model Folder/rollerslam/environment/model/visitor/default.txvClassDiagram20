@@ -6,7 +6,7 @@
 		<property name="$defaultDiagram" value="true"/>
 		<property name="$metaclass" value="ClassDiagram20"/>
 		<reference referencedUin="design:node:::-amcqg9f6xvft86-2xovun">
-			<property name="bounds" value="35,55,90,80"/>
+			<property name="bounds" value="415,95,90,57"/>
 			<property name="location_set_by_user" value="true"/>
 			<property name="view_as_class" value="true"/>
 			<reference referencedUin="label:$name:design:node:::-amcqg9f6xvft86-2xovun">
@@ -17,12 +17,16 @@
 			</reference>
 		</reference>
 		<reference referencedUin="design:node:::-amcqg9f6xvpw70-iwx62e">
-			<property name="bounds" value="235,55,80,80"/>
+			<property name="bounds" value="235,55,55,28"/>
 			<property name="location_set_by_user" value="true"/>
 			<property name="view_as_class" value="true"/>
 			<reference referencedUin="label:$name:design:node:::-amcqg9f6xvpw70-iwx62e">
 				<property name="bounds" value="-4,30,29,13"/>
 			</reference>
+		</reference>
+		<reference referencedUin="design:view:::V1hexuhf7hv70i525vqft">
+			<property name="bounds" value="5,5,82,109"/>
+			<property name="location_set_by_user" value="true"/>
 		</reference>
 	</view>
 </nodeSet>

@@ -43,6 +43,7 @@
 			<property name="mod_Visibility" value="$public"/>
 			<property name="$name" value="accept"/>
 			<property name="__aggregationEnd_formalParameter" value="1wri7f6xwe2cykw0in9"/>
+			<property name="__aggregationEnd_formalParameter" value="1wri7f6xwe2cykw0in9"/>
 			<node uin="1wri7f6xwe2cykw0in9">
 				<property name="$metaclass" value="Parameter"/>
 				<property name="$name" value="visitor"/>
@@ -57,8 +58,8 @@
 		</link>
 		<link uin="ieje0rf6xyr6jaonz9po">
 			<property name="$metaclass" value="KernelAssociation20"/>
-			<property name="supplierCardinality" value="3"/>
-			<property name="supplierRole" value="baskets"/>
+			<property name="@supplierCardinality" value="3"/>
+			<property name="@supplierRole" value="baskets"/>
 			<participant referencedUin="design:node:::a82a3f6xwe2cyricsew" role="Client"></participant>
 			<participant referencedUin="design:node:::-tdsqjuf6xw016r-3krydo" role="Supplier"></participant>
 		</link>
