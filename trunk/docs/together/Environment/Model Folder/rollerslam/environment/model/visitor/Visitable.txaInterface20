@@ -10,6 +10,7 @@
 			<property name="mod_Visibility" value="$public"/>
 			<property name="$name" value="accept"/>
 			<property name="__aggregationEnd_formalParameter" value="-5kd6yff6xvssvo-oqri0m"/>
+			<property name="__aggregationEnd_formalParameter" value="-5kd6yff6xvssvo-oqri0m"/>
 			<node uin="-5kd6yff6xvssvo-oqri0m">
 				<property name="$metaclass" value="Parameter"/>
 				<property name="$name" value="visitor"/>
