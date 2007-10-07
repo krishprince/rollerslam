@@ -7,45 +7,50 @@
 		<property name="$metaclass" value="ClassDiagram20"/>
 		<reference referencedUin="design:view:::V1hexuhf733odf0-sjy61s">
 			<property name="$shortcutReference" value="true"/>
-			<property name="bounds" value="5,24,108,230"/>
+			<property name="bounds" value="5,24,102,89"/>
 			<property name="location_set_by_user" value="true"/>
 		</reference>
 		<reference referencedUin="design:node:::-tdsqjuf733s04o-ob1i3t">
-			<property name="bounds" value="421,175,133,80"/>
+			<property name="bounds" value="421,175,87,80"/>
 			<property name="location_set_by_user" value="true"/>
 			<reference referencedUin="design:link:::ieje0rf733xiicjtwcm3:-tdsqjuf733s04o-ob1i3t">
 				<property name="sourceAnchor" value="426,201"/>
-				<property name="targetAnchor" value="407,201"/>
-				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf733xiicjtwcm3:-tdsqjuf733s04o-ob1i3t">
-					<property name="bounds" value="407,161,7,17"/>
-				</reference>
+				<property name="targetAnchor" value="365,201"/>
 				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf733xiicjtwcm3:-tdsqjuf733s04o-ob1i3t">
-					<property name="bounds" value="457,161,7,17"/>
+					<property name="bounds" value="409,181,7,17"/>
+				</reference>
+				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf733xiicjtwcm3:-tdsqjuf733s04o-ob1i3t">
+					<property name="bounds" value="375,181,7,17"/>
 				</reference>
 			</reference>
 		</reference>
 		<reference referencedUin="design:node:::-tdsqjuf733yneq-qaix1u">
-			<property name="bounds" value="421,274,157,88"/>
+			<property name="bounds" value="421,274,90,80"/>
 			<property name="location_set_by_user" value="true"/>
 			<reference referencedUin="design:link:::ieje0rf733yxvdwj5aqc:-tdsqjuf733yneq-qaix1u">
 				<property name="sourceAnchor" value="447,279"/>
-				<property name="targetAnchor" value="407,247"/>
-				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf733yxvdwj5aqc:-tdsqjuf733yneq-qaix1u">
-					<property name="bounds" value="449,261,7,17"/>
-				</reference>
+				<property name="targetAnchor" value="365,243"/>
 				<reference referencedUin="label:supplierCardinality:design:link:::ieje0rf733yxvdwj5aqc:-tdsqjuf733yneq-qaix1u">
-					<property name="bounds" value="415,233,7,17"/>
+					<property name="bounds" value="374,227,7,17"/>
+				</reference>
+				<reference referencedUin="label:clientCardinality:design:link:::ieje0rf733yxvdwj5aqc:-tdsqjuf733yneq-qaix1u">
+					<property name="bounds" value="413,245,7,17"/>
 				</reference>
 			</reference>
 		</reference>
 		<reference referencedUin="design:node:::-tdsqjuf733qdn5a12uui">
-			<property name="bounds" value="255,175,147,101"/>
+			<property name="bounds" value="255,175,105,82"/>
 			<property name="location_set_by_user" value="true"/>
 		</reference>
 		<reference referencedUin="design:view:::V1hexuhf79oxmoy-c6mikk">
 			<property name="bounds" value="155,24,82,121"/>
 			<property name="location_set_by_user" value="true"/>
 			<property name="collapsedCompartments" value=""/>
+		</reference>
+		<reference referencedUin="design:view:::V1hexuhf7i4ovv8-iurs9v">
+			<property name="bounds" value="126,6,82,109"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$hidden" value="true"/>
 		</reference>
 	</view>
 </nodeSet>
