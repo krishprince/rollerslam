@@ -21,15 +21,14 @@ public class RefereeRamificator  implements RamificationComponent {
 	public void processRamifications(EnvironmentStateModel refereeWorld) {
 		EnvironmentStateModel world = ((RefereeWorldModel) refereeWorld).getEnvironmentStateModel();
 		if(world != null) {
-			String query = "processRamifications(["
+			String query = "processRamificationsReferee(["
 				+ javaPrologVisitor.getPrologRepresentation((World) world)
-				+ "], Z)";
+				+ "], R)";
 			
 			CompoundTerm ret;
 			try {
+				System.out.println("query: "+ query);
 				ret = eclipse.rpc(query);
-				//System.out.println("query: "+ query);
-				//System.out.println("result: "+ ret.arg(2));
 				
 				prologJavaVisitor.updateWorldRepresentation((RefereeWorldModel) refereeWorld, ret.arg(2));
 				
