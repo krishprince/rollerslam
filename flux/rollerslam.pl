@@ -162,5 +162,13 @@ state_update(Z1,standUp(player(X)),Z2,[]) :-
  (not poss(standUp(player(X)),Z1), 
  Z2=Z1
  ).
+ 
+ 
+ state_update(Z1,lookBall,Z2,[scored(Team)]) :-
+           (holds(score(Score, team(Team)),Z1),
+           Score2 #= Score + 1,
+           update(Z1,[score(Score2, team(Team))],[score(Score, team(Team))],Z2))
+           ;
+           (Z1=Z2).
 
 %% End Action Group

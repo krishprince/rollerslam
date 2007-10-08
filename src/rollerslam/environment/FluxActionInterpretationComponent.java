@@ -249,13 +249,9 @@ public class FluxActionInterpretationComponent implements
 					+ javaPrologVisitor.getPrologRepresentation((World) world)
 					+ "]," + action + ", " + "R)";
 
-			System.out.println("action: " + action);
-
 			CompoundTerm ret;
 			try {
 				ret = eclipse.rpc(query);
-
-				// System.out.println("result: " + ret);
 
 				prologJavaVisitor.updateWorldRepresentation((World) world, ret
 						.arg(3));

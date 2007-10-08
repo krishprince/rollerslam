@@ -96,8 +96,8 @@ public class RollerslamEnvironmentAgent extends AutomataAgent {
 		eclipseProgram = new File(folder + "ramification.pl");
 		eclipse.compile(eclipseProgram);
 
-		//eclipseProgram = new File(folder + "referee.pl");
-		//eclipse.compile(eclipseProgram);
+		eclipseProgram = new File(folder + "referee.pl");
+		eclipse.compile(eclipseProgram);
 	}
 
 	/**

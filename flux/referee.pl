@@ -2,10 +2,7 @@
 
 :- dynamic current_state/1.
 
-state_update(Z1,lookBall,Z2,[scored(Team)]) :-
-           holds(score(Score, team(Team)),Z1),
-           Score2 #= Score + 1,
-           update(Z1,[score(Score2, team(Team))],[score(Score, team(Team))],Z2).
+
 
 
 perform(lookBall, [Y]) :-
@@ -35,7 +32,7 @@ main(FinalState) :-
            
 
            
-processRamifications(InitialState, FinalState) :- retract_all(current_state(_)),
+processRamificationsReferee(InitialState, FinalState) :- retract_all(current_state(_)),
            assert(current_state(InitialState)),
            execute(lookBall, InitialState, FinalState).
 
