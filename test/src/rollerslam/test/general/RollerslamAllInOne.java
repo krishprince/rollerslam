@@ -49,7 +49,7 @@ public class RollerslamAllInOne extends JFrame implements ActionListener {
 		}     	
     	sd = new ServerDisplay(logger);
     	try {
-			//new RefereeAgent();
+			new RefereeAgent();
 		} catch (Exception e) {
 			if (PrintTrace.TracePrint) {
 				e.printStackTrace();
