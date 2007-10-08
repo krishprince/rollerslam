@@ -22,6 +22,7 @@ import rollerslam.infrastructure.client.ClientFacade;
 import rollerslam.infrastructure.client.ClientFacadeImpl;
 import rollerslam.infrastructure.server.PrintTrace;
 import rollerslam.infrastructure.server.SimulationState;
+import rollerslam.logging.AgentActionLogEntry;
 
 public class CoachAgentActionGenerator implements
 		ModelBasedBehaviorStrategyComponent {
@@ -59,6 +60,30 @@ public class CoachAgentActionGenerator implements
 			m = changeOffensivePosition(model);
 		}
 		
+		if(m != null){
+			try {
+				int cycle = 0;
+				int id = -1;
+				if(model.myTeam == PlayerTeam.TEAM_A){
+					id = -2;
+				} else {
+					id = -3;
+				}
+					
+				cycle = ((World) model.environmentStateModel).currentCycle;
+
+				AgentActionLogEntry envLog = new AgentActionLogEntry(cycle,
+						id, m);
+
+				facade.getLogRecordingService().addEntry(envLog);
+	
+			} catch (RemoteException e) {
+				if (PrintTrace.TracePrint) {
+					e.printStackTrace();
+				}
+				return m;
+			}
+		}
 		return m;
 	}
 	
@@ -116,7 +141,7 @@ public class CoachAgentActionGenerator implements
 		mesg.posCoord = DefensivePositionCoord.getCoord(model.playersPosition.get(model.playersToChangePosition.get(0)));
 
 		f.message = mesg;
-		
+
 		model.playersToChangePosition.remove(0);
 		
 		return new SendMsgAction(f);		
