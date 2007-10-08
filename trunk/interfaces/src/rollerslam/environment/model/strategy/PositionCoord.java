@@ -9,7 +9,7 @@ public class PositionCoord {
 	
 	public static int maxArea = 25000;
 	public static double maxPlayers = 0.25;
-	public static final int GOALDIFFERENCE = 15;
+	public static final int GOALDIFFERENCE = 5;
 	
 	public static Vector getCoord(PlayerPosition position){
 		return posCoord.get(position);
