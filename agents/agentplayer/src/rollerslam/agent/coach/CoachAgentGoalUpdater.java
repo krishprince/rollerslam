@@ -13,6 +13,7 @@ import java.util.Map.Entry;
 
 import com.sun.xml.internal.ws.model.Mode;
 
+import rollerslam.agent.player.AgentGoalLogMessages;
 import rollerslam.environment.model.Fact;
 import rollerslam.environment.model.Player;
 import rollerslam.environment.model.PlayerTeam;
@@ -103,6 +104,8 @@ public class CoachAgentGoalUpdater implements GoalUpdateComponent {
 			id = -3;
 		}
 			
+		logMsg += " -- I WAS LISTENING";
+		
 		Vector<Message> acts = ((World)model.environmentStateModel).actions;
 		String me = null;
 		
@@ -146,6 +149,7 @@ public class CoachAgentGoalUpdater implements GoalUpdateComponent {
 			
 			logMsg += " -- SENDING POSITION TO AGENT " + model.lastPlayers;
 			
+			logMsg += " -- NOW I'M SET_POSITION";
 			model.currentGoal = CoachAgentGoal.SET_POSITION;
 			
 			return;
@@ -158,29 +162,37 @@ public class CoachAgentGoalUpdater implements GoalUpdateComponent {
 		if(model.myTeam == PlayerTeam.TEAM_A){
 			if(((World)model.environmentStateModel).scoreboard.scoreTeamA - ((World)model.environmentStateModel).scoreboard.scoreTeamB > (variant * PositionCoord.GOALDIFFERENCE)){
 				if(!model.defensivePosition){
+					logMsg += " -- TEAM LOSING WITH " + (((World)model.environmentStateModel).scoreboard.scoreTeamA - ((World)model.environmentStateModel).scoreboard.scoreTeamB) + " DIFERENCE";
 					model.defensivePosition = true;
 					model.offensivePosition = false;
+					logMsg += " -- NOW I'M CHANGE_DEFENSIVE_POSITION";
 					model.currentGoal = CoachAgentGoal.CHANGE_DEFENSIVE_POSITION;
 				}
 				
 			} else if(((World)model.environmentStateModel).scoreboard.scoreTeamB - ((World)model.environmentStateModel).scoreboard.scoreTeamA > (variant * PositionCoord.GOALDIFFERENCE)){
 				if(!model.offensivePosition){
+					logMsg += " -- TEAM WINNING WITH " + (((World)model.environmentStateModel).scoreboard.scoreTeamA - ((World)model.environmentStateModel).scoreboard.scoreTeamB) + " DIFERENCE";
 					model.offensivePosition = true;
 					model.defensivePosition = false;
+					logMsg += " -- NOW I'M CHANGE_OFFENSIVE_POSITION";
 					model.currentGoal = CoachAgentGoal.CHANGE_OFFENSIVE_POSITION;
 				}
 			}
 		} else {
 			if(((World)model.environmentStateModel).scoreboard.scoreTeamB - ((World)model.environmentStateModel).scoreboard.scoreTeamA > (variant * PositionCoord.GOALDIFFERENCE)){
 				if(!model.defensivePosition){
+					logMsg += " -- TEAM LOSING WITH " + (((World)model.environmentStateModel).scoreboard.scoreTeamA - ((World)model.environmentStateModel).scoreboard.scoreTeamB) + " DIFERENCE";
 					model.defensivePosition = true;
 					model.offensivePosition = false;
+					logMsg += " -- NOW I'M CHANGE_DEFENSIVE_POSITION";
 					model.currentGoal = CoachAgentGoal.CHANGE_DEFENSIVE_POSITION;
 				}
 			} else if(((World)model.environmentStateModel).scoreboard.scoreTeamA - ((World)model.environmentStateModel).scoreboard.scoreTeamB > (variant * PositionCoord.GOALDIFFERENCE)){
 				if(!model.offensivePosition){
+					logMsg += " -- TEAM WINNING WITH " + (((World)model.environmentStateModel).scoreboard.scoreTeamA - ((World)model.environmentStateModel).scoreboard.scoreTeamB) + " DIFERENCE";
 					model.offensivePosition = true;
 					model.defensivePosition = false;
+					logMsg += " -- NOW I'M CHANGE_OFFENSIVE_POSITION";
 					model.currentGoal = CoachAgentGoal.CHANGE_OFFENSIVE_POSITION;
 				}
 			}
@@ -197,27 +209,69 @@ public class CoachAgentGoalUpdater implements GoalUpdateComponent {
 		}
 		
 		if(model.playersToGoBall.size() > 0 || (model.playersToGoBall = verifyHowMuchGoBall(model)).size() > 0){
+			logMsg += " -- MANY ENEMY NEAR THE BALL";
+			logMsg += " -- NOW I'M GO_TO_BALL";
 			model.currentGoal = CoachAgentGoal.GO_TO_BALL;
 		}
 		
 	}
 	
 	private void setPosition(CoachAgentWorldModel model){
+		cycle = ((World)model.environmentStateModel).currentCycle;
+		
+		if(model.myTeam == PlayerTeam.TEAM_A){
+			id = -2;
+		} else {
+			id = -3;
+		}
+		logMsg += " -- I WAS SET_POSITION";
+		
+		logMsg += " -- NOW I'M LISTENING";
 		model.currentGoal = CoachAgentGoal.LISTENING;
 	}
 	
 	private void goToBall(CoachAgentWorldModel model){
+		cycle = ((World)model.environmentStateModel).currentCycle;
+		
+		if(model.myTeam == PlayerTeam.TEAM_A){
+			id = -2;
+		} else {
+			id = -3;
+		}
+		logMsg += " -- I WAS GO_TO_BALL";
+		
+		logMsg += " -- NOW I'M LISTENING";
 		model.currentGoal = CoachAgentGoal.LISTENING;
 	}
 	
 	private void changeOffensivePosition(CoachAgentWorldModel model){
 		if(model.playersToChangePosition.size() == 0){
+			cycle = ((World)model.environmentStateModel).currentCycle;
+			
+			if(model.myTeam == PlayerTeam.TEAM_A){
+				id = -2;
+			} else {
+				id = -3;
+			}
+			logMsg += " -- I WAS CHANGE_OFFENSIVE_POSITION";
+			
+			logMsg += " -- NOW I'M LISTENING";
 			model.currentGoal = CoachAgentGoal.LISTENING;
 		}
 	}
 
 	private void changeDefensivePosition(CoachAgentWorldModel model){
 		if(model.playersToChangePosition.size() == 0){
+			cycle = ((World)model.environmentStateModel).currentCycle;
+			
+			if(model.myTeam == PlayerTeam.TEAM_A){
+				id = -2;
+			} else {
+				id = -3;
+			}
+			logMsg += " -- I WAS CHANGE_DEFENSIVE_POSITION";
+			
+			logMsg += " -- NOW I'M LISTENING";
 			model.currentGoal = CoachAgentGoal.LISTENING;
 		}	
 	}

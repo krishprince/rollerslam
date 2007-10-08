@@ -646,17 +646,26 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 	private boolean receiveMessage(AgentWorldModel model){
 		Vector<Message> acts = ((World)model.environmentStateModel).actions;
 
+		cycle = ((World)model.environmentStateModel).currentCycle;
+		id = model.myID;
+		
 		for(Message a : acts){
 			if(a instanceof SendMsgAction){
 				Fact f = ((SendMsgAction)a).subject;
 				if(f.receiver.equals(String.valueOf(model.myID))){
+					logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.RECEIVE_MESSAGE.getValue().replace("%REMET%", ((SendMsgAction)a).subject.sender);
 					//TODO recebi a msg, fazer o que agora?
 					if(f.message instanceof GoToBallRole){
+						logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.RECEIVE_GO_TO_BALL_MSG.getValue();
+						
+						logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_BALL.getValue();
 						model.currentGoal = AgentGoal.GO_TO_BALL;
 						model.goToBall = true;
 						return true;
 					} else if (f.message instanceof ChangeRoleFact){
 						model.posCoord = ((ChangeRoleFact)f.message).posCoord;
+						logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.RECEIVE_NEW_COORD_MSG.getValue().replace("%X%", String.valueOf(model.posCoord.x)).replace("%Y%", String.valueOf(model.posCoord.y));
+						logMsg += LOG_MSG_SEPARATOR + AgentGoalLogMessages.NEXT_GOAL.getValue() + AgentGoalLogMessages.GO_TO_INIT_COORD.getValue();
 						model.currentGoal = AgentGoal.GO_TO_INIT_COORD;
 						return true;
 					}
