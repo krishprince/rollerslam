@@ -1,19 +1,12 @@
 package rollerslam.agent.coach;
 
 import java.rmi.RemoteException;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.NavigableMap;
 import java.util.Random;
-import java.util.Set;
 import java.util.TreeMap;
 import java.util.Vector;
-import java.util.Map.Entry;
 
-import com.sun.xml.internal.ws.model.Mode;
-
-import rollerslam.agent.player.AgentGoalLogMessages;
 import rollerslam.environment.model.Fact;
 import rollerslam.environment.model.Player;
 import rollerslam.environment.model.PlayerTeam;
@@ -24,7 +17,6 @@ import rollerslam.environment.model.strategy.PositionCoord;
 import rollerslam.environment.model.strategy.Receivers;
 import rollerslam.environment.model.utils.MathGeometry;
 import rollerslam.infrastructure.agent.Message;
-import rollerslam.infrastructure.agent.automata.ModelBasedBehaviorStrategyComponent;
 import rollerslam.infrastructure.agent.goalbased.GoalBasedEnvironmentStateModel;
 import rollerslam.infrastructure.agent.goalbased.GoalUpdateComponent;
 import rollerslam.infrastructure.client.ClientFacade;
