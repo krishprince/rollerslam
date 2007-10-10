@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<view uin="V1hexuhf7hw7n2w2rqgu5">
+		<property name="$defaultDiagram" value="true"/>
+		<property name="$metaclass" value="ClassDiagram20"/>
+		<reference referencedUin="design:node:::-amcqg9f7hw7ze1-yzpvvl">
+			<property name="bounds" value="135,115,90,57"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="view_as_class" value="true"/>
+			<reference referencedUin="label:$name:design:node:::-amcqg9f7hw7ze1-yzpvvl">
+				<property name="bounds" value="-8,30,37,17"/>
+			</reference>
+			<reference referencedUin="design:node:::tq87glf7hw95u8pza653:-amcqg9f7hw7ze1-yzpvvl">
+				<property name="bounds" value="36,-13,0,0"/>
+			</reference>
+		</reference>
+		<reference referencedUin="design:node:::-amcqg9f7hw84lyt295pz">
+			<property name="bounds" value="295,115,90,57"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="view_as_class" value="true"/>
+			<reference referencedUin="label:$name:design:node:::-amcqg9f7hw84lyt295pz">
+				<property name="bounds" value="-11,30,43,17"/>
+			</reference>
+			<reference referencedUin="design:node:::tq87glf7hw9iq78uxskq:-amcqg9f7hw84lyt295pz">
+				<property name="bounds" value="23,-22,0,0"/>
+			</reference>
+		</reference>
+	</view>
+</nodeSet>

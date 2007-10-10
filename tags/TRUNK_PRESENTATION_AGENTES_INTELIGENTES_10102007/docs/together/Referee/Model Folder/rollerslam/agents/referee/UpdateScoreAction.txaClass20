@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<node uin="-tdsqjuf6xuwlbb-4fs3su">
+		<property name="$metaclass" value="Class20"/>
+		<property name="$name" value="UpdateScoreAction"/>
+		<property name="mod__extends" value="Message"/>
+		<link uin="ieje0rf6xuwwb5xlr79a">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="mod__cachedBaseName" value="Message"/>
+			<participant referencedUin="design:node:::-tdsqjuf6xuwlbb-4fs3su" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6xuw1xexcti7j" role="Supplier"></participant>
+		</link>
+		<node uin="hnimszf6xv087z9ikv4k">
+			<property name="$metaclass" value="Property20"/>
+			<property name="mod__typeReferencedElement" value="design:node:::PrimitiveType.Integer"/>
+			<property name="mod__type" value="Integer"/>
+			<property name="mod_Visibility" value="$packageLocal"/>
+			<property name="lower" value="1"/>
+			<property name="upper" value="1"/>
+			<property name="multiplicity" value="1"/>
+			<property name="$name" value="scoreTeamA"/>
+			<link uin="ieje0rf6xv089auqbh6q">
+				<property name="$metaclass" value="TypeLink"/>
+				<participant referencedUin="design:node:::hnimszf6xv087z9ikv4k:-tdsqjuf6xuwlbb-4fs3su" role="Client"></participant>
+				<participant referencedUin="design:node:::PrimitiveType.Integer" role="Supplier"></participant>
+			</link>
+		</node>
+		<node uin="hnimszf6xv0mee-ijt0ch">
+			<property name="$metaclass" value="Property20"/>
+			<property name="mod__typeReferencedElement" value="design:node:::PrimitiveType.Integer"/>
+			<property name="mod__type" value="Integer"/>
+			<property name="mod_Visibility" value="$packageLocal"/>
+			<property name="$name" value="scoreTeamB"/>
+			<link uin="ieje0rf6xv0meu-mmc83m">
+				<property name="$metaclass" value="TypeLink"/>
+				<participant referencedUin="design:node:::hnimszf6xv0mee-ijt0ch:-tdsqjuf6xuwlbb-4fs3su" role="Client"></participant>
+				<participant referencedUin="design:node:::PrimitiveType.Integer" role="Supplier"></participant>
+			</link>
+		</node>
+	</node>
+</nodeSet>
