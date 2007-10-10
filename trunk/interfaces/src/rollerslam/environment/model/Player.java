@@ -16,7 +16,10 @@ public class Player extends AnimatedObject {
 	public int id = id_gen ++;
 	
 	public boolean hasBall(){
-		return world.playerWithBall == this;
+		if(world!= null)
+			return world.playerWithBall == this;
+		else
+			return false;
 	} 
         
     public boolean inGround = false;
