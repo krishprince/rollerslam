@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-
-<nodeSet  version="1.1">
-	<node uin="ba089nf6xzr3lnytcfy8">
-		<property name="$metaclass" value="Component20"/>
-		<property name="$name" value="RollerslamEnvironment"/>
-	</node>
-</nodeSet>

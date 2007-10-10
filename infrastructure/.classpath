@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="src_interfaces"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/logging"/>
-	<classpathentry kind="lib" path="/lib/eclipse.jar"/>
-	<classpathentry kind="output" path="build"/>
-</classpath>
