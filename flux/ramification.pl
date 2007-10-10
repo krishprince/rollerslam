@@ -50,8 +50,8 @@ ramify_ball(Z1,  Z3):-
   getModule(vector(X,Y), VR),
   VR > 0,
   holds(attrition(Attr), Z2),
-  X2 is X / 1,
-  Y2 is Y / 1,  
+  X2 is X / 2,
+  Y2 is Y / 2,  
   update(Z2, [speed(ball, vector(X2, Y2))], [speed(ball, vector(X, Y))], Z3))
   
   ;
