@@ -48,13 +48,13 @@ public class RollerslamAllInOne extends JFrame implements ActionListener {
 			logger = null;
 		}     	
     	sd = new ServerDisplay(logger);
-    	try {
+    	/*try {
 			new RefereeAgent();
 		} catch (Exception e) {
 			if (PrintTrace.TracePrint) {
 				e.printStackTrace();
 			}
-		}
+		}*/
         initComponents();
     }
 
