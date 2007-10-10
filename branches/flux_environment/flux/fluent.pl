@@ -5,26 +5,26 @@
 :- ( current_module(chr) -> true ; use_module(library(chr)) ).
 
 :- get_flag(variable_names, Val), setval(variable_names_flag, Val), set_flag(variable_names, off).
-eq(_17779, _17782, _17785) :- functor(_17779, _17797, _17800), functor(_17782, _17812, _17815), (_17797 = _17812, _17800 = _17815 -> _17779 =.. [_17838|_17840], _17782 =.. [_17847|_17849], and_eq(_17840, _17849, _17785) ; _17785 = (0 #\= 0)).
-neq(_18079, _18082) :- or_neq(exists, _18079, _18082).
-neq(_18107, _18110, _18113) :- or_neq_c(exists, _18107, _18110, _18113).
-neq_all(_18142, _18145) :- or_neq(forall, _18142, _18145).
-neq_all(_18170, _18173, _18176) :- or_neq_c(forall, _18170, _18173, _18176).
-or_neq(_18205, _18208, _18211) :- functor(_18208, _18223, _18226), functor(_18211, _18238, _18241), (_18223 = _18238, _18226 = _18241 -> _18208 =.. [_18264|_18266], _18211 =.. [_18273|_18275], or_neq(_18205, _18266, _18275, _18287), call(_18287) ; true).
-or_neq_c(_18510, _18513, _18516, _18519) :- functor(_18513, _18532, _18535), functor(_18516, _18547, _18550), (_18532 = _18547, _18535 = _18550 -> _18513 =.. [_18573|_18575], _18516 =.. [_18582|_18584], or_neq(_18510, _18575, _18584, _18519) ; _18519 = (0 #= 0)).
-or_neq(_18835, [], [], 0 #\= 0).
-or_neq(_18878, [_18883|_18884], [_18889|_18890], _18893) :- or_neq(_18878, _18884, _18890, _18910), (_18878 = forall, var(_18883), \+ is_domain(_18883) -> (binding(_18883, _18884, _18890, _18949) -> _18893 = #\/(_18889 #\= _18949, _18910) ; _18893 = _18910) ; _18893 = #\/(_18883 #\= _18889, _18910)).
-binding(_19224, [_19229|_19230], [_19235|_19236], _19239) :- _19224 == _19229 -> _19239 = _19235 ; binding(_19224, _19230, _19236, _19239).
+eq(_17609, _17612, _17615) :- functor(_17609, _17627, _17630), functor(_17612, _17642, _17645), (_17627 = _17642, _17630 = _17645 -> _17609 =.. [_17668|_17670], _17612 =.. [_17677|_17679], and_eq(_17670, _17679, _17615) ; _17615 = (0 #\= 0)).
+neq(_17909, _17912) :- or_neq(exists, _17909, _17912).
+neq(_17937, _17940, _17943) :- or_neq_c(exists, _17937, _17940, _17943).
+neq_all(_17972, _17975) :- or_neq(forall, _17972, _17975).
+neq_all(_18000, _18003, _18006) :- or_neq_c(forall, _18000, _18003, _18006).
+or_neq(_18035, _18038, _18041) :- functor(_18038, _18053, _18056), functor(_18041, _18068, _18071), (_18053 = _18068, _18056 = _18071 -> _18038 =.. [_18094|_18096], _18041 =.. [_18103|_18105], or_neq(_18035, _18096, _18105, _18117), call(_18117) ; true).
+or_neq_c(_18340, _18343, _18346, _18349) :- functor(_18343, _18362, _18365), functor(_18346, _18377, _18380), (_18362 = _18377, _18365 = _18380 -> _18343 =.. [_18403|_18405], _18346 =.. [_18412|_18414], or_neq(_18340, _18405, _18414, _18349) ; _18349 = (0 #= 0)).
+or_neq(_18665, [], [], 0 #\= 0).
+or_neq(_18708, [_18713|_18714], [_18719|_18720], _18723) :- or_neq(_18708, _18714, _18720, _18740), (_18708 = forall, var(_18713), \+ is_domain(_18713) -> (binding(_18713, _18714, _18720, _18779) -> _18723 = #\/(_18719 #\= _18779, _18740) ; _18723 = _18740) ; _18723 = #\/(_18713 #\= _18719, _18740)).
+binding(_19054, [_19059|_19060], [_19065|_19066], _19069) :- _19054 == _19059 -> _19069 = _19065 ; binding(_19054, _19060, _19066, _19069).
 and_eq([], [], 0 #= 0).
-and_eq([_19329|_19330], [_19335|_19336], _19339) :- and_eq(_19330, _19336, _19353), _19339 = #/\(_19329 #= _19335, _19353).
+and_eq([_19159|_19160], [_19165|_19166], _19169) :- and_eq(_19160, _19166, _19183), _19169 = #/\(_19159 #= _19165, _19183).
 or_and_eq([], 0 #\= 0).
-or_and_eq([_19511|_19512], #\/(_19515, _19519)) :- (_19511 = eq(_19531, _19534) -> and_eq(_19531, _19534, _19515) ; _19511 = neq(_19531, _19534), or_neq(exists, _19531, _19534, _19515)), or_and_eq(_19512, _19519).
-inst(_19749, _19752) :- \+ (term_variables(_19749, _19765), term_variables(_19752, _19776), bound_free(_19776, _19765, _19789, _19792), copy_term_vars(_19792, _19752, _19807), \+ (make_suspension('CHRfail', 1, _19984), insert_suspension(_19789, _19984, 2, suspend), last_suspension(_19992), _19749 = _19807, true, new_suspensions(_19992, []), kill_suspension(_19984))).
-copy_fluent(_20020, _20023, _20026, _20029) :- term_variables(_20020, _20042), bound_free(_20042, [], _20061, _20057), copy_term_vars(_20057, [_20020, _20023], [_20026, _20029]).
-bound_free([], _20214, _20214, []).
-bound_free([_20234|_20235], _20238, _20241, _20244) :- bound_free(_20235, _20238, _20259, _20262), (is_domain(_20234) -> _20241 = [_20234|_20259], _20244 = _20262 ; _20241 = _20259, _20244 = [_20234|_20262]).
-member(_20469, [_20469|_20474], _20474).
-member(_20489, [_20494|_20495], [_20494|_20500]) :- member(_20489, _20495, _20500).
+or_and_eq([_19341|_19342], #\/(_19345, _19349)) :- (_19341 = eq(_19361, _19364) -> and_eq(_19361, _19364, _19345) ; _19341 = neq(_19361, _19364), or_neq(exists, _19361, _19364, _19345)), or_and_eq(_19342, _19349).
+inst(_19579, _19582) :- \+ (term_variables(_19579, _19595), term_variables(_19582, _19606), bound_free(_19606, _19595, _19619, _19622), copy_term_vars(_19622, _19582, _19637), \+ (make_suspension('CHRfail', 1, _19814), insert_suspension(_19619, _19814, 2, suspend), last_suspension(_19822), _19579 = _19637, true, new_suspensions(_19822, []), kill_suspension(_19814))).
+copy_fluent(_19850, _19853, _19856, _19859) :- term_variables(_19850, _19872), bound_free(_19872, [], _19891, _19887), copy_term_vars(_19887, [_19850, _19853], [_19856, _19859]).
+bound_free([], _20044, _20044, []).
+bound_free([_20064|_20065], _20068, _20071, _20074) :- bound_free(_20065, _20068, _20089, _20092), (is_domain(_20064) -> _20071 = [_20064|_20089], _20074 = _20092 ; _20071 = _20089, _20074 = [_20064|_20092]).
+member(_20299, [_20299|_20304], _20304).
+member(_20319, [_20324|_20325], [_20324|_20330]) :- member(_20319, _20325, _20330).
 not_holds(A, B) :-
 	'CHRgen_num'(C),
 	coca(add_one_constraint(C, not_holds(A, B))),
@@ -87,7 +87,7 @@ not_holds(A, B) :-
 	'CHRnot_holds_2__47'(B, C, D, E).
 :- set_flag('CHRnot_holds_2__47' / 4, leash, notrace).
 :- set_flag('CHRnot_holds_2' / 4, leash, notrace).
-:- current_macro('CHRnot_holds_2' / 4, _22083, _22084, _22085) -> true ; define_macro('CHRnot_holds_2' / 4, tr_chr / 2, [write]).
+:- current_macro('CHRnot_holds_2' / 4, _21913, _21914, _21915) -> true ; define_macro('CHRnot_holds_2' / 4, tr_chr / 2, [write]).
 'CHRnot_holds_2__45'(A, B, C, D) :-
 	'CHRnot_holds_2__48'(A, B, C, D).
 :- set_flag('CHRnot_holds_2__45' / 4, leash, notrace).
@@ -229,7 +229,7 @@ not_holds_all(A, B) :-
 	'CHRnot_holds_all_2__58'(B, C, D, E).
 :- set_flag('CHRnot_holds_all_2__58' / 4, leash, notrace).
 :- set_flag('CHRnot_holds_all_2' / 4, leash, notrace).
-:- current_macro('CHRnot_holds_all_2' / 4, _24958, _24959, _24960) -> true ; define_macro('CHRnot_holds_all_2' / 4, tr_chr / 2, [write]).
+:- current_macro('CHRnot_holds_all_2' / 4, _24788, _24789, _24790) -> true ; define_macro('CHRnot_holds_all_2' / 4, tr_chr / 2, [write]).
 'CHRnot_holds_all_2__57'(A, B, C, D) :-
 	'CHRnot_holds_all_2__59'(A, B, C, D).
 :- set_flag('CHRnot_holds_all_2__57' / 4, leash, notrace).
@@ -274,7 +274,7 @@ duplicate_free(A) :-
 'CHRduplicate_free_1'(duplicate_free(A), B, C, D) :-
 	'CHRduplicate_free_1__60'(duplicate_free(A), B, C, D).
 :- set_flag('CHRduplicate_free_1' / 4, leash, notrace).
-:- current_macro('CHRduplicate_free_1' / 4, _25641, _25642, _25643) -> true ; define_macro('CHRduplicate_free_1' / 4, tr_chr / 2, [write]).
+:- current_macro('CHRduplicate_free_1' / 4, _25471, _25472, _25473) -> true ; define_macro('CHRduplicate_free_1' / 4, tr_chr / 2, [write]).
 'CHRduplicate_free_1__60'(A, B, C, D) :-
 	'CHRduplicate_free_1__61'(A, B, C, D).
 :- set_flag('CHRduplicate_free_1__60' / 4, leash, notrace).
@@ -423,7 +423,7 @@ or_holds(A, B) :-
 	'CHRor_holds_2__66'(B, C, D, E).
 :- set_flag('CHRor_holds_2__66' / 4, leash, notrace).
 :- set_flag('CHRor_holds_2' / 4, leash, notrace).
-:- current_macro('CHRor_holds_2' / 4, _29046, _29047, _29048) -> true ; define_macro('CHRor_holds_2' / 4, tr_chr / 2, [write]).
+:- current_macro('CHRor_holds_2' / 4, _28876, _28877, _28878) -> true ; define_macro('CHRor_holds_2' / 4, tr_chr / 2, [write]).
 'CHRor_holds_2__62'(A, B, C, D) :-
 	'CHRor_holds_2__67'(A, B, C, D).
 :- set_flag('CHRor_holds_2__62' / 4, leash, notrace).
@@ -482,7 +482,7 @@ or_holds(A, B, C) :-
 'CHRor_holds_3'(or_holds(A, B, C), D, E, F) :-
 	'CHRor_holds_3__68'(or_holds(A, B, C), D, E, F).
 :- set_flag('CHRor_holds_3' / 4, leash, notrace).
-:- current_macro('CHRor_holds_3' / 4, _29872, _29873, _29874) -> true ; define_macro('CHRor_holds_3' / 4, tr_chr / 2, [write]).
+:- current_macro('CHRor_holds_3' / 4, _29702, _29703, _29704) -> true ; define_macro('CHRor_holds_3' / 4, tr_chr / 2, [write]).
 'CHRor_holds_3__68'(A, B, C, D) :-
 	'CHRor_holds_3__69'(A, B, C, D).
 :- set_flag('CHRor_holds_3__68' / 4, leash, notrace).
@@ -521,7 +521,7 @@ all_holds(A, B) :-
 'CHRall_holds_2'(all_holds(A, B), C, D, E) :-
 	'CHRall_holds_2__70'(all_holds(A, B), C, D, E).
 :- set_flag('CHRall_holds_2' / 4, leash, notrace).
-:- current_macro('CHRall_holds_2' / 4, _30449, _30450, _30451) -> true ; define_macro('CHRall_holds_2' / 4, tr_chr / 2, [write]).
+:- current_macro('CHRall_holds_2' / 4, _30279, _30280, _30281) -> true ; define_macro('CHRall_holds_2' / 4, tr_chr / 2, [write]).
 'CHRall_holds_2__70'(A, B, C, D) :-
 	'CHRall_holds_2__71'(A, B, C, D).
 :- set_flag('CHRall_holds_2__70' / 4, leash, notrace).
@@ -586,7 +586,7 @@ all_holds(A, B, C) :-
 	'CHRall_holds_3__73'(B, C, D, E).
 :- set_flag('CHRall_holds_3__73' / 4, leash, notrace).
 :- set_flag('CHRall_holds_3' / 4, leash, notrace).
-:- current_macro('CHRall_holds_3' / 4, _31596, _31597, _31598) -> true ; define_macro('CHRall_holds_3' / 4, tr_chr / 2, [write]).
+:- current_macro('CHRall_holds_3' / 4, _31426, _31427, _31428) -> true ; define_macro('CHRall_holds_3' / 4, tr_chr / 2, [write]).
 'CHRall_holds_3__72'(A, B, C, D) :-
 	'CHRall_holds_3__74'(A, B, C, D).
 :- set_flag('CHRall_holds_3__72' / 4, leash, notrace).
@@ -745,7 +745,7 @@ all_not_holds(A, B, C) :-
 	'CHRall_not_holds_3__84'(B, C, D, E).
 :- set_flag('CHRall_not_holds_3__84' / 4, leash, notrace).
 :- set_flag('CHRall_not_holds_3' / 4, leash, notrace).
-:- current_macro('CHRall_not_holds_3' / 4, _34939, _34940, _34941) -> true ; define_macro('CHRall_not_holds_3' / 4, tr_chr / 2, [write]).
+:- current_macro('CHRall_not_holds_3' / 4, _34769, _34770, _34771) -> true ; define_macro('CHRall_not_holds_3' / 4, tr_chr / 2, [write]).
 'CHRall_not_holds_3__83'(A, B, C, D) :-
 	'CHRall_not_holds_3__85'(A, B, C, D).
 :- set_flag('CHRall_not_holds_3__83' / 4, leash, notrace).
@@ -870,7 +870,7 @@ if_then_holds(A, B, C) :-
 'CHRif_then_holds_3'(if_then_holds(A, B, C), D, E, F) :-
 	'CHRif_then_holds_3__94'(if_then_holds(A, B, C), D, E, F).
 :- set_flag('CHRif_then_holds_3' / 4, leash, notrace).
-:- current_macro('CHRif_then_holds_3' / 4, _37588, _37589, _37590) -> true ; define_macro('CHRif_then_holds_3' / 4, tr_chr / 2, [write]).
+:- current_macro('CHRif_then_holds_3' / 4, _37418, _37419, _37420) -> true ; define_macro('CHRif_then_holds_3' / 4, tr_chr / 2, [write]).
 'CHRif_then_holds_3__94'(A, B, C, D) :-
 	'CHRif_then_holds_3__95'(A, B, C, D).
 :- set_flag('CHRif_then_holds_3__94' / 4, leash, notrace).
@@ -1071,7 +1071,7 @@ if_then_or_holds(A, B, C) :-
 	'CHRif_then_or_holds_3__104'(B, C, D, E).
 :- set_flag('CHRif_then_or_holds_3__104' / 4, leash, notrace).
 :- set_flag('CHRif_then_or_holds_3' / 4, leash, notrace).
-:- current_macro('CHRif_then_or_holds_3' / 4, _42179, _42180, _42181) -> true ; define_macro('CHRif_then_or_holds_3' / 4, tr_chr / 2, [write]).
+:- current_macro('CHRif_then_or_holds_3' / 4, _42009, _42010, _42011) -> true ; define_macro('CHRif_then_or_holds_3' / 4, tr_chr / 2, [write]).
 'CHRif_then_or_holds_3__96'(A, B, C, D) :-
 	'CHRif_then_or_holds_3__105'(A, B, C, D).
 :- set_flag('CHRif_then_or_holds_3__96' / 4, leash, notrace).
@@ -1130,7 +1130,7 @@ if_then_or_holds(A, B, C, D) :-
 'CHRif_then_or_holds_4'(if_then_or_holds(A, B, C, D), E, F, G) :-
 	'CHRif_then_or_holds_4__106'(if_then_or_holds(A, B, C, D), E, F, G).
 :- set_flag('CHRif_then_or_holds_4' / 4, leash, notrace).
-:- current_macro('CHRif_then_or_holds_4' / 4, _43024, _43025, _43026) -> true ; define_macro('CHRif_then_or_holds_4' / 4, tr_chr / 2, [write]).
+:- current_macro('CHRif_then_or_holds_4' / 4, _42854, _42855, _42856) -> true ; define_macro('CHRif_then_or_holds_4' / 4, tr_chr / 2, [write]).
 'CHRif_then_or_holds_4__106'(A, B, C, D) :-
 	'CHRif_then_or_holds_4__107'(A, B, C, D).
 :- set_flag('CHRif_then_or_holds_4__106' / 4, leash, notrace).
@@ -1178,7 +1178,7 @@ cancel(A, B) :-
 	'CHRcancel_2__109'(B, C, D, E).
 :- set_flag('CHRcancel_2__109' / 4, leash, notrace).
 :- set_flag('CHRcancel_2' / 4, leash, notrace).
-:- current_macro('CHRcancel_2' / 4, _43826, _43827, _43828) -> true ; define_macro('CHRcancel_2' / 4, tr_chr / 2, [write]).
+:- current_macro('CHRcancel_2' / 4, _43656, _43657, _43658) -> true ; define_macro('CHRcancel_2' / 4, tr_chr / 2, [write]).
 'CHRcancel_2__108'(A, B, C, D) :-
 	'CHRcancel_2__110'(A, B, C, D).
 :- set_flag('CHRcancel_2__108' / 4, leash, notrace).
@@ -1331,7 +1331,7 @@ cancelled(A, B) :-
 	'CHRcancelled_2__122'(B, C, D, E).
 :- set_flag('CHRcancelled_2__122' / 4, leash, notrace).
 :- set_flag('CHRcancelled_2' / 4, leash, notrace).
-:- current_macro('CHRcancelled_2' / 4, _46969, _46970, _46971) -> true ; define_macro('CHRcancelled_2' / 4, tr_chr / 2, [write]).
+:- current_macro('CHRcancelled_2' / 4, _46799, _46800, _46801) -> true ; define_macro('CHRcancelled_2' / 4, tr_chr / 2, [write]).
 'CHRcancelled_2__121'(A, B, C, D) :-
 	'CHRcancelled_2__123'(A, B, C, D).
 :- set_flag('CHRcancelled_2__121' / 4, leash, notrace).

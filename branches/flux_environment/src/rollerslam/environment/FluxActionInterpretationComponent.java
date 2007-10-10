@@ -13,6 +13,7 @@ import rollerslam.environment.model.WorldObject;
 import rollerslam.environment.model.actions.ArmAction;
 import rollerslam.environment.model.actions.JoinGameAction;
 import rollerslam.environment.model.actions.LegAction;
+import rollerslam.environment.model.actions.UpdateScoreAction;
 import rollerslam.environment.model.actions.VoiceAction;
 import rollerslam.environment.model.actions.arm.CatchAction;
 import rollerslam.environment.model.actions.arm.CountertackleAction;
@@ -101,7 +102,7 @@ public class FluxActionInterpretationComponent implements
 	private void throwA(World w, Player p, Vector vet) {
 		double error = Math.random();
 		double result = error % 2;
-		action = "throwA(" + getIDForObject(p) + "," + error + ","
+		action = "throwA(" + getIDForObject(p) + "," + error 
 				+ ", vector(" + vet.x + "," + vet.y + ")," + p.strength + ","
 				+ result + ")";
 	}
@@ -177,7 +178,11 @@ public class FluxActionInterpretationComponent implements
 		} else if (m instanceof JoinGameAction) {
 			JoinGameAction mt = (JoinGameAction) m;
 			this.joinWorld((World) w, mt.sender, mt.team);
-		}
+		} else if (m instanceof UpdateScoreAction){
+			UpdateScoreAction mt = (UpdateScoreAction) m;
+			 ((World)w).scoreboard.scoreTeamA += mt.getScoreTeamA();
+			 ((World)w).scoreboard.scoreTeamB += mt.getScoreTeamB();
+		};
 
 		// adds all actions to the world
 		((World) w).newActions.add(m);
@@ -236,6 +241,7 @@ public class FluxActionInterpretationComponent implements
 		}
 
 	}
+	
 
 	public FluxActionInterpretationComponent(EclipseConnection eclipse) {
 		this.eclipse = eclipse;
