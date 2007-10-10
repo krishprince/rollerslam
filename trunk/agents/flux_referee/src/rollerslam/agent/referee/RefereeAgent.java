@@ -1,6 +1,8 @@
 package rollerslam.agent.referee;
 
 
+import java.io.File;
+
 import rollerslam.environment.model.Fact;
 import rollerslam.environment.model.actions.UpdateScoreAction;
 import rollerslam.environment.model.actions.voice.SendMsgAction;
@@ -16,6 +18,9 @@ import rollerslam.infrastructure.client.ClientFacade;
 import rollerslam.infrastructure.client.ClientFacadeImpl;
 import rollerslam.infrastructure.client.ClientInitialization;
 import rollerslam.infrastructure.server.PrintTrace;
+import rollerslam.infrastructure.settings.GeneralSettings;
+import rollerslam.infrastructure.settings.GeneralSettingsImpl;
+
 import com.parctechnologies.eclipse.EclipseConnection;
 
 @SuppressWarnings("serial")
@@ -33,7 +38,7 @@ public class RefereeAgent extends AutomataAgent {
         ClientInitialization clientInitialization = facade.getClientInitialization();
         clientInitialization.init();
 
-        //initializeEclipseConnection();
+        initializeEclipseConnection();
         remoteThis = (Agent) clientInitialization.exportObject(this);
 
         facade.getAgentRegistry().register(remoteThis);
@@ -94,6 +99,14 @@ public class RefereeAgent extends AutomataAgent {
 
         this.run();
         startSimulation();
+    }
+    
+    private void initializeEclipseConnection() throws Exception {
+        String folder = (String)GeneralSettingsImpl.getInstance().getSetting(GeneralSettings.FLUX_CODE_HOME); 
+        
+        eclipse = facade.getClientInitialization().getEclipseConnection();
+        File eclipseProgram = new File(folder + "referee.pl");
+        eclipse.compile(eclipseProgram);
     }
     public static void main(String[] args) throws Exception {
         new RefereeAgent();
