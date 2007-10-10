@@ -58,11 +58,11 @@ public class RefereePrologJavaWorldVisitor {
 		if (goalTeam != null) {
 			refereeWorld.needsToSayGoal = true;
 			refereeWorld.goalFact = new GoalFact(((World)refereeWorld.getEnvironmentStateModel()).currentCycle, goalTeam);
-			newLogentry(refereeWorld.goalFact);
+			//newLogentry(refereeWorld.goalFact);
 		}		
 	}
 	
-	 private void newLogentry(GoalFact goal) {
+	 /*private void newLogentry(GoalFact goal) {
 			try {			
 				//TODO pegar id do juiz
 				AgentActionLogEntry envLog = new AgentActionLogEntry(goal.cycle, -1, (Message)goal.message);
@@ -75,7 +75,7 @@ public class RefereePrologJavaWorldVisitor {
 					e.printStackTrace();
 				}
 			}
-		}
+		}*/
 	
 	private TEAM getScoredTeam(World world, CompoundTerm term) {
 		int teamId = Integer.parseInt(term.arg(1).toString());
