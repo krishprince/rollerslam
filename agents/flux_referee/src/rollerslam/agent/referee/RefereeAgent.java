@@ -33,10 +33,13 @@ public class RefereeAgent extends AutomataAgent {
     public EclipseConnection eclipse;
 
     public RefereeAgent() throws Exception {
+    	this("localhost");
+    }
+    public RefereeAgent(String nameServer) throws Exception {
         facade = ClientFacadeImpl.getInstance();
 
         ClientInitialization clientInitialization = facade.getClientInitialization();
-        clientInitialization.init();
+        clientInitialization.init(nameServer);
 
         initializeEclipseConnection();
         remoteThis = (Agent) clientInitialization.exportObject(this);
