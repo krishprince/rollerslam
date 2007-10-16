@@ -39,6 +39,9 @@
     <path id="display_classpath">
         <fileset dir="${dist.dir}" includes="${display.jarfile}"/>
     </path>
+    <path id="eclipse_classpath">
+        <fileset dir="${dist.dir}" includes="${eclipse.jarfile}"/>
+    </path>
     
     <target name="prepare">
         <mkdir dir="${build.dir}"/>
@@ -72,10 +75,11 @@
     </target>
     
     <!-- infrastructure -->
-    <target name="compile-infrastructure" depends="prepare">
+    <target name="compile-infrastructure" depends="prepare,copy-dependencies">
         <javac srcdir="infrastructure/src_interfaces:infrastructure/src" destdir="${infrastructure.build.dir}" target="1.5">
             <classpath>
                 <path refid="logging_classpath"/>
+                <path refid="eclipse_classpath"/>
             </classpath>
         </javac>
         <copy todir="${infrastructure.build.dir}">
@@ -87,7 +91,7 @@
         <jar destfile="${dist.dir}/${infrastructure.jarfile}">
             <fileset dir="${infrastructure.build.dir}" includes="**/*.class" />
             <manifest>
-                <attribute name="Class-Path" value="${interfaces.jarfile} ${logging.jarfile} ${hsqldb.jarfile}" />
+                <attribute name="Class-Path" value="${eclipse.jarfile} ${interfaces.jarfile} ${logging.jarfile} ${hsqldb.jarfile}" />
             </manifest>
         </jar>
         <copy todir="${dist.dir}">
@@ -161,6 +165,7 @@
             <classpath>
                 <path refid="infrastructure_classpath"/>
                 <path refid="interfaces_classpath"/>
+                <path refid="eclipse_classpath"/>
             </classpath>
         </javac>
     </target>
@@ -169,7 +174,7 @@
             <fileset dir="${environment.build.dir}" includes="**/*.class" />
             <manifest>
                 <attribute name="Main-Class" value="rollerslam.environment.gui.ServerDisplay" />
-                <attribute name="Class-Path" value="${hsqldb.jarfile} ${logging.jarfile} ${infrastructure.jarfile} ${interfaces.jarfile}" />
+                <attribute name="Class-Path" value="${eclipse.jarfile} ${hsqldb.jarfile} ${logging.jarfile} ${infrastructure.jarfile} ${interfaces.jarfile}" />
             </manifest>
         </jar>
     </target>
