@@ -31,7 +31,7 @@ public class SimulationSettings {
         
         static {
             try {
-                PLAYERS_PER_TEAM = Integer.parseInt((String)GeneralSettingsImpl.getInstance().getSetting(GeneralSettings.PLAYERS_PER_TEAM));
+                PLAYERS_PER_TEAM = Integer.parseInt((String)GeneralSettingsImpl.getInstance().getSetting("PLAYERS_PER_TEAM"));
             } catch (Exception err) {
                 throw new RuntimeException("Error setting SimulationSettings. Details: " + err, err);
             }

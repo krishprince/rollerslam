@@ -40,10 +40,10 @@ public class LogRecordingServiceImpl implements LogRecordingService {
             try {
                 p = new Properties();
                 GeneralSettings gs = GeneralSettingsImpl.getInstance();
-                p.setProperty("concrete.log.class", (String) gs.getSetting(GeneralSettings.LOG_CLASS));
+                p.setProperty("concrete.log.class", (String) gs.getSetting("LOG_CLASS"));
 
                 p.setProperty("log.level", "0"); //not used propety, but is required for the background log component
-                p.setProperty("db.url", (String) gs.getSetting(GeneralSettings.DB_URL));
+                p.setProperty("db.url", (String) gs.getSetting("DB_URL"));
             } catch (RemoteException ex) {
                 throw new RuntimeException("Error initalizing log service. Details: " + ex, ex);
             }

@@ -26,7 +26,7 @@ public class SelectiveLogRecordingServiceDecorator implements LogRecordingServic
     public SelectiveLogRecordingServiceDecorator(LogRecordingService other, GeneralSettings setts) {
         try {
             lrs = other;
-            String availableClasses = (String) setts.getSetting(GeneralSettings.INSTANCES_TO_BE_LOGGED);
+            String availableClasses = (String) setts.getSetting("INSTANCES_TO_BE_LOGGED");
             classes = new java.util.ArrayList<String>();
             if (!"*".equals(availableClasses)) { //if not logging everything (log everything = empty classes list
                 classes.addAll(Arrays.asList(availableClasses.split(",")));

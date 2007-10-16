@@ -105,7 +105,7 @@ public class RefereeAgent extends AutomataAgent {
     }
     
     private void initializeEclipseConnection() throws Exception {
-        String folder = (String)GeneralSettingsImpl.getInstance().getSetting(GeneralSettings.FLUX_CODE_HOME); 
+        String folder = (String)GeneralSettingsImpl.getInstance().getSetting("FLUX_CODE_HOME"); 
         
         eclipse = facade.getClientInitialization().getEclipseConnection();
         File eclipseProgram = new File(folder + "referee.pl");
