@@ -25,7 +25,7 @@
     <property name="testagent.jarfile" value="testagent.jar"/>
     <property name="repeater.jarfile" value="repeater.jar"/>
     <property name="mobile-display.jarfile" value="mobile-display.jar"/>
-    
+    <property name="eclipse.jarfile" value="eclipse.jar"/>
     
     <path id="logging_classpath">
         <fileset dir="${dist.dir}" includes="${logging.jarfile}"/>
@@ -39,8 +39,6 @@
     <path id="display_classpath">
         <fileset dir="${dist.dir}" includes="${display.jarfile}"/>
     </path>
-    
-    
     
     <target name="prepare">
         <mkdir dir="${build.dir}"/>
