@@ -14,6 +14,7 @@
     <property name="testagent.build.dir" value="${agents.build.dir}/testagent"/>
     <property name="repeater.build.dir" value="${build.dir}/repeater"/>
     <property name="mobile-display.build.dir" value="${build.dir}/mobile/display"/>
+    <property name="test.build.dir" value="${build.dir}/test"/>
     
     <property name="hsqldb.jarfile" value="hsqldb.jar"/>
     <property name="logging.jarfile" value="logging.jar"/>
@@ -26,6 +27,7 @@
     <property name="repeater.jarfile" value="repeater.jar"/>
     <property name="mobile-display.jarfile" value="mobile-display.jar"/>
     <property name="eclipse.jarfile" value="eclipse.jar"/>
+    <property name="test.jarfile" value="RollerslamAllInOne.jar"/>
     
     <path id="logging_classpath">
         <fileset dir="${dist.dir}" includes="${logging.jarfile}"/>
@@ -42,6 +44,12 @@
     <path id="eclipse_classpath">
         <fileset dir="${dist.dir}" includes="${eclipse.jarfile}"/>
     </path>
+    <path id="mobile-display_classpath">
+        <fileset dir="${dist.dir}" includes="${mobile-display.jarfile}"/>
+    </path>
+    <path id="environment_classpath">
+        <fileset dir="${dist.dir}" includes="${environment.jarfile}"/>
+    </path>
     
     <target name="prepare">
         <mkdir dir="${build.dir}"/>
@@ -56,7 +64,8 @@
         <mkdir dir="${logplayer.build.dir}/"/>
         <mkdir dir="${display.build.dir}/"/>		
         <mkdir dir="${repeater.build.dir}/"/>		
-        <mkdir dir="${mobile-display.build.dir}/"/>		
+        <mkdir dir="${mobile-display.build.dir}/"/>	
+        <mkdir dir="${test.build.dir}/"/>
     </target>
     
     <target name="clean">
@@ -236,6 +245,29 @@
         </jar>
     </target>
     
+    <!-- test -->
+    <target name="compile-test" depends="prepare">
+        <javac srcdir="test/src" destdir="${test.build.dir}" target="1.5">
+            <classpath>
+                <path refid="infrastructure_classpath"/>
+                <path refid="interfaces_classpath"/>
+                <path refid="eclipse_classpath"/>
+                <path refid="display_classpath"/>
+                <path refid="mobile-display_classpath"/>
+                <path refid="environment_classpath"/>
+            </classpath>
+        </javac>
+    </target>
+    <target name="build-test" depends="compile-test,copy-dependencies">
+        <jar destfile="${dist.dir}/${test.jarfile}">
+            <fileset dir="${test.build.dir}" includes="**/*.class" />
+            <manifest>
+                <attribute name="Main-Class" value="rollerslam.test.general.RollerslamAllInOne" />
+                <attribute name="Class-Path" value=". ${display.jarfile} ${environment.jarfile} ${eclipse.jarfile} ${hsqldb.jarfile} ${logging.jarfile} ${infrastructure.jarfile} ${interfaces.jarfile}" />
+            </manifest>
+        </jar>
+    </target>
+        
     <target name="copy-dependencies">
         <copy todir="${dist.dir}">
             <fileset dir="${lib.dir}" includes="**/*.jar"/>
@@ -244,12 +276,12 @@
     
     <target name="compile" depends="compile-logging,compile-infrastructure,
      compile-interfaces,compile-environment,compile-testagent,compile-display,
-    compile-logplayer,compile-repeater,compile-mobile-display">
+    compile-logplayer,compile-repeater,compile-mobile-display,compile-test">
     </target>
     
     <target name="build" depends="build-logging,build-infrastructure,
      build-interfaces,build-environment,build-testagent,build-display,
-    build-logplayer,build-repeater,build-mobile-display">
+    build-logplayer,build-repeater,build-mobile-display,build-test">
     </target>
     
 </project>
