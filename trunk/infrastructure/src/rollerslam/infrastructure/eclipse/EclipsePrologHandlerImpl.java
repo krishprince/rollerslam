@@ -29,7 +29,7 @@ public class EclipsePrologHandlerImpl implements EclipsePrologHandler {
             
             try {
                 System.setProperty("eclipse.directory", (String)gs.getSetting("ECLIPSE_HOME"));
-                folder = (String)gs.getSetting("FLUX_CODE_HOME");
+                folder = (String)gs.getSetting("ENV_FLUX_CODE_HOME");
             } catch (Exception err) {
                 throw new RuntimeException("Error intializing eclipse properties. Details: " + err, err);
             }

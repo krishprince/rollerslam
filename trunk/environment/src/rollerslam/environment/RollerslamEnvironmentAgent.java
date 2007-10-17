@@ -73,7 +73,7 @@ public class RollerslamEnvironmentAgent extends AutomataAgent {
 		System.setProperty("eclipse.directory", (String) GeneralSettingsImpl.getInstance().getSetting(
 				"ECLIPSE_HOME"));
 		String folder = (String) GeneralSettingsImpl.getInstance().getSetting(
-				"FLUX_CODE_HOME");
+				"ENV_FLUX_CODE_HOME");
 
 		EclipseEngineOptions eclipseEngineOptions = new EclipseEngineOptions();
 		File eclipseProgram;
