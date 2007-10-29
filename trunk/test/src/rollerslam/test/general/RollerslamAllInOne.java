@@ -4,15 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Method;
 import java.rmi.registry.LocateRegistry;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import rollerslam.agent.referee.RefereeAgent;
 import rollerslam.display.gui.RollerslamDisplay;
 import rollerslam.display.gui.RollerslamMobileDisplay;
 import rollerslam.environment.gui.ServerDisplay;
@@ -37,18 +34,18 @@ public class RollerslamAllInOne extends JFrame implements ActionListener {
     private JButton jbInstantiate = new JButton("Init");
 
     public RollerslamAllInOne() {
-    	LogRecordingService logger;
-		try {
-			logger = (LogRecordingService) LocateRegistry.getRegistry("localhost")
+        LogRecordingService logger;
+        try {
+            logger = (LogRecordingService) LocateRegistry.getRegistry("localhost")
 					.lookup(LogRecordingService.class.getSimpleName());
-		} catch (Exception e) {
-			if (PrintTrace.TracePrint){
-				e.printStackTrace();
-			}
-			logger = null;
-		}     	
-    	sd = new ServerDisplay(logger);
-    	
+        } catch (Exception e) {
+            if (PrintTrace.TracePrint) {
+                e.printStackTrace();
+            }
+            logger = null;
+        }
+        sd = new ServerDisplay(logger);
+
         initComponents();
     }
 
@@ -69,20 +66,21 @@ public class RollerslamAllInOne extends JFrame implements ActionListener {
 
     public static void main(String... args) throws Exception {
         new Thread(new Runnable() {
-        	public void run() {
-        		try {
-        	    	LogRecordingServiceImpl.main(new String[0]);
-				} catch (Exception e) {
-					if (PrintTrace.TracePrint){
-						e.printStackTrace();
-					}
-				}
-        	}
+
+            public void run() {
+                try {
+                    LogRecordingServiceImpl.main(new String[0]);
+                } catch (Exception e) {
+                    if (PrintTrace.TracePrint) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         }).start();
 
         Thread.sleep(5000);
-    	
-    	RollerslamAllInOne raio = new RollerslamAllInOne();
+
+        RollerslamAllInOne raio = new RollerslamAllInOne();
         raio.pack();
         raio.rd.main();
         raio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -90,20 +88,21 @@ public class RollerslamAllInOne extends JFrame implements ActionListener {
 
         Thread.sleep(5000);
 
-        // this should be called only AFTER the server is completely initialized!!!                
+        // this should be called only AFTER the server is completely initialized!!!
         ClientFacade cli = ClientFacadeImpl.getInstance();
         cli.getClientInitialization().init("localhost");
-        
+
         new Thread(new Runnable() {
-        	public void run() {
-        		try {
-					RollerslamMobileDisplay.main(new String[]{"localhost"});
-				} catch (Exception e) {
-					if (PrintTrace.TracePrint){
-						e.printStackTrace();
-					}
-				}
-        	}
+
+            public void run() {
+                try {
+                    RollerslamMobileDisplay.main(new String[]{"localhost"});
+                } catch (Exception e) {
+                    if (PrintTrace.TracePrint) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         }).start();
     }
 
