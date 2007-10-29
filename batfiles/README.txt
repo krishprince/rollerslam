@@ -18,7 +18,7 @@
  *  
  *  http://rollerslam.googlecode.com
  
- This version: 
+ This version: Rollerslam 1.1 revision 619
  
  Before you execute Rollerslam you will Java Runtime Environment (JRE) 6  
  or greater (http://java.sun.com/javase/downloads/?intcmp=1281),
@@ -37,9 +37,10 @@
  3. Wait the window to show up
  4. Execute runReferee.bat
  
- For replay a game.
+ For replay a game:
  
  1. Configure settings.properties with your local settings.
  2. Execute runLogPlayer.bat
  
  
+ IMPORTANT: Always check http://rollerslam.googlecode.com for news.
