@@ -3,6 +3,8 @@
     <property name="build.dir" value="classes_tmp"/>
     <property name="dist.dir" value="dist_tmp"/>
     <property name="lib.dir" value="lib"/>
+    <property name="bat.dir" value="batfiles"/>
+    
     
     <property name="logging.build.dir" value="${build.dir}/logging"/>
     <property name="infrastructure.build.dir" value="${build.dir}/infrastructure"/>
@@ -12,9 +14,14 @@
     <property name="logplayer.build.dir" value="${build.dir}/logplayer"/>
     <property name="display.build.dir" value="${build.dir}/display"/>
     <property name="testagent.build.dir" value="${agents.build.dir}/testagent"/>
+    <property name="flux_referee.build.dir" value="${agents.build.dir}/flux_referee"/>
     <property name="repeater.build.dir" value="${build.dir}/repeater"/>
     <property name="mobile-display.build.dir" value="${build.dir}/mobile/display"/>
     <property name="test.build.dir" value="${build.dir}/test"/>
+    
+    <property name="env_flux_home.dir" value="environment/flux"/>
+    <property name="ref_flux_home.dir" value="agents/flux_referee/flux"/>
+    
     
     <property name="hsqldb.jarfile" value="hsqldb.jar"/>
     <property name="logging.jarfile" value="logging.jar"/>
@@ -24,6 +31,7 @@
     <property name="display.jarfile" value="display.jar"/>
     <property name="environment.jarfile" value="environment.jar"/>
     <property name="testagent.jarfile" value="testagent.jar"/>
+    <property name="flux_referee.jarfile" value="flux_referee.jar"/>
     <property name="repeater.jarfile" value="repeater.jar"/>
     <property name="mobile-display.jarfile" value="mobile-display.jar"/>
     <property name="eclipse.jarfile" value="eclipse.jar"/>
@@ -55,11 +63,15 @@
         <mkdir dir="${build.dir}"/>
         <mkdir dir="${dist.dir}"/>
         
+        <mkdir dir="${dist.dir}/env_flux_home"/>
+        <mkdir dir="${dist.dir}/ref_flux_home"/>
+        
         <mkdir dir="${logging.build.dir}"/>
         <mkdir dir="${infrastructure.build.dir}"/>
         <mkdir dir="${interfaces.build.dir}"/>
         <mkdir dir="${agents.build.dir}"/>
         <mkdir dir="${testagent.build.dir}"/>
+        <mkdir dir="${flux_referee.build.dir}"/>
         <mkdir dir="${environment.build.dir}/"/>
         <mkdir dir="${logplayer.build.dir}/"/>
         <mkdir dir="${display.build.dir}/"/>		
@@ -163,7 +175,7 @@
             <fileset dir="${logplayer.build.dir}" includes="**/*.class" />
             <manifest>
                 <attribute name="Main-Class" value="rollerslam.logplayer.gui.LogPlayerDisplay" />
-                <attribute name="Class-Path" value="${hsqldb.jarfile} ${logging.jarfile} ${infrastructure.jarfile} ${interfaces.jarfile} ${display.jarfile}" />
+                <attribute name="Class-Path" value="${hsqldb.jarfile} ${logging.jarfile} ${infrastructure.jarfile} ${interfaces.jarfile} ${display.jarfile} ${flux_referee.jarfile}" />
             </manifest>
         </jar>
     </target>
@@ -183,7 +195,7 @@
             <fileset dir="${environment.build.dir}" includes="**/*.class" />
             <manifest>
                 <attribute name="Main-Class" value="rollerslam.environment.gui.ServerDisplay" />
-                <attribute name="Class-Path" value="${eclipse.jarfile} ${hsqldb.jarfile} ${logging.jarfile} ${infrastructure.jarfile} ${interfaces.jarfile}" />
+                <attribute name="Class-Path" value="${eclipse.jarfile} ${hsqldb.jarfile} ${logging.jarfile} ${infrastructure.jarfile} ${interfaces.jarfile} ${flux_referee.jarfile}" />
             </manifest>
         </jar>
     </target>
@@ -203,6 +215,25 @@
             <manifest>
                 <attribute name="Main-Class" value="rollerslam.agent.goalbased.RollerslamGoalBasedAgent" />
                 <attribute name="Class-Path" value="${infrastructure.jarfile} ${interfaces.jarfile}" />
+            </manifest>
+        </jar>
+    </target>
+    
+    <!-- flux_referee -->
+    <target name="compile-flux_referee" depends="prepare">
+        <javac srcdir="agents/flux_referee/src" destdir="${flux_referee.build.dir}" target="1.5">
+            <classpath>
+                <path refid="infrastructure_classpath"/>
+                <path refid="interfaces_classpath"/>
+            </classpath>
+        </javac>
+    </target>
+    <target name="build-flux_referee" depends="compile-flux_referee">
+        <jar destfile="${dist.dir}/${flux_referee.jarfile}">
+            <fileset dir="${flux_referee.build.dir}" includes="**/*.class" />
+            <manifest>
+                <attribute name="Main-Class" value="rollerslam.agent.referee.RefereeAgent" />
+                <attribute name="Class-Path" value=". ${eclipse.jarfile} ${infrastructure.jarfile} ${interfaces.jarfile}" />
             </manifest>
         </jar>
     </target>
@@ -263,7 +294,7 @@
             <fileset dir="${test.build.dir}" includes="**/*.class" />
             <manifest>
                 <attribute name="Main-Class" value="rollerslam.test.general.RollerslamAllInOne" />
-                <attribute name="Class-Path" value=". ${display.jarfile} ${environment.jarfile} ${eclipse.jarfile} ${hsqldb.jarfile} ${logging.jarfile} ${infrastructure.jarfile} ${interfaces.jarfile}" />
+                <attribute name="Class-Path" value=". ${display.jarfile} ${environment.jarfile} ${eclipse.jarfile} ${hsqldb.jarfile} ${logging.jarfile} ${infrastructure.jarfile} ${interfaces.jarfile} ${testagent.jarfile} ${flux_referee.jarfile}" />
             </manifest>
         </jar>
     </target>
@@ -271,17 +302,27 @@
     <target name="copy-dependencies">
         <copy todir="${dist.dir}">
             <fileset dir="${lib.dir}" includes="**/*.jar"/>
+            <fileset dir="${bat.dir}" includes="**/*.bat"/>
+            <fileset dir="${bat.dir}" includes="**/*.txt"/>
+        </copy>
+        <copy todir="${dist.dir}/env_flux_home">
+            <fileset dir="${env_flux_home.dir}" includes="**/*.pl"/>
+            <fileset dir="${env_flux_home.dir}" includes="**/*.chr"/>
+        </copy>
+        <copy todir="${dist.dir}/ref_flux_home">
+            <fileset dir="${ref_flux_home.dir}" includes="**/*.pl"/>
+            <fileset dir="${ref_flux_home.dir}" includes="**/*.chr"/>
         </copy>
     </target>
     
-    <target name="compile" depends="compile-logging,compile-infrastructure,
+    <target name="compile" depends="clean,compile-logging,compile-infrastructure,
      compile-interfaces,compile-environment,compile-testagent,compile-display,
-    compile-logplayer,compile-repeater,compile-mobile-display,compile-test">
+    compile-logplayer,compile-repeater,compile-mobile-display,compile-test,compile-flux_referee">
     </target>
     
-    <target name="build" depends="build-logging,build-infrastructure,
+    <target name="build" depends="clean,build-logging,build-infrastructure,
      build-interfaces,build-environment,build-testagent,build-display,
-    build-logplayer,build-repeater,build-mobile-display,build-test">
+    build-logplayer,build-repeater,build-mobile-display,build-test,build-flux_referee">
     </target>
     
 </project>
