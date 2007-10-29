@@ -9,7 +9,8 @@ Rollerslam home page.
 
 RollerSlam is a fusion of many sports like: football, soccer, handball, hockey among others (there are at least 12 sports at this list!). This project is going to be held following (as much as possible) an MDA approach trying to reuse the design principles behind Robocup system. 
 
-You can check out the [latest version of the game]http://rollerslam.googlecode.com/files/Rollerslam1.1_20071029.zip.
+You can check out the [latest version of the game]
+http://rollerslam.googlecode.com/files/Rollerslam1.1_20071029.zip .
 
 This [http://rollerslam.googlecode.com/svn/trunk/docs/PresentationAgentes.ppt
 presentation] shows Rollerslam from an Intelligent Agents view (its in brazilian portuguese).
