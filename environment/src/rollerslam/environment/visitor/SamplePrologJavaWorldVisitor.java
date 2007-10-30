@@ -89,6 +89,12 @@ public class SamplePrologJavaWorldVisitor implements PrologJavaWorldVisitor {
 							Player p = getPlayerFromID(world, id);
 							p.counterTackle = true;
 						}
+					} else if (term.functor().equals("scoreA")) {
+						int result = (Integer) term.arg(1);
+						world.scoreboard.scoreTeamA = result;
+					} else if (term.functor().equals("scoreB")) {
+						int result = (Integer) term.arg(1);
+						world.scoreboard.scoreTeamB = result;
 					}
 				}
 			}

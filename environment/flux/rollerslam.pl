@@ -163,6 +163,19 @@ state_update(Z1,standUp(player(X)),Z2,[]) :-
  Z2=Z1
  ).
  
+ %%
+ %% UpdateScore Action
+ %%
+ 
+ state_update(Z1, updateScore(RecentScoreTeamA,RecentScoreTeamB), Z2, []):-
+  (holds(scoreA(ScoreTeamA),Z1),
+  holds(scoreB(ScoreTeamB),Z1),
+  ResultTeamA is ScoreTeamA + RecentScoreTeamA,
+  ResultTeamB is ScoreTeamB + RecentScoreTeamB,
+   update(Z1,[scoreA(ResultTeamA), scoreB(ResultTeamB)],[scoreA(ScoreTeamA), scoreB(ScoreTeamB)], Z2))
+   ;
+  (Z2=Z1).
+ 
  
 
 

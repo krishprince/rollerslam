@@ -102,9 +102,13 @@ public class FluxActionInterpretationComponent implements
 	private void throwA(World w, Player p, Vector vet) {
 		double error = Math.random();
 		double result = error % 2;
-		action = "throwA(" + getIDForObject(p) + "," + error 
-				+ ", vector(" + vet.x + "," + vet.y + ")," + p.strength + ","
-				+ result + ")";
+		action = "throwA(" + getIDForObject(p) + "," + error + ", vector("
+				+ vet.x + "," + vet.y + ")," + p.strength + "," + result + ")";
+	}
+
+	private void updateScore(World w, int recentScoreA, int recentScoreB) {
+
+		action = "updateScore(" + recentScoreA + "," + recentScoreB + ")";
 	}
 
 	private void sendMsg(World w, Agent agent, Fact f) {
@@ -178,11 +182,13 @@ public class FluxActionInterpretationComponent implements
 		} else if (m instanceof JoinGameAction) {
 			JoinGameAction mt = (JoinGameAction) m;
 			this.joinWorld((World) w, mt.sender, mt.team);
-		} else if (m instanceof UpdateScoreAction){
+		} else if (m instanceof UpdateScoreAction) {
 			UpdateScoreAction mt = (UpdateScoreAction) m;
-			 ((World)w).scoreboard.scoreTeamA += mt.getScoreTeamA();
-			 ((World)w).scoreboard.scoreTeamB += mt.getScoreTeamB();
-		};
+			this.updateScore((World) w, mt.getScoreTeamA(), mt.getScoreTeamB());
+			// ((World) w).scoreboard.scoreTeamA += mt.getScoreTeamA();
+			// ((World) w).scoreboard.scoreTeamB += mt.getScoreTeamB();
+		}
+		;
 
 		// adds all actions to the world
 		((World) w).newActions.add(m);
@@ -241,7 +247,6 @@ public class FluxActionInterpretationComponent implements
 		}
 
 	}
-	
 
 	public FluxActionInterpretationComponent(EclipseConnection eclipse) {
 		this.eclipse = eclipse;
@@ -256,6 +261,7 @@ public class FluxActionInterpretationComponent implements
 					+ "]," + action + ", " + "R)";
 
 			CompoundTerm ret;
+			System.out.println("query: "+query);
 			try {
 				ret = eclipse.rpc(query);
 
