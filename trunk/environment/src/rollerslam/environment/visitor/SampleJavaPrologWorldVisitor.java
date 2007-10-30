@@ -37,6 +37,10 @@ public class SampleJavaPrologWorldVisitor implements JavaPrologWorldVisitor {
 	}
 
 	public void visit(WorldObject obj) {
+
+		accumulator.add("scoreA(" + obj.world.scoreboard.scoreTeamA + ")");
+		accumulator.add("scoreB(" + obj.world.scoreboard.scoreTeamB + ")");
+
 		accumulator.add("position(" + getIDForObject(obj) + ","
 				+ vectorToString(obj.s) + ")");
 	}
