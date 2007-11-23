@@ -260,7 +260,6 @@ public class FluxActionInterpretationComponent implements
 
 	public void runFluxAction(EnvironmentWorldModel world) {
 		if (action != null) {
-			long bef = System.currentTimeMillis();
 			CompoundTerm query = new CompoundTermImpl("runAction",
 													  world.getFluents(),
 													  action,
@@ -271,9 +270,6 @@ public class FluxActionInterpretationComponent implements
 			
 			try {
 				ret = eclipse.rpc(query);
-				long af = System.currentTimeMillis();
-				
-				System.out.println("time elapsed: " + (af - bef));
 //				prologJavaVisitor.updateWorldRepresentation((World) world, ret
 //						.arg(3));
 				world.setFluents((Collection)ret.arg(3));
