@@ -1,1 +1,0 @@
-java -cp .; -jar flux_referee.jar
