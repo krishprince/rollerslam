@@ -431,8 +431,8 @@ public class AgentGoalUpdater implements GoalUpdateComponent {
 		}
 		try {
 			Player me = model.getMe();
-			System.err.println((me != null ? me.id + "" : "??") + " GOAL: "
-					+ model.currentGoal);
+//			System.err.println((me != null ? me.id + "" : "??") + " GOAL: "
+//					+ model.currentGoal);
 		} catch (Exception e) {
 		}
 		;
