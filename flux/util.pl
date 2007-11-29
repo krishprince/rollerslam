@@ -4,10 +4,12 @@
 %%%%%%%%%%%%%%%%%%%%%% RAMIFICATION FUNCTIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-processRamifications(InitialState, FinalState) :-
+ processRamifications(InitialState, FinalState) :-
            ramifySlam(InitialState, ramify, FinalState) .
 
 processRamifications(_, _ ) :- print('RAMIFICATION FAILED').
+
+% processRamifications(X,X).
 
 ramifySlam(Z1,ramify,Z2) :-
 collect_ramifiable_objects(Z1, Agents),
@@ -23,10 +25,14 @@ ramify_objects(Z1, [A|R], Z3) :- ramify_object(Z1,A,Z2), ramify_objects(Z2,R,Z3)
 
 runAction(CurrentState, Action, NextState) :- state_update(CurrentState, Action, NextState,[]).
 
+% runSeriesOfActions(CurrentState, _, CurrentState).
+
 runSeriesOfActions(CurrentState, [], CurrentState).
 runSeriesOfActions(CurrentState, [C|L], FinalState) :- runAction(CurrentState, C, NextState),
                                                        runSeriesOfActions(NextState, L, FinalState).
-                                                       
+
+runEnvStep(CurrentState, Actions, FinalState) :- processRamifications(CurrentState, NextState), runSeriesOfActions(NextState, Actions, FinalState).
+                                                        
 in_list(X, [F|Z]) :- X=F ; in_list(X,Z).
 
 collect_ramifiable_objects(State, Result) :- collect_ramifiable_objects0(State, [], Result). 
