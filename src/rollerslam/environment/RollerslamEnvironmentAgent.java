@@ -2,8 +2,10 @@ package rollerslam.environment;
 
 import java.io.File;
 import java.rmi.RemoteException;
+import java.util.Set;
 
 import rollerslam.environment.model.World;
+import rollerslam.environment.model.actions.CompositeAction;
 import rollerslam.infrastructure.agent.Message;
 import rollerslam.infrastructure.agent.StateMessage;
 import rollerslam.infrastructure.agent.automata.AutomataAgent;
@@ -13,7 +15,6 @@ import rollerslam.infrastructure.agent.automata.ModelInitializationComponent;
 import rollerslam.infrastructure.server.PrintTrace;
 import rollerslam.infrastructure.server.ServerFacade;
 import rollerslam.infrastructure.server.ServerFacadeImpl;
-import rollerslam.infrastructure.settings.GeneralSettings;
 import rollerslam.infrastructure.settings.GeneralSettingsImpl;
 import rollerslam.logging.EnvironmentStateLogEntry;
 
@@ -74,6 +75,22 @@ public class RollerslamEnvironmentAgent extends AutomataAgent {
 		EnvironmentWorldModel wout = ((EnvironmentWorldModel)worldModel);
 		wout.updateWorld();
 		return new StateMessage(null, wout.getWorld());
+	}
+	
+	protected void processCycle() throws Exception {	
+		long bef = System.currentTimeMillis();
+		super.processCycle();
+		long aft = System.currentTimeMillis();
+		
+		System.out.println("ELAPSED TIME: " + (aft - bef));
+	}
+
+//	protected void think() {
+//		ramificationComponent.processRamifications(worldModel);		
+//	}
+	
+	protected void interpretPerceptions() throws RemoteException {		
+		interpretationComponent.processAction(worldModel, new CompositeAction(sensor.getActions()));
 	}
 	
 	private void initializeEclipseConnection() throws Exception {

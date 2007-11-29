@@ -42,7 +42,11 @@ public class FluxRamificationComponent implements RamificationComponent {
 		
 		CompoundTerm ret;
 		try {
+			long bef = System.currentTimeMillis();		
 			ret = eclipse.rpc(query);
+			long aft = System.currentTimeMillis();
+			
+			System.out.println("(RA) PROLOG/FLUX TIME: " + (aft - bef));				
 			
 //			System.out.println("result: "+ret);
 			
