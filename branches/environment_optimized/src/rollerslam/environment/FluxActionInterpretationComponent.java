@@ -1,8 +1,10 @@
 package rollerslam.environment;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Hashtable;
+import java.util.Set;
 
 import rollerslam.environment.model.Ball;
 import rollerslam.environment.model.Fact;
@@ -12,6 +14,7 @@ import rollerslam.environment.model.SimulationSettings;
 import rollerslam.environment.model.World;
 import rollerslam.environment.model.WorldObject;
 import rollerslam.environment.model.actions.ArmAction;
+import rollerslam.environment.model.actions.CompositeAction;
 import rollerslam.environment.model.actions.JoinGameAction;
 import rollerslam.environment.model.actions.LegAction;
 import rollerslam.environment.model.actions.UpdateScoreAction;
@@ -122,8 +125,34 @@ public class FluxActionInterpretationComponent implements
 	private void standUp(World w, Player p) {
 		action =  new CompoundTermImpl("standUp", getIDForObject(p) );
 	}
-
+	
 	public void processAction(EnvironmentStateModel wout, Message m) {
+		if (m instanceof CompositeAction) {
+			long bef = System.currentTimeMillis();
+			Collection<Message> actions = ((CompositeAction)m).getActions();
+			ArrayList<CompoundTerm> terms = new ArrayList<CompoundTerm>();
+			
+			for (Message action : actions) {
+				processSingleAction(wout, action);
+				terms.add(this.action);
+			}
+			
+			long aft = System.currentTimeMillis();
+			
+			System.out.println("(AI) TRANSLATION TIME: " + (aft - bef));	
+			runFluxAction((EnvironmentWorldModel) wout, terms);
+		} else {
+			processSingleAction(wout, m);
+			ArrayList<CompoundTerm> terms = new ArrayList<CompoundTerm>();
+			terms.add(this.action);
+			runFluxAction((EnvironmentWorldModel) wout, terms);
+		}
+		
+	}
+
+
+		
+	private void processSingleAction(EnvironmentStateModel wout, Message m) {
 		World w = ((EnvironmentWorldModel)wout).getWorld();
 		action = null;
 
@@ -196,8 +225,6 @@ public class FluxActionInterpretationComponent implements
 
 		// adds all actions to the world
 		((World) w).newActions.add(m);
-
-		runFluxAction((EnvironmentWorldModel) wout);
 	}
 
 	public void joinWorld(World worldModel, Agent agent, PlayerTeam playerTeam) {
@@ -258,19 +285,24 @@ public class FluxActionInterpretationComponent implements
 		this.prologJavaVisitor = new SamplePrologJavaWorldVisitor();
 	}
 
-	public void runFluxAction(EnvironmentWorldModel world) {
+	public void runFluxAction(EnvironmentWorldModel world, ArrayList<CompoundTerm> terms) {
 		if (action != null) {
-			CompoundTerm query = new CompoundTermImpl("runAction",
+			CompoundTerm query = new CompoundTermImpl("runSeriesOfActions",
 													  world.getFluents(),
-													  action,
+													  terms,
 													  null);
 				
 			CompoundTerm ret;
 //			System.out.println("query: "+query);
 			
 			try {
+				long bef = System.currentTimeMillis();
 				ret = eclipse.rpc(query);
-//				prologJavaVisitor.updateWorldRepresentation((World) world, ret
+				long aft = System.currentTimeMillis();
+				
+				System.out.println("(AI) PROLOG/FLUX TIME: " + (aft - bef));				
+
+				//				prologJavaVisitor.updateWorldRepresentation((World) world, ret
 //						.arg(3));
 				world.setFluents((Collection)ret.arg(3));
 
