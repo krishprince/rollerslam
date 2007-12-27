@@ -3,11 +3,13 @@
 :- dynamic goal/1.
 :- dynamic action/1.
 
-goal(runToBall).
-action(dash(10)).
+%% initial GOAL
 
-perform(_, _).
-poss(_,_).
+goal(runToBall).
+
+%% initial ACTION
+
+action(dash(10)).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -57,26 +59,3 @@ state_update(Z1, computeNextAction, Z2, _) :-
 	 	
 state_update(Z1, computeNextAction, Z1, _).	 	
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
- init(PlayerID, PlayerTeam) :- assert(player(PlayerID)), assert(team(PlayerTeam)). 
-
-processAgentCycle(WorldState, Action) :- 
-	goal(OldGoal), action(OldAction),
-	Z = [goal(OldGoal), action(OldAction) | WorldState], 
-	
-	state_update(Z, interpretEnvModel, Z1, []),
-    state_update(Z1, updateGoal, Z2, []),
-    state_update(Z2, computeNextAction, Z3, []),
-    
-    holds(goal(NewGoal), Z3),
-    holds(action(NewAction), Z3),
-    
-	retract(goal(_)),
-	retract(action(_)),
-	
-	assert(goal(NewGoal)),
-	assert(action(NewAction)),
-	
-	Action = NewAction.
-	
