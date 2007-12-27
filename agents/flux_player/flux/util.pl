@@ -1,52 +1,6 @@
 :- ['flux'].
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%% RAMIFICATION FUNCTIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
- processRamifications(InitialState, FinalState) :-
-           ramifySlam(InitialState, ramify, FinalState) .
-
-processRamifications(_, _ ) :- print('RAMIFICATION FAILED').
-
-% processRamifications(X,X).
-
-ramifySlam(Z1,ramify,Z2) :-
-collect_ramifiable_objects(Z1, Agents),
-ramify_objects(Z1, Agents, Z2).
-
-ramify_objects(Z1, [], Z1).
-ramify_objects(Z1, [A|R], Z3) :- ramify_object(Z1,A,Z2), ramify_objects(Z2,R,Z3).
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%% HELPER  FUNCTIONS %%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-runAction(CurrentState, Action, NextState) :- state_update(CurrentState, Action, NextState,[]).
-
-% runSeriesOfActions(CurrentState, _, CurrentState).
-
-runSeriesOfActions(CurrentState, [], CurrentState).
-runSeriesOfActions(CurrentState, [C|L], FinalState) :- runAction(CurrentState, C, NextState),
-                                                       runSeriesOfActions(NextState, L, FinalState).
-
-runEnvStep(CurrentState, Actions, FinalState) :- processRamifications(CurrentState, NextState), runSeriesOfActions(NextState, Actions, FinalState).
-                                                        
 in_list(X, [F|Z]) :- X=F ; in_list(X,Z).
-
-collect_ramifiable_objects(State, Result) :- collect_ramifiable_objects0(State, [], Result). 
-
-collect_ramifiable_objects0([], UpToNow, UpToNow).
-collect_ramifiable_objects0([speed(Object, _) | R], UpToNow, Result) :-
-				(in_list(Object, UpToNow), collect_ramifiable_objects0(R, UpToNow, Result))
-									;
-				(not in_list(Object, UpToNow), collect_ramifiable_objects0(R, [Object|UpToNow], Result)).
-
-collect_ramifiable_objects0([_ | R], UpToNow, Result) :- 
- 			collect_ramifiable_objects0(R, UpToNow, Result).
-
-
 
 closer(Sxa, Sya, Sxb, Syb, MaxDistance) :-
            calcDistance(Sxa, Sya, Sxb, Syb, A),
@@ -115,7 +69,28 @@ moduleFlux(Strength,ModResult, ResultX, ResultY):-
        
 %%---------------------       
     
-      
+
+ init(PlayerID, PlayerTeam) :- assert(player(PlayerID)), assert(team(PlayerTeam)). 
+
+processAgentCycle(WorldState, Action) :- 
+	goal(OldGoal), action(OldAction),
+	Z = [goal(OldGoal), action(OldAction) | WorldState], 
+	
+	state_update(Z, interpretEnvModel, Z1, []),
+    state_update(Z1, updateGoal, Z2, []),
+    state_update(Z2, computeNextAction, Z3, []),
+    
+    holds(goal(NewGoal), Z3),
+    holds(action(NewAction), Z3),
+    
+	retract(goal(_)),
+	retract(action(_)),
+	
+	assert(goal(NewGoal)),
+	assert(action(NewAction)),
+	
+	Action = NewAction.
+	      
     
     
                
