@@ -9,6 +9,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/infrastructure"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/mobile_display"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/agentplayer"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/referee"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/flux_player"/>
 	<classpathentry kind="output" path="build"/>
 </classpath>
