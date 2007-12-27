@@ -23,6 +23,7 @@ import rollerslam.infrastructure.agent.goalbased.GoalInitializationComponent;
 import rollerslam.infrastructure.agent.goalbased.GoalUpdateComponent;
 import rollerslam.infrastructure.client.ClientFacade;
 import rollerslam.infrastructure.client.ClientFacadeImpl;
+import rollerslam.infrastructure.eclipse.EclipsePrologHandlerImpl;
 import rollerslam.infrastructure.settings.GeneralSettingsImpl;
 
 import com.parctechnologies.eclipse.CompoundTermImpl;
@@ -143,7 +144,7 @@ public class FluxPlayerAgent extends GoalBasedAgent {
     private void initializeEclipseConnection() throws Exception {
         String folder = (String)GeneralSettingsImpl.getInstance().getSetting("PLAYER_FLUX_CODE_HOME"); 
         
-        eclipse = facade.getClientInitialization().getEclipseConnection();
+        eclipse = new EclipsePrologHandlerImpl().getEclipseConnection();
 
         File eclipseProgram = null;
         

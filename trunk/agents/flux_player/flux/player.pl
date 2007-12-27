@@ -25,7 +25,7 @@ state_update(Z1, updateGoal, Z2, _) :-
 		
 	   calcDistance(Sxa, Sya, Sxb, Syb, Sdist),
 		
-		Sdist < 10,
+		Sdist < 20,
 		
 		update(Z1, [goal(kickBall)], [goal(runToBall)], Z2).
 
@@ -50,12 +50,12 @@ state_update(Z1, computeNextAction, Z2, _) :-
 
 		player(PX),
 		
-		holds(position(ball, Sball), Z1),
-		holds(position(player(PX), Splayer), Z1),
-		
-		subtractVector(Sbal, Splayerl, Acc),
-			 	
-	 	update(Z1, [action(kick(Acc))], [], Z2). 
+		holds(position(ball, vector(Bx, By)), Z1),
+					 	
+		Bxm is 0 - Bx,
+		Bym is 0 - By,
+					 	
+	 	update(Z1, [action(kick(vector(Bxm, Bym)))], [], Z2). 
 	 	
 state_update(Z1, computeNextAction, Z1, _).	 	
 
