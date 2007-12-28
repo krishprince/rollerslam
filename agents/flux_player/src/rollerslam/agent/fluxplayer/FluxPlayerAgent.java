@@ -141,24 +141,8 @@ public class FluxPlayerAgent extends GoalBasedAgent {
         startSimulation();
     }
     
-    private void initializeEclipseConnection() throws Exception {
-        String folder = (String)GeneralSettingsImpl.getInstance().getSetting("PLAYER_FLUX_CODE_HOME"); 
-        
-        eclipse = new EclipsePrologHandlerImpl().getEclipseConnection();
-
-        File eclipseProgram = null;
-        
-        eclipseProgram = new File(folder + "flux.pl");
-		eclipse.compile(eclipseProgram);
-
-		eclipseProgram = new File(folder + "fluent.chr");
-		eclipse.compile(eclipseProgram);
-		
-        eclipseProgram = new File(folder + "util.pl");
-		eclipse.compile(eclipseProgram);
-        
-        eclipseProgram = new File(folder + "player.pl");
-        eclipse.compile(eclipseProgram);
+    private void initializeEclipseConnection() throws Exception {        
+        eclipse = facade.getClientInitialization().getEclipseConnection(); //new EclipsePrologHandlerImpl().getEclipseConnection();
     }
     
 	public static void main(String... args) throws Exception {
