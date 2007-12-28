@@ -46,8 +46,10 @@ public class AgentRegistryImpl implements AgentRegistryServer {
 	 * @see rollerslam.infrastructure.server.AgentRegistry#register(rollerslam.agents.Agent)
 	 */
 	public void register(Agent a) throws RemoteException {
+		if (ServerFacadeImpl.getInstance().getSimulationAdmin().getState() != SimulationState.RUNNING) {
 			agents.add(a);
-			sensorEffectorManager.registerAgent(a);
+			sensorEffectorManager.registerAgent(a);			
+		}
 	}
 
 	/**

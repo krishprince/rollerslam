@@ -81,7 +81,8 @@ public abstract class AutomataAgent implements Agent, SimulationStateProvider {
 			
 			if (onError) {
 				System.err.println("ERROR DETECTED! SIMULATION ABORTED");
-				System.exit(-1);
+				return;
+//				System.exit(-1);
 			}
 		}
 	};
