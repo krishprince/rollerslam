@@ -1,10 +1,15 @@
 package rollerslam.agent.fluxplayer;
 
+import java.io.File;
+
 import javax.swing.JOptionPane;
+
+import com.parctechnologies.eclipse.EclipseConnection;
 
 import rollerslam.environment.model.PlayerTeam;
 import rollerslam.environment.model.SimulationSettings;
 import rollerslam.infrastructure.client.ClientFacadeImpl;
+import rollerslam.infrastructure.settings.GeneralSettingsImpl;
 
 public class FluxPlayerTeam {
 	public static void main(String[] args) throws Exception {		
@@ -31,6 +36,23 @@ public class FluxPlayerTeam {
 	}
 	
 	private static void createAgentsInTeam(PlayerTeam team) throws Exception {
+        String folder = (String)GeneralSettingsImpl.getInstance().getSetting("PLAYER_FLUX_CODE_HOME"); 
+
+        EclipseConnection eclipse = ClientFacadeImpl.getInstance().getClientInitialization().getEclipseConnection();
+        File eclipseProgram = null;
+        
+        eclipseProgram = new File(folder + "flux.pl");
+		eclipse.compile(eclipseProgram);
+
+		eclipseProgram = new File(folder + "fluent.chr");
+		eclipse.compile(eclipseProgram);
+		
+        eclipseProgram = new File(folder + "util.pl");
+		eclipse.compile(eclipseProgram);
+        
+        eclipseProgram = new File(folder + "player.pl");
+        eclipse.compile(eclipseProgram);
+
 		for(int i=0;i<SimulationSettings.PLAYERS_PER_TEAM;++i) {
 			new FluxPlayerAgent(team);
 		}

@@ -31,13 +31,15 @@ public class FluxPlayerModelBasedBehaviorStrategyComponent implements
 			
 			if (world != null) {
 				CompoundTerm query = new CompoundTermImpl("processAgentCycle",
+						((FluxPlayerWorldModel) w).myID,
+						((FluxPlayerWorldModel) w).myTeam.toString(),
 						visitor.getPrologRepresentation(world), null);
 
 				CompoundTerm ret;
 
 				try {
 					ret = eclipse.rpc(query);
-					return actionTerm2Object(world, (CompoundTerm) ret.arg(2));
+					return actionTerm2Object(world, (CompoundTerm) ret.arg(4));
 
 				} catch (Exception e) {
 					e.printStackTrace();

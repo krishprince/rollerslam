@@ -69,11 +69,26 @@ moduleFlux(Strength,ModResult, ResultX, ResultY):-
        
 %%---------------------       
     
+:- dynamic player/1.
+:- dynamic team/1.
+:- dynamic goal/2.
+:- dynamic action/2.
+    
+player(p).
+team(teamA).
 
- init(PlayerID, PlayerTeam) :- assert(player(PlayerID)), assert(team(PlayerTeam)). 
+init(PlayerID, PlayerTeam) :- assert(player(PlayerID)), assert(team(PlayerTeam)), 
+							  initialGoal(IGOAL), initialAction(IACTION),
+							  assert(goal(PlayerID, IGOAL)), assert(action(PlayerID, IACTION)). 
 
-processAgentCycle(WorldState, Action) :- 
-	goal(OldGoal), action(OldAction),
+processAgentCycle(PlayerID, PlayerTeam, WorldState, Action) :- 
+	retract_all(player(_)),
+	retract_all(team(_)),
+
+	assert(player(PlayerID)),
+	assert(team(PlayerTeam)),
+
+	goal(PlayerID, OldGoal), action(PlayerID, OldAction),
 	Z = [goal(OldGoal), action(OldAction) | WorldState], 
 	
 	state_update(Z, interpretEnvModel, Z1, []),
@@ -83,11 +98,11 @@ processAgentCycle(WorldState, Action) :-
     holds(goal(NewGoal), Z3),
     holds(action(NewAction), Z3),
     
-	retract(goal(_)),
-	retract(action(_)),
+	retract(goal(PlayerID, _)),
+	retract(action(PlayerID, _)),
 	
-	assert(goal(NewGoal)),
-	assert(action(NewAction)),
+	assert(goal(PlayerID, NewGoal)),
+	assert(action(PlayerID, NewAction)),
 	
 	Action = NewAction.
 	      
