@@ -1,18 +1,12 @@
-:- ['goalBasedAgentNextAction'].
+:- ['fluent'].
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% After updating the internal state and his goal is time for the agent execute the choosen action.%%%
+%% After updating the internal state and his goal is time for the agent execute the action.%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-state_update(Z1,[executeAction],Z2,[]) :-
-                 holds(nextAction(Agent,[])).
-                 
-state_update(Z1,[],Z2,[]):-
-            holds(nextAction(Agent,Action)),
-            runAction(Z1,Action,Z2).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Following is the list of possible actions%%
+%% Follow is the list of possible actions%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% STAND UP ACTION
@@ -24,6 +18,7 @@ state_update(Z1,[],Z2,[]):-
 
 state_update(Z1, jump(Agent), Z2, []) :-
             update(Z1,[onAir(Agent)],[],Z2).
+
 
 %% SKATE ACTION
 
@@ -93,14 +88,14 @@ state_update(Z1,spike(Agent), Z2,[]):-
 
 %% TOUCHDOWN ACTION
 
-state_update(Z1, touchDown(), Z2, []):-.
+%% state_update(Z1, touchDown(), Z2, []).
 
 %% PASS ACTION
 
 state_update(Z1, pass(Agent), Z2, []):-
                  holds(pass(Agent,AgentB),Z1),
-                 holds(position(AgentB,vector(S),Z1),
-                 holds(position(Ball,Vector(Sb),Z1),
+                 holds(position(AgentB,vector(S)),Z1),
+                 holds(position(Ball,vector(Sb)),Z1),
                  update(Z1,[position(Ball,vector(S))],[position(Ball,vector(Sb)),pass(Agent,AgentB)],Z2).
 
 %% SHOOT ACTION
@@ -109,17 +104,33 @@ state_update(Z1, shoot(Agent), Z2, []):-
                  holds(stamina(Agent,Strength),Z1),
                  (
                  holds(hasBall(Agent,HAND),Z1),
-                 (((Strength>1000),runAction(Z1,dropAndKick(Agent),Z2)) ;(runAction(Z1,throw(Agent),Z2))
+                 (
+                  (
+                   (
+                    Strength>1000,
+                    execute(dropAndKick(Agent),Z1,Z2)
+                    )
+                    ;
+                   (
+                    execute(throw(Agent),Z1,Z2)
+                   )
+                  )
                  )
                  ;
                  (
-                 holds(hasBall(Agent,FOOT),Z1),
-                 runAction(Z1,kick(Agent),Z2)
+                  holds(hasBall(Agent,FOOT),Z1),
+                  execute(kick(Agent),Z1,Z2)
                  )
                  ;
                  (
-                 (Strength>1000,runAction(Z1,voleyKick(Agent),Z2));
-                 (runAction(Z1,spike(Agent),Z2))
+                  (
+                   Strength>1000,
+                   runAction(Z1,voleyKick(Agent),Z2)
+                   )
+                   ;
+                 (
+                 runAction(Z1,spike(Agent),Z2)
+                 )
                  ).
 
 %% SCREEN ACTION

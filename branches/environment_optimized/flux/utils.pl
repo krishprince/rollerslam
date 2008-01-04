@@ -7,7 +7,7 @@
 
 closer(Sxb, Syb, Sxa, Sya, Distance) :-
            calcDistance(Sxb, Syb, Sxa, Sya, A, B, C),
-           A <= Distance.
+           Distance >= A.
 
 calcDistance(Sxb, Syb, Sxa, Sya, A, B, C) :-
                   B is (Sxb - Sxa),
