@@ -11,7 +11,7 @@ state_update(Z1, interpretEnvModel, Z2, _):-
     holds(position(Ball,vector(Sxb, Syb)), Z1),
     holds(position(Agent, vector(Sxa,Sya)), Z1),
     closer(Sxb, Syb, Sxa, Sya, 10000),
-    not closer (Sxb, Syb, Sxa, Sya, 1000),
+    not closer(Sxb, Syb, Sxa, Sya, 1000),
     update(Z1,[nearBall(Agent)],[], Z2)
  )
  ;
@@ -39,12 +39,12 @@ state_update(Z1, interpretEnvModel, Z2, _):-
    holds(position(Ball,vector(Sxd, Syd)), Z1),
    holds(hasBall(Agent), Z1),
    holds(teammate(Agent, AgentB), Z1),
-   not holds(teammate(Agent, AgentC), Z1,
+   not holds(teammate(Agent, AgentC), Z1),
    closer(Sxa, Sya, Sxb, Syb, 5000),
    closer(Sxb, Syb, Sxc, Syc, 5000),
    update(Z1,[hasToScreen(Agent, AgentC)],[],Z2)
  )
- ;
+  ;
  (  %% strategie to shoot the ball
    holds(position(Agent, vector(Sxa, Sya)),Z1),
    holds(position(Ball,vector(Sxb, Syb)), Z1),
@@ -62,9 +62,9 @@ state_update(Z1, interpretEnvModel, Z2, _):-
    update(Z1,[hasToShoot(Agent)],[],Z2)
  )
  ;
- ( %% strategic to go to goal or to pass the ball
+ ( %% strategie to go to goal or to pass the ball
   holds(position(Agent, vector(Sxa, Sya)), Z1),
-  holds(position(Ball,vector(Sxb, Syb)), Z1)
+  holds(position(Ball,vector(Sxb, Syb)), Z1),
   holds(hasBall(Agent),Z1),
   holds(teamSide(Agent,SidePart),Z1),
       (
