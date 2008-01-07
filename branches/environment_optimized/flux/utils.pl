@@ -5,6 +5,12 @@
 %% helper functions%%
 %%%%%%%%%%%%%%%%%%%%%
 
+isInField(Sx, FieldPart):-
+               (Sx<0,
+               FieldPart is 'West');
+               (Sx>0,
+               FieldPart is 'East').
+
 closer(Sxb, Syb, Sxa, Sya, Distance) :-
            calcDistance(Sxb, Syb, Sxa, Sya, A, B, C),
            Distance >= A.
