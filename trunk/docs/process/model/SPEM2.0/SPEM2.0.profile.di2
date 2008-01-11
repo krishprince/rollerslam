@@ -1320,13 +1320,13 @@
     </owner>
   </di2:Diagram>
   <di2:Diagram isVisible="true" fontFamily="Arial" lineStyle="solid" fontColor="255:255:255" foregroundColor="255:255:255" backgroundColor="255:255:255" borderColor="255:255:255" position="0:0" name="Method Plugin">
-    <contained xsi:type="di2:GraphNode" isVisible="true" fontFamily="Arial" lineStyle="solid" fontColor="0:0:0" foregroundColor="248:249:214" backgroundColor="248:249:214" borderColor="157:124:47" position="211:9" size="100:50">
+    <contained xsi:type="di2:GraphNode" isVisible="true" fontFamily="Arial" lineStyle="solid" fontColor="0:0:0" foregroundColor="248:249:214" backgroundColor="248:249:214" borderColor="157:124:47" position="226:11" size="100:50">
       <semanticModel xsi:type="di2:Uml1SemanticModelBridge" presentation="TextStereotype">
         <element xsi:type="uml:ElementImport" href="SPEM2.0.profile.uml#_U72rIL_kEdyULNqY0JUsug"/>
       </semanticModel>
-      <anchorage position="242:59" graphEdge="/5/@contained.7"/>
-      <anchorage position="262:59" graphEdge="/5/@contained.8"/>
-      <anchorage position="280:59" graphEdge="/5/@contained.11"/>
+      <anchorage position="257:61" graphEdge="/5/@contained.7"/>
+      <anchorage position="277:61" graphEdge="/5/@contained.8"/>
+      <anchorage position="295:61" graphEdge="/5/@contained.11"/>
     </contained>
     <contained xsi:type="di2:GraphNode" isVisible="true" fontFamily="Arial" lineStyle="solid" fontColor="0:0:0" foregroundColor="248:249:214" backgroundColor="248:249:214" borderColor="157:124:47" position="553:20" size="100:51">
       <semanticModel xsi:type="di2:Uml1SemanticModelBridge" presentation="TextStereotype">
@@ -1354,13 +1354,13 @@
       <anchorage position="939:600" graphEdge="/5/@contained.34"/>
       <anchorage position="977:600" graphEdge="/5/@contained.36"/>
     </contained>
-    <contained xsi:type="di2:GraphNode" isVisible="true" fontFamily="Arial" lineStyle="solid" fontColor="0:0:0" foregroundColor="248:249:214" backgroundColor="248:249:214" borderColor="157:124:47" position="58:180" size="100:55">
+    <contained xsi:type="di2:GraphNode" isVisible="true" fontFamily="Arial" lineStyle="solid" fontColor="0:0:0" foregroundColor="248:249:214" backgroundColor="248:249:214" borderColor="157:124:47" position="28:170" size="100:55">
       <contained xsi:type="di2:GraphNode" isVisible="true" fontFamily="Arial" lineStyle="solid" fontColor="0:0:0" foregroundColor="248:249:214" backgroundColor="248:249:214" borderColor="157:124:47" position="20:20" size="100:100"/>
       <contained xsi:type="di2:GraphNode" isVisible="true" fontFamily="Arial" lineStyle="solid" fontColor="0:0:0" foregroundColor="248:249:214" backgroundColor="248:249:214" borderColor="157:124:47" position="20:20" size="100:100"/>
       <semanticModel xsi:type="di2:Uml1SemanticModelBridge" presentation="TextStereotype">
         <element xsi:type="uml:Stereotype" href="SPEM2.0.profile.uml#_uqwnYL_mEdyULNqY0JUsug"/>
       </semanticModel>
-      <anchorage position="158:211" graphEdge="/5/@contained.7"/>
+      <anchorage position="128:201" graphEdge="/5/@contained.7"/>
     </contained>
     <contained xsi:type="di2:GraphNode" isVisible="true" fontFamily="Arial" lineStyle="solid" fontColor="0:0:0" foregroundColor="248:249:214" backgroundColor="248:249:214" borderColor="157:124:47" position="230:175" size="100:55">
       <contained xsi:type="di2:GraphNode" isVisible="true" fontFamily="Arial" lineStyle="solid" fontColor="0:0:0" foregroundColor="248:249:214" backgroundColor="248:249:214" borderColor="157:124:47" position="20:20" size="100:100"/>
