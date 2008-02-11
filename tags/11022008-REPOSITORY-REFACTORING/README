@@ -1,0 +1,52 @@
+Rollerslam version 1.0
+
+Components:
+ - Environment/SimulationServer (environment.jar)
+ - LogServer (infrastructure.jar, logging.jar, hsqldb.jar)
+ - Repeater (repeater.jar)
+ - MobileRepeater (mobile-display.jar)
+ - Display (display.jar)
+ - MobileDisplay (RollerslamMobile.jad, RollerslamMobile.jar, microemulator.jar)
+ - Agents (testagent.jar)
+ - LogDisplay (logplayer.jar)
+
+How-to execute:
+ - LogServer - OPTIONAL
+   * java -Xms512m -Xmx1024m -cp infrastructure.jar rollerslam.infrastructure.logging.LogRecordingServiceImpl
+   - LogServer will salve the log at folder "c:\temp"
+
+ - Environment/SimulationServer
+   * java -jar environment.jar <logServerIP>
+   - <logServerIP> = IP LogServer. If logServerIP is not declared, the environment will starts the LogServer in itself.
+
+ - Agents
+   * java -cp testagent.jar rollerslam.agent.goalbased.RollerslamGoalBasedAgent <team> <environmentIP>
+   - <team> = Team of agent. Can be only "A" or "B"
+   - <environemtIP> = IP of Environment/SimulationServer or can be "auto" that will automatic find the simulation and connect.
+
+ - Repeater
+   * java -jar repeater.jar
+
+ - Display
+   * java -jar display.jar
+
+ - MobileRepeater
+   * java -jar mobile-display.jar
+
+ - MobileDisplay
+   * java -jar microemulator.jar RollerslamMobile.jad
+
+ - LogDisplay
+   * java -jar logplayer.jar
+
+
+
+The Rollerslam Team:
+ * Antonio Jose de Vasconcelos Costa - ajvc at cin.ufpe.br
+ * Breno Batista Machado - bbm at cin.ufpe.br
+ * Cleyton Mario de Oliveira Rodrigues - cmor at cin.ufpe.br
+ * Marcos Aurelio Almeida da Silva - maas at cin.ufpe.br
+ * Pablo Santana Barbosa - psb at cin.ufpe.br
+ * Renata Teles Moreira - rtm at cin.ufpe.br
+ * Weslei Alvim de Tarso Marinho - watm at cin.ufpe.br
+ 

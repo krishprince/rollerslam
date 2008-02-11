@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>Kobra2 BICT Profile</name>
+	<comment></comment>
+	<projects>
+		<project>KobrA2 Profile</project>
+	</projects>
+	<buildSpec>
+	</buildSpec>
+	<natures>
+		<nature>com.borland.selena.uml20.uml20_nature</nature>
+		<nature>com.tssap.selena.model.modeling_nature</nature>
+		<nature>com.tssap.selena.model.design_nature</nature>
+		<nature>com.borland.selena.profile.creator.profilecreator.profilecreatornature</nature>
+		<nature>com.borland.selena.profile.creator.profilecreator.uml20</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>Suspended Root</name>
+			<type>2</type>
+			<locationURI>SuspendedRootVariable</locationURI>
+		</link>
+	</linkedResources>
+</projectDescription>
