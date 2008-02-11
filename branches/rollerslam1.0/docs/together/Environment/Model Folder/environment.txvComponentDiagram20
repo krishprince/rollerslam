@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<view uin="V-oyrl70f6xzpcxku190lb">
+		<property name="$metaclass" value="ComponentDiagram20"/>
+		<property name="$name" value="environment"/>
+		<reference referencedUin="design:node:::ba089nf6xzr3lnytcfy8">
+			<property name="bounds" value="295,195,136,80"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<property name="bounds_setted_by_user" value="true"/>
+			<reference referencedUin="design:link:::ieje0rf6xzs8xh-if69d:ba089nf6xzr3lnytcfy8">
+				<property name="sourceAnchor" value="300,270"/>
+				<property name="targetAnchor" value="160,270"/>
+				<property name="bendpoints" value=""/>
+			</reference>
+			<reference referencedUin="design:link:::ieje0rf6xzu9kiubq3hg:ba089nf6xzr3lnytcfy8">
+				<property name="sourceAnchor" value="320,280"/>
+				<property name="targetAnchor" value="160,330"/>
+				<property name="bendpoints" value="320,330"/>
+				<property name="smooth_bendpoints" value="320,330"/>
+				<property name="location_set_by_user" value="true"/>
+			</reference>
+			<reference referencedUin="design:link:::ieje0rf6xzsygbt22nxi:ba089nf6xzr3lnytcfy8">
+				<property name="sourceAnchor" value="410,200"/>
+				<property name="targetAnchor" value="410,121"/>
+				<property name="bendpoints" value=""/>
+			</reference>
+			<reference referencedUin="design:link:::ieje0rf6xztli6-485z0q:ba089nf6xzr3lnytcfy8">
+				<property name="sourceAnchor" value="320,200"/>
+				<property name="targetAnchor" value="160,130"/>
+				<property name="bendpoints" value="320,130"/>
+				<property name="smooth_bendpoints" value="320,130"/>
+				<property name="location_set_by_user" value="true"/>
+			</reference>
+			<reference referencedUin="design:link:::ieje0rf6xzscqn-fe5qsu:ba089nf6xzr3lnytcfy8">
+				<property name="sourceAnchor" value="300,220"/>
+				<property name="targetAnchor" value="160,211"/>
+				<property name="bendpoints" value="300,211"/>
+				<property name="smooth_bendpoints" value="300,211"/>
+				<property name="location_set_by_user" value="true"/>
+			</reference>
+		</reference>
+		<reference referencedUin="design:node:::-amcqg9f6xzrnba-x30whn">
+			<property name="bounds" value="135,255,20,20"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="label:$name:design:node:::-amcqg9f6xzrnba-x30whn">
+				<property name="bounds" value="-6,30,33,13"/>
+			</reference>
+		</reference>
+		<reference referencedUin="design:node:::-amcqg9f6xzs0fi4p87ro">
+			<property name="bounds" value="135,196,20,20"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="label:$name:design:node:::-amcqg9f6xzs0fi4p87ro">
+				<property name="bounds" value="-7,30,35,13"/>
+			</reference>
+		</reference>
+		<reference referencedUin="design:node:::-amcqg9f6xzsq96osa5eg">
+			<property name="bounds" value="395,96,20,20"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="label:$name:design:node:::-amcqg9f6xzsq96osa5eg">
+				<property name="bounds" value="-47,30,114,13"/>
+			</reference>
+		</reference>
+		<reference referencedUin="design:node:::-amcqg9f6xzter4vp1tqx">
+			<property name="bounds" value="135,115,20,20"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="label:$name:design:node:::-amcqg9f6xzter4vp1tqx">
+				<property name="bounds" value="-35,30,90,13"/>
+			</reference>
+		</reference>
+		<reference referencedUin="design:node:::-amcqg9f6xzu2l7-g9ecm6">
+			<property name="bounds" value="135,315,20,20"/>
+			<property name="location_set_by_user" value="true"/>
+			<property name="$shortcutReference" value="true"/>
+			<reference referencedUin="label:$name:design:node:::-amcqg9f6xzu2l7-g9ecm6">
+				<property name="bounds" value="-24,30,69,13"/>
+			</reference>
+		</reference>
+	</view>
+</nodeSet>

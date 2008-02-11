@@ -1,0 +1,3 @@
+Boneco Azul=     http://www.collegegear.com/sf/stores/product_images/212120-x.jpg
+Boneco vermelho= http://www.flagandbanner.com/f-b-images/scs14890.jpg
+bola=            http://www.footballsms.co.uk/football.jpg

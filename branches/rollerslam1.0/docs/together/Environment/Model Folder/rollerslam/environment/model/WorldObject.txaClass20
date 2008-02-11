@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<node uin="-tdsqjuf6xveknk-3rxgvl">
+		<property name="$metaclass" value="Class20"/>
+		<property name="$name" value="WorldObject"/>
+		<property name="mod__implements" value="rollerslam.environment.model.visitor.Visitable"/>
+		<link uin="ieje0rf6xvgr0bkooe6q">
+			<property name="$metaclass" value="Implementation20"/>
+			<property name="mod__cachedBaseName" value="rollerslam.environment.model.visitor.Visitable"/>
+			<participant referencedUin="design:node:::-tdsqjuf6xveknk-3rxgvl" role="Client"></participant>
+			<participant referencedUin="design:node:::-amcqg9f6xvft86-2xovun" role="Supplier"></participant>
+		</link>
+		<node uin="hnimszf6xvi2dm-rms8qk">
+			<property name="$metaclass" value="Property20"/>
+			<property name="mod__typeReferencedElement" value="design:node:::PrimitiveType.Integer"/>
+			<property name="mod__type" value="Integer"/>
+			<property name="lower" value="1"/>
+			<property name="upper" value="1"/>
+			<property name="multiplicity" value="1"/>
+			<property name="$name" value="sx"/>
+			<property name="mod__initialValue" value="0"/>
+			<property name="mod_Visibility" value="$public"/>
+			<link uin="ieje0rf6xvi2e151xo1o">
+				<property name="$metaclass" value="TypeLink"/>
+				<participant referencedUin="design:node:::hnimszf6xvi2dm-rms8qk:-tdsqjuf6xveknk-3rxgvl" role="Client"></participant>
+				<participant referencedUin="design:node:::PrimitiveType.Integer" role="Supplier"></participant>
+			</link>
+		</node>
+		<node uin="hnimszf6xvjirg9rc5jm">
+			<property name="$metaclass" value="Property20"/>
+			<property name="mod__typeReferencedElement" value="design:node:::PrimitiveType.Integer"/>
+			<property name="mod__type" value="Integer"/>
+			<property name="lower" value="1"/>
+			<property name="upper" value="1"/>
+			<property name="multiplicity" value="1"/>
+			<property name="$name" value="sy"/>
+			<property name="mod__initialValue" value="0"/>
+			<property name="mod_Visibility" value="$public"/>
+			<link uin="ieje0rf6xvjirwpcugfh">
+				<property name="$metaclass" value="TypeLink"/>
+				<participant referencedUin="design:node:::hnimszf6xvjirg9rc5jm:-tdsqjuf6xveknk-3rxgvl" role="Client"></participant>
+				<participant referencedUin="design:node:::PrimitiveType.Integer" role="Supplier"></participant>
+			</link>
+		</node>
+		<node uin="hnimszf6xvjw4d3fj0j0">
+			<property name="$metaclass" value="Property20"/>
+			<property name="mod__typeReferencedElement" value="design:node:::PrimitiveType.Integer"/>
+			<property name="mod__type" value="Integer"/>
+			<property name="$name" value="width"/>
+			<property name="mod__initialValue" value="0"/>
+			<property name="mod_Visibility" value="$public"/>
+			<link uin="ieje0rf6xvjw4dj684lp">
+				<property name="$metaclass" value="TypeLink"/>
+				<participant referencedUin="design:node:::hnimszf6xvjw4d3fj0j0:-tdsqjuf6xveknk-3rxgvl" role="Client"></participant>
+				<participant referencedUin="design:node:::PrimitiveType.Integer" role="Supplier"></participant>
+			</link>
+		</node>
+		<node uin="hnimszf6xvkb4atwhrz6">
+			<property name="$metaclass" value="Property20"/>
+			<property name="mod__typeReferencedElement" value="design:node:::PrimitiveType.Integer"/>
+			<property name="mod__type" value="Integer"/>
+			<property name="lower" value="1"/>
+			<property name="upper" value="1"/>
+			<property name="multiplicity" value="1"/>
+			<property name="$name" value="height"/>
+			<property name="mod__initialValue" value="0"/>
+			<property name="mod_Visibility" value="$public"/>
+			<link uin="ieje0rf6xvkb4q-6vohm2">
+				<property name="$metaclass" value="TypeLink"/>
+				<participant referencedUin="design:node:::hnimszf6xvkb4atwhrz6:-tdsqjuf6xveknk-3rxgvl" role="Client"></participant>
+				<participant referencedUin="design:node:::PrimitiveType.Integer" role="Supplier"></participant>
+			</link>
+		</node>
+		<node uin="tq87glf6xvkrabrqxjyp">
+			<property name="$metaclass" value="Operation20"/>
+			<property name="mod_Visibility" value="$public"/>
+			<property name="$name" value="collidesWith"/>
+			<property name="__aggregationEnd_formalParameter" value="-5kd6yff6xvncv9leg8ou"/>
+			<property name="mod__returnTypeReferencedElement" value="design:node:::PrimitiveType.Boolean"/>
+			<property name="mod__returnType" value="Boolean"/>
+			<property name="__aggregationEnd_returnResult" value="-5kd6yff6xvncvo-wrytdo"/>
+			<property name="__aggregationEnd_formalParameter" value="-5kd6yff6xvncv9leg8ou"/>
+			<property name="__aggregationEnd_returnResult" value="-5kd6yff6xvncvo-wrytdo"/>
+			<node uin="-5kd6yff6xvncv9leg8ou">
+				<property name="$metaclass" value="Parameter"/>
+				<property name="$name" value="obj"/>
+				<property name="lower" value="1"/>
+				<property name="upper" value="1"/>
+				<property name="multiplicity" value="1"/>
+				<property name="mod__typeReferencedElement" value="design:node:::-tdsqjuf6xveknk-3rxgvl"/>
+				<property name="mod__type" value="WorldObject"/>
+				<link uin="ieje0rf6xvncvogzbwlu">
+					<property name="$metaclass" value="TypeLink"/>
+					<participant referencedUin="design:node:::-5kd6yff6xvncv9leg8ou:tq87glf6xvkrabrqxjyp:-tdsqjuf6xveknk-3rxgvl" role="Client"></participant>
+					<participant referencedUin="design:node:::-tdsqjuf6xveknk-3rxgvl" role="Supplier"></participant>
+				</link>
+			</node>
+			<node uin="-5kd6yff6xvncvo-wrytdo">
+				<property name="$metaclass" value="Parameter"/>
+				<property name="$name" value="Parameter1"/>
+				<property name="mod__typeReferencedElement" value="design:node:::PrimitiveType.Boolean"/>
+				<property name="mod__type" value="Boolean"/>
+				<property name="direction" value="$return"/>
+				<link uin="ieje0rf6xvncvofnw0sv">
+					<property name="$metaclass" value="TypeLink"/>
+					<participant referencedUin="design:node:::-5kd6yff6xvncvo-wrytdo:tq87glf6xvkrabrqxjyp:-tdsqjuf6xveknk-3rxgvl" role="Client"></participant>
+					<participant referencedUin="design:node:::PrimitiveType.Boolean" role="Supplier"></participant>
+				</link>
+			</node>
+		</node>
+	</node>
+</nodeSet>
