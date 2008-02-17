@@ -8,9 +8,9 @@ import rollerslam.agent.communicative.specification.service.CommunicativeAgent;
 import rollerslam.agent.communicative.specification.type.action.AskAction;
 import rollerslam.agent.communicative.specification.type.action.AskAllAction;
 import rollerslam.agent.communicative.specification.type.action.TellAction;
-import rollerslam.agent.communicative.specification.type.fluent.FluentObject;
-import rollerslam.agent.communicative.specification.type.fluent.OID;
-import rollerslam.agent.communicative.specification.type.fluent.OOState;
+import rollerslam.agent.communicative.specification.type.object.OID;
+import rollerslam.agent.communicative.specification.type.object.OOState;
+import rollerslam.agent.communicative.specification.type.object.WorldObject;
 import rollerslam.infrastructure.specification.service.Agent;
 import rollerslam.infrastructure.specification.service.Message;
 import rollerslam.infrastructure.specification.service.SimulationInfrastructure;
@@ -37,7 +37,7 @@ public class CommunicativeAgentImpl extends CommunicativeAgent {
 					Set<Message> perceptions = agent.getPerceptions();					
 					Set<Message> actions = processCycle(perceptions);
 					
-					if (!actions.isEmpty()) {
+					if (actions != null && !actions.isEmpty()) {
 						agent.sendActions(actions);						
 					}
 					
@@ -61,16 +61,16 @@ public class CommunicativeAgentImpl extends CommunicativeAgent {
 				
 				OOState knowledge = getKnowledgeForAgent(tellAction.sender);
 				
-				for (FluentObject object : tellAction.objects) {
+				for (WorldObject object : tellAction.objects) {
 					knowledge.objects.put(object.oid, object);
 				}
 			} else if (message instanceof AskAction) {
 				AskAction askAction = (AskAction) message;
 				TellAction ta = new TellAction();
-				ta.objects = new HashSet<FluentObject>();
+				ta.objects = new HashSet<WorldObject>();
 				
 				for (OID oid : askAction.oids) {
-					FluentObject obj = this.kb.objects.get(oid);
+					WorldObject obj = this.kb.objects.get(oid);
 					if (obj != null) {
 						ta.objects.add(obj);
 					}
@@ -80,7 +80,7 @@ public class CommunicativeAgentImpl extends CommunicativeAgent {
 				messages.add(ta);
 			} else if (message instanceof AskAllAction) {
 				TellAction ta = new TellAction();
-				ta.objects = new HashSet<FluentObject>(this.kb.objects.values());
+				ta.objects = new HashSet<WorldObject>(this.kb.objects.values());
 				
 				ta.receiver.add(message.sender);
 				messages.add(ta);				

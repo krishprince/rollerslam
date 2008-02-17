@@ -1,4 +1,4 @@
-package rollerslam.agent.communicative.specification.type.fluent;
+package rollerslam.agent.communicative.specification.type.object;
 
 public class StringOID extends OID {
 	private String oid = "";

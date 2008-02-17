@@ -1,6 +1,6 @@
 package rollerslam.display.realization.service.gui.mvc;
 
-import rollerslam.agent.communicative.specification.type.fluent.OOState;
+import rollerslam.agent.communicative.specification.type.object.OOState;
 
 
 public interface Model {

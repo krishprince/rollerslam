@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 
 import rollerslam.agent.communicative.realization.service.CommunicativeAgentImpl;
 import rollerslam.agent.communicative.specification.type.action.AskAllAction;
-import rollerslam.agent.communicative.specification.type.fluent.OOState;
+import rollerslam.agent.communicative.specification.type.object.OOState;
 import rollerslam.display.realization.service.gui.RollerslamDisplay;
 import rollerslam.infrastructure.specification.service.Agent;
 import rollerslam.infrastructure.specification.service.Message;

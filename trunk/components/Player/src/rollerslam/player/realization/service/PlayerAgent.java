@@ -1,61 +1,37 @@
 package rollerslam.player.realization.service;
 
 
-import rollerslam.agent.communicative.realization.service.CommunicativeAgentImpl;
-import rollerslam.agent.communicative.specification.type.action.AskAction;
-import rollerslam.common.actions.DashAction;
-import rollerslam.common.objects.Ball;
-import rollerslam.common.objects.Player;
-import rollerslam.common.objects.oid.BallOID;
-import rollerslam.common.objects.oid.PlayerOID;
-import rollerslam.common.objects.state.BallState;
-import rollerslam.common.objects.state.PlayerState;
+import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
+
+import rollerslam.agent.communicative.specification.type.object.WorldObject;
+import rollerslam.common.datatype.PlayerTeam;
+import rollerslam.fluxcommunicativeagent.realization.service.FluxCommunicativeAgent;
+import rollerslam.fluxcommunicativeagent.realization.type.FluxOID;
+import rollerslam.fluxcommunicativeagent.realization.type.FluxOOState;
+import rollerslam.fluxinferenceengine.specification.type.Fluent;
 import rollerslam.infrastructure.specification.service.Agent;
-import rollerslam.infrastructure.specification.service.Message;
-import rollerslam.infrastructure.specification.type.AgentID;
 
-public class PlayerAgent extends CommunicativeAgentImpl {
+import com.parctechnologies.eclipse.Atom;
+import com.parctechnologies.eclipse.CompoundTermImpl;
 
-	private AgentID gamePhysics;
-	private BallOID ballOID = new BallOID();
-	private PlayerOID myBody;
-	private boolean senseCycle;
-	
-	public PlayerAgent(Agent port, AgentID gamePhysics, PlayerOID playerBodyOID) {
-		super(port, 50);
+// TODO remove references to EclipseProlog and to InferenceEngine
+public class PlayerAgent extends FluxCommunicativeAgent {
+
+	public PlayerAgent(Agent port, long cycleLength, PlayerTeam team, int playerID) throws Exception {
+		super(port, new File("/documents/rollerslam/workspace/Player/src/rollerslam/player/realization/service/flux/player.pl"), "player", cycleLength);
 		
-		this.gamePhysics = gamePhysics;
-		this.myBody = playerBodyOID;
-		senseCycle = true;
+		FluxOID oid = new FluxOID(new Atom("me"));
+		Set<Fluent> fs = new HashSet<Fluent>();
+		
+		fs.add(makeFluent(oid, "id", new CompoundTermImpl("player", playerID, team.toString())));
+		fs.add(makeFluent(oid, "senseCycle", new Atom("true")));
+		
+		FluxOOState state = new FluxOOState(fs);
+		WorldObject wo = new WorldObject(oid, state);
+		
+		kb.objects.put(oid, wo);
 	}
 
-	protected Message computeNextAction() {
-		Message ret = null;
-		
-		if (senseCycle) {
-			AskAction askAction = new AskAction();
-			askAction.oids.add(ballOID);
-			askAction.oids.add(myBody);
-			askAction.receiver.add(gamePhysics);
-			ret = askAction;
-		} else {
-			Ball ball = (Ball) getKnowledgeForAgent(gamePhysics).objects.get(ballOID);
-			Player me = (Player) getKnowledgeForAgent(gamePhysics).objects.get(myBody);			
-			
-			if (ball != null && me != null) {
-				BallState bs = ((BallState)ball.state);
-				PlayerState ps = (PlayerState) me.state;
-				
-				DashAction dashAction = new DashAction(myBody, ps.s.subtract(bs.s));
-				dashAction.receiver.add(gamePhysics);
-				ret = dashAction;
-			}
-		}
-		
-		if (ret != null) {
-			ret.sender = agent.getAgentID();
-		}
-		senseCycle = !senseCycle;
-		return ret;
-	}
 }

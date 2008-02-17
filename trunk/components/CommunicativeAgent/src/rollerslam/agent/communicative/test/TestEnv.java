@@ -1,8 +1,8 @@
 package rollerslam.agent.communicative.test;
 
 import rollerslam.agent.communicative.realization.service.CommunicativeAgentImpl;
-import rollerslam.agent.communicative.specification.type.fluent.FluentObject;
-import rollerslam.agent.communicative.specification.type.fluent.StringOID;
+import rollerslam.agent.communicative.specification.type.object.StringOID;
+import rollerslam.agent.communicative.specification.type.object.WorldObject;
 import rollerslam.infrastructure.specification.service.Agent;
 
 public class TestEnv extends CommunicativeAgentImpl {
@@ -13,7 +13,7 @@ public class TestEnv extends CommunicativeAgentImpl {
 		Semaphor ns = new Semaphor();		
 		ns.value = 0;
 
-		FluentObject fo = new FluentObject(new StringOID("semaphor"), ns);				
+		WorldObject fo = new WorldObject(new StringOID("semaphor"), ns);				
 		kb.objects.put(fo.oid, fo);
 	}
 

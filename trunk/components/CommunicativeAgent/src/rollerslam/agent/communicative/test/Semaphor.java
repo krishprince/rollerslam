@@ -1,9 +1,9 @@
 package rollerslam.agent.communicative.test;
 
-import rollerslam.agent.communicative.specification.type.fluent.FluentState;
+import rollerslam.agent.communicative.specification.type.object.ObjectState;
 
 
-public class Semaphor extends FluentState {
+public class Semaphor extends ObjectState {
 	public int value = 0;
 	
 	public String toString() {
