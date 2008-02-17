@@ -14,8 +14,8 @@ import java.text.NumberFormat;
 
 import javax.swing.JLabel;
 
-import rollerslam.agent.communicative.specification.type.fluent.FluentObject;
-import rollerslam.agent.communicative.specification.type.fluent.OOState;
+import rollerslam.agent.communicative.specification.type.object.OOState;
+import rollerslam.agent.communicative.specification.type.object.WorldObject;
 import rollerslam.common.DomainSettings;
 import rollerslam.common.datatype.PlayerTeam;
 import rollerslam.common.objects.Ball;
@@ -108,7 +108,7 @@ public class GameCanvas extends Canvas implements MouseMotionListener {
                     if (world != null) {
                         boolean freeBall = true;
                         
-                        for (FluentObject object : world.objects.values()) {
+                        for (WorldObject object : world.objects.values()) {
                         	if (object instanceof Player) {
                         		Player player = (Player) object;
                         		freeBall &= !((PlayerState)player.state).withBall;
@@ -119,7 +119,7 @@ public class GameCanvas extends Canvas implements MouseMotionListener {
 							}
 						}
 
-                        for (FluentObject object : world.objects.values()) {
+                        for (WorldObject object : world.objects.values()) {
                         	if (object instanceof Player) {
                         		PlayerState player = (PlayerState) object.state;
                                 Sprite s = null;

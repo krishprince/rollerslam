@@ -1,10 +1,10 @@
 package rollerslam.common.objects.state;
 
-import rollerslam.agent.communicative.specification.type.fluent.FluentState;
+import rollerslam.agent.communicative.specification.type.object.ObjectState;
 import rollerslam.utils.Vector;
 
 @SuppressWarnings("serial")
-public class WorldObject extends FluentState {
+public class WorldObject extends ObjectState {
 	// center position
 	public Vector s = new Vector(0,0); 
 	

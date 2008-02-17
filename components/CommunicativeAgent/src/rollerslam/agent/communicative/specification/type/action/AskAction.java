@@ -3,7 +3,7 @@ package rollerslam.agent.communicative.specification.type.action;
 import java.util.HashSet;
 import java.util.Set;
 
-import rollerslam.agent.communicative.specification.type.fluent.OID;
+import rollerslam.agent.communicative.specification.type.object.OID;
 import rollerslam.infrastructure.specification.service.Message;
 
 public class AskAction extends Message {

@@ -24,8 +24,11 @@ public class AgentImpl implements Agent {
 
 	public Set<Message> getPerceptions() {		
 		
-		Set<Message> ret = simulation.msgs.get(id) ;		
-		System.out.println("[" + id + "] GET " + ret);
+		Set<Message> ret = simulation.msgs.get(id) ;
+		
+		if (ret != null && !ret.isEmpty()) {
+			System.out.println("[" + id + "] GET " + ret);			
+		}
 
 		if (simulation.simAdmin.getState() == SimulationState.RUNNING) {
 			synchronized (simulation.token) {
@@ -42,7 +45,9 @@ public class AgentImpl implements Agent {
 	}
 
 	public void sendActions(Set<Message> actions) {
-		System.out.println("[" + id + "] SEND " + actions);
+		if (actions != null && !actions.isEmpty()) {
+			System.out.println("[" + id + "] SEND " + actions);			
+		}
 		
 		if (simulation.simAdmin.getState() == SimulationState.RUNNING) {
 			synchronized (simulation.token) {

@@ -1,6 +1,6 @@
 package rollerslam.common.objects.oid;
 
-import rollerslam.agent.communicative.specification.type.fluent.OID;
+import rollerslam.agent.communicative.specification.type.object.OID;
 import rollerslam.common.datatype.PlayerTeam;
 
 public class PlayerOID extends OID {
