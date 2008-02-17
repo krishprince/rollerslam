@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<node uin="-amcqg9f7hwd09r-5zrb9u">
+		<property name="$metaclass" value="Interface20"/>
+		<property name="$name" value="ClientInitialization"/>
+		<node uin="tq87glf7hwdj8hbpkzf7">
+			<property name="$metaclass" value="Operation20"/>
+			<property name="mod_Visibility" value="$public"/>
+			<property name="$name" value="init"/>
+			<node uin="ttifwdf7hwdjffgj0ewa">
+				<property name="$metaclass" value="Constraint"/>
+				<property name="$name" value="ownedRuleAggregation"/>
+				<node uin="ul14qaf7hwdjff-xo0cd">
+					<property name="$metaclass" value="ValueSpecification"/>
+					<property name="$name" value="ValueSpecification1"/>
+					<property name="language" value="ocl"/>
+				</node>
+			</node>
+			<node uin="ttifwdf7hwdjff-ksqfya">
+				<property name="$metaclass" value="Constraint"/>
+				<property name="$name" value="precondition"/>
+				<node uin="ul14qaf7hwdjff-dc64eo">
+					<property name="$metaclass" value="ValueSpecification"/>
+					<property name="$name" value="ValueSpecification1"/>
+					<property name="language" value="ocl"/>
+				</node>
+			</node>
+			<node uin="ttifwdf7hwdjfu1ypu6d">
+				<property name="$metaclass" value="Constraint"/>
+				<property name="$name" value="postcondition"/>
+				<node uin="ul14qaf7hwdjfu-8s3vm9">
+					<property name="$metaclass" value="ValueSpecification"/>
+					<property name="$name" value="ValueSpecification1"/>
+					<property name="language" value="ocl"/>
+				</node>
+			</node>
+			<node uin="ttifwdf7hwdjfuv3yr7q">
+				<property name="$metaclass" value="Constraint"/>
+				<property name="$name" value="bodyCondition"/>
+				<node uin="ul14qaf7hwdjfuwrzrr5">
+					<property name="$metaclass" value="ValueSpecification"/>
+					<property name="$name" value="ValueSpecification1"/>
+				</node>
+			</node>
+		</node>
+	</node>
+</nodeSet>

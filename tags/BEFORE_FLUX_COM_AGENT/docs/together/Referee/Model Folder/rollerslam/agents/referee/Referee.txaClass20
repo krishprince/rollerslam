@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<node uin="-tdsqjuf6wnctgv-h6mj28">
+		<property name="$metaclass" value="Class20"/>
+		<property name="$name" value="Referee"/>
+		<property name="stereotype" value="masProfile.AutomataAgent"/>
+		<link uin="ieje0rf6y6lbq5-87eohb">
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<participant referencedUin="design:node:::-tdsqjuf6wnctgv-h6mj28" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6y6fzta-o9sd8g" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6y6lq7u-c1plqv">
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<participant referencedUin="design:node:::-tdsqjuf6wnctgv-h6mj28" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6y69grx-yilcoj" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6y708ew4nc0f6">
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="stereotype" value="K2use"/>
+			<participant referencedUin="design:node:::-tdsqjuf6wnctgv-h6mj28" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6y6u8ls8totpe" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf6y70bfe-g7x1yc">
+			<property name="$metaclass" value="KernelAssociation20"/>
+			<property name="stereotype" value="K2Use"/>
+			<participant referencedUin="design:node:::-tdsqjuf6wnctgv-h6mj28" role="Client"></participant>
+			<participant referencedUin="design:node:::-tdsqjuf6y6zfem-9vkdj9" role="Supplier"></participant>
+		</link>
+	</node>
+</nodeSet>

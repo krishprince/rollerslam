@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<node uin="-tdsqjuf6rwkf8i-z3q7t3">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2Interface"/>
+		<property name="mod__extends" value="uml20.components.Interface"/>
+		<link uin="ieje0rf6rwrdzx5dv946">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="stereotype" value="extension"/>
+			<property name="mod__cachedBaseName" value="uml20.components.Interface"/>
+			<participant referencedUin="design:node:::-tdsqjuf6rwkf8i-z3q7t3" role="Client"></participant>
+			<participant referencedUin="ecore:e_class:bin:uml20.components.Interface:http#//www.borland.com/together/uml20" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="-tdsqjuf6rwkk1j-m618tw">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2InterfaceOperation"/>
+		<property name="mod__extends" value="uml20.kernel.features.Operation"/>
+		<link uin="ieje0rf6rwrb3m6a5ze6">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="stereotype" value="extension"/>
+			<property name="mod__cachedBaseName" value="uml20.kernel.features.Operation"/>
+			<participant referencedUin="design:node:::-tdsqjuf6rwkk1j-m618tw" role="Client"></participant>
+			<participant referencedUin="ecore:e_class:bin:uml20.kernel.features.Operation:http#//www.borland.com/together/uml20" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="-tdsqjuf6rwkpvabt0p6f">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2InterfaceOperationParameter"/>
+		<property name="mod__extends" value="uml20.kernel.Parameter"/>
+		<link uin="ieje0rf6rwr8spha66d">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="stereotype" value="extension"/>
+			<property name="mod__cachedBaseName" value="uml20.kernel.Parameter"/>
+			<participant referencedUin="design:node:::-tdsqjuf6rwkpvabt0p6f" role="Client"></participant>
+			<participant referencedUin="ecore:e_class:bin:uml20.kernel.Parameter:http#//www.borland.com/together/uml20" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="-tdsqjuf6rwky7f-hsuzof">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2Class"/>
+		<property name="mod__extends" value="uml20.classes.Class"/>
+		<link uin="ieje0rf6rwr51sbj2n7o">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="stereotype" value="extension"/>
+			<property name="mod__cachedBaseName" value="uml20.classes.Class"/>
+			<participant referencedUin="design:node:::-tdsqjuf6rwky7f-hsuzof" role="Client"></participant>
+			<participant referencedUin="ecore:e_class:bin:uml20.classes.Class:http#//www.borland.com/together/uml20" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="-tdsqjuf6rwl2dn-j7r4e2">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2DataType"/>
+		<property name="mod__extends" value="uml20.kernel.DataType"/>
+		<link uin="ieje0rf6rwr26v3l47u2">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="stereotype" value="extension"/>
+			<property name="mod__cachedBaseName" value="uml20.kernel.DataType"/>
+			<participant referencedUin="design:node:::-tdsqjuf6rwl2dn-j7r4e2" role="Client"></participant>
+			<participant referencedUin="ecore:e_class:bin:uml20.kernel.DataType:http#//www.borland.com/together/uml20" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="-tdsqjuf6rwl6wdpombj3">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2InterfaceOperationPrecondition"/>
+		<property name="mod__extends" value="uml.ocl.Constraint"/>
+		<link uin="ieje0rf6rwqwawm3wrud">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="stereotype" value="extension"/>
+			<property name="mod__cachedBaseName" value="uml.ocl.Constraint"/>
+			<participant referencedUin="design:node:::-tdsqjuf6rwl6wdpombj3" role="Client"></participant>
+			<participant referencedUin="ecore:e_class:bin:uml.ocl.Constraint:http#//www.borland.com/together/uml" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="-tdsqjuf6rwlfoe-flpvh6">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2InterfaceOperationPostcondition"/>
+		<property name="mod__extends" value="uml.ocl.Constraint"/>
+		<link uin="ieje0rf6rwqtcn-cortrn">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="stereotype" value="extension"/>
+			<property name="mod__cachedBaseName" value="uml.ocl.Constraint"/>
+			<participant referencedUin="design:node:::-tdsqjuf6rwlfoe-flpvh6" role="Client"></participant>
+			<participant referencedUin="ecore:e_class:bin:uml.ocl.Constraint:http#//www.borland.com/together/uml" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="-tdsqjuf6rwlmof-judvcz">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2InterfaceOperationBody"/>
+		<property name="mod__extends" value="uml.ocl.Constraint"/>
+		<link uin="ieje0rf6rwqqxapc4wao">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="stereotype" value="extension"/>
+			<property name="mod__cachedBaseName" value="uml.ocl.Constraint"/>
+			<participant referencedUin="design:node:::-tdsqjuf6rwlmof-judvcz" role="Client"></participant>
+			<participant referencedUin="ecore:e_class:bin:uml.ocl.Constraint:http#//www.borland.com/together/uml" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="-tdsqjuf6rwlsd5-qczcwz">
+		<property name="$metaclass" value="Class20"/>
+		<property name="stereotype" value="stereotype"/>
+		<property name="$name" value="K2ConstraintExpression"/>
+		<property name="mod__extends" value="uml.ocl.Constraint"/>
+		<link uin="ieje0rf6rwqomo-nhyq9j">
+			<property name="$metaclass" value="Generalization20"/>
+			<property name="stereotype" value="extension"/>
+			<property name="mod__cachedBaseName" value="uml.ocl.Constraint"/>
+			<participant referencedUin="design:node:::-tdsqjuf6rwlsd5-qczcwz" role="Client"></participant>
+			<participant referencedUin="ecore:e_class:bin:uml.ocl.Constraint:http#//www.borland.com/together/uml" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="1g64yf6ujwc68-a8t4rl">
+		<property name="$metaclass" value="Note"/>
+		<property name="$name" value="Note1"/>
+		<property name="$note_text" value="ExpressionInOCL = Constraint"/>
+		<link uin="ieje0rf6ujwlu8n5kism">
+			<property name="$metaclass" value="Note Link"/>
+			<participant referencedUin="design:node:::1g64yf6ujwc68-a8t4rl" role="Client"></participant>
+			<participant referencedUin="design:link:::ieje0rf6rwqomo-nhyq9j:-tdsqjuf6rwlsd5-qczcwz" role="Supplier"></participant>
+		</link>
+	</node>
+</nodeSet>

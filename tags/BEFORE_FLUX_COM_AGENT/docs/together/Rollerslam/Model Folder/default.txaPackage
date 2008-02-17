@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<nodeSet  version="1.1">
+	<node uin="ba089nf7hw1clolqonjt">
+		<property name="$metaclass" value="Component20"/>
+		<property name="$name" value="Server"/>
+		<link uin="ieje0rf7hw2s5k-w7b1fe">
+			<property name="$metaclass" value="ProvidedInterface20"/>
+			<participant referencedUin="design:node:::ba089nf7hw1clolqonjt" role="Client"></participant>
+			<participant referencedUin="design:node:::-amcqg9f7hvzgxh-2h2qur" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf7hw5p22-2dntql">
+			<property name="$metaclass" value="ProvidedInterface20"/>
+			<participant referencedUin="design:node:::ba089nf7hw1clolqonjt" role="Client"></participant>
+			<participant referencedUin="design:node:::-amcqg9f7hw4aboxlred2" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf7hwagk3sa0mrf">
+			<property name="$metaclass" value="ProvidedInterface20"/>
+			<participant referencedUin="design:node:::ba089nf7hw1clolqonjt" role="Client"></participant>
+			<participant referencedUin="design:node:::-amcqg9f7hw84lyt295pz" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf7hwaixl-wu1jzm">
+			<property name="$metaclass" value="ProvidedInterface20"/>
+			<participant referencedUin="design:node:::ba089nf7hw1clolqonjt" role="Client"></participant>
+			<participant referencedUin="design:node:::-amcqg9f7hw7ze1-yzpvvl" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf7hwdzeii8cqq9">
+			<property name="$metaclass" value="ProvidedInterface20"/>
+			<participant referencedUin="design:node:::ba089nf7hw1clolqonjt" role="Client"></participant>
+			<participant referencedUin="design:node:::-amcqg9f7hwd09r-5zrb9u" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf7hwgi50-p6pt8m">
+			<property name="$metaclass" value="ProvidedInterface20"/>
+			<participant referencedUin="design:node:::ba089nf7hw1clolqonjt" role="Client"></participant>
+			<participant referencedUin="design:node:::-amcqg9f7hwf0v1ioglb1" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf7hwjghk-3kk3na">
+			<property name="$metaclass" value="ProvidedInterface20"/>
+			<participant referencedUin="design:node:::ba089nf7hw1clolqonjt" role="Client"></participant>
+			<participant referencedUin="design:node:::-amcqg9f7hwhak0thdza1" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf7hwlruvl8xnzm">
+			<property name="$metaclass" value="ProvidedInterface20"/>
+			<participant referencedUin="design:node:::ba089nf7hw1clolqonjt" role="Client"></participant>
+			<participant referencedUin="design:node:::-amcqg9f7hwknxd-jshiw3" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="ba089nf7hwwc1x-g2dsea">
+		<property name="$metaclass" value="Component20"/>
+		<property name="$name" value="RollerslamAgent"/>
+	</node>
+	<node uin="ba089nf7hwwmke-gktz3e">
+		<property name="$metaclass" value="Component20"/>
+		<property name="$name" value="RollerslamEnvironment"/>
+		<link uin="ieje0rf7hwx6dx2fwcc4">
+			<property name="$metaclass" value="RequiredInterface20"/>
+			<participant referencedUin="design:node:::ba089nf7hwwmke-gktz3e" role="Client"></participant>
+			<participant referencedUin="design:node:::-amcqg9f7hw7ze1-yzpvvl" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf7hwx9n44wgcpg">
+			<property name="$metaclass" value="RequiredInterface20"/>
+			<participant referencedUin="design:node:::ba089nf7hwwmke-gktz3e" role="Client"></participant>
+			<participant referencedUin="design:node:::-amcqg9f7hw84lyt295pz" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf7hx187x-nj2f2u">
+			<property name="$metaclass" value="RequiredInterface20"/>
+			<participant referencedUin="design:node:::ba089nf7hwwmke-gktz3e" role="Client"></participant>
+			<participant referencedUin="design:node:::-amcqg9f7hw4aboxlred2" role="Supplier"></participant>
+		</link>
+		<link uin="ieje0rf7hx22jy-u6y1hg">
+			<property name="$metaclass" value="RequiredInterface20"/>
+			<participant referencedUin="design:node:::ba089nf7hwwmke-gktz3e" role="Client"></participant>
+			<participant referencedUin="design:node:::-amcqg9f7hvzgxh-2h2qur" role="Supplier"></participant>
+		</link>
+	</node>
+	<node uin="ba089nf7hxcws4-i7y0ec">
+		<property name="$metaclass" value="Component20"/>
+		<property name="$name" value="RollerslamDisplay"/>
+	</node>
+</nodeSet>
