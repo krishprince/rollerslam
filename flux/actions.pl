@@ -33,7 +33,9 @@ state_update(Z1, jumpV(Agent), Z2, []) :-
 %TODO stand_up
 state_update(Z1,skate(Agent, vector(Axa, Aya)), Z2, []) :-
             holds(acceleration(Agent,vector(Old)), Z1),
-            update(Z1,[acceleration(Agent, vector(Axa, Aya))],[acceleration(Agent,vector(Old))],Z2).
+            holds(stamina(Agent,Strength), Z1),
+            NewStamina #= Strength + (Strength * (1/100)),
+            update(Z1,[acceleration(Agent, vector(Axa, Aya)), stamina(Agent,NewStamina)],[acceleration(Agent,vector(Old)),stamina(Agent,Strength)],Z2).
 
 %% Actions with ball
 
@@ -51,63 +53,69 @@ state_update(Z1, catch(Agent), Z2, []):-
             holds(position(ball, vector(Sbx, Sby)), Z1),
             (
               closer(Sx, Sy, Sbx, Sby, 500),            %% the ball is near
-              update(Z1,[hasBall(Agent)],[],Z2)
+              update(Z1,[hasBall(Agent)],[free(Ball)],Z2)
             );
             (
               Z2 = Z1
             ).
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%% HOLDING BALL ACTIONS %%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %% DROP AND KICK ACTION
 state_update(Z1, dropAndKick(Agent), Z2, []):-
-             holds(hasBall(Agent),Z1),                          %% o agente deve possuir a bola
+             poss(dropAndKick(Agent),Z1),
              holds(stamina(Agent,Strength), Z1),
              holds(position(Ball, vector(Sxb, Syb)), Z1),
              Xb #= Sxb * Strength,
              Yb #= Syb * Strength,
-             NewStamina #= Strength * (1/10),
-             update(Z1,[position(Ball, vector(Xb, Yb)), stamina(Agent, NewStamina)],[hasBall(Agent),position(Ball, vector(Sxb, Syb))],Z2).
+             NewStamina #= Strength - (Strength * (1/10)),
+             update(Z1,[position(Ball, vector(Xb, Yb)), stamina(Agent, NewStamina), free(Ball)],[hasBall(Agent),position(Ball, vector(Sxb, Syb))],Z2).
 
 
 %% KICK ACTION
 state_update(Z1,kick(Agent), Z2,[]):-
-             holds(hasBall(Agent),Z1),                          %% o agente deve possuir a bola
+             poss(kick(Agent),Z1),
              holds(stamina(Agent,Strength), Z1),
              holds(position(Ball, vector(Sxb, Syb)), Z1),
              Xb #= Sxb * Strength,
              Yb #= Syb * Strength,
-             NewStamina #= Strength * (1/10),
-             update(Z1,[position(Ball, vector(Xb, Yb)), stamina(Agent, NewStamina)],[position(Ball, vector(Sxb, Syb))],Z2).
+             NewStamina #= Strength - (Strength * (1/10)),
+             update(Z1,[position(Ball, vector(Xb, Yb)), stamina(Agent, NewStamina)],[position(Ball, vector(Sxb, Syb)),hasBall(Agent)],Z2).
 
 
 %% THROW ACTION
 state_update(Z1, throw(Agent), Z2, []):-
-             holds(hasBall(Agent),Z1),                          %% o agente deve possuir a bola
+             poss(throw(Agent),Z1),
              holds(stamina(Agent,Strength), Z1),
              holds(position(Ball, vector(Sxb, Syb)), Z1),
              Xb #= Sxb * Strength * (1/2),
              Yb #= Syb * Strength * (1/2),
-             NewStamina #= Strength * (1/5),
-             update(Z1,[position(Ball, vector(Xb, Yb)), stamina(Agent, NewStamina)],[hasBall(Agent),position(Ball, vector(Sxb, Syb))],Z2).
+             NewStamina #= Strength - (Strength * (1/5)),
+             update(Z1,[position(Ball, vector(Xb, Yb)), stamina(Agent, NewStamina),free(Ball)],[hasBall(Agent),position(Ball, vector(Sxb, Syb))],Z2).
 
 
-%% SPIKE ACTION
-state_update(Z1,spike(Agent), Z2,[]):-
+%% VOLLEY ACTION
+state_update(Z1,volley(Agent), Z2,[]):-
+             poss(volley(Agent),Z1),
              holds(stamina(Agent,Strength), Z1),
              holds(position(Ball, vector(Sxb, Syb)), Z1),
              Xb #= Sxb * Strength,
              Yb #= Syb * Strength,
-             NewStamina #= Strength * (1/10),
+             NewStamina #= Strength - (Strength * (1/10)),
              update(Z1,[position(Ball, vector(Xb, Yb)), stamina(Agent, NewStamina)],[position(Ball, vector(Sxb, Syb))],Z2).
 
 
-%% VOLEY KICK ACTION
+%% SPIKE KICK ACTION
 state_update(Z1,spike(Agent), Z2,[]):-
+             poss(spike(Agent),Z1),
              holds(stamina(Agent,Strength), Z1),
              holds(position(Ball, vector(Sxb, Syb)), Z1),
              Xb #= Sxb * Strength * (1/2),
              Yb #= Syb * Strength * (1/2),
-             NewStamina #= Strength * (1/5),
+             NewStamina #= Strength - (Strength * (1/5)),
              update(Z1,[position(Ball, vector(Xb, Yb)), stamina(Agent, NewStamina)],[position(Ball, vector(Sxb, Syb))],Z2).
 
 
@@ -116,52 +124,10 @@ state_update(Z1,spike(Agent), Z2,[]):-
 %% state_update(Z1, touchDown(), Z2, []).
 
 
-%% PASS ACTION
-state_update(Z1, pass(Agent), Z2, []):-
-                 holds(hasBall(Agent),Z1),              %% o agente deve possuir a bola
-                 holds(pass(Agent,AgentB),Z1),
-                 holds(position(AgentB,vector(S)),Z1),
-                 holds(position(Ball,vector(Sb)),Z1),
-                 update(Z1,[position(Ball,vector(S))],[position(Ball,vector(Sb)),pass(Agent,AgentB)],Z2).
-
-
-%% SHOOT ACTION
-state_update(Z1, shoot(Agent), Z2, []):-
-                 holds(stamina(Agent,Strength),Z1),
-                 (
-                 holds(hasBall(Agent,HAND),Z1),       %% o agente deve possuir a bola
-                 (
-                  (
-                   (
-                    Strength>1000,
-                    execute(dropAndKick(Agent),Z1,Z2)
-                    )
-                    ;
-                   (
-                    execute(throw(Agent),Z1,Z2)
-                   )
-                  )
-                 )
-                 ;
-                 (
-                  holds(hasBall(Agent,FOOT),Z1),       %% o agente deve possuir a bola
-                  execute(kick(Agent),Z1,Z2)
-                 )
-                 ;
-                 (
-                  (
-                   Strength>1000,
-                   runAction(Z1,voleyKick(Agent),Z2)
-                   )
-                   ;
-                 (
-                 runAction(Z1,spike(Agent),Z2)
-                 )
-                 ).
-
 
 %% SCREEN ACTION
 state_update(Z1, screen(Agent), Z2,[]):-
+            poss(screen(Agent),Z1),
             holds(screen(Agent, AgentB),Z1),
             holds(stamina(Agent,StrengthA), Z1),
             holds(stamina(Agent,StrengtB),Z1),
@@ -171,48 +137,55 @@ state_update(Z1, screen(Agent), Z2,[]):-
 
 
 %% COUNTERTACKLE ACTION
-%TODO has_ball. (?????????)
-%TODO recieve_tackle.
 state_update(Z1, counterTackle(Agent), Z2, []):-
+            poss(counterTackle(Agent),Z1),
             hols(stamina(Agent,Strength), Z1),
             (Strength >= 10000,
-             NewStamina #= Strength * (1/10),
+             NewStamina #= Strength - (Strength * (1/10)),
               update(Z1, [counterTackle(Agent), stamina(Agent, NewStamina)], [stamina(Agent, Strength)], Z2));
-              (Z2=Z1) .
+              (Z2=Z1).
 
 
 %% TACKLE ACTION
 state_update(Z1, tackle(Agent), Z2, []):-
-            holds(hasBall(AgentB),Z1),                %% o oponente está com a bola
+            poss(tackle(Agent),Z1),
             holds(tackle(Agent,AgentB),Z1),
             holds(stamina(Agent,StrengthA), Z1),
-            holds(stamina(Agent,StrengtB),Z1),
-             ( holds(isInPart(Agent,ON_FIELD),
-               holds(isInPart(AgentB,ON_FIELD),
+            holds(stamina(AgentB,StrengthB), Z1),
+            holds(position(AgentA, vector(Sxa,Syb)),Z1),
+            holds(position(AgentB, vector(Sxb,Syb)),Z1),
+             ( isOnField(vector(Sxa,Sya)),
+               isOnField(vector(Sxb,Syb)),
                (StrengthA > StrengthB,
               update(Z1,[inGround(AgentB),acceleration(Agent,vector(0,0)), speed(Agent,vector(0,0))],[tackle(Agent,AgentB)], Z2));
             (update(Z1,[acceleration(Agent,vector(0,0)), speed(Agent,vector(0,0)),acceleration(AgentB,vector(0,0)), speed(AgentB,vector(0,0))],[tackle(Agent,AgentB)],Z2)).
              )
              ;
              (
-             holds(isInPart(Agent,ON_FIELD),Z1),
-             holds(isInPart(AgentB, ON_INNER_TRACK ),Z1),
+             isOnField(vector(Sxa,Sya)),
+             isOnInTrack(vector(Sxb,Syb)),
              update(Z1,[inGround(AgentB)],[tackle(Agent, AgentB)],Z2)
              )
              ;
              (
-             holds(isInPart(Agent,ON_INNER_TRACK),Z1),
-             holds(isInPart(AgentB,ON_FIELD),Z1),
+             isOnInTrack(vector(Sxa,Sya)),
+             isOnField(vector(Sxb,Syb)),
              update(Z1,[],[tackle(Agent,AgentB)],Z2)
              )
              ;
              (
-             holds(isInPart(Agent,ON_INNER_TRACK),Z1),
-             holds(isInPart(AgentB, ON_INNER_TRACK),Z1),
-             holds(position(Agent,vector(Sxa,Sya),Z1),
-             holds(position(Agent,vector(Sxb,Syb),Z1),
+             isOnInTrack(vector(Sxa,Sya)),
+             isOnInTrack(vector(Sxb,Syb)),
              (((Sya > Syb),(Sya < 0));((Sya<Syb),(Sya>0)), update(Z1,[inGround(B)],[tackle(Agent, AgentB)],Z2));
              (update(Z1,[inGround(Agent), inGround(AgentB)],[tackle(Agent,AgentB)],Z2))
              )
              ;
              (Z1=Z2);
+             
+%% DUNK ACTION
+state_update(Z1, dunk(Agent,Dir), Z2, []):-
+             poss(dunk(Agent),Z1),
+             holds(position(Ball,OldDir)),
+             update(Z1,[position(Ball,Dir)],[position(Ball,OldDir), hasBall(Agent)],Z2).
+
+
