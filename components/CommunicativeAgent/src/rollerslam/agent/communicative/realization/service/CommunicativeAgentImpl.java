@@ -19,6 +19,7 @@ import rollerslam.infrastructure.specification.type.AgentID;
 public class CommunicativeAgentImpl extends CommunicativeAgent {
 
 	public SimulationInfrastructure simulation;
+	private long cycleLenght;
 	
 	@Override
 	public void setSimulationInfrastructure(SimulationInfrastructure simulation) {
@@ -29,7 +30,10 @@ public class CommunicativeAgentImpl extends CommunicativeAgent {
 		this.agent = agent;
 		this.kb = new OOState();
 		this.agentKB = new HashMap<AgentID, OOState>();
-		
+		this.cycleLenght = cycleLenght;
+	}
+
+	protected void startThread() {
 		new Thread() {
 			public void run() {				
 				while(true) {
