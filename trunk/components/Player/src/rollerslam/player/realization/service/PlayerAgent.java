@@ -18,9 +18,11 @@ import com.parctechnologies.eclipse.CompoundTermImpl;
 
 // TODO remove references to EclipseProlog and to InferenceEngine
 public class PlayerAgent extends FluxCommunicativeAgent {
+	
+	private static final String ADDRESS_FLUX_FILE = PlayerAgent.class.getResource("player.pl").getFile();
 
 	public PlayerAgent(Agent port, long cycleLength, PlayerTeam team, int playerID) throws Exception {
-		super(port, new File("/documents/rollerslam/workspace/Player/src/rollerslam/player/realization/service/flux/player.pl"), "player", cycleLength);
+		super(port, new File(ADDRESS_FLUX_FILE), "player", cycleLength);
 		
 		FluxOID oid = new FluxOID(new Atom("me"));
 		Set<Fluent> fs = new HashSet<Fluent>();
