@@ -17,8 +17,10 @@ import com.parctechnologies.eclipse.CompoundTermImpl;
 
 public class GamePhysicsAgent extends FluxCommunicativeAgent {
 
+	private static final String ADDRESS_FLUX_FILE = GamePhysicsAgent.class.getResource("gamePhysics.pl").getFile();
+
 	public GamePhysicsAgent(Agent port, long cycleLength, int playersPerTeam) throws Exception {
-		super(port, new File("/documents/rollerslam/workspace/GamePhysics/src/rollerslam/gamephysics/realization/service/flux/gamePhysics.pl"), "gamePhysics", cycleLength);
+		super(port, new File(ADDRESS_FLUX_FILE), "gamePhysics", cycleLength);
 		
 		FluxOID oid = new FluxOID(new Atom("ball"));
 		Set<Fluent> fs = new HashSet<Fluent>();
