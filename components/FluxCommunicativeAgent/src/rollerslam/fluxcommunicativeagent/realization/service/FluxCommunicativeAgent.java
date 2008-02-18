@@ -47,6 +47,8 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 		
 		this.inferenceEngine = new EclipsePrologFluxEngine();
 		this.fluxSpec = new EclipsePrologFluxSpecification(fluxSpec, agentTerm);
+		
+		startThread();
 	}
 
 	protected void processSpecificMessage(Message message) {
@@ -128,7 +130,7 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 					as = new OOState();
 				}
 				
-				updateOOState(as, (EclipsePrologFluent) ef.term.arg(2));
+				updateOOState(as, new EclipsePrologFluent((CompoundTerm) ef.term.arg(2)));
 			} else if (ef.term.functor().equals("@")) {
 				updateOOState(newKB, ef);
 			}
@@ -173,6 +175,20 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 		EclipsePrologFluent f = new EclipsePrologFluent(new CompoundTermImpl(
 				"@", oid.term, vl));
 		return f;
+	}
+
+	protected void declareFAtom(FluxOID oid, String attributeName, String attributeValue) {
+		
+		WorldObject wobject = kb.objects.get(oid);
+		
+		if (wobject == null) {
+			wobject = new WorldObject(oid, new FluxOOState(new HashSet<Fluent>()));
+			kb.objects.put(oid, wobject);
+		}
+		
+		FluxOOState wostate = (FluxOOState) wobject.state;
+		
+		wostate.fluents.add(makeFluent(oid, attributeName, new Atom(attributeValue)));
 	}
 	
 }
