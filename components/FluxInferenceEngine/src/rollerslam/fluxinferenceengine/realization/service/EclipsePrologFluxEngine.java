@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.Vector;
 
 import rollerslam.fluxinferenceengine.realization.eclipseprolog.EclipsePrologHandlerImpl;
+import rollerslam.fluxinferenceengine.realization.flux.ADDRESS_FluxFiles;
 import rollerslam.fluxinferenceengine.realization.type.EclipsePrologFluent;
 import rollerslam.fluxinferenceengine.realization.type.EclipsePrologFluxAction;
 import rollerslam.fluxinferenceengine.realization.type.EclipsePrologFluxSpecification;
@@ -25,27 +26,27 @@ import com.parctechnologies.eclipse.Fail;
 
 public class EclipsePrologFluxEngine extends FluxInferenceEngine {
 
-	private static EclipseConnection connection = EclipsePrologHandlerImpl.getInstance().getEclipseConnection();
-	
+	private static EclipseConnection connection = EclipsePrologHandlerImpl
+			.getInstance().getEclipseConnection();
+
 	static {
-		String folder = "/documents/rollerslam/workspace/FluxInferenceEngine/src/rollerslam/fluxinferenceengine/realization/flux/";
-		
 		try {
-			connection.compile(new File(folder + "fluent.pl"));
-			connection.compile(new File(folder + "flux.pl"));
-			connection.compile(new File(folder + "ooflux.pl"));		
+			connection.compile(new File(ADDRESS_FluxFiles.ADDRESS_FLUENT_FILE));
+			connection.compile(new File(ADDRESS_FluxFiles.ADDRESS_FLUX_FILE));
+			connection.compile(new File(ADDRESS_FluxFiles.ADDRESS_OOFLUX_FILE));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private Set<EclipsePrologFluxSpecification> compiledSpecs = new HashSet<EclipsePrologFluxSpecification>();
-	
+
 	public EclipsePrologFluxEngine() throws Exception {
 		this.reasoningFacade = new ReasoningFacade() {
 
 			@Override
-			public Action computeNextAction(FluxSpecification spec, State state) throws ReasoningException {
+			public Action computeNextAction(FluxSpecification spec, State state)
+					throws ReasoningException {
 				if (spec instanceof EclipsePrologFluxSpecification) {
 					EclipsePrologFluxSpecification espec = (EclipsePrologFluxSpecification) spec;
 
@@ -57,13 +58,12 @@ public class EclipsePrologFluxEngine extends FluxInferenceEngine {
 					Collection col = getEclipsePrologState(state.fluents);
 
 					try {
-						CompoundTerm ret = connection.rpc(espec.agentName + "ComputeNextAction",
-								col, 
-								null);
+						CompoundTerm ret = connection.rpc(espec.agentName
+								+ "ComputeNextAction", col, null);
 						return new EclipsePrologFluxAction((CompoundTerm) ret
 								.arg(2));
 					} catch (Fail e) {
-						return null;						
+						return null;
 					} catch (Exception e) {
 						throw new ReasoningException(e);
 					}
@@ -72,10 +72,11 @@ public class EclipsePrologFluxEngine extends FluxInferenceEngine {
 			}
 
 			@Override
-			public State updateModel(FluxSpecification spec, State state) throws ReasoningException {
+			public State updateModel(FluxSpecification spec, State state)
+					throws ReasoningException {
 				if (spec instanceof EclipsePrologFluxSpecification) {
 					EclipsePrologFluxSpecification espec = (EclipsePrologFluxSpecification) spec;
-										
+
 					try {
 						compileSpec(espec);
 					} catch (Exception e) {
@@ -84,9 +85,8 @@ public class EclipsePrologFluxEngine extends FluxInferenceEngine {
 					Collection col = getEclipsePrologState(state.fluents);
 
 					try {
-						CompoundTerm ret = connection.rpc(espec.agentName + "UpdateModel",
-								col, 
-								null);
+						CompoundTerm ret = connection.rpc(espec.agentName
+								+ "UpdateModel", col, null);
 						return getGenericState(ret.arg(2));
 					} catch (Fail e) {
 						return state;
@@ -95,30 +95,30 @@ public class EclipsePrologFluxEngine extends FluxInferenceEngine {
 					}
 
 				}
-				return state;			
+				return state;
 			}
 
 			@Override
-			public State processAction(FluxSpecification spec, State state, Action action) throws ReasoningException {
+			public State processAction(FluxSpecification spec, State state,
+					Action action) throws ReasoningException {
 				if (spec instanceof EclipsePrologFluxSpecification
 						&& action instanceof EclipsePrologFluxAction) {
-					
+
 					EclipsePrologFluxSpecification espec = (EclipsePrologFluxSpecification) spec;
-					EclipsePrologFluxAction		   eaction  = (EclipsePrologFluxAction) action;
-										
+					EclipsePrologFluxAction eaction = (EclipsePrologFluxAction) action;
+
 					try {
 						compileSpec(espec);
 						Collection col = getEclipsePrologState(state.fluents);
-						
-						CompoundTerm ret = connection.rpc(espec.agentName + "ProcessAction",
-								col, 
-								eaction.actionTerm, 
+
+						CompoundTerm ret = connection.rpc(espec.agentName
+								+ "ProcessAction", col, eaction.actionTerm,
 								null);
 						return getGenericState(ret.arg(2));
 					} catch (Fail e) {
 						e.printStackTrace();
-						
-						return state;						
+
+						return state;
 					} catch (Exception e) {
 						throw new ReasoningException(e);
 					}
@@ -126,7 +126,7 @@ public class EclipsePrologFluxEngine extends FluxInferenceEngine {
 				}
 				return state;
 			}
-			
+
 		};
 	}
 
@@ -134,27 +134,29 @@ public class EclipsePrologFluxEngine extends FluxInferenceEngine {
 		Collection estate = (Collection) object;
 		State gstate = null;
 		Vector<Fluent> fluents = new Vector<Fluent>();
-		
+
 		for (Object oterm : estate) {
 			CompoundTerm term = (CompoundTerm) oterm;
 			fluents.add(new EclipsePrologFluent(term));
 		}
-		
+
 		gstate = new State(fluents.toArray(new Fluent[0]));
 		return gstate;
 	}
 
 	protected Collection getEclipsePrologState(Fluent[] fluents) {
 		Vector<CompoundTermImpl> estate = new Vector<CompoundTermImpl>();
-		
-		for(int i=0;i<fluents.length;++i) {
-			estate.add((CompoundTermImpl) ((EclipsePrologFluent)fluents[i]).term);
+
+		for (int i = 0; i < fluents.length; ++i) {
+			estate
+					.add((CompoundTermImpl) ((EclipsePrologFluent) fluents[i]).term);
 		}
-		
+
 		return estate;
 	}
 
-	protected void compileSpec(EclipsePrologFluxSpecification spec) throws Exception{
+	protected void compileSpec(EclipsePrologFluxSpecification spec)
+			throws Exception {
 		if (!compiledSpecs.contains(spec)) {
 			connection.compile(spec.fluxFile);
 			compiledSpecs.add(spec);
