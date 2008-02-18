@@ -15,6 +15,7 @@ import rollerslam.infrastructure.specification.service.Agent;
 import com.parctechnologies.eclipse.Atom;
 import com.parctechnologies.eclipse.CompoundTermImpl;
 
+// TODO fazer o mesmo que na classe player
 public class GamePhysicsAgent extends FluxCommunicativeAgent {
 
 	private static final String ADDRESS_FLUX_FILE = GamePhysicsAgent.class.getResource("gamePhysics.pl").getFile();
