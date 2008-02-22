@@ -1,8 +1,8 @@
 package rollerslam.fluxcommunicativeagent.realization.type;
 
-import com.parctechnologies.eclipse.CompoundTerm;
-
 import rollerslam.agent.communicative.specification.type.object.OID;
+
+import com.parctechnologies.eclipse.CompoundTerm;
 
 public class FluxOID extends OID {
 	public CompoundTerm term;
@@ -38,7 +38,7 @@ public class FluxOID extends OID {
 	}
 
 	public String toString() {
-		return "" + term;
+		return ToStringPrinterUtility.toString(term);
 	}
 	
 }
