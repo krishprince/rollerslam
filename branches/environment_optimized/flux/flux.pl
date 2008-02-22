@@ -98,21 +98,21 @@ update(Z1, ThetaP, ThetaN, Z2) :-
 
 %%
 %% knows(F,Z)
-%% 
+%%
 %% ground fluent F is known to hold in state Z
 %%
 knows(F, Z) :- \+ not_holds(F, Z).
 
 %%
 %% knows_not(F,Z)
-%% 
+%%
 %% ground fluent F is known not to hold in state Z
 %%
 knows_not(F, Z) :- \+ holds(F, Z).
 
 %%
 %% knows_val(X,F,Z)
-%% 
+%%
 %% there is an instance of the variables in X for which
 %% non-ground fluent F is known to hold in state Z
 %%
@@ -139,11 +139,11 @@ dom([]).
 dom([X|Xs]) :- dom(Xs), ( is_domain(X) -> indomain(X)
                                         ; true ).
 
-ambiguous(X) :- 
-   ( getval(known_val, Val), 
+ambiguous(X) :-
+   ( getval(known_val, Val),
      Val \== nil -> setval(known_val, nil)
    ;
-                    setval(known_val, X), 
+                    setval(known_val, X),
                     false
    ).
 
@@ -294,7 +294,7 @@ plan_search(Problem, Z) :-
 %% S ::= [] | do(A,S)
 %% A ::= primitive action | if_true(F)| if_false(F)
 %% F ::= fluent
-%% 
+%%
 knows(F, S, Z0) :- \+ ( res(S, Z0, Z), not_holds(F, Z) ).
 
 %%
@@ -322,17 +322,17 @@ knows_val(X, F, S, Z0) :-
    setval(known_vals, T2),
    false.
 knows_val(X, _, _, _) :-
-   getval(known_vals, T), 
+   getval(known_vals, T),
    member(X, T),
    setval(known_vals, nil).
 
 
 res([], Z0, Z0).
 res(do(A,S), Z0, Z) :-
-   ( A = if_true(F)  -> res(S, Z0, Z), holds(F, Z) 
+   ( A = if_true(F)  -> res(S, Z0, Z), holds(F, Z)
    ;
                         ( A = if_false(F) -> res(S, Z0, Z),
-                                             not_holds(F, Z) 
+                                             not_holds(F, Z)
                         ;
                                              res(S, Z0, Z1),
                                              state_update(Z1, A, Z, _)
@@ -345,7 +345,7 @@ res(do(A,S), Z0, Z) :-
 %% Ramification Problem
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-		  
+
 %%
 %% causes(Z1,P,N,Z2)
 %%
@@ -371,3 +371,18 @@ causes(Z,P,N,Z2) :-
 %%
 ramify(Z1,ThetaP,ThetaN,Z2) :-
    update(Z1,ThetaP,ThetaN,Z), causes(Z,ThetaP,ThetaN,Z2).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Concurrency Actions
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+member(A,[]):-false.
+member(A,[X|L]):- A=X ; member(A,[L]).
+
+dir_effect([],_,[],[]).
+dir_effect([C|L],Z,ThetaP,ThetaN):- state.
+
+update([Z1,L], ThetaP, ThetaN, ZX):- update(Z1,[],[],Z2), update([L],[],[],)
