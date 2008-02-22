@@ -19,7 +19,10 @@ public class DisplayAgent extends CommunicativeAgentImpl {
 		super(port, cycleLenght);
 		this.gamePhysics = gamePhysics;
 		
-		createDisplayFrame();		
+		createDisplayFrame();	
+		
+		super.startThread();
+		
 	}
 
 	private void createDisplayFrame() {

@@ -11,227 +11,198 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferStrategy;
 import java.text.NumberFormat;
+import java.util.Iterator;
+import java.util.Set;
 
 import javax.swing.JLabel;
 
 import rollerslam.agent.communicative.specification.type.object.OOState;
 import rollerslam.agent.communicative.specification.type.object.WorldObject;
 import rollerslam.common.DomainSettings;
-import rollerslam.common.datatype.PlayerTeam;
-import rollerslam.common.objects.Ball;
-import rollerslam.common.objects.Player;
-import rollerslam.common.objects.oid.PlayerOID;
-import rollerslam.common.objects.state.BallState;
-import rollerslam.common.objects.state.PlayerState;
 import rollerslam.display.realization.service.gui.mvc.Model;
 import rollerslam.display.realization.service.gui.sprite.Sprite;
 import rollerslam.display.realization.service.gui.sprite.SpriteKind;
 import rollerslam.display.realization.service.gui.sprite.SpriteStore;
+import rollerslam.fluxcommunicativeagent.realization.type.FluxOID;
+import rollerslam.fluxcommunicativeagent.realization.type.FluxOOState;
+import rollerslam.fluxinferenceengine.realization.type.EclipsePrologFluent;
+import rollerslam.fluxinferenceengine.specification.type.Fluent;
+
+import com.parctechnologies.eclipse.Atom;
+import com.parctechnologies.eclipse.CompoundTerm;
 
 /**
- *
+ * 
  * @author Weslei
  */
 @SuppressWarnings(value = "serial")
 public class GameCanvas extends Canvas implements MouseMotionListener {
 
-    /** The stragey that allows us to use accelerate page flipping */
-    private BufferStrategy strategy;
+	/** The stragey that allows us to use accelerate page flipping */
+	private BufferStrategy strategy;
 
-    private OOState world;
+	private OOState world;
 
-    private Model model;
-    private SpriteStore ss;
+	private Model model;
+	private SpriteStore ss;
 
-    //private JLabel messagesLabel;
+	// private JLabel messagesLabel;
 
-    private Sprite background;
-    //private Sprite scoreBoardA;
-    //private Sprite scoreBoardB;
-    private GameField gameField;
-    
-    public Point mPoint;
+	private Sprite background;
+	// private Sprite scoreBoardA;
+	// private Sprite scoreBoardB;
+	private GameField gameField;
 
-    public GameCanvas(JLabel messages) {
-        gameField = new GameField(4);
+	public Point mPoint;
 
-        setBounds(0, 0, gameField.getWidth(), gameField.getHeight());
+	public GameCanvas(JLabel messages) {
+		gameField = new GameField(4);
 
-        //this.messagesLabel = messages;
+		setBounds(0, 0, gameField.getWidth(), gameField.getHeight());
 
-        // Tell AWT not to bother repainting our canvas since we're
-        // going to do that our self in accelerated mode
-        setIgnoreRepaint(true);
-        ss = SpriteStore.get();
+		// this.messagesLabel = messages;
 
-        background = new Sprite(gameField.getImage());
-        //scoreBoardA = new Sprite(gameField.getScoreboardA());
-        //scoreBoardB = new Sprite(gameField.getScoreboardB());
-        
-        this.addMouseMotionListener(this);
-    }
+		// Tell AWT not to bother repainting our canvas since we're
+		// going to do that our self in accelerated mode
+		setIgnoreRepaint(true);
+		ss = SpriteStore.get();
 
-    public void init() {
-        // create the buffering strategy which will allow AWT
-        // to manage our accelerated graphics
-        createBufferStrategy(2);
-        strategy = getBufferStrategy();
-        updateGraphics();
-    }
+		background = new Sprite(gameField.getImage());
+		// scoreBoardA = new Sprite(gameField.getScoreboardA());
+		// scoreBoardB = new Sprite(gameField.getScoreboardB());
 
-    private void updateGraphics() {
-        new Thread() {
-            public void run() {
-                NumberFormat nf = NumberFormat.getInstance();
-                nf.setMaximumIntegerDigits(3);
-                nf.setMinimumIntegerDigits(3);
-                nf.setParseIntegerOnly(true);
-                //Font f = new Font(null, Font.BOLD, (int) (scoreBoardB.getHeight() / 1.3));
+		this.addMouseMotionListener(this);
+	}
 
-                //String tmp;
-                Graphics2D g;
-                //String agId;
-                //boolean isRed = true;
-                int x;
-                int y;
+	public void init() {
+		// create the buffering strategy which will allow AWT
+		// to manage our accelerated graphics
+		createBufferStrategy(2);
+		strategy = getBufferStrategy();
+		updateGraphics();
+	}
 
-                while (true) {
-                  //  agId = "";
-                    g = (Graphics2D) strategy.getDrawGraphics();
+	private void updateGraphics() {
+		new Thread() {
+			public void run() {
+				NumberFormat nf = NumberFormat.getInstance();
+				nf.setMaximumIntegerDigits(3);
+				nf.setMinimumIntegerDigits(3);
+				nf.setParseIntegerOnly(true);
+				Printer printer = new Printer(GameCanvas.this.gameField);
+				Graphics2D g;
 
-                    g.setColor(Color.GREEN);
-                    g.fillRect(0, 0, 800, 600);
+				while (true) {
+					g = (Graphics2D) strategy.getDrawGraphics();
 
-                    background.draw(g, 0, 0);
+					g.setColor(Color.GREEN);
+					g.fillRect(0, 0, 800, 600);
 
-                    world = model.getModel();
-                    if (world != null) {
-                        boolean freeBall = true;
-                        
-                        for (WorldObject object : world.objects.values()) {
-                        	if (object instanceof Player) {
-                        		Player player = (Player) object;
-                        		freeBall &= !((PlayerState)player.state).withBall;
-                        		
-                        		if (!freeBall) {
-                        			break;
-                        		}
-							}
+					background.draw(g, 0, 0);
+
+					world = model.getModel();
+					if (world != null) {
+
+						for (WorldObject object : world.objects.values()) {
+
+							printer.print(g, object);
+
 						}
 
-                        for (WorldObject object : world.objects.values()) {
-                        	if (object instanceof Player) {
-                        		PlayerState player = (PlayerState) object.state;
-                                Sprite s = null;
+					}
 
-                                if (((PlayerOID)object.oid).team == PlayerTeam.TEAM_A) {
-                                    if (player.withBall) {
-                                        s = ss.getSprite(SpriteKind.RED_PLAYER_WITH_BALL);
-                                    } else if (player.inGround) {
-                                        s = ss.getSprite(SpriteKind.RED_PLAYER_GROUNDED);
-                                    } else {
-                                        s = ss.getSprite(SpriteKind.RED_PLAYER);
-                                    }                                	
-                                } else {
-                                    if (player.withBall) {
-                                        s = ss.getSprite(SpriteKind.BLUE_PLAYER_WITH_BALL);
-                                        freeBall = false;
-                                    } else if (player.inGround) {
-                                        s = ss.getSprite(SpriteKind.BLUE_PLAYER_GROUNDED);
-                                    } else {
-                                        s = ss.getSprite(SpriteKind.BLUE_PLAYER);
-                                    }                                	
-                                }
-                                
-                                x = translatex(player.s.x) - 15;
-                                y = translatey(player.s.y) - 30;
-                                if (mPoint != null && (mPoint.x >= x && mPoint.x <= (x + 15))
-                                    && (mPoint.y >= y && mPoint.y <= (y + 30))) {
-                                    // agId = "PId: " + object.oid;
-                                    // isRed = true;
-                                }
-                                s.draw(g, x, y);
-							} else if (object instanceof Ball) {
-								BallState ball = (BallState) object.state;
-		                        
-								if (freeBall) {
-		                            ss
-											.getSprite(SpriteKind.BALL)
-											.draw(
-													g,
-													translatex(ball.s.x) - 5,
-													translatey(ball.s.y) - 5);
-		                        }								
-							}
+					g.dispose();
+					strategy.show();
 
-						}                        
+					try {
+						Thread.sleep(50);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}.start();
+	}
 
-                    }
-                    
-/*
-                    for (Message message : world.actions) {
-                            if (message instanceof SendMsgAction) {
-                                MessageHandler.scheduleForExhibition(((SendMsgAction) message).subject);
-                            }
-                        }
+	public void setModel(Model model) {
+		this.model = model;
+	}
 
-                        g.setColor(Color.RED);
-                        g.fillRect(0, 0, scoreBoardA.getWidth(), scoreBoardA.getHeight());
-                        g.setColor(Color.BLUE);
-                        g.fillRect(scoreBoardB.getWidth(), 0, scoreBoardB.getWidth(), scoreBoardB.getHeight());
-                        
-                        tmp = nf.format(world.scoreboard.scoreTeamA);
+	public void mouseMoved(MouseEvent e) {
+		this.mPoint = e.getPoint();
+	}
 
-                        g.setFont(f);
-                        g.setColor(Color.WHITE);
-                        g.drawString(tmp, 0, (int) (scoreBoardB.getHeight() / 1.3));
+	public void mouseDragged(MouseEvent e) {
+	}
 
-                        tmp = nf.format(world.scoreboard.scoreTeamB);
+	private class Printer {
 
-                        g.setColor(Color.WHITE);
-                        g.drawString(tmp, scoreBoardB.getWidth(), (int) (scoreBoardB.getHeight() / 1.3));
-                        
-                        g.setColor(Color.BLACK);
-                        g.drawString("Sim cycle: " + world.currentCycle, 5, 50);
-                        
-                        g.setColor(isRed ? Color.RED : Color.BLUE);
-                        g.drawString(agId, 5, 70);
-                        
-                        
+		private GameField gameField;
 
-                        messagesLabel.setText(MessageHandler.getCurrentMessage()); 
-                    }
-*/
-                    
-                    g.dispose();
-                    strategy.show();
+		Printer(GameField gameField) {
+			this.gameField = gameField;
+		}
 
-                    try {
-                        Thread.sleep(50);
-                    } catch (InterruptedException e) {
-                         e.printStackTrace();
-                    }
-                }
-            }
-        }.start();
-    }
+		public void print(Graphics2D graphics2D, WorldObject worldObject) {
+			String attribute = "position";
+			Object value = attributeDiscoverer(worldObject, attribute);
+			if (value instanceof CompoundTerm) {
+				CompoundTerm compoundTerm = (CompoundTerm) value;
+				Integer x = (Integer) compoundTerm.arg(1);
+				Integer y = (Integer) compoundTerm.arg(2);
+				final SpriteKind sprite = getSprite(worldObject);
+				ss.getSprite(sprite).draw(graphics2D,
+						translatex(x) - 5, translatey(y) - 5);
+			}
+		}
 
-    private int translatex(int sx) {
-        return ((sx + DomainSettings.OUTTRACK_WIDTH / 2) * gameField.getWidth()) / DomainSettings.OUTTRACK_WIDTH;
-    }
+		private SpriteKind getSprite(WorldObject worldObject) {
+			SpriteKind retorno = null;
+			FluxOID fluxOID = (FluxOID)worldObject.oid;
+			if("ball".equals(fluxOID.term.functor())){
+				retorno = SpriteKind.BALL;
+			} else {
+				retorno = SpriteKind.BLUE_PLAYER;
+			}
+			
+			return retorno;
+		}
 
-    private int translatey(int sy) {
-        return ((sy + DomainSettings.OUTTRACK_HEIGHT / 2) * gameField.getHeight()) / DomainSettings.OUTTRACK_HEIGHT;
-    }
+		private Object attributeDiscoverer(WorldObject worldObject,
+				String attribute) {
+			Object retorno = null;
+			if (worldObject.state instanceof FluxOOState) {
+				FluxOOState fluxOOState = (FluxOOState) worldObject.state;
+				boolean teste = true;
+				Set<Fluent> fluents = fluxOOState.fluents;
+				Iterator<Fluent> iterator = fluents.iterator();
+				while (teste && iterator.hasNext()) {
+					Fluent fluent = iterator.next();
+					EclipsePrologFluent eclipsePrologFluent = (EclipsePrologFluent) fluent;
+					CompoundTerm compoundTerm = (CompoundTerm) eclipsePrologFluent.term
+							.arg(2);
+					Atom atom = (Atom) compoundTerm.arg(1);
+					if (attribute.equals(atom.functor())) {
+						teste = false;
+						retorno = compoundTerm.arg(2);
+					}
+				}
+			}
+			return retorno;
+		}
 
-    public void setModel(Model model) {
-        this.model = model;
-    }
+		private int translatex(int sx) {
+			return ((sx + DomainSettings.OUTTRACK_WIDTH / 2) * gameField
+					.getWidth())
+					/ DomainSettings.OUTTRACK_WIDTH;
+		}
 
-    public void mouseMoved(MouseEvent e) {
-        this.mPoint = e.getPoint();
-    }
+		private int translatey(int sy) {
+			return ((sy + DomainSettings.OUTTRACK_HEIGHT / 2) * gameField
+					.getHeight())
+					/ DomainSettings.OUTTRACK_HEIGHT;
+		}
 
-    public void mouseDragged(MouseEvent e) {}
-    
+	}
+
 }

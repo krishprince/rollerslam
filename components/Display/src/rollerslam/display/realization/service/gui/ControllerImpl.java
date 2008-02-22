@@ -36,7 +36,7 @@ public class ControllerImpl implements Controller {
     				model.setModel(agent.getStateForDisplay());
     				
     				try {
-						Thread.sleep(200);
+						Thread.sleep(50);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
