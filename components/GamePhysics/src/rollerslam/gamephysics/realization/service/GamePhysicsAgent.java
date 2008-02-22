@@ -21,12 +21,16 @@ public class GamePhysicsAgent extends FluxCommunicativeAgent {
 	private static final String ADDRESS_FLUX_FILE = GamePhysicsAgent.class.getResource("gamePhysics.pl").getFile();
 
 	public GamePhysicsAgent(Agent port, long cycleLength, int playersPerTeam) throws Exception {
-		super(port, new File(ADDRESS_FLUX_FILE), "gamePhysics", cycleLength);
-		
-		FluxOID oid = new FluxOID(new Atom("ball"));
+		super(port, new File(ADDRESS_FLUX_FILE), "gamePhysics", cycleLength);		
+		createObject("ball",0,0);	
+		createObject("player",100,100);
+	}
+
+	private void createObject(String id, int x, int y) {
+		FluxOID oid = new FluxOID(new Atom(id));
 		Set<Fluent> fs = new HashSet<Fluent>();
 		
-		fs.add(makeFluent(oid, "position", new CompoundTermImpl("vector",0,0)));
+		fs.add(makeFluent(oid, "position", new CompoundTermImpl("vector",x,y)));
 		
 		FluxOOState state = new FluxOOState(fs);
 		WorldObject wo = new WorldObject(oid, state);
