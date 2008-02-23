@@ -12,19 +12,19 @@ state_update(Z1,standUp(Agent),Z2,[]) :-
 %% By considering that exists two kind of jump actions, a vertical one and a horizontal one.
 
 %% JUMP HORIZONTAL ACTION
-state_update(Z1, jumpH(Agent), Z2, []) :-
+state_update(Z1, jumpH(Agent), Z3, []) :-
             poss(jumpH(Agent),Z1),
-            holds(position(Agent, vector(Sx, Sy)), Z1),
-            holds(stamina(Agent,Stamina),Z1),
-            calcNewPosition(Stamina, vector(Sx,Sy), vector(NSx,NSy)),
-            insideBoundary(vector(NSx,NSy)),
-            update(Z1,[position(Agent, vector(NSx, NSy)],[position(Agent, vector(Sx, Sy)],Z2).
+            holds(speed(Agent, vector(Vx, Vy)), Z1),
+            update(Z1,[jumpingH(Agent, vector(Vx, Vy))],[],Z2),
+            ramify(Z2,[jumpingH(Agent, vector(Vx, Vy))],[],Z3).
 
 
 %% JUMP VERTICAL ACTION
-state_update(Z1, jumpV(Agent), Z2, []) :-
-            poss(jumpH(Agent),Z1),
-            update(Z1,[onAir(Agent)],[],Z2).
+state_update(Z1, jumpV(Agent), Z3, []) :-
+            poss(jumpV(Agent),Z1),
+            holds(position(Agent, vector(Sx, Sy)), Z1),
+            update(Z1,[jumpingV(Agent, vector(Sx, Sy))],[],Z2),
+            ramify(Z2,[jumpingV(Agent, vector(Sx, Sy))],[],Z3).
 
 
 %% SKATE ACTION
