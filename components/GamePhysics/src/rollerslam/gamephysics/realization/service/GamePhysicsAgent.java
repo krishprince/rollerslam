@@ -13,17 +13,20 @@ import rollerslam.fluxinferenceengine.specification.type.Fluent;
 import rollerslam.infrastructure.specification.service.Agent;
 
 import com.parctechnologies.eclipse.Atom;
+import com.parctechnologies.eclipse.CompoundTerm;
 import com.parctechnologies.eclipse.CompoundTermImpl;
 
-// TODO fazer o mesmo que na classe player
+// TODO fazer o mesmo que na classe player - o mesmo oque?
 public class GamePhysicsAgent extends FluxCommunicativeAgent {
 
 	private static final String ADDRESS_FLUX_FILE = GamePhysicsAgent.class.getResource("gamePhysics.pl").getFile();
 
 	public GamePhysicsAgent(Agent port, long cycleLength, int playersPerTeam) throws Exception {
 		super(port, new File(ADDRESS_FLUX_FILE), "gamePhysics", cycleLength);		
+		//TODO usar DomainSettings para carregar elementos do jogo
 		createObject("ball",0,0);	
-		createObject("player",100,100);
+		createPlayer("1","TEAM_A",10000,10000);
+		createPlayer("2","TEAM_B",-10000,-10000);
 	}
 
 	private void createObject(String id, int x, int y) {
@@ -33,9 +36,18 @@ public class GamePhysicsAgent extends FluxCommunicativeAgent {
 		fs.add(makeFluent(oid, "position", new CompoundTermImpl("vector",x,y)));
 		
 		FluxOOState state = new FluxOOState(fs);
-		WorldObject wo = new WorldObject(oid, state);
+		WorldObject worldObject = new WorldObject(oid, state);
 		
-		kb.objects.put(oid, wo);
+		kb.objects.put(oid, worldObject);
+	}
+
+	private void createPlayer(String id, String team, int x, int y) {
+		CompoundTerm compoundTerm = new CompoundTermImpl("player",new Atom(id), team);
+		FluxOID oid = new FluxOID(compoundTerm);
+
+		//TODO pegar a posição da tela dos players conforme versão 1.0
+		super.declareFAtom(oid, "position", new CompoundTermImpl("vector",x,y));
+		
 	}
 
 }
