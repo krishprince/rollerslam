@@ -162,7 +162,13 @@ public class GameCanvas extends Canvas implements MouseMotionListener {
 			if("ball".equals(fluxOID.term.functor())){
 				retorno = SpriteKind.BALL;
 			} else {
-				retorno = SpriteKind.BLUE_PLAYER;
+				CompoundTerm compoundTerm = (CompoundTerm) fluxOID.term;
+				String team = (String)compoundTerm.arg(2);
+				if("TEAM_A".equalsIgnoreCase(team)){
+					retorno = SpriteKind.RED_PLAYER;
+				} else {
+					retorno = SpriteKind.BLUE_PLAYER;
+				}
 			}
 			
 			return retorno;
