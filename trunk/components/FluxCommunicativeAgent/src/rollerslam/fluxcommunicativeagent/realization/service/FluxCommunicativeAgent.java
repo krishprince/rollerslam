@@ -190,5 +190,19 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 		
 		wostate.fluents.add(makeFluent(oid, attributeName, new Atom(attributeValue)));
 	}
+
+	protected void declareFAtom(FluxOID oid, String attributeName, CompoundTermImpl attributeValue) {
+		
+		WorldObject wobject = kb.objects.get(oid);
+		
+		if (wobject == null) {
+			wobject = new WorldObject(oid, new FluxOOState(new HashSet<Fluent>()));
+			kb.objects.put(oid, wobject);
+		}
+		
+		FluxOOState wostate = (FluxOOState) wobject.state;
+		
+		wostate.fluents.add(makeFluent(oid, attributeName, attributeValue));
+	}
 	
 }
