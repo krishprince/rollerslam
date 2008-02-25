@@ -6,7 +6,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/SimulationInfrastructure"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/CommunicativeAgent"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Player"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Common"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/FluxCommunicativeAgent"/>
 	<classpathentry kind="lib" path="/FluxInferenceEngine/lib/eclipse.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Display"/>
