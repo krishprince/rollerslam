@@ -16,14 +16,12 @@ import com.parctechnologies.eclipse.Atom;
 import com.parctechnologies.eclipse.CompoundTerm;
 import com.parctechnologies.eclipse.CompoundTermImpl;
 
-// TODO fazer o mesmo que na classe player - o mesmo oque?
 public class GamePhysicsAgent extends FluxCommunicativeAgent {
 
 	private static final String ADDRESS_FLUX_FILE = GamePhysicsAgent.class.getResource("gamePhysics.pl").getFile();
 
 	public GamePhysicsAgent(Agent port, long cycleLength, int playersPerTeam) throws Exception {
 		super(port, new File(ADDRESS_FLUX_FILE), "gamePhysics", cycleLength);		
-		//TODO usar DomainSettings para carregar elementos do jogo
 		createObject("ball",0,0);	
 		createPlayer("1","TEAM_A",10000,10000);
 		createPlayer("2","TEAM_B",-10000,-10000);
