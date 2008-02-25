@@ -18,7 +18,6 @@ import javax.swing.JLabel;
 
 import rollerslam.agent.communicative.specification.type.object.OOState;
 import rollerslam.agent.communicative.specification.type.object.WorldObject;
-import rollerslam.common.DomainSettings;
 import rollerslam.display.realization.service.gui.mvc.Model;
 import rollerslam.display.realization.service.gui.sprite.Sprite;
 import rollerslam.display.realization.service.gui.sprite.SpriteKind;
@@ -54,6 +53,9 @@ public class GameCanvas extends Canvas implements MouseMotionListener {
 	private GameField gameField;
 
 	public Point mPoint;
+
+	public static final int OUTTRACK_HEIGHT = 138000;
+	public static final int OUTTRACK_WIDTH  = 188000;
 
 	public GameCanvas(JLabel messages) {
 		gameField = new GameField(4);
@@ -198,15 +200,15 @@ public class GameCanvas extends Canvas implements MouseMotionListener {
 		}
 
 		private int translatex(int sx) {
-			return ((sx + DomainSettings.OUTTRACK_WIDTH / 2) * gameField
+			return ((sx + GameCanvas.OUTTRACK_WIDTH / 2) * gameField
 					.getWidth())
-					/ DomainSettings.OUTTRACK_WIDTH;
+					/ GameCanvas.OUTTRACK_WIDTH;
 		}
 
 		private int translatey(int sy) {
-			return ((sy + DomainSettings.OUTTRACK_HEIGHT / 2) * gameField
+			return ((sy + GameCanvas.OUTTRACK_HEIGHT / 2) * gameField
 					.getHeight())
-					/ DomainSettings.OUTTRACK_HEIGHT;
+					/ GameCanvas.OUTTRACK_HEIGHT;
 		}
 
 	}
