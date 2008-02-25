@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry excluding="rollerslam/display/realization/service/gui/MessageHandler.java" kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Common"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/CommunicativeAgent"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/SimulationInfrastructure"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/FluxCommunicativeAgent"/>
