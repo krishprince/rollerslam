@@ -30,13 +30,14 @@ state_update(Z1, jumpV(Agent), Z3, []) :-
 %% SKATE ACTION
 %TODO boundary_collision (colisão com os limites do campo - possible_position).
 %TODO player_collision (colisão com outro jogador - possible_position).
-%TODO stand_up
 state_update(Z1,skate(Agent, vector(Axa, Aya)), Z3, []) :-
-            holds(acceleration(Agent,vector(Old)), Z1),
+            holds(acceleration(Agent,vector(OldA)), Z1),
+            holds(speed(Agent,vector(OldV)),Z1),
+            holds(position(Agent, vector(OldS)),Z1),
             holds(stamina(Agent,Strength), Z1),
             NewStamina #= Strength + (Strength * (1/100)),
             update(Z1,[acceleration(Agent, vector(Axa, Aya)), stamina(Agent,NewStamina)],[acceleration(Agent,vector(Old)),stamina(Agent,Strength)],Z2),
-            ramify(Z2,[acceleration(Agent, vector(Axa,Aya))], [],Z3).
+            ramify(Z2,[acceleration(Agent, vector(Axa,Aya)),speed(Agent,vector(OldV)), position(Agent, vector(OldS))], [],Z3).
 
 %% Actions with ball
 
@@ -69,55 +70,65 @@ state_update(Z1, catch(Agent), Z2, []):-
 state_update(Z1, dropAndKick(Agent), Z3, []):-
              poss(dropAndKick(Agent),Z1),
              holds(stamina(Agent,Strength), Z1),
+             holds(position(Ball,vector(OldS)),Z1),
+             holds(speed(Ball,vector(OldV)),Z1),
              ModuleX(Strength,Ax),
              ModuleY(Strength,Ay),
              NewStamina #= Strength - (Strength * (1/10)),
              update(Z1,[acceleration(Ball, vector(Ax, Ay)), stamina(Agent,NewStamina), free(Ball)],[hasBall(Agent)],Z2),
-             ramify(Z2,[acceleration(Ball,vector(Ax,Ay))],[],Z3).
+             ramify(Z2,[acceleration(Ball,vector(Ax,Ay)),position(Ball,vector(OldS)),speed(Ball,vector(OldV))],[],Z3).
 
 
 %% KICK ACTION
 state_update(Z1,kick(Agent), Z3,[]):-
              poss(kick(Agent),Z1),
              holds(stamina(Agent,Strength), Z1),
+             holds(position(Ball,vector(OldS)),Z1),
+             holds(speed(Ball,vector(OldV)),Z1),
              ModuleX(Strength,Ax),
              ModuleY(Strength,Ay),
              NewStamina #= Strength - (Strength * (1/10)),
              update(Z1,[acceleration(Ball, vector(Ax,Ay)), stamina(Agent, NewStamina)],[hasBall(Agent)],Z2),
-             ramify(Z2,[acceleration(Ball,vector(Ax,Ay))],[],Z3).
+             ramify(Z2,[acceleration(Ball,vector(Ax,Ay)),position(Ball,vector(OldS)),speed(Ball,vector(OldV))],[],Z3).
 
 
 %% THROW ACTION
 state_update(Z1, throw(Agent), Z3, []):-
              poss(throw(Agent),Z1),
              holds(stamina(Agent,Strength), Z1),
+             holds(position(Ball,vector(OldS)),Z1),
+             holds(speed(Ball,vector(OldV)),Z1),
              ModuleX(Strength * (1/2),Ax),
              ModuleY(Strength * (1/2),Ay),
              NewStamina #= Strength - (Strength * (1/5)),
              update(Z1,[acceleration(Ball, vector(Ax, Ay)), stamina(Agent, NewStamina),free(Ball)],[hasBall(Agent)],Z2),
-             ramify(Z2,[acceleration(Ball, vector(Ax, Ay))],[],Z3).
+             ramify(Z2,[acceleration(Ball,vector(Ax,Ay)),position(Ball,vector(OldS)),speed(Ball,vector(OldV))],[],Z3).
 
 
 %% VOLLEY ACTION
 state_update(Z1,volley(Agent), Z3,[]):-
              poss(volley(Agent),Z1),
              holds(stamina(Agent,Strength), Z1),
+             holds(position(Ball,vector(OldS)),Z1),
+             holds(speed(Ball,vector(OldV)),Z1),
              ModuleX(Strength,Ax),
              ModuleY(Strength,Ay),
              NewStamina #= Strength - (Strength * (1/10)),
              update(Z1,[acceleration(Ball, vector(Ax, Ay)), stamina(Agent, NewStamina)],[],Z2),
-             ramify(Z2,[acceleration(Ball, vector(Ax, Ay))],[],Z3).
+             ramify(Z2,[acceleration(Ball,vector(Ax,Ay)),position(Ball,vector(OldS)),speed(Ball,vector(OldV))],[],Z3).
 
 
 %% SPIKE KICK ACTION
-state_update(Z1,spike(Agent), Z2,[]):-
+state_update(Z1,spike(Agent), Z3,[]):-
              poss(spike(Agent),Z1),
              holds(stamina(Agent,Strength), Z1),
+             holds(position(Ball,vector(OldS)),Z1),
+             holds(speed(Ball,vector(OldV)),Z1),
              ModuleX(Strength * (1/2),Ax),
              ModuleY(Strength * (1/2),Ay),
              NewStamina #= Strength - (Strength * (1/5)),
              update(Z1,[acceleration(Ball, vector(Ax, Ay)), stamina(Agent, NewStamina)],[],Z2),
-             ramify(Z2,[acceleration(Ball, vector(Ax, Ay))],[],Z3).
+             ramify(Z2,[acceleration(Ball,vector(Ax,Ay)),position(Ball,vector(OldS)),speed(Ball,vector(OldV))],[],Z3).
 
 
 %% TOUCHDOWN ACTION
