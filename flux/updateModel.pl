@@ -19,7 +19,7 @@ causes([acceleration(FluentObject,vector(Ax,Ay)),speed(FluentObject,vector(Vix, 
                                                   VectorV #= sqrt((Vx*Vx) + (Vy*Vy)),
                                                   Sx #= Six + Vix * 2 + (VectorA * 4)/2,
                                                   Sy #= Siy + Viy * 2 + (VectorA * 4)/2,
-                                                  existsSomeone(vector(Sx,Sy),Z,vector(NewSx, NewSy)).
+                                                  existsSomeone(vector(Six,Siy), vector(Sx,Sy),Z,vector(NewSx, NewSy)).
 
 %% The following idea is update the position by considering that the player is jumping horizontally on the field
 
@@ -46,14 +46,36 @@ causes(jumpingV(FluentObject,vector(Six,Siy)),position(FluentObject,vector(Sx,Sy
                                                          
 %% To check if exist someone in the new localization. In this case, the position is updated to a near location.
 
-existsSomeone(vector(Sx,Sy),State,vector(NewSx, NewSy)):-
+existsSomeone(vector(Six,Siy),vector(Sx,Sy),State,vector(NewSx, NewSy)):-
                                                     (
-                                                    holds(position(_,vector(Sx,Sy)),State),
-                                                    NewSx #= Sx + 1,
-                                                    NewSy #= Sy + 1
+                                                    holds(position(_,vector(NewSx,NewSy)),State),
+                                                    pertencesToLine(vector(Six,Siy),vector(Sx,Sy),vector(NewSx, NewSy)),
+                                                    Sx #= Sx + 1,
+                                                    Sy #= Sy + 1,
+                                                    existsSomeone(vector(Six,Siy),vector(Sx,Sy),State,vector(NewSx, NewSy))
                                                      );
                                                     (NewSx = Sx, NewSy = Sy).
-                                                    
-%%  To change th direction
 
+pertencesToLine(vector(Xi,Yi), vector(Xf,Yf), vector(Pi,Pf)):-
+                                           A #= (Yf - Yi)/(Xf-Xi),
+                                           B #= Yi - ((Yf - Yi)/(Xf-Xi)*Xi),
+                                           Pf = A * Pi + B,
+                                           ((Xf>=Xi, Xf>=Pi);(Xf<Xi,Pi<Xi))
+                                           ((Yf>=Yi, Yf>=Pf);(Yf<Yi,Pf<Yi)).
+                                           
+
+
+
+                                                    
+%%  Colision response (what happens after the colision)
+
+Newton principle of conservation of Kinetic Energy: the sum of their masses times their respective velocities before the impact is equal
+to the sum of their masses times their respective velocities after the impact:
+                                         %% m1v1i + m2v2i = m1v1f + m2v2f
+%% Elatic colision - conservation of Kinetic Energy
+%% Coeficiente of restitution: e = -(v1f - v2f)/(v1i - v2i)
+%% Perfect elastic colision: e=1
+%% No deformation/ No rotation
+
+%% Considering the player impact, we keep the same vector direction and change the sense
 
