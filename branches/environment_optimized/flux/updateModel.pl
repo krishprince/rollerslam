@@ -1,3 +1,5 @@
+:- ['position'].
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%      Ramification          %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -19,7 +21,8 @@ causes([acceleration(FluentObject,vector(Ax,Ay)),speed(FluentObject,vector(Vix, 
                                                   VectorV #= sqrt((Vx*Vx) + (Vy*Vy)),
                                                   Sx #= Six + Vix * 2 + (VectorA * 4)/2,
                                                   Sy #= Siy + Viy * 2 + (VectorA * 4)/2,
-                                                  existsSomeone(vector(Six,Siy), vector(Sx,Sy),Z,vector(NewSx, NewSy)).
+                                                  existsSomeone(vector(Six,Siy), vector(Sx,Sy),Z,vector(MidSx, MidSy)),
+                                                  outBoundary(vector(MidSx, MidSy),vector(NewSx,NewSy)).
 
 %% The following idea is update the position by considering that the player is jumping horizontally on the field
 
@@ -31,7 +34,7 @@ causes([acceleration(FluentObject,vector(Ax,Ay)),speed(FluentObject,vector(Vix, 
 causes(jumpingH(FluentObject,vector(Vx,Vy)),position(FluentObject,vector(NewSx,NewSy)),Z):-
                                                          Sx #= Vx * 0.71 * 2,
                                                          Sy #= Vy * 0.71 * 2,
-                                                         existsSomeone(vector(Sx,Sy),Z,vector(NewSx, NewSy))..
+                                                         existsSomeone(vector(Sx,Sy),Z,vector(NewSx, NewSy)).
 
 %% The following idea is update the position by considering that the player is jumping vertically on the ramp
 
@@ -43,7 +46,7 @@ causes(jumpingH(FluentObject,vector(Vx,Vy)),position(FluentObject,vector(NewSx,N
 causes(jumpingV(FluentObject,vector(Six,Siy)),position(FluentObject,vector(Sx,Sy)),Z):-
                                                          Sx = Six,
                                                          Sy = Siy.
-                                                         
+
 %% To check if exist someone in the new localization. In this case, the position is updated to a near location.
 
 existsSomeone(vector(Six,Siy),vector(Sx,Sy),State,vector(NewSx, NewSy)):-
@@ -62,11 +65,9 @@ pertencesToLine(vector(Xi,Yi), vector(Xf,Yf), vector(Pi,Pf)):-
                                            Pf = A * Pi + B,
                                            ((Xf>=Xi, Xf>=Pi);(Xf<Xi,Pi<Xi))
                                            ((Yf>=Yi, Yf>=Pf);(Yf<Yi,Pf<Yi)).
-                                           
 
 
 
-                                                    
 %%  Colision response (what happens after the colision)
 
 Newton principle of conservation of Kinetic Energy: the sum of their masses times their respective velocities before the impact is equal
@@ -78,4 +79,17 @@ to the sum of their masses times their respective velocities after the impact:
 %% No deformation/ No rotation
 
 %% Considering the player impact, we keep the same vector direction and change the sense
+
+outBoundary(vector(MidSx, MidSy),vector(NewSx,NewSy)):-
+                                    (
+                                     isOnInTrack(vector(Sx,Sy)),
+                                     NewSx =  MidSx,
+                                     NewSy = MidSy
+                                     );
+                                     (
+                                     NewSx #= MidSx * (-1),
+                                     NewSy #= MidSy * (-1)
+                                     ).
+
+
 
