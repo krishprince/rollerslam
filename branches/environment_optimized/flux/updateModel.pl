@@ -31,10 +31,10 @@ causes([acceleration(FluentObject,vector(Ax,Ay)),speed(FluentObject,vector(Vix, 
 %% Hy(t)= (Vi Sin @)t - (gt)²div 2
 %% @ = 45º, t=2, g=10
 
-causes(jumpingH(FluentObject,vector(Vx,Vy)),position(FluentObject,vector(NewSx,NewSy)),Z):-
-                                                         Sx #= Vx * 0.71 * 2,
-                                                         Sy #= Vy * 0.71 * 2,
-                                                         existsSomeone(vector(Sx,Sy),Z,vector(NewSx, NewSy)).
+causes([jumpingH(FluentObject,vector(Vx,Vy))],[position(FluentObject,vector(NewSx,NewSy))],Z):-
+                                                         Sx #= Vx * 2 * sqrt(2)/2,
+                                                         Sy #= Vy * 2 * sqrt(2)/2,
+                                                         existsSomeone(vector(Sx,Sy),Z,vector(NewSx, NewSy)) .
 
 %% The following idea is update the position by considering that the player is jumping vertically on the ramp
 
@@ -63,15 +63,15 @@ pertencesToLine(vector(Xi,Yi), vector(Xf,Yf), vector(Pi,Pf)):-
                                            A #= (Yf - Yi)/(Xf-Xi),
                                            B #= Yi - ((Yf - Yi)/(Xf-Xi)*Xi),
                                            Pf = A * Pi + B,
-                                           ((Xf>=Xi, Xf>=Pi);(Xf<Xi,Pi<Xi))
+                                           ((Xf>=Xi, Xf>=Pi);(Xf<Xi,Pi<Xi)),
                                            ((Yf>=Yi, Yf>=Pf);(Yf<Yi,Pf<Yi)).
 
 
 
 %%  Colision response (what happens after the colision)
 
-Newton principle of conservation of Kinetic Energy: the sum of their masses times their respective velocities before the impact is equal
-to the sum of their masses times their respective velocities after the impact:
+%% Newton principle of conservation of Kinetic Energy: the sum of their masses times their respective velocities before the impact is equal
+%% to the sum of their masses times their respective velocities after the impact:
                                          %% m1v1i + m2v2i = m1v1f + m2v2f
 %% Elatic colision - conservation of Kinetic Energy
 %% Coeficiente of restitution: e = -(v1f - v2f)/(v1i - v2i)
