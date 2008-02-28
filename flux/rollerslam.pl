@@ -1,4 +1,5 @@
-:- ['fluent'].
+:- ['pre_conditionsActions'].
+:- ['updateModel'].
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Follow is the list of possible actions   %%
@@ -28,8 +29,7 @@ state_update(Z1, jumpV(Agent), Z3, []) :-
 
 
 %% SKATE ACTION
-%TODO boundary_collision (colisão com os limites do campo - possible_position).
-%TODO player_collision (colisão com outro jogador - possible_position).
+
 state_update(Z1,skate(Agent, vector(Axa, Aya)), Z3, []) :-
             holds(acceleration(Agent,vector(OldA)), Z1),
             holds(speed(Agent,vector(OldV)),Z1),
@@ -43,7 +43,7 @@ state_update(Z1,skate(Agent, vector(Axa, Aya)), Z3, []) :-
 
 %% RELEASE ACTION
 state_update(Z1, release(Agent), Z2, [Whistle]):-
-             poss(release(Agent),Z1)
+             poss(release(Agent),Z1),
              Whistle = true,
              update(Z1,[free(Ball)],[hasBall(Agent)],Z2).
 
@@ -51,10 +51,10 @@ state_update(Z1, release(Agent), Z2, [Whistle]):-
 %% CATCH ACTION
 state_update(Z1, catch(Agent), Z2, []):-
             poss(catch(Agent),Z1),
-            holds(position(Agent, vector(Sx, Sy), Z1),
+            holds(position(Agent, vector(Sx, Sy)), Z1),
             holds(position(ball, vector(Sbx, Sby)), Z1),
             (
-              closer(Sx, Sy, Sbx, Sby, 500),            %% the ball is near
+              closer(Sx, Sy, Sbx, Sby, 500),
               update(Z1,[hasBall(Agent)],[free(Ball)],Z2)
             );
             (
@@ -72,8 +72,8 @@ state_update(Z1, dropAndKick(Agent), Z3, []):-
              holds(stamina(Agent,Strength), Z1),
              holds(position(Ball,vector(OldS)),Z1),
              holds(speed(Ball,vector(OldV)),Z1),
-             ModuleX(Strength,Ax),
-             ModuleY(Strength,Ay),
+             moduleX(Strength,Ax),
+             moduleY(Strength,Ay),
              NewStamina #= Strength - (Strength * (1/10)),
              update(Z1,[acceleration(Ball, vector(Ax, Ay)), stamina(Agent,NewStamina), free(Ball)],[hasBall(Agent)],Z2),
              ramify(Z2,[acceleration(Ball,vector(Ax,Ay)),position(Ball,vector(OldS)),speed(Ball,vector(OldV))],[],Z3).
@@ -85,8 +85,8 @@ state_update(Z1,kick(Agent), Z3,[]):-
              holds(stamina(Agent,Strength), Z1),
              holds(position(Ball,vector(OldS)),Z1),
              holds(speed(Ball,vector(OldV)),Z1),
-             ModuleX(Strength,Ax),
-             ModuleY(Strength,Ay),
+             moduleX(Strength,Ax),
+             moduleY(Strength,Ay),
              NewStamina #= Strength - (Strength * (1/10)),
              update(Z1,[acceleration(Ball, vector(Ax,Ay)), stamina(Agent, NewStamina)],[hasBall(Agent)],Z2),
              ramify(Z2,[acceleration(Ball,vector(Ax,Ay)),position(Ball,vector(OldS)),speed(Ball,vector(OldV))],[],Z3).
@@ -98,8 +98,8 @@ state_update(Z1, throw(Agent), Z3, []):-
              holds(stamina(Agent,Strength), Z1),
              holds(position(Ball,vector(OldS)),Z1),
              holds(speed(Ball,vector(OldV)),Z1),
-             ModuleX(Strength * (1/2),Ax),
-             ModuleY(Strength * (1/2),Ay),
+             moduleX((Strength * (1/2)),Ax),
+             moduleY((Strength * (1/2)),Ay),
              NewStamina #= Strength - (Strength * (1/5)),
              update(Z1,[acceleration(Ball, vector(Ax, Ay)), stamina(Agent, NewStamina),free(Ball)],[hasBall(Agent)],Z2),
              ramify(Z2,[acceleration(Ball,vector(Ax,Ay)),position(Ball,vector(OldS)),speed(Ball,vector(OldV))],[],Z3).
@@ -111,8 +111,8 @@ state_update(Z1,volley(Agent), Z3,[]):-
              holds(stamina(Agent,Strength), Z1),
              holds(position(Ball,vector(OldS)),Z1),
              holds(speed(Ball,vector(OldV)),Z1),
-             ModuleX(Strength,Ax),
-             ModuleY(Strength,Ay),
+             moduleX(Strength,Ax),
+             moduleY(Strength,Ay),
              NewStamina #= Strength - (Strength * (1/10)),
              update(Z1,[acceleration(Ball, vector(Ax, Ay)), stamina(Agent, NewStamina)],[],Z2),
              ramify(Z2,[acceleration(Ball,vector(Ax,Ay)),position(Ball,vector(OldS)),speed(Ball,vector(OldV))],[],Z3).
@@ -124,8 +124,8 @@ state_update(Z1,spike(Agent), Z3,[]):-
              holds(stamina(Agent,Strength), Z1),
              holds(position(Ball,vector(OldS)),Z1),
              holds(speed(Ball,vector(OldV)),Z1),
-             ModuleX(Strength * (1/2),Ax),
-             ModuleY(Strength * (1/2),Ay),
+             moduleX(Strength * (1/2),Ax),
+             moduleY(Strength * (1/2),Ay),
              NewStamina #= Strength - (Strength * (1/5)),
              update(Z1,[acceleration(Ball, vector(Ax, Ay)), stamina(Agent, NewStamina)],[],Z2),
              ramify(Z2,[acceleration(Ball,vector(Ax,Ay)),position(Ball,vector(OldS)),speed(Ball,vector(OldV))],[],Z3).
@@ -175,7 +175,7 @@ state_update(Z1, tackle(Agent), Z2, []):-
                isOnField(vector(Sxb,Syb)),
                (StrengthA > StrengthB,
               update(Z1,[inGround(AgentB),acceleration(Agent,vector(0,0)), speed(Agent,vector(0,0))],[tackle(Agent,AgentB)], Z2));
-            (update(Z1,[acceleration(Agent,vector(0,0)), speed(Agent,vector(0,0)),acceleration(AgentB,vector(0,0)), speed(AgentB,vector(0,0))],[tackle(Agent,AgentB)],Z2)).
+            (update(Z1,[acceleration(Agent,vector(0,0)), speed(Agent,vector(0,0)),acceleration(AgentB,vector(0,0)), speed(AgentB,vector(0,0))],[tackle(Agent,AgentB)],Z2))
              )
              ;
              (
@@ -197,12 +197,12 @@ state_update(Z1, tackle(Agent), Z2, []):-
              (update(Z1,[inGround(Agent), inGround(AgentB)],[tackle(Agent,AgentB)],Z2))
              )
              ;
-             (Z1=Z2);
-             
+             (Z1=Z2).
+
 %% DUNK ACTION
-state_update(Z1, dunk(Agent,Dir), Z2, []):-
-             poss(dunk(Agent),Z1),
-             holds(position(Ball,OldDir)),
-             update(Z1,[position(Ball,Dir)],[position(Ball,OldDir), hasBall(Agent)],Z2).
+state_update(Z1, dunk(Agent,Dir), Z2, []):- 
+               poss(dunk(Agent),Z1),
+               holds(position(Ball,OldDir),Z1),
+               update(Z1,[position(Ball,Dir)],[position(Ball,OldDir), hasBall(Agent)],Z2).
 
 

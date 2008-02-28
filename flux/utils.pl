@@ -16,22 +16,17 @@ isInHemisphere(Sy, HemispherePart):-
                   (HemispherePart is 'South').
 
 closer(Sxb, Syb, Sxa, Sya, Distance) :-
-           calcDistance(Sxb, Syb, Sxa, Sya, A, B, C),
+           calcDistance(Sxb, Syb, Sxa, Sya, A),
            Distance >= A.
 
-calcDistance(Sxb, Syb, Sxa, Sya, A, B, C) :-
+calcDistance(Sxb, Syb, Sxa, Sya, A) :-
                   B is (Sxb - Sxa),
                   C is (Syb - Sya),
-                  B is (B * B),
-                  C is (C * C),
-                  A is ((B + C)^(1/2)).
+                  B1 is (B * B),
+                  C1 is (C * C),
+                  A is ((B1 + C1)^(1/2)).
 
-%% TODO:: CHECK THE MAX VALUE AND ADJUST THIS FUNCTION
-calcNewPosition(Stamina, vector(Sx,Sy), newPVector):-
-                 NSx #= Sx * Stamina,
-                 NSy #= Sy * Stamina,
-                 checkModule(vector(NSx, NSy), MAX, newPVector).
-                 
+
 insideBoundary(vector(NSx,NSy)):-
                  isOnInTrack(vector(NSx,NSy)).
 

@@ -379,10 +379,10 @@ ramify(Z1,ThetaP,ThetaN,Z2) :-
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-member(A,[]):-false.
-member(A,[X|L]):- A=X ; member(A,[L]).
+%% member(A,[]):-false.
+%% member(A,[X|L]):- A=X ; member(A,[L]).
 
-dir_effect([],_,[],[]).
-dir_effect([C|L],Z,ThetaP,ThetaN):- state.
+%% dir_effect([],_,[],[]).
+%% dir_effect([C|L],Z,ThetaP,ThetaN).
 
-update([Z1,L], ThetaP, ThetaN, ZX):- update(Z1,[],[],Z2), update([L],[],[],)
+%% update([Z1,L], ThetaP, ThetaN, ZX).

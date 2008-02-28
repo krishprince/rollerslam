@@ -32,7 +32,7 @@
  isOnOutWestTramp(vector(Sx,Sy)):-
                    isPointInEllipse(14000, -642206, 6061, -642206, -6061, Sx, Sy),
                    not isOnInWestTramp(vector(Sx,Sy)).
-                   
+
  %% Must be in the Out East Tramp. (Right)
  isOnOutEastTramp(vector(Sx,Sy)):-
                    isPointInEllipse(14000, 642206, 6061, 642206, -6061, Sx, Sy),
@@ -41,12 +41,12 @@
  %% Must be in the West Ramp Edge. (Left)
  isOnWestEdge(vector(Sx,Sy)):-
                   isPointInEllipse(15500, -642206, 6481, -642206, -6481, Sx, Sy),
-                  not isOnOutWestTramp(vector(Sx,Sy))).
-                  
+                  not isOnOutWestTramp(vector(Sx,Sy)).
+
  %% Must be in the East Ramp Edge. (Right)
  isOnEastEdge(vector(Sx,Sy)):-
                   isPointInEllipse(15500, 642206, 6481, 642206, -6481, Sx, Sy),
-                  not isOnOutEastTramp(vector(Sx,Sy))).
+                  not isOnOutEastTramp(vector(Sx,Sy)).
 
  %% Must be in the West Ramp. (Left)
  isOnWestRamp(vector(Sx,Sy)):-
@@ -60,3 +60,10 @@
                  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
+%% Auxiliary Functions
+
+inTramp(vector(Sx,Sy)):-  isOnInWestTramp(vector(Sx,Sy));
+                          isOnInEastTramp(vector(Sx,Sy));
+                          isOnOutWestTramp(vector(Sx,Sy));
+                          isOnOutEastTramp(vector(Sx,Sy)).
