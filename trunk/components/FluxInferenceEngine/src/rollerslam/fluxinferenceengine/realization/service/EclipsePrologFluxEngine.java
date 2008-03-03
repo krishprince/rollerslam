@@ -43,7 +43,8 @@ public class EclipsePrologFluxEngine extends FluxInferenceEngine {
 	private Set<EclipsePrologFluxSpecification> compiledSpecs = new HashSet<EclipsePrologFluxSpecification>();
 
 	public EclipsePrologFluxEngine() throws Exception {
-		this.reasoningFacade = new ReasoningFacade() {
+		//TODO refactoring anonimous class to named inner class
+		this.setReasoningFacade(new ReasoningFacade() {
 
 			@Override
 			public Action computeNextAction(FluxSpecification spec, State state)
@@ -128,7 +129,7 @@ public class EclipsePrologFluxEngine extends FluxInferenceEngine {
 				return state;
 			}
 
-		};
+		});
 	}
 
 	protected State getGenericState(Object object) {

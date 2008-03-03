@@ -11,19 +11,15 @@ import rollerslam.fluxinferenceengine.specification.type.State;
 
 public class TestEclipseFluxEngine {
 
-	/**
-	 * @param args
-	 * @throws Exception 
-	 */
 	public static void main(String[] args) throws Exception {
 		FluxSpecification spec = new EclipsePrologFluxSpecification(
 				new File("/documents/rollerslam/workspace/FluxInferenceEngine/src/rollerslam/fluxinferenceengine/test/testflux.pl"),
 				"test");
 		State state = new State();
-		
+
 		FluxInferenceEngine fie = new EclipsePrologFluxEngine();
-		ReasoningFacade rf = fie.reasoningFacade;
-		
+		ReasoningFacade rf = fie.getReasoningFacade();
+
 		System.out.println(""+rf.updateModel(spec, state));
 	}
 
