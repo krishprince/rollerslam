@@ -12,17 +12,17 @@ import rollerslam.infrastructure.specification.service.Message;
 import rollerslam.infrastructure.specification.type.AgentID;
 
 public class DisplayAgent extends CommunicativeAgentImpl {
-	
+
 	private AgentID gamePhysics;
-	
+
 	public DisplayAgent(Agent port, AgentID gamePhysics, long cycleLenght) {
 		super(port, cycleLenght);
 		this.gamePhysics = gamePhysics;
-		
-		createDisplayFrame();	
-		
+
+		createDisplayFrame();
+
 		super.startThread();
-		
+
 	}
 
 	private void createDisplayFrame() {
@@ -34,18 +34,18 @@ public class DisplayAgent extends CommunicativeAgentImpl {
         jf.getContentPane().add(panel);
 
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+
         // finally make the window visible
         jf.pack();
         jf.setResizable(false);
 
         panel.main();
-        jf.setVisible(true);		
+        jf.setVisible(true);
 	}
 
 	protected Message computeNextAction() {
 		AskAllAction askAction = new AskAllAction();
-		askAction.receiver.add(gamePhysics);
+		askAction.getReceiver().add(gamePhysics);
 		return askAction;
 	}
 
