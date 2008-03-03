@@ -1,5 +1,15 @@
 package rollerslam.fluxinferenceengine.specification.service;
 
 public abstract class FluxInferenceEngine {
-	public ReasoningFacade reasoningFacade;
+
+	private ReasoningFacade reasoningFacade;
+
+	public ReasoningFacade getReasoningFacade() {
+		return reasoningFacade;
+	}
+
+	public void setReasoningFacade(ReasoningFacade reasoningFacade) {
+		this.reasoningFacade = reasoningFacade;
+	}
+
 }
