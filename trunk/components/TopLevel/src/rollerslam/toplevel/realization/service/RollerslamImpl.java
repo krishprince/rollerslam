@@ -16,10 +16,42 @@ import rollerslam.toplevel.specification.service.Rollerslam;
 public class RollerslamImpl extends Rollerslam {
 
 	private static final String TEAM_A = "TEAM_A";
-	public SimulationInfrastructure infrastructure;
-	public CommunicativeAgent		display;
-	public CommunicativeAgent		gamePhysics;
-	public CommunicativeAgent		player;
+	private SimulationInfrastructure infrastructure;
+	private CommunicativeAgent		display;
+	private CommunicativeAgent		gamePhysics;
+	private CommunicativeAgent		player;
+
+	public SimulationInfrastructure getInfrastructure() {
+		return infrastructure;
+	}
+
+	public void setInfrastructure(SimulationInfrastructure infrastructure) {
+		this.infrastructure = infrastructure;
+	}
+
+	public CommunicativeAgent getDisplay() {
+		return display;
+	}
+
+	public void setDisplay(CommunicativeAgent display) {
+		this.display = display;
+	}
+
+	public CommunicativeAgent getGamePhysics() {
+		return gamePhysics;
+	}
+
+	public void setGamePhysics(CommunicativeAgent gamePhysics) {
+		this.gamePhysics = gamePhysics;
+	}
+
+	public CommunicativeAgent getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(CommunicativeAgent player) {
+		this.player = player;
+	}
 
 	public RollerslamImpl() throws Exception {
 			infrastructure = new SimulationInfrastructureImpl();
@@ -39,10 +71,6 @@ public class RollerslamImpl extends Rollerslam {
 			infrastructure.getSimAdmin().setState(SimulationState.RUNNING);
 	}
 
-	/**
-	 * @param args
-	 * @throws Exception
-	 */
 	public static void main(String[] args) throws Exception {
 		new RollerslamImpl();
 	}
