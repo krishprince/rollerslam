@@ -24,7 +24,7 @@ public class TestAgent extends CommunicativeAgentImpl {
 
 		Semaphor ns = new Semaphor();
 
-		ns.value = (int) (System.currentTimeMillis() % 10000);
+		ns.setValue((int) (System.currentTimeMillis() % 10000));
 
 		WorldObject fo = new WorldObject(new StringOID("semaphor"), ns);
 		tellAction.getObjects().add(fo);
