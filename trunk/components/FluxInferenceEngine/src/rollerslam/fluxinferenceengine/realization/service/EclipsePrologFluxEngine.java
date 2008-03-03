@@ -57,7 +57,7 @@ public class EclipsePrologFluxEngine extends FluxInferenceEngine {
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
-					Collection col = getEclipsePrologState(state.fluents);
+					Collection col = getEclipsePrologState(state.getFluents());
 
 					try {
 						CompoundTerm ret = connection.rpc(espec.getAgentName()
@@ -84,7 +84,7 @@ public class EclipsePrologFluxEngine extends FluxInferenceEngine {
 					} catch (Exception e) {
 						throw new ReasoningException(e);
 					}
-					Collection col = getEclipsePrologState(state.fluents);
+					Collection col = getEclipsePrologState(state.getFluents());
 
 					try {
 						CompoundTerm ret = connection.rpc(espec.getAgentName()
@@ -111,7 +111,7 @@ public class EclipsePrologFluxEngine extends FluxInferenceEngine {
 
 					try {
 						compileSpec(espec);
-						Collection col = getEclipsePrologState(state.fluents);
+						Collection col = getEclipsePrologState(state.getFluents());
 
 						CompoundTerm ret = connection.rpc(espec.getAgentName()
 								+ "ProcessAction", col, eaction.getActionTerm(),
