@@ -12,7 +12,7 @@ public class Test {
 
 		Agent envConn = sim.connectAgent(new CommunicativeAgentID("ENV"));
 		new TestEnv(envConn);
-		
+
 		Agent agConn = sim.connectAgent(new CommunicativeAgentID("AGT"));
 		new TestAgent(agConn, envConn.getAgentID());
 
@@ -24,10 +24,10 @@ public class Test {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
+
 		System.out.println("START");
-		
-		sim.simAdmin.setState(SimulationState.RUNNING);
+
+		sim.getSimAdmin().setState(SimulationState.RUNNING);
 	}
-	
+
 }
