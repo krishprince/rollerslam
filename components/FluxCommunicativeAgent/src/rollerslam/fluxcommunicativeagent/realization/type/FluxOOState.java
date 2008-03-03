@@ -14,7 +14,7 @@ public class FluxOOState extends ObjectState {
 		super();
 		this.fluents = fluents;
 	}
-	
+
 	public String toString() {
 		StringBuffer retorno = new StringBuffer();
 		Iterator<Fluent> iterator = this.fluents.iterator();
@@ -23,7 +23,7 @@ public class FluxOOState extends ObjectState {
 			String item = "";
 			if(fluent instanceof EclipsePrologFluent){
 				EclipsePrologFluent eclipsePrologFluent = (EclipsePrologFluent)fluent;
-				item = ToStringPrinterUtility.toString(eclipsePrologFluent.term);
+				item = ToStringPrinterUtility.toString(eclipsePrologFluent.getTerm());
 			} else {
 				item = fluent.toString();
 			}
