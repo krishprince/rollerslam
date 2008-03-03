@@ -97,7 +97,7 @@ public class GameCanvas extends Canvas implements MouseMotionListener {
 					world = model.getModel();
 					if (world != null) {
 
-						for (WorldObject object : world.objects.values()) {
+						for (WorldObject object : world.getObjects().values()) {
 
 							printer.print(g, object);
 
@@ -152,7 +152,7 @@ public class GameCanvas extends Canvas implements MouseMotionListener {
 
 		private SpriteKind getSprite(WorldObject worldObject) {
 			SpriteKind retorno = null;
-			FluxOID fluxOID = (FluxOID)worldObject.oid;
+			FluxOID fluxOID = (FluxOID)worldObject.getOid();
 			if("ball".equals(fluxOID.getTerm().functor())){
 				retorno = SpriteKind.BALL;
 			} else {
@@ -171,8 +171,8 @@ public class GameCanvas extends Canvas implements MouseMotionListener {
 		private Object attributeDiscoverer(WorldObject worldObject,
 				String attribute) {
 			Object retorno = null;
-			if (worldObject.state instanceof FluxOOState) {
-				FluxOOState fluxOOState = (FluxOOState) worldObject.state;
+			if (worldObject.getState() instanceof FluxOOState) {
+				FluxOOState fluxOOState = (FluxOOState) worldObject.getState();
 				boolean teste = true;
 				Set<Fluent> fluents = fluxOOState.getFluents();
 				Iterator<Fluent> iterator = fluents.iterator();
