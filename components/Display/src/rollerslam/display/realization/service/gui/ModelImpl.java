@@ -6,7 +6,7 @@ import rollerslam.display.realization.service.gui.mvc.Model;
 
 public class ModelImpl implements Model {
 
-    public OOState model;
+    private OOState model;
 
     public OOState getModel() {
         return model;

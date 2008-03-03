@@ -45,11 +45,7 @@ public class GameCanvas extends Canvas implements MouseMotionListener {
 	private Model model;
 	private SpriteStore ss;
 
-	// private JLabel messagesLabel;
-
 	private Sprite background;
-	// private Sprite scoreBoardA;
-	// private Sprite scoreBoardB;
 	private GameField gameField;
 
 	public Point mPoint;
@@ -62,16 +58,12 @@ public class GameCanvas extends Canvas implements MouseMotionListener {
 
 		setBounds(0, 0, gameField.getWidth(), gameField.getHeight());
 
-		// this.messagesLabel = messages;
-
 		// Tell AWT not to bother repainting our canvas since we're
 		// going to do that our self in accelerated mode
 		setIgnoreRepaint(true);
 		ss = SpriteStore.get();
 
 		background = new Sprite(gameField.getImage());
-		// scoreBoardA = new Sprite(gameField.getScoreboardA());
-		// scoreBoardB = new Sprite(gameField.getScoreboardB());
 
 		this.addMouseMotionListener(this);
 	}

@@ -8,21 +8,18 @@ import java.util.Vector;
 import rollerslam.display.realization.service.DisplayAgent;
 import rollerslam.display.realization.service.gui.mvc.Controller;
 import rollerslam.display.realization.service.gui.mvc.Model;
-import rollerslam.display.realization.service.gui.mvc.View;
 
 /**
- * @author Marcos AurÃ©lio
+ * @author Marcos Aurélio
  *
  */
 public class ControllerImpl implements Controller {
 
-    View view = null;
-    Model model = null;
-    DisplayAgent agent = null;
-    
-    public ControllerImpl(View view, Model model, DisplayAgent agent) {
-        this.view = view;
-        this.model = model;   
+    private Model model = null;
+    private DisplayAgent agent = null;
+
+    public ControllerImpl(Model model, DisplayAgent agent) {
+        this.model = model;
         this.agent = agent;
     }
 
@@ -34,7 +31,7 @@ public class ControllerImpl implements Controller {
     		public void run() {
     			while(true) {
     				model.setModel(agent.getStateForDisplay());
-    				
+
     				try {
 						Thread.sleep(50);
 					} catch (InterruptedException e) {
@@ -53,6 +50,6 @@ public class ControllerImpl implements Controller {
 		ret.add("localhost");
 		return ret;
 	}
-    
-    
+
+
 }
