@@ -59,7 +59,7 @@ public class EclipsePrologFluxEngine extends FluxInferenceEngine {
 					Collection col = getEclipsePrologState(state.fluents);
 
 					try {
-						CompoundTerm ret = connection.rpc(espec.agentName
+						CompoundTerm ret = connection.rpc(espec.getAgentName()
 								+ "ComputeNextAction", col, null);
 						return new EclipsePrologFluxAction((CompoundTerm) ret
 								.arg(2));
@@ -86,7 +86,7 @@ public class EclipsePrologFluxEngine extends FluxInferenceEngine {
 					Collection col = getEclipsePrologState(state.fluents);
 
 					try {
-						CompoundTerm ret = connection.rpc(espec.agentName
+						CompoundTerm ret = connection.rpc(espec.getAgentName()
 								+ "UpdateModel", col, null);
 						return getGenericState(ret.arg(2));
 					} catch (Fail e) {
@@ -112,7 +112,7 @@ public class EclipsePrologFluxEngine extends FluxInferenceEngine {
 						compileSpec(espec);
 						Collection col = getEclipsePrologState(state.fluents);
 
-						CompoundTerm ret = connection.rpc(espec.agentName
+						CompoundTerm ret = connection.rpc(espec.getAgentName()
 								+ "ProcessAction", col, eaction.getActionTerm(),
 								null);
 						return getGenericState(ret.arg(2));
@@ -159,7 +159,7 @@ public class EclipsePrologFluxEngine extends FluxInferenceEngine {
 	protected void compileSpec(EclipsePrologFluxSpecification spec)
 			throws Exception {
 		if (!compiledSpecs.contains(spec)) {
-			connection.compile(spec.fluxFile);
+			connection.compile(spec.getFluxFile());
 			compiledSpecs.add(spec);
 		}
 	}
