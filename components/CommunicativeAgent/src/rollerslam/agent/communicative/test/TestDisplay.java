@@ -20,7 +20,7 @@ public class TestDisplay extends CommunicativeAgentImpl {
 	protected Message computeNextAction() {
 		AskAction askAction = new AskAction();
 		askAction.getReceiver().add(env);
-		askAction.oids.add(new StringOID("semaphor"));
+		askAction.getOids().add(new StringOID("semaphor"));
 		return askAction;
 	}
 }
