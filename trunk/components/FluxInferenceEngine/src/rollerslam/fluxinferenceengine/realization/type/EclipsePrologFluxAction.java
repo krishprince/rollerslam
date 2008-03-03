@@ -6,11 +6,19 @@ import rollerslam.fluxinferenceengine.specification.type.Action;
 
 public class EclipsePrologFluxAction extends Action {
 
-	public CompoundTerm actionTerm;
+	private CompoundTerm actionTerm;
+
+	public CompoundTerm getActionTerm() {
+		return actionTerm;
+	}
+
+	public void setActionTerm(CompoundTerm actionTerm) {
+		this.actionTerm = actionTerm;
+	}
 
 	public EclipsePrologFluxAction(CompoundTerm actionTerm) {
 		super();
 		this.actionTerm = actionTerm;
 	}
-	
+
 }
