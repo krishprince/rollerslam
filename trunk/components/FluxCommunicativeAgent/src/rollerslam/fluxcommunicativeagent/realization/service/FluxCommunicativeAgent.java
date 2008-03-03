@@ -36,18 +36,18 @@ import com.parctechnologies.eclipse.CompoundTermImpl;
 
 // TODO remove this dependency to Eclipse Prolog LIB's
 public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
-	
+
 	private FluxInferenceEngine inferenceEngine;
 	private FluxSpecification   fluxSpec;
-	
+
 	private State 			    fluxState = new State();
-	
+
 	public FluxCommunicativeAgent(Agent port, File fluxSpec, String agentTerm, final long cycleLength) throws Exception {
 		super(port, cycleLength);
-		
+
 		this.inferenceEngine = new EclipsePrologFluxEngine();
 		this.fluxSpec = new EclipsePrologFluxSpecification(fluxSpec, agentTerm);
-		
+
 		startThread();
 	}
 
@@ -62,50 +62,50 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 				}
 			} catch (ReasoningException e) {
 				e.printStackTrace();
-			}			
+			}
 		}
 	}
-	
+
 	protected Set<Message> processCycle(Set<Message> perceptions) {
 		if (inferenceEngine == null || fluxSpec == null) return null;
-		
+
 		Set<Message> ret = super.processCycle(perceptions);
 
 		updateFluxState();
-		
+
 		try {
 			fluxState = inferenceEngine.reasoningFacade.updateModel(fluxSpec, fluxState);
 
 			updateInternalModel(fluxState);
-			
+
 			Action ac = inferenceEngine.reasoningFacade.computeNextAction(fluxSpec, fluxState);
-			
+
 			if (ac != null) {
 				EclipsePrologFluxAction eac = ((EclipsePrologFluxAction)ac);
-				
+
 				if (eac.actionTerm.functor().equals("ask")) {
 					AskAction msg = new AskAction();
-					
+
 					msg.oids.add(new FluxOID((CompoundTerm) eac.actionTerm.arg(1)));
-					
-					msg.sender = this.agent.getAgentID();
-					msg.receiver.add(new FluxAgentID(new Atom("gamePhysics")));
-					
-					ret.add(msg);										
+
+					msg.setSender(this.agent.getAgentID());
+					msg.getReceiver().add(new FluxAgentID(new Atom("gamePhysics")));
+
+					ret.add(msg);
 				} else if (eac.actionTerm.functor().equals("askAll")) {
 					Message msg = new AskAllAction();
-					
-					msg.sender = this.agent.getAgentID();
-					msg.receiver.add(new FluxAgentID(new Atom("gamePhysics")));
-					
-					ret.add(msg);					
+
+					msg.setSender(this.agent.getAgentID());
+					msg.getReceiver().add(new FluxAgentID(new Atom("gamePhysics")));
+
+					ret.add(msg);
 				} else {
 					Message msg = new FluxAction(eac);
-					
-					msg.sender = this.agent.getAgentID();
-					msg.receiver.add(new FluxAgentID(new Atom("gamePhysics")));
-					
-					ret.add(msg);					
+
+					msg.setSender(this.agent.getAgentID());
+					msg.getReceiver().add(new FluxAgentID(new Atom("gamePhysics")));
+
+					ret.add(msg);
 				}
 			}
 		} catch (ReasoningException e) {
@@ -117,19 +117,19 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 	private void updateInternalModel(State state) {
 		OOState newKB = new OOState();
 		HashMap<AgentID, OOState> newAgentKB = new HashMap<AgentID, OOState>();
-		
+
 		for (Fluent f : state.fluents) {
 			EclipsePrologFluent ef = (EclipsePrologFluent) f;
-			
+
 			if (ef.term.functor().equals("k")) {
 				FluxAgentID agId = new FluxAgentID((CompoundTerm) ef.term.arg(1));
 
 				OOState as = newAgentKB.get(agId);
-				
+
 				if (as == null) {
 					as = new OOState();
 				}
-				
+
 				updateOOState(as, new EclipsePrologFluent((CompoundTerm) ef.term.arg(2)));
 			} else if (ef.term.functor().equals("@")) {
 				updateOOState(newKB, ef);
@@ -143,19 +143,19 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 		if (obj == null) {
 			obj = new WorldObject(oid, new FluxOOState(new HashSet<Fluent>()));
 		}
-		
+
 		((FluxOOState)obj.state).fluents.add(ef);
-		
+
 		newKB.objects.put(oid, obj);
 	}
 
 	private void updateFluxState() {
 		Vector<Fluent> fluents = new Vector<Fluent>();
-				
+
 		for (WorldObject object : kb.objects.values()) {
 			fluents.addAll(((FluxOOState)object.state).fluents);
 		}
-		
+
 		for(AgentID agent : agentKB.keySet()) {
 			for (WorldObject object : ((OOState)agentKB.get(agent)).objects.values()) {
 				for (Fluent fluent : ((FluxOOState)object.state).fluents) {
@@ -165,44 +165,44 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 				}
 			}
 		}
-		
+
 		fluxState = new State(fluents.toArray(new Fluent[0]));
 	}
-	
+
 	protected Fluent makeFluent(FluxOID oid, String att, CompoundTerm value) {
 		CompoundTerm vl = new CompoundTermImpl("->",new Atom(att), value);
-		
+
 		EclipsePrologFluent f = new EclipsePrologFluent(new CompoundTermImpl(
 				"@", oid.term, vl));
 		return f;
 	}
 
 	protected void declareFAtom(FluxOID oid, String attributeName, String attributeValue) {
-		
+
 		WorldObject wobject = kb.objects.get(oid);
-		
+
 		if (wobject == null) {
 			wobject = new WorldObject(oid, new FluxOOState(new HashSet<Fluent>()));
 			kb.objects.put(oid, wobject);
 		}
-		
+
 		FluxOOState wostate = (FluxOOState) wobject.state;
-		
+
 		wostate.fluents.add(makeFluent(oid, attributeName, new Atom(attributeValue)));
 	}
 
 	protected void declareFAtom(FluxOID oid, String attributeName, CompoundTermImpl attributeValue) {
-		
+
 		WorldObject wobject = kb.objects.get(oid);
-		
+
 		if (wobject == null) {
 			wobject = new WorldObject(oid, new FluxOOState(new HashSet<Fluent>()));
 			kb.objects.put(oid, wobject);
 		}
-		
+
 		FluxOOState wostate = (FluxOOState) wobject.state;
-		
+
 		wostate.fluents.add(makeFluent(oid, attributeName, attributeValue));
 	}
-	
+
 }
