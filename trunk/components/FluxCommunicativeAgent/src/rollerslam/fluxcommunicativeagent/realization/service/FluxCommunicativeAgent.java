@@ -1,6 +1,5 @@
 package rollerslam.fluxcommunicativeagent.realization.service;
 
-
 import java.io.File;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -38,11 +37,12 @@ import com.parctechnologies.eclipse.CompoundTermImpl;
 public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 
 	private FluxInferenceEngine inferenceEngine;
-	private FluxSpecification   fluxSpec;
+	private FluxSpecification fluxSpec;
 
-	private State 			    fluxState = new State();
+	private State fluxState = new State();
 
-	public FluxCommunicativeAgent(Agent port, File fluxSpec, String agentTerm, final long cycleLength) throws Exception {
+	public FluxCommunicativeAgent(Agent port, File fluxSpec, String agentTerm,
+			final long cycleLength) throws Exception {
 		super(port, cycleLength);
 
 		this.inferenceEngine = new EclipsePrologFluxEngine();
@@ -52,11 +52,13 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 	}
 
 	protected void processSpecificMessage(Message message) {
-		if (inferenceEngine == null || fluxSpec == null) return;
+		if (inferenceEngine == null || fluxSpec == null)
+			return;
 
 		if (message instanceof FluxAction) {
 			try {
-				State s = inferenceEngine.reasoningFacade.processAction(fluxSpec, fluxState, ((FluxAction)message).action);
+				State s = inferenceEngine.reasoningFacade.processAction(
+						fluxSpec, fluxState, ((FluxAction) message).action);
 				if (s != null) {
 					fluxState = s;
 				}
@@ -67,43 +69,50 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 	}
 
 	protected Set<Message> processCycle(Set<Message> perceptions) {
-		if (inferenceEngine == null || fluxSpec == null) return null;
+		if (inferenceEngine == null || fluxSpec == null)
+			return null;
 
 		Set<Message> ret = super.processCycle(perceptions);
 
 		updateFluxState();
 
 		try {
-			fluxState = inferenceEngine.reasoningFacade.updateModel(fluxSpec, fluxState);
+			fluxState = inferenceEngine.reasoningFacade.updateModel(fluxSpec,
+					fluxState);
 
 			updateInternalModel(fluxState);
 
-			Action ac = inferenceEngine.reasoningFacade.computeNextAction(fluxSpec, fluxState);
+			Action ac = inferenceEngine.reasoningFacade.computeNextAction(
+					fluxSpec, fluxState);
 
 			if (ac != null) {
-				EclipsePrologFluxAction eac = ((EclipsePrologFluxAction)ac);
+				EclipsePrologFluxAction eac = ((EclipsePrologFluxAction) ac);
 
-				if (eac.actionTerm.functor().equals("ask")) {
+				if (eac.getActionTerm().functor().equals("ask")) {
 					AskAction msg = new AskAction();
 
-					msg.oids.add(new FluxOID((CompoundTerm) eac.actionTerm.arg(1)));
+					msg.oids.add(new FluxOID((CompoundTerm) eac.getActionTerm()
+							.arg(1)));
 
 					msg.setSender(this.agent.getAgentID());
-					msg.getReceiver().add(new FluxAgentID(new Atom("gamePhysics")));
+					msg.getReceiver().add(
+							new FluxAgentID(new Atom("gamePhysics")));
 
 					ret.add(msg);
-				} else if (eac.actionTerm.functor().equals("askAll")) {
+				} else if (eac.getActionTerm().functor().equals("askAll")) {
 					Message msg = new AskAllAction();
 
 					msg.setSender(this.agent.getAgentID());
-					msg.getReceiver().add(new FluxAgentID(new Atom("gamePhysics")));
+					msg.getReceiver().add(
+							new FluxAgentID(new Atom("gamePhysics")));
 
 					ret.add(msg);
 				} else {
 					Message msg = new FluxAction(eac);
 
 					msg.setSender(this.agent.getAgentID());
-					msg.getReceiver().add(new FluxAgentID(new Atom("gamePhysics")));
+					msg.getReceiver().add(
+							new FluxAgentID(new Atom("gamePhysics")));
 
 					ret.add(msg);
 				}
@@ -122,7 +131,8 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 			EclipsePrologFluent ef = (EclipsePrologFluent) f;
 
 			if (ef.getTerm().functor().equals("k")) {
-				FluxAgentID agId = new FluxAgentID((CompoundTerm) ef.getTerm().arg(1));
+				FluxAgentID agId = new FluxAgentID((CompoundTerm) ef.getTerm()
+						.arg(1));
 
 				OOState as = newAgentKB.get(agId);
 
@@ -130,7 +140,8 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 					as = new OOState();
 				}
 
-				updateOOState(as, new EclipsePrologFluent((CompoundTerm) ef.getTerm().arg(2)));
+				updateOOState(as, new EclipsePrologFluent((CompoundTerm) ef
+						.getTerm().arg(2)));
 			} else if (ef.getTerm().functor().equals("@")) {
 				updateOOState(newKB, ef);
 			}
@@ -144,7 +155,7 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 			obj = new WorldObject(oid, new FluxOOState(new HashSet<Fluent>()));
 		}
 
-		((FluxOOState)obj.state).fluents.add(ef);
+		((FluxOOState) obj.state).fluents.add(ef);
 
 		newKB.objects.put(oid, obj);
 	}
@@ -153,12 +164,13 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 		Vector<Fluent> fluents = new Vector<Fluent>();
 
 		for (WorldObject object : kb.objects.values()) {
-			fluents.addAll(((FluxOOState)object.state).fluents);
+			fluents.addAll(((FluxOOState) object.state).fluents);
 		}
 
-		for(AgentID agent : agentKB.keySet()) {
-			for (WorldObject object : ((OOState)agentKB.get(agent)).objects.values()) {
-				for (Fluent fluent : ((FluxOOState)object.state).fluents) {
+		for (AgentID agent : agentKB.keySet()) {
+			for (WorldObject object : ((OOState) agentKB.get(agent)).objects
+					.values()) {
+				for (Fluent fluent : ((FluxOOState) object.state).fluents) {
 					fluents.add(new EclipsePrologFluent(new CompoundTermImpl(
 							"k", ((FluxAgentID) agent).term,
 							((EclipsePrologFluent) fluent).getTerm())));
@@ -170,33 +182,38 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 	}
 
 	protected Fluent makeFluent(FluxOID oid, String att, CompoundTerm value) {
-		CompoundTerm vl = new CompoundTermImpl("->",new Atom(att), value);
+		CompoundTerm vl = new CompoundTermImpl("->", new Atom(att), value);
 
 		EclipsePrologFluent f = new EclipsePrologFluent(new CompoundTermImpl(
 				"@", oid.term, vl));
 		return f;
 	}
 
-	protected void declareFAtom(FluxOID oid, String attributeName, String attributeValue) {
+	protected void declareFAtom(FluxOID oid, String attributeName,
+			String attributeValue) {
 
 		WorldObject wobject = kb.objects.get(oid);
 
 		if (wobject == null) {
-			wobject = new WorldObject(oid, new FluxOOState(new HashSet<Fluent>()));
+			wobject = new WorldObject(oid, new FluxOOState(
+					new HashSet<Fluent>()));
 			kb.objects.put(oid, wobject);
 		}
 
 		FluxOOState wostate = (FluxOOState) wobject.state;
 
-		wostate.fluents.add(makeFluent(oid, attributeName, new Atom(attributeValue)));
+		wostate.fluents.add(makeFluent(oid, attributeName, new Atom(
+				attributeValue)));
 	}
 
-	protected void declareFAtom(FluxOID oid, String attributeName, CompoundTermImpl attributeValue) {
+	protected void declareFAtom(FluxOID oid, String attributeName,
+			CompoundTermImpl attributeValue) {
 
 		WorldObject wobject = kb.objects.get(oid);
 
 		if (wobject == null) {
-			wobject = new WorldObject(oid, new FluxOOState(new HashSet<Fluent>()));
+			wobject = new WorldObject(oid, new FluxOOState(
+					new HashSet<Fluent>()));
 			kb.objects.put(oid, wobject);
 		}
 
