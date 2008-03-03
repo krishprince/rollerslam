@@ -12,22 +12,22 @@ public class AgentImpl implements Agent {
 
 	private SimulationInfrastructureImpl simulation;
 	private AgentID						 id;
-	
+
 	public AgentImpl(SimulationInfrastructureImpl simulation, AgentID id) {
 		this.simulation = simulation;
 		this.id         = id;
 	}
-	
+
 	public AgentID getAgentID() {
 		return id;
 	}
 
-	public Set<Message> getPerceptions() {		
-		
+	public Set<Message> getPerceptions() {
+
 		Set<Message> ret = simulation.msgs.get(id) ;
-		
+
 		if (ret != null && !ret.isEmpty()) {
-			System.out.println("[" + id + "] GET " + ret);			
+			System.out.println("[" + id + "] GET " + ret);
 		}
 
 		if (simulation.simAdmin.getState() == SimulationState.RUNNING) {
@@ -46,9 +46,10 @@ public class AgentImpl implements Agent {
 
 	public void sendActions(Set<Message> actions) {
 		if (actions != null && !actions.isEmpty()) {
-			System.out.println("[" + id + "] SEND " + actions);			
+			//TODO refactoring to logger
+			System.out.println("[" + id + "] SEND " + actions);
 		}
-		
+
 		if (simulation.simAdmin.getState() == SimulationState.RUNNING) {
 			synchronized (simulation.token) {
 				for (Message action : actions) {
