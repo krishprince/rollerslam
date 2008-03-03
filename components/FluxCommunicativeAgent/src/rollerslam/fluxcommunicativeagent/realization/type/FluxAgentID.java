@@ -7,7 +7,15 @@ import com.parctechnologies.eclipse.CompoundTerm;
 
 public class FluxAgentID extends CommunicativeAgentID {
 
-	public CompoundTerm term;
+	private CompoundTerm term;
+
+	public CompoundTerm getTerm() {
+		return term;
+	}
+
+	public void setTerm(CompoundTerm term) {
+		this.term = term;
+	}
 
 	public FluxAgentID(CompoundTerm term) {
 		super(term.functor());
@@ -42,12 +50,12 @@ public class FluxAgentID extends CommunicativeAgentID {
 			return false;
 		return true;
 	}
-	
+
 	public String toString() {
 		if (term instanceof Atom) {
 			return ""+ term.functor();
 		} else {
-			return "" + term;			
+			return "" + term;
 		}
 	}
 

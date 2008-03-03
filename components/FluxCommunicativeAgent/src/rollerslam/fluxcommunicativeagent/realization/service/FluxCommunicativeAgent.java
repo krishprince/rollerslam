@@ -155,7 +155,7 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 			obj = new WorldObject(oid, new FluxOOState(new HashSet<Fluent>()));
 		}
 
-		((FluxOOState) obj.state).fluents.add(ef);
+		((FluxOOState) obj.state).getFluents().add(ef);
 
 		newKB.objects.put(oid, obj);
 	}
@@ -164,15 +164,15 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 		Vector<Fluent> fluents = new Vector<Fluent>();
 
 		for (WorldObject object : kb.objects.values()) {
-			fluents.addAll(((FluxOOState) object.state).fluents);
+			fluents.addAll(((FluxOOState) object.state).getFluents());
 		}
 
 		for (AgentID agent : agentKB.keySet()) {
 			for (WorldObject object : ((OOState) agentKB.get(agent)).objects
 					.values()) {
-				for (Fluent fluent : ((FluxOOState) object.state).fluents) {
+				for (Fluent fluent : ((FluxOOState) object.state).getFluents()) {
 					fluents.add(new EclipsePrologFluent(new CompoundTermImpl(
-							"k", ((FluxAgentID) agent).term,
+							"k", ((FluxAgentID) agent).getTerm(),
 							((EclipsePrologFluent) fluent).getTerm())));
 				}
 			}
@@ -185,7 +185,7 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 		CompoundTerm vl = new CompoundTermImpl("->", new Atom(att), value);
 
 		EclipsePrologFluent f = new EclipsePrologFluent(new CompoundTermImpl(
-				"@", oid.term, vl));
+				"@", oid.getTerm(), vl));
 		return f;
 	}
 
@@ -202,7 +202,7 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 
 		FluxOOState wostate = (FluxOOState) wobject.state;
 
-		wostate.fluents.add(makeFluent(oid, attributeName, new Atom(
+		wostate.getFluents().add(makeFluent(oid, attributeName, new Atom(
 				attributeValue)));
 	}
 
@@ -219,7 +219,7 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 
 		FluxOOState wostate = (FluxOOState) wobject.state;
 
-		wostate.fluents.add(makeFluent(oid, attributeName, attributeValue));
+		wostate.getFluents().add(makeFluent(oid, attributeName, attributeValue));
 	}
 
 }

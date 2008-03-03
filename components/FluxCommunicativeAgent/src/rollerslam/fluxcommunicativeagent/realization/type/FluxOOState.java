@@ -8,7 +8,16 @@ import rollerslam.fluxinferenceengine.realization.type.EclipsePrologFluent;
 import rollerslam.fluxinferenceengine.specification.type.Fluent;
 
 public class FluxOOState extends ObjectState {
-	public Set<Fluent> fluents;
+
+	private Set<Fluent> fluents;
+
+	public Set<Fluent> getFluents() {
+		return fluents;
+	}
+
+	public void setFluents(Set<Fluent> fluents) {
+		this.fluents = fluents;
+	}
 
 	public FluxOOState(Set<Fluent> fluents) {
 		super();
