@@ -57,7 +57,7 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 
 		if (message instanceof FluxAction) {
 			try {
-				State s = inferenceEngine.reasoningFacade.processAction(
+				State s = inferenceEngine.getReasoningFacade().processAction(
 						fluxSpec, fluxState, ((FluxAction) message).action);
 				if (s != null) {
 					fluxState = s;
@@ -77,12 +77,12 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 		updateFluxState();
 
 		try {
-			fluxState = inferenceEngine.reasoningFacade.updateModel(fluxSpec,
+			fluxState = inferenceEngine.getReasoningFacade().updateModel(fluxSpec,
 					fluxState);
 
 			updateInternalModel(fluxState);
 
-			Action ac = inferenceEngine.reasoningFacade.computeNextAction(
+			Action ac = inferenceEngine.getReasoningFacade().computeNextAction(
 					fluxSpec, fluxState);
 
 			if (ac != null) {
