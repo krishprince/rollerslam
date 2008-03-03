@@ -150,27 +150,27 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 
 	private void updateOOState(OOState newKB, EclipsePrologFluent ef) {
 		FluxOID oid = new FluxOID((CompoundTerm) ef.getTerm().arg(1));
-		WorldObject obj = newKB.objects.get(oid);
+		WorldObject obj = newKB.getObjects().get(oid);
 		if (obj == null) {
 			obj = new WorldObject(oid, new FluxOOState(new HashSet<Fluent>()));
 		}
 
-		((FluxOOState) obj.state).getFluents().add(ef);
+		((FluxOOState) obj.getState()).getFluents().add(ef);
 
-		newKB.objects.put(oid, obj);
+		newKB.getObjects().put(oid, obj);
 	}
 
 	private void updateFluxState() {
 		Vector<Fluent> fluents = new Vector<Fluent>();
 
-		for (WorldObject object : this.getKb().objects.values()) {
-			fluents.addAll(((FluxOOState) object.state).getFluents());
+		for (WorldObject object : this.getKb().getObjects().values()) {
+			fluents.addAll(((FluxOOState) object.getState()).getFluents());
 		}
 
 		for (AgentID agent : this.getAgentKB().keySet()) {
-			for (WorldObject object : ((OOState) this.getAgentKB().get(agent)).objects
+			for (WorldObject object : ((OOState) this.getAgentKB().get(agent)).getObjects()
 					.values()) {
-				for (Fluent fluent : ((FluxOOState) object.state).getFluents()) {
+				for (Fluent fluent : ((FluxOOState) object.getState()).getFluents()) {
 					fluents.add(new EclipsePrologFluent(new CompoundTermImpl(
 							"k", ((FluxAgentID) agent).getTerm(),
 							((EclipsePrologFluent) fluent).getTerm())));
@@ -192,15 +192,15 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 	protected void declareFAtom(FluxOID oid, String attributeName,
 			String attributeValue) {
 
-		WorldObject wobject = this.getKb().objects.get(oid);
+		WorldObject wobject = this.getKb().getObjects().get(oid);
 
 		if (wobject == null) {
 			wobject = new WorldObject(oid, new FluxOOState(
 					new HashSet<Fluent>()));
-			this.getKb().objects.put(oid, wobject);
+			this.getKb().getObjects().put(oid, wobject);
 		}
 
-		FluxOOState wostate = (FluxOOState) wobject.state;
+		FluxOOState wostate = (FluxOOState) wobject.getState();
 
 		wostate.getFluents().add(makeFluent(oid, attributeName, new Atom(
 				attributeValue)));
@@ -209,15 +209,15 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 	protected void declareFAtom(FluxOID oid, String attributeName,
 			CompoundTermImpl attributeValue) {
 
-		WorldObject wobject = this.getKb().objects.get(oid);
+		WorldObject wobject = this.getKb().getObjects().get(oid);
 
 		if (wobject == null) {
 			wobject = new WorldObject(oid, new FluxOOState(
 					new HashSet<Fluent>()));
-			this.getKb().objects.put(oid, wobject);
+			this.getKb().getObjects().put(oid, wobject);
 		}
 
-		FluxOOState wostate = (FluxOOState) wobject.state;
+		FluxOOState wostate = (FluxOOState) wobject.getState();
 
 		wostate.getFluents().add(makeFluent(oid, attributeName, attributeValue));
 	}
