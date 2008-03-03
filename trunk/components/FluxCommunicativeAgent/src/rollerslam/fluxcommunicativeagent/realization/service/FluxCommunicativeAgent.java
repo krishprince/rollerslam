@@ -121,8 +121,8 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 		for (Fluent f : state.fluents) {
 			EclipsePrologFluent ef = (EclipsePrologFluent) f;
 
-			if (ef.term.functor().equals("k")) {
-				FluxAgentID agId = new FluxAgentID((CompoundTerm) ef.term.arg(1));
+			if (ef.getTerm().functor().equals("k")) {
+				FluxAgentID agId = new FluxAgentID((CompoundTerm) ef.getTerm().arg(1));
 
 				OOState as = newAgentKB.get(agId);
 
@@ -130,15 +130,15 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 					as = new OOState();
 				}
 
-				updateOOState(as, new EclipsePrologFluent((CompoundTerm) ef.term.arg(2)));
-			} else if (ef.term.functor().equals("@")) {
+				updateOOState(as, new EclipsePrologFluent((CompoundTerm) ef.getTerm().arg(2)));
+			} else if (ef.getTerm().functor().equals("@")) {
 				updateOOState(newKB, ef);
 			}
 		}
 	}
 
 	private void updateOOState(OOState newKB, EclipsePrologFluent ef) {
-		FluxOID oid = new FluxOID((CompoundTerm) ef.term.arg(1));
+		FluxOID oid = new FluxOID((CompoundTerm) ef.getTerm().arg(1));
 		WorldObject obj = newKB.objects.get(oid);
 		if (obj == null) {
 			obj = new WorldObject(oid, new FluxOOState(new HashSet<Fluent>()));
@@ -161,7 +161,7 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 				for (Fluent fluent : ((FluxOOState)object.state).fluents) {
 					fluents.add(new EclipsePrologFluent(new CompoundTermImpl(
 							"k", ((FluxAgentID) agent).term,
-							((EclipsePrologFluent) fluent).term)));
+							((EclipsePrologFluent) fluent).getTerm())));
 				}
 			}
 		}
