@@ -17,31 +17,31 @@ public class RollerslamImpl extends Rollerslam {
 
 	private static final String TEAM_A = "TEAM_A";
 	public SimulationInfrastructure infrastructure;
-	public CommunicativeAgent		display;	
-	public CommunicativeAgent		gamePhysics;	
+	public CommunicativeAgent		display;
+	public CommunicativeAgent		gamePhysics;
 	public CommunicativeAgent		player;
-	
+
 	public RollerslamImpl() throws Exception {
 			infrastructure = new SimulationInfrastructureImpl();
-			
+
 			AgentID displayID = new CommunicativeAgentID("display");
 			AgentID gamePhysicsID = new FluxAgentID("gamePhysics");
 			AgentID playerID = new FluxAgentID("player");
-			
+
 			Agent displayConnector = infrastructure.connectAgent(displayID);
-			Agent gamePhysicsConnector = infrastructure.connectAgent(gamePhysicsID);						
+			Agent gamePhysicsConnector = infrastructure.connectAgent(gamePhysicsID);
 			Agent playerConnector = infrastructure.connectAgent(playerID);
-			
+
 			display = new DisplayAgent(displayConnector, gamePhysicsID, 50);
 			gamePhysics = new GamePhysicsAgent(gamePhysicsConnector, 1, 50);
 			player = new PlayerAgent(playerConnector, 1, TEAM_A, 50);
-			
-			infrastructure.simAdmin.setState(SimulationState.RUNNING);
+
+			infrastructure.getSimAdmin().setState(SimulationState.RUNNING);
 	}
-	
+
 	/**
 	 * @param args
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
 		new RollerslamImpl();
