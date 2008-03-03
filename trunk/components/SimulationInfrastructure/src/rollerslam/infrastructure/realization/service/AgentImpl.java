@@ -30,7 +30,7 @@ public class AgentImpl implements Agent {
 			System.out.println("[" + id + "] GET " + ret);
 		}
 
-		if (simulation.simAdmin.getState() == SimulationState.RUNNING) {
+		if (simulation.getSimAdmin().getState() == SimulationState.RUNNING) {
 			synchronized (simulation.token) {
 				Set<Message> oldRet = ret;
 				ret = new HashSet<Message>(oldRet);
@@ -41,7 +41,7 @@ public class AgentImpl implements Agent {
 	}
 
 	public SimulationState getSimulationState() {
-		return simulation.simAdmin.getState();
+		return simulation.getSimAdmin().getState();
 	}
 
 	public void sendActions(Set<Message> actions) {
@@ -50,7 +50,7 @@ public class AgentImpl implements Agent {
 			System.out.println("[" + id + "] SEND " + actions);
 		}
 
-		if (simulation.simAdmin.getState() == SimulationState.RUNNING) {
+		if (simulation.getSimAdmin().getState() == SimulationState.RUNNING) {
 			synchronized (simulation.token) {
 				for (Message action : actions) {
 					for (AgentID agentID : action.receiver) {

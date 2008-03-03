@@ -11,17 +11,18 @@ import rollerslam.infrastructure.specification.service.SimulationInfrastructure;
 import rollerslam.infrastructure.specification.service.SimulationState;
 import rollerslam.infrastructure.specification.type.AgentID;
 
-public class SimulationInfrastructureImpl extends SimulationInfrastructure implements SimulationAdmin {
+public class SimulationInfrastructureImpl extends SimulationInfrastructure
+		implements SimulationAdmin {
 
-	protected Object 		  token = new Object();	
+	protected Object token = new Object();
 	protected SimulationState state;
 	protected HashMap<AgentID, Set<Message>> msgs;
 
 	public SimulationInfrastructureImpl() {
 		state = SimulationState.INITIALIZED;
-		simAdmin = this;
+		this.setSimAdmin(this);
 		msgs = new HashMap<AgentID, Set<Message>>();
-		agent = new HashSet<Agent>();
+		this.setAgent(new HashSet<Agent>());
 	}
 
 	public SimulationState getState() {
@@ -31,12 +32,12 @@ public class SimulationInfrastructureImpl extends SimulationInfrastructure imple
 	public void setState(SimulationState s) {
 		this.state = s;
 	}
-		
+
 	public Agent connectAgent(AgentID agentID) {
 		AgentImpl agentConnector = new AgentImpl(this, agentID);
 		msgs.put(agentID, new HashSet<Message>());
-		agent.add(agentConnector);
-		
+		this.getAgent().add(agentConnector);
+
 		return agentConnector;
 	}
 }
