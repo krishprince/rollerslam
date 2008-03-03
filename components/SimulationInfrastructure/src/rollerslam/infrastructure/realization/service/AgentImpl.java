@@ -53,8 +53,8 @@ public class AgentImpl implements Agent {
 		if (simulation.getSimAdmin().getState() == SimulationState.RUNNING) {
 			synchronized (simulation.token) {
 				for (Message action : actions) {
-					for (AgentID agentID : action.receiver) {
-						action.sender = getAgentID();
+					for (AgentID agentID : action.getReceiver()) {
+						action.setSender(getAgentID());
 						simulation.msgs.get(agentID).add(action);
 					}
 				}
