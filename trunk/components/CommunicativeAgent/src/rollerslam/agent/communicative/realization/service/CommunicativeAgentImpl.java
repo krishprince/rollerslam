@@ -66,18 +66,18 @@ public class CommunicativeAgentImpl extends CommunicativeAgent {
 
 				OOState knowledge = getKnowledgeForAgent(tellAction.getSender());
 
-				for (WorldObject object : tellAction.objects) {
+				for (WorldObject object : tellAction.getObjects()) {
 					knowledge.objects.put(object.oid, object);
 				}
 			} else if (message instanceof AskAction) {
 				AskAction askAction = (AskAction) message;
 				TellAction ta = new TellAction();
-				ta.objects = new HashSet<WorldObject>();
+				ta.setObjects(new HashSet<WorldObject>());
 
-				for (OID oid : askAction.oids) {
+				for (OID oid : askAction.getOids()) {
 					WorldObject obj = this.getKb().objects.get(oid);
 					if (obj != null) {
-						ta.objects.add(obj);
+						ta.getObjects().add(obj);
 					}
 				}
 
@@ -85,7 +85,7 @@ public class CommunicativeAgentImpl extends CommunicativeAgent {
 				messages.add(ta);
 			} else if (message instanceof AskAllAction) {
 				TellAction ta = new TellAction();
-				ta.objects = new HashSet<WorldObject>(this.getKb().objects.values());
+				ta.setObjects(new HashSet<WorldObject>(this.getKb().objects.values()));
 
 				ta.getReceiver().add(message.getSender());
 				messages.add(ta);
