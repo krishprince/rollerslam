@@ -36,7 +36,7 @@ public class GamePhysicsAgent extends FluxCommunicativeAgent {
 		FluxOOState state = new FluxOOState(fs);
 		WorldObject worldObject = new WorldObject(oid, state);
 
-		this.getKb().objects.put(oid, worldObject);
+		this.getKb().getObjects().put(oid, worldObject);
 	}
 
 	private void createPlayer(String id, String team, int x, int y) {
