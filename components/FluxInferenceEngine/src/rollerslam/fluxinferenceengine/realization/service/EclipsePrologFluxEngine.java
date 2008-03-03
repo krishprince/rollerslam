@@ -113,7 +113,7 @@ public class EclipsePrologFluxEngine extends FluxInferenceEngine {
 						Collection col = getEclipsePrologState(state.fluents);
 
 						CompoundTerm ret = connection.rpc(espec.agentName
-								+ "ProcessAction", col, eaction.actionTerm,
+								+ "ProcessAction", col, eaction.getActionTerm(),
 								null);
 						return getGenericState(ret.arg(2));
 					} catch (Fail e) {
