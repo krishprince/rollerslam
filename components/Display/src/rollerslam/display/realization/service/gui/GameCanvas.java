@@ -161,10 +161,10 @@ public class GameCanvas extends Canvas implements MouseMotionListener {
 		private SpriteKind getSprite(WorldObject worldObject) {
 			SpriteKind retorno = null;
 			FluxOID fluxOID = (FluxOID)worldObject.oid;
-			if("ball".equals(fluxOID.term.functor())){
+			if("ball".equals(fluxOID.getTerm().functor())){
 				retorno = SpriteKind.BALL;
 			} else {
-				CompoundTerm compoundTerm = (CompoundTerm) fluxOID.term;
+				CompoundTerm compoundTerm = (CompoundTerm) fluxOID.getTerm();
 				String team = (String)compoundTerm.arg(2);
 				if("TEAM_A".equalsIgnoreCase(team)){
 					retorno = SpriteKind.RED_PLAYER;
@@ -182,7 +182,7 @@ public class GameCanvas extends Canvas implements MouseMotionListener {
 			if (worldObject.state instanceof FluxOOState) {
 				FluxOOState fluxOOState = (FluxOOState) worldObject.state;
 				boolean teste = true;
-				Set<Fluent> fluents = fluxOOState.fluents;
+				Set<Fluent> fluents = fluxOOState.getFluents();
 				Iterator<Fluent> iterator = fluents.iterator();
 				while (teste && iterator.hasNext()) {
 					Fluent fluent = iterator.next();
