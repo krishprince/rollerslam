@@ -18,7 +18,8 @@ import rollerslam.infrastructure.specification.type.AgentID;
 
 public class CommunicativeAgentImpl extends CommunicativeAgent {
 
-	public SimulationInfrastructure simulation;
+	//TODO compreender o que eh isso?
+	private SimulationInfrastructure simulation;
 	private long cycleLenght;
 
 	@Override
@@ -27,9 +28,9 @@ public class CommunicativeAgentImpl extends CommunicativeAgent {
 	}
 
 	public CommunicativeAgentImpl(final Agent agent, final long cycleLenght) {
-		this.agent = agent;
-		this.kb = new OOState();
-		this.agentKB = new HashMap<AgentID, OOState>();
+		this.setAgent(agent);
+		this.setKb(new OOState());
+		this.setAgentKB(new HashMap<AgentID, OOState>());
 		this.cycleLenght = cycleLenght;
 	}
 
@@ -38,11 +39,11 @@ public class CommunicativeAgentImpl extends CommunicativeAgent {
 			public void run() {
 				while(true) {
 
-					Set<Message> perceptions = agent.getPerceptions();
+					Set<Message> perceptions = CommunicativeAgentImpl.this.getAgent().getPerceptions();
 					Set<Message> actions = processCycle(perceptions);
 
 					if (actions != null && !actions.isEmpty()) {
-						agent.sendActions(actions);
+						CommunicativeAgentImpl.this.getAgent().sendActions(actions);
 					}
 
 					try {
@@ -74,7 +75,7 @@ public class CommunicativeAgentImpl extends CommunicativeAgent {
 				ta.objects = new HashSet<WorldObject>();
 
 				for (OID oid : askAction.oids) {
-					WorldObject obj = this.kb.objects.get(oid);
+					WorldObject obj = this.getKb().objects.get(oid);
 					if (obj != null) {
 						ta.objects.add(obj);
 					}
@@ -84,7 +85,7 @@ public class CommunicativeAgentImpl extends CommunicativeAgent {
 				messages.add(ta);
 			} else if (message instanceof AskAllAction) {
 				TellAction ta = new TellAction();
-				ta.objects = new HashSet<WorldObject>(this.kb.objects.values());
+				ta.objects = new HashSet<WorldObject>(this.getKb().objects.values());
 
 				ta.getReceiver().add(message.getSender());
 				messages.add(ta);
@@ -95,25 +96,25 @@ public class CommunicativeAgentImpl extends CommunicativeAgent {
 
 		Message nextAction = computeNextAction();
 		if (nextAction != null) {
-			nextAction.setSender(agent.getAgentID());
+			nextAction.setSender(this.getAgent().getAgentID());
 			messages.add(nextAction);
 		}
 
 		for (Message message : messages) {
-			message.setSender(agent.getAgentID());
+			message.setSender(this.getAgent().getAgentID());
 		}
 		//TODO refactoring to logger
-		System.out.println("[" + agent.getAgentID() + "] KB # " + kb);
-		System.out.println("[" + agent.getAgentID() + "] AKB # " + agentKB);
+		System.out.println("[" + this.getAgent().getAgentID() + "] KB # " + this.getKb());
+		System.out.println("[" + this.getAgent().getAgentID() + "] AKB # " + this.getAgentKB());
 		return messages;
 	}
 
 	protected OOState getKnowledgeForAgent(AgentID sender) {
-		OOState oos = agentKB.get(sender);
+		OOState oos = this.getAgentKB().get(sender);
 
 		if (oos == null) {
 			oos = new OOState();
-			agentKB.put(sender, oos);
+			this.getAgentKB().put(sender, oos);
 		}
 
 		return oos;

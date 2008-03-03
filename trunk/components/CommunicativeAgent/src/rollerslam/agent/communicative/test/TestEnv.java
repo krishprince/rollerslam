@@ -9,12 +9,12 @@ public class TestEnv extends CommunicativeAgentImpl {
 
 	public TestEnv(Agent port) {
 		super(port, 1600);
-		
-		Semaphor ns = new Semaphor();		
+
+		Semaphor ns = new Semaphor();
 		ns.value = 0;
 
-		WorldObject fo = new WorldObject(new StringOID("semaphor"), ns);				
-		kb.objects.put(fo.oid, fo);
+		WorldObject fo = new WorldObject(new StringOID("semaphor"), ns);
+		this.getKb().objects.put(fo.oid, fo);
 	}
 
 }
