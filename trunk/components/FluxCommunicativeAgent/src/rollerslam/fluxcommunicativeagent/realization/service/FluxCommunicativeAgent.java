@@ -127,7 +127,7 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 		OOState newKB = new OOState();
 		HashMap<AgentID, OOState> newAgentKB = new HashMap<AgentID, OOState>();
 
-		for (Fluent f : state.fluents) {
+		for (Fluent f : state.getFluents()) {
 			EclipsePrologFluent ef = (EclipsePrologFluent) f;
 
 			if (ef.getTerm().functor().equals("k")) {
