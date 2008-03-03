@@ -31,7 +31,7 @@ import com.parctechnologies.eclipse.Atom;
 import com.parctechnologies.eclipse.CompoundTerm;
 
 /**
- * 
+ *
  * @author Weslei
  */
 @SuppressWarnings(value = "serial")
@@ -172,7 +172,7 @@ public class GameCanvas extends Canvas implements MouseMotionListener {
 					retorno = SpriteKind.BLUE_PLAYER;
 				}
 			}
-			
+
 			return retorno;
 		}
 
@@ -187,7 +187,7 @@ public class GameCanvas extends Canvas implements MouseMotionListener {
 				while (teste && iterator.hasNext()) {
 					Fluent fluent = iterator.next();
 					EclipsePrologFluent eclipsePrologFluent = (EclipsePrologFluent) fluent;
-					CompoundTerm compoundTerm = (CompoundTerm) eclipsePrologFluent.term
+					CompoundTerm compoundTerm = (CompoundTerm) eclipsePrologFluent.getTerm()
 							.arg(2);
 					Atom atom = (Atom) compoundTerm.arg(1);
 					if (attribute.equals(atom.functor())) {
