@@ -150,7 +150,7 @@ public class EclipsePrologFluxEngine extends FluxInferenceEngine {
 
 		for (int i = 0; i < fluents.length; ++i) {
 			estate
-					.add((CompoundTermImpl) ((EclipsePrologFluent) fluents[i]).term);
+					.add((CompoundTermImpl) ((EclipsePrologFluent) fluents[i]).getTerm());
 		}
 
 		return estate;
