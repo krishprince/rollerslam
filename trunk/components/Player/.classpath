@@ -4,8 +4,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/SimulationInfrastructure"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/FluxCommunicativeAgent"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/CommunicativeAgent"/>
 	<classpathentry kind="lib" path="/FluxInferenceEngine/lib/eclipse.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/FluxInferenceEngine"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CommunicativeAgent"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
