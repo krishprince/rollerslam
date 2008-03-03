@@ -91,7 +91,7 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 				if (eac.getActionTerm().functor().equals("ask")) {
 					AskAction msg = new AskAction();
 
-					msg.oids.add(new FluxOID((CompoundTerm) eac.getActionTerm()
+					msg.getOids().add(new FluxOID((CompoundTerm) eac.getActionTerm()
 							.arg(1)));
 
 					msg.setSender(this.getAgent().getAgentID());
