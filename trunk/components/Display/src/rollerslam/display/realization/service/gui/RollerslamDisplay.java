@@ -34,7 +34,7 @@ public class RollerslamDisplay extends JPanel implements View, ActionListener {
 
     public RollerslamDisplay(DisplayAgent agent) {
         Model model = new ModelImpl();
-        this.controller = new ControllerImpl(this, model, agent);
+        this.controller = new ControllerImpl(model, agent);
 
         game.setModel(model);
 
@@ -73,7 +73,7 @@ public class RollerslamDisplay extends JPanel implements View, ActionListener {
         connectButton.addActionListener(this);
 
         this.add(down2);
-        
+
     }
 
     public void main() {
@@ -97,7 +97,7 @@ public class RollerslamDisplay extends JPanel implements View, ActionListener {
         if (msg == null || "".equals(msg)) {
             msg = "Exception class: " + e1.getClass().getName();
         }
-        JOptionPane.showMessageDialog(this, msg, "There was an error...", JOptionPane.ERROR_MESSAGE);        
+        JOptionPane.showMessageDialog(this, msg, "There was an error...", JOptionPane.ERROR_MESSAGE);
     }
 
     private void connectButtonClick(ActionEvent e) {
@@ -127,7 +127,7 @@ public class RollerslamDisplay extends JPanel implements View, ActionListener {
 			if (opt != JOptionPane.OK_OPTION) {
 				return;
 			}
-			
+
 			addr = (String) jcb.getSelectedItem();
         }
 
