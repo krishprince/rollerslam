@@ -10,16 +10,16 @@ import rollerslam.infrastructure.specification.type.AgentID;
 public class TestDisplay extends CommunicativeAgentImpl {
 
 	private AgentID env;
-	
+
 	public TestDisplay(Agent port, AgentID env) {
 		super(port, 500);
-		
+
 		this.env = env;
 	}
 
 	protected Message computeNextAction() {
 		AskAction askAction = new AskAction();
-		askAction.receiver.add(env);
+		askAction.getReceiver().add(env);
 		askAction.oids.add(new StringOID("semaphor"));
 		return askAction;
 	}

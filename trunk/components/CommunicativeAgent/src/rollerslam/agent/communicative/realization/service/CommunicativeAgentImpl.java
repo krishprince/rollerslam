@@ -20,7 +20,7 @@ public class CommunicativeAgentImpl extends CommunicativeAgent {
 
 	public SimulationInfrastructure simulation;
 	private long cycleLenght;
-	
+
 	@Override
 	public void setSimulationInfrastructure(SimulationInfrastructure simulation) {
 		this.simulation = simulation;
@@ -35,36 +35,36 @@ public class CommunicativeAgentImpl extends CommunicativeAgent {
 
 	protected void startThread() {
 		new Thread() {
-			public void run() {				
+			public void run() {
 				while(true) {
 
-					Set<Message> perceptions = agent.getPerceptions();					
+					Set<Message> perceptions = agent.getPerceptions();
 					Set<Message> actions = processCycle(perceptions);
-					
+
 					if (actions != null && !actions.isEmpty()) {
-						agent.sendActions(actions);						
+						agent.sendActions(actions);
 					}
-					
+
 					try {
 						Thread.sleep(cycleLenght);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-				}				
+				}
 			}
-			
+
 		}.start();
 	}
 
-	protected Set<Message> processCycle(Set<Message> perceptions) {		
+	protected Set<Message> processCycle(Set<Message> perceptions) {
 		Set<Message> messages = new HashSet<Message>();
-		
+
 		for (Message message : perceptions) {
 			if (message instanceof TellAction) {
 				TellAction tellAction = (TellAction) message;
-				
-				OOState knowledge = getKnowledgeForAgent(tellAction.sender);
-				
+
+				OOState knowledge = getKnowledgeForAgent(tellAction.getSender());
+
 				for (WorldObject object : tellAction.objects) {
 					knowledge.objects.put(object.oid, object);
 				}
@@ -72,37 +72,37 @@ public class CommunicativeAgentImpl extends CommunicativeAgent {
 				AskAction askAction = (AskAction) message;
 				TellAction ta = new TellAction();
 				ta.objects = new HashSet<WorldObject>();
-				
+
 				for (OID oid : askAction.oids) {
 					WorldObject obj = this.kb.objects.get(oid);
 					if (obj != null) {
 						ta.objects.add(obj);
 					}
 				}
-				
-				ta.receiver.add(message.sender);
+
+				ta.getReceiver().add(message.getSender());
 				messages.add(ta);
 			} else if (message instanceof AskAllAction) {
 				TellAction ta = new TellAction();
 				ta.objects = new HashSet<WorldObject>(this.kb.objects.values());
-				
-				ta.receiver.add(message.sender);
-				messages.add(ta);				
+
+				ta.getReceiver().add(message.getSender());
+				messages.add(ta);
 			} else {
 				processSpecificMessage(message);
 			}
-		}		
-		
+		}
+
 		Message nextAction = computeNextAction();
 		if (nextAction != null) {
-			nextAction.sender = agent.getAgentID();
-			messages.add(nextAction);			
+			nextAction.setSender(agent.getAgentID());
+			messages.add(nextAction);
 		}
 
 		for (Message message : messages) {
-			message.sender = agent.getAgentID(); 
+			message.setSender(agent.getAgentID());
 		}
-		
+		//TODO refactoring to logger
 		System.out.println("[" + agent.getAgentID() + "] KB # " + kb);
 		System.out.println("[" + agent.getAgentID() + "] AKB # " + agentKB);
 		return messages;
@@ -110,7 +110,7 @@ public class CommunicativeAgentImpl extends CommunicativeAgent {
 
 	protected OOState getKnowledgeForAgent(AgentID sender) {
 		OOState oos = agentKB.get(sender);
-		
+
 		if (oos == null) {
 			oos = new OOState();
 			agentKB.put(sender, oos);
