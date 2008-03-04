@@ -13,19 +13,11 @@ import rollerslam.agent.communicative.specification.type.object.OOState;
 import rollerslam.agent.communicative.specification.type.object.WorldObject;
 import rollerslam.infrastructure.specification.service.Agent;
 import rollerslam.infrastructure.specification.service.Message;
-import rollerslam.infrastructure.specification.service.SimulationInfrastructure;
 import rollerslam.infrastructure.specification.type.AgentID;
 
 public class CommunicativeAgentImpl extends CommunicativeAgent {
 
-	//TODO compreender o que eh isso?
-	private SimulationInfrastructure simulation;
 	private long cycleLenght;
-
-	@Override
-	public void setSimulationInfrastructure(SimulationInfrastructure simulation) {
-		this.simulation = simulation;
-	}
 
 	public CommunicativeAgentImpl(final Agent agent, final long cycleLenght) {
 		this.setAgent(agent);
