@@ -6,7 +6,7 @@ import com.parctechnologies.eclipse.CompoundTerm;
 public class ToStringPrinterUtility {
 	
 	public static String toString(Object object) {
-		String retorno = "null";
+		String retorno = "???";
 		
 		if(object instanceof Atom){
 			Atom atom = (Atom)object;
@@ -18,12 +18,26 @@ public class ToStringPrinterUtility {
 				retorno = ToStringPrinterUtility.toString(compoundTerm.arg(1)) + "[" + ToStringPrinterUtility.toString(compoundTerm.arg(2)) + "]" ;
 			} else if("->".equals(functor)){
 				retorno = ToStringPrinterUtility.toString(compoundTerm.arg(1)) + "->" + ToStringPrinterUtility.toString(compoundTerm.arg(2)) ;
-			} 
+			} else {
+				retorno = functor + "(" + printParameters(compoundTerm)+")";
+			}
 		} else if(object!=null) {
 			retorno = object.toString();
 		}
 		
 		return retorno;
+	}
+
+	private static String printParameters(CompoundTerm compoundTerm) {
+		String ret = "";
+		
+		for(int i=1;i<=compoundTerm.arity();++i) {
+			if (i!=1) {
+				ret += ", ";
+			}
+			ret += ToStringPrinterUtility.toString(compoundTerm.arg(i));
+		}
+		return ret;
 	}
 
 }
