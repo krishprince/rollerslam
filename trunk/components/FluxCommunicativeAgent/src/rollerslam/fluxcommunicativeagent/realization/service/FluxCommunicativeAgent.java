@@ -207,7 +207,7 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 	}
 
 	protected void declareFAtom(FluxOID oid, String attributeName,
-			CompoundTermImpl attributeValue) {
+			CompoundTerm attributeValue) {
 
 		WorldObject wobject = this.getKb().getObjects().get(oid);
 
