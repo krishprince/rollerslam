@@ -23,6 +23,7 @@ import com.parctechnologies.eclipse.CompoundTermImpl;
 import com.parctechnologies.eclipse.EclipseConnection;
 import com.parctechnologies.eclipse.Fail;
 
+@SuppressWarnings("unchecked")
 public class ReasoningFacadeImpl extends ReasoningFacade {
 	private static EclipseConnection connection = EclipsePrologHandlerImpl
 			.getInstance().getEclipseConnection();
