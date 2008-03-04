@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import rollerslam.agent.communicative.specification.type.object.OOState;
 import rollerslam.infrastructure.specification.service.Agent;
-import rollerslam.infrastructure.specification.service.SimulationInfrastructure;
 import rollerslam.infrastructure.specification.type.AgentID;
 
 public abstract class CommunicativeAgent {
@@ -36,8 +35,5 @@ public abstract class CommunicativeAgent {
 	public void setKb(OOState kb) {
 		this.kb = kb;
 	}
-
-	public abstract void setSimulationInfrastructure(
-			SimulationInfrastructure simulation);
 
 }
