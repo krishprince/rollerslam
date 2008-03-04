@@ -20,7 +20,7 @@ public class PlayerAgent extends FluxCommunicativeAgent {
 
 		super.declareFAtom(me, "id", ""+playerID);
 		super.declareFAtom(me, "team", team);
-		super.declareFAtom(me, "senseCycle", "true");
+		super.declareFAtom(me, "senseCycle", new Atom("true"));
 	}
 
 }
