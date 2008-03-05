@@ -3,6 +3,7 @@ package rollerslam.fluxinferenceengine.realization.service;
 import java.io.File;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 
@@ -91,8 +92,12 @@ public class ReasoningFacadeImpl extends ReasoningFacade {
 						+ "ComputeNextAction", col, null);
 				return new EclipsePrologFluxAction((CompoundTerm) ret.arg(2));
 			} catch (Fail e) {
+				System.out.println("FAIL IN " + espec.getAgentName() + ".computeNextAction()");
+				
 				return null;
 			} catch (Exception e) {
+				System.err.println("EXCEPTION IN " + espec.getAgentName() + ".computeNextAction()");
+				
 				throw new ReasoningException(e);
 			}
 		}
@@ -117,8 +122,12 @@ public class ReasoningFacadeImpl extends ReasoningFacade {
 						+ "UpdateModel", col, null);
 				return getGenericState(ret.arg(2));
 			} catch (Fail e) {
+				System.err.println("FAIL IN " + espec.getAgentName() + ".updateModel()");
+				
 				return state;
 			} catch (Exception e) {
+				System.err.println("EXCEPTION IN " + espec.getAgentName() + ".updateModel()");
+				
 				throw new ReasoningException(e);
 			}
 
@@ -141,16 +150,48 @@ public class ReasoningFacadeImpl extends ReasoningFacade {
 
 				CompoundTerm ret = connection.rpc(espec.getAgentName()
 						+ "ProcessAction", col, eaction.getActionTerm(), null);
-				return getGenericState(ret.arg(2));
+				return getGenericState(ret.arg(3));
 			} catch (Fail e) {
+				System.err.println("FAIL IN " + espec.getAgentName() + ".processAction()");
+				
 				e.printStackTrace();
 
 				return state;
 			} catch (Exception e) {
+				System.err.println("EXCEPTION IN " + espec.getAgentName() + ".processAction()");
+				
 				throw new ReasoningException(e);
 			}
 
 		}
 		return state;
+	}
+
+	@Override
+	public State initializeModel(FluxSpecification spec, List<Object> initialData) throws ReasoningException {
+		if (spec instanceof EclipsePrologFluxSpecification) {
+
+			EclipsePrologFluxSpecification espec = (EclipsePrologFluxSpecification) spec;
+
+			try {
+				compileSpec(espec);
+
+				CompoundTerm ret = connection.rpc(espec.getAgentName()
+						+ "InitializeModel", initialData, null);
+				return getGenericState(ret.arg(2));
+			} catch (Fail e) {
+				System.err.println("FAIL IN " + espec.getAgentName() + ".initializeModel()");
+				
+				e.printStackTrace();
+
+				return new State();
+			} catch (Exception e) {
+				System.err.println("EXCEPTION IN " + espec.getAgentName() + ".initializeModel()");
+				
+				throw new ReasoningException(e);
+			}
+
+		}
+		return new State();
 	}
 }

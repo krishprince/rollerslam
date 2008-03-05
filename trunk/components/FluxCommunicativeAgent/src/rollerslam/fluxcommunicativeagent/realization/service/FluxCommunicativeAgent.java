@@ -3,6 +3,7 @@ package rollerslam.fluxcommunicativeagent.realization.service;
 import java.io.File;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 
@@ -42,19 +43,21 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 	private State fluxState = new State();
 
 	public FluxCommunicativeAgent(Agent port, File fluxSpec, String agentTerm,
-			final long cycleLength) throws Exception {
+			final long cycleLength, List<Object> initialData) throws Exception {
 		super(port, cycleLength);
 
 		this.inferenceEngine = new EclipsePrologFluxEngine();
 		this.fluxSpec = new EclipsePrologFluxSpecification(fluxSpec, agentTerm);
 
+		fluxState = inferenceEngine.getReasoningFacade().initializeModel(this.fluxSpec, initialData);
+		updateInternalModel(fluxState);
+		
 		startThread();
 	}
 
 	protected void processSpecificMessage(Message message) {
 		if (inferenceEngine == null || fluxSpec == null)
 			return;
-
 		if (message instanceof FluxAction) {
 			try {
 				State s = inferenceEngine.getReasoningFacade().processAction(
@@ -68,6 +71,7 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 		}
 	}
 
+	// TODO why is gamePhysics being added by default?
 	protected Set<Message> processCycle(Set<Message> perceptions) {
 		if (inferenceEngine == null || fluxSpec == null)
 			return null;
@@ -107,6 +111,8 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 							new FluxAgentID(new Atom("gamePhysics")));
 
 					ret.add(msg);
+				} else if (eac.getActionTerm().functor().equals("noAction")) {
+					
 				} else {
 					Message msg = new FluxAction(eac);
 
@@ -146,18 +152,9 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 				updateOOState(newKB, ef);
 			}
 		}
-	}
-
-	private void updateOOState(OOState newKB, EclipsePrologFluent ef) {
-		FluxOID oid = new FluxOID((CompoundTerm) ef.getTerm().arg(1));
-		WorldObject obj = newKB.getObjects().get(oid);
-		if (obj == null) {
-			obj = new WorldObject(oid, new FluxOOState(new HashSet<Fluent>()));
-		}
-
-		((FluxOOState) obj.getState()).getFluents().add(ef);
-
-		newKB.getObjects().put(oid, obj);
+		
+		this.setKb(newKB);
+		this.setAgentKB(newAgentKB);
 	}
 
 	private void updateFluxState() {
@@ -181,45 +178,24 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 		fluxState = new State(fluents.toArray(new Fluent[0]));
 	}
 
+	private void updateOOState(OOState newKB, EclipsePrologFluent ef) {
+		FluxOID oid = new FluxOID((CompoundTerm) ef.getTerm().arg(1));
+		WorldObject obj = newKB.getObjects().get(oid);
+		if (obj == null) {
+			obj = new WorldObject(oid, new FluxOOState(new HashSet<Fluent>()));
+		}
+
+		((FluxOOState) obj.getState()).getFluents().add(ef);
+
+		newKB.getObjects().put(oid, obj);
+	}
+
 	protected Fluent makeFluent(FluxOID oid, String att, CompoundTerm value) {
 		CompoundTerm vl = new CompoundTermImpl("->", new Atom(att), value);
 
 		EclipsePrologFluent f = new EclipsePrologFluent(new CompoundTermImpl(
 				"@", oid.getTerm(), vl));
 		return f;
-	}
-
-	protected void declareFAtom(FluxOID oid, String attributeName,
-			String attributeValue) {
-
-		WorldObject wobject = this.getKb().getObjects().get(oid);
-
-		if (wobject == null) {
-			wobject = new WorldObject(oid, new FluxOOState(
-					new HashSet<Fluent>()));
-			this.getKb().getObjects().put(oid, wobject);
-		}
-
-		FluxOOState wostate = (FluxOOState) wobject.getState();
-
-		wostate.getFluents().add(makeFluent(oid, attributeName, new Atom(
-				attributeValue)));
-	}
-
-	protected void declareFAtom(FluxOID oid, String attributeName,
-			CompoundTerm attributeValue) {
-
-		WorldObject wobject = this.getKb().getObjects().get(oid);
-
-		if (wobject == null) {
-			wobject = new WorldObject(oid, new FluxOOState(
-					new HashSet<Fluent>()));
-			this.getKb().getObjects().put(oid, wobject);
-		}
-
-		FluxOOState wostate = (FluxOOState) wobject.getState();
-
-		wostate.getFluents().add(makeFluent(oid, attributeName, attributeValue));
 	}
 
 }

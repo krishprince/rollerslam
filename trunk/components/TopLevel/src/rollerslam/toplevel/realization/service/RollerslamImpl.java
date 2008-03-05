@@ -15,7 +15,12 @@ import rollerslam.toplevel.specification.service.Rollerslam;
 
 public class RollerslamImpl extends Rollerslam {
 
+	private static final int DISPLAY_CYCLE = 100;
+	private static final int GAME_PHYSICS_CYCLE = 150;
+	private static final int PLAYER_CYCLE = 150;
+	
 	private static final String TEAM_A = "TEAM_A";
+	
 	private SimulationInfrastructure infrastructure;
 	private CommunicativeAgent		display;
 	private CommunicativeAgent		gamePhysics;
@@ -64,9 +69,9 @@ public class RollerslamImpl extends Rollerslam {
 			Agent gamePhysicsConnector = infrastructure.connectAgent(gamePhysicsID);
 			Agent playerConnector = infrastructure.connectAgent(playerID);
 
-			display = new DisplayAgent(displayConnector, gamePhysicsID, 50);
-			gamePhysics = new GamePhysicsAgent(gamePhysicsConnector, 1, 50);
-			player = new PlayerAgent(playerConnector, 1, TEAM_A, 50);
+			display = new DisplayAgent(displayConnector, gamePhysicsID, DISPLAY_CYCLE);
+			gamePhysics = new GamePhysicsAgent(gamePhysicsConnector, GAME_PHYSICS_CYCLE, 1);
+			player = new PlayerAgent(playerConnector, PLAYER_CYCLE, TEAM_A, 1);
 
 			infrastructure.getSimAdmin().setState(SimulationState.RUNNING);
 	}
