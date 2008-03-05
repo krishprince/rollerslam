@@ -2,25 +2,30 @@ package rollerslam.player.realization.service;
 
 
 import java.io.File;
+import java.util.Arrays;
 
 import rollerslam.fluxcommunicativeagent.realization.service.FluxCommunicativeAgent;
-import rollerslam.fluxcommunicativeagent.realization.type.FluxOID;
 import rollerslam.infrastructure.specification.service.Agent;
-
-import com.parctechnologies.eclipse.Atom;
 
 public class PlayerAgent extends FluxCommunicativeAgent {
 	
 	private static final String ADDRESS_FLUX_FILE = PlayerAgent.class.getResource("player.pl").getFile();
 
 	public PlayerAgent(Agent port, long cycleLength, String team, int playerID) throws Exception {
-		super(port, new File(ADDRESS_FLUX_FILE), "player", cycleLength);
-		
-		FluxOID me = new FluxOID(new Atom("me"));
+		super(port, new File(ADDRESS_FLUX_FILE), "player", cycleLength, Arrays.asList(new Object[] { playerID, team, computeOid(playerID, team) }));
+	}
 
-		super.declareFAtom(me, "id", ""+playerID);
-		super.declareFAtom(me, "team", team);
-		super.declareFAtom(me, "senseCycle", new Atom("true"));
+	private static Object computeOid(int playerID, String team) {
+		String oid = "p";
+		
+		if (team.equals("TEAM_A")) {
+			oid += "a";
+		} else {
+			oid += "b";			
+		}
+		
+		oid += playerID;
+		return oid;
 	}
 
 }

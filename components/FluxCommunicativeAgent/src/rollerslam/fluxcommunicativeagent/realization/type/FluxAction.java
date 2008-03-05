@@ -19,4 +19,8 @@ public class FluxAction extends Message {
 		super();
 		this.action = action;
 	}
+	
+	public String toString() {
+		return super.toString();
+	}
 }

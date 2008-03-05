@@ -12,6 +12,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferStrategy;
 import java.text.NumberFormat;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Set;
 
 import javax.swing.JLabel;
@@ -156,13 +157,13 @@ public class GameCanvas extends Canvas implements MouseMotionListener {
 			if("ball".equals(fluxOID.getTerm().functor())){
 				retorno = SpriteKind.BALL;
 			} else {
-				CompoundTerm compoundTerm = (CompoundTerm) fluxOID.getTerm();
-				String team = (String)compoundTerm.arg(2);
+				//CompoundTerm compoundTerm = (CompoundTerm) fluxOID.getTerm();
+/*				String team = (String)compoundTerm.arg(2);
 				if("TEAM_A".equalsIgnoreCase(team)){
 					retorno = SpriteKind.RED_PLAYER;
-				} else {
+				} else {*/
 					retorno = SpriteKind.BLUE_PLAYER;
-				}
+				//}
 			}
 
 			return retorno;
@@ -179,8 +180,15 @@ public class GameCanvas extends Canvas implements MouseMotionListener {
 				while (teste && iterator.hasNext()) {
 					Fluent fluent = iterator.next();
 					EclipsePrologFluent eclipsePrologFluent = (EclipsePrologFluent) fluent;
-					CompoundTerm compoundTerm = (CompoundTerm) eclipsePrologFluent.getTerm()
-							.arg(2);
+					CompoundTerm compoundTerm = null;
+					
+					Object data = eclipsePrologFluent.getTerm().arg(2);
+					if (data instanceof CompoundTerm) {
+						compoundTerm = (CompoundTerm) data;
+					} else if (data instanceof LinkedList) {
+						compoundTerm = (CompoundTerm) ((LinkedList)data).get(0);
+					}
+					
 					Atom atom = (Atom) compoundTerm.arg(1);
 					if (attribute.equals(atom.functor())) {
 						teste = false;

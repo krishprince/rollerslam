@@ -21,4 +21,7 @@ public class EclipsePrologFluxAction extends Action {
 		this.actionTerm = actionTerm;
 	}
 
+	public String toString() {
+		return super.toString() + " " + actionTerm.functor() + "(" + ")";
+	}
 }

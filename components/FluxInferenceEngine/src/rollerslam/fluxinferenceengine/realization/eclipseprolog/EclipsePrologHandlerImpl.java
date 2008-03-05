@@ -20,7 +20,7 @@ public class EclipsePrologHandlerImpl implements EclipsePrologHandler {
     public EclipseConnection getEclipseConnection() {
         if (eclipse == null) {
             try {
-                System.setProperty("eclipse.directory", "C:\\Program Files\\ECLiPSe 5.10");
+                System.setProperty("eclipse.directory", "/home/maas/eclipse/");
             } catch (Exception err) {
                 throw new RuntimeException("Error intializing eclipse properties. Details: " + err, err);
             }
