@@ -158,12 +158,12 @@ public class GameCanvas extends Canvas implements MouseMotionListener {
 				retorno = SpriteKind.BALL;
 			} else {
 				//CompoundTerm compoundTerm = (CompoundTerm) fluxOID.getTerm();
-/*				String team = (String)compoundTerm.arg(2);
+				String team = attributeDiscoverer(worldObject, "team").toString();
 				if("TEAM_A".equalsIgnoreCase(team)){
 					retorno = SpriteKind.RED_PLAYER;
-				} else {*/
+				} else {
 					retorno = SpriteKind.BLUE_PLAYER;
-				//}
+				}
 			}
 
 			return retorno;

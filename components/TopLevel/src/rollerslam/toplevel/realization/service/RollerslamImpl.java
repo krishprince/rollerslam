@@ -70,7 +70,7 @@ public class RollerslamImpl extends Rollerslam {
 			Agent playerConnector = infrastructure.connectAgent(playerID);
 
 			display = new DisplayAgent(displayConnector, gamePhysicsID, DISPLAY_CYCLE);
-			gamePhysics = new GamePhysicsAgent(gamePhysicsConnector, GAME_PHYSICS_CYCLE, 1);
+			gamePhysics = new GamePhysicsAgent(gamePhysicsConnector, GAME_PHYSICS_CYCLE, 40);
 			player = new PlayerAgent(playerConnector, PLAYER_CYCLE, TEAM_A, 1);
 
 			infrastructure.getSimAdmin().setState(SimulationState.RUNNING);
