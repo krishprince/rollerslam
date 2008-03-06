@@ -1,11 +1,11 @@
-package rollerslam.fluxcommunicativeagent.realization.type;
+package rollerslam.fluxinferenceengine.realization.type;
 
 import java.util.LinkedList;
 
 import com.parctechnologies.eclipse.Atom;
 import com.parctechnologies.eclipse.CompoundTerm;
 
-public class ToStringPrinterUtility {
+class ToStringPrinterUtility {
 	
 	public static String toString(Object object) {
 		String retorno = "???";

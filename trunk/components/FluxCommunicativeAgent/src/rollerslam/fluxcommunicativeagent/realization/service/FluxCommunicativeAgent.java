@@ -64,6 +64,7 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 						fluxSpec, fluxState, ((FluxAction) message).getAction());
 				if (s != null) {
 					fluxState = s;
+					updateInternalModel(fluxState);
 				}
 			} catch (ReasoningException e) {
 				e.printStackTrace();
