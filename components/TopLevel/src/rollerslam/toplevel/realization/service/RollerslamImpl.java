@@ -15,9 +15,9 @@ import rollerslam.toplevel.specification.service.Rollerslam;
 
 public class RollerslamImpl extends Rollerslam {
 
-	private static final int DISPLAY_CYCLE = 100;
-	private static final int GAME_PHYSICS_CYCLE = 150;
-	private static final int PLAYER_CYCLE = 150;
+	private static final int DISPLAY_CYCLE = 500;
+	private static final int GAME_PHYSICS_CYCLE = 100;
+	private static final int PLAYER_CYCLE = 500;
 	
 	private static final String TEAM_A = "TEAM_A";
 	
