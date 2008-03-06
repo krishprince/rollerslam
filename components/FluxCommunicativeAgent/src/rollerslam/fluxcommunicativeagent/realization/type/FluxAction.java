@@ -21,6 +21,6 @@ public class FluxAction extends Message {
 	}
 	
 	public String toString() {
-		return super.toString();
+		return super.toString() + "# FLUX ACTION " + action;
 	}
 }

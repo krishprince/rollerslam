@@ -16,6 +16,10 @@ playerUpdateModel(Z0, Z1) :-
 	update(Z0, [me@[senseCycle->true]], [me@[senseCycle->false]], Z1).	
 
 playerComputeNextAction(Z, dash(P, vector(1000, 1000))) :-
+    holds(me@[senseCycle->false], Z),
 	holds(me@[oid->P], Z).
+
+playerComputeNextAction(Z, ask(ball)) :-
+    holds(me@[senseCycle->true], Z).
 
 playerProcessAction(Z, _, Z).
