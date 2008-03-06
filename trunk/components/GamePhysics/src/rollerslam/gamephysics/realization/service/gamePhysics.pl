@@ -1,18 +1,53 @@
+maxAcceleration(600).
+maxSpeed(1000).
 
 gamePhysicsInitializeModel([PlayersPerTeam], 
 	[	
 		ball@[position->vector(0,0)],
-		ball@[velocity->vector(0,0)],
+		ball@[speed->vector(0,0)],
 		ball@[acceleration->vector(0,0)] | Players
 			
 	]) :-
 	
 	players(PlayersPerTeam, Players).
 
-gamePhysicsUpdateModel(Z0, Z0).
+gamePhysicsProcessAction(Z0, dash(P, Dir), Z1) :-
+	holds(P@[acceleration->Acc], Z0),
+
+	maxAcceleration(MA),
+	limitModulo(Dir, MA, Dir1),
+	update(Z0, [P@[acceleration->Dir1]], [P@[acceleration->Acc]], Z1).
 	
 gamePhysicsComputeNextAction(_, noAction).
 
+gamePhysicsUpdateModel(Z0, Z1) :- 
+	collectObjects(Z0, Objects),
+	updateAllObjects(Z0, Objects, Z1).
+
+updateObject(Z0, O, Z1) :-
+	holds(O@[acceleration->Acc], Z0),
+	holds(O@[speed->Speed], Z0),
+	holds(O@[position->Pos], Z0),
+	
+	sumVectors(Speed, Acc, Speed1),
+	sumVectors(Pos, Speed, Pos1),
+
+	maxSpeed(PMS),	
+	limitModulo(Speed1, PMS, Speed2),
+	
+	update(Z0, [ O@[speed->Speed2], O@[position->Pos1] ],
+			   [ O@[speed->Speed], O@[position->Pos] ], Z1).
+	
+updateAllObjects(Z0, [], Z0).
+
+updateAllObjects(Z0, [O|R], Z1) :-
+	updateAllObjects(Z0, R, Z2),
+	updateObject(Z2, O, Z1).
+
+collectObjects([], []).
+collectObjects([O@[_->_] | Zr], Objs) :-
+	collectObjects(Zr, Objs0),
+	union(Objs0, [O], Objs).
 
 playerOid(PID, Team, Atom) :-
 	((Team = "TEAM_A", TeamAtom = a) ;
@@ -37,7 +72,7 @@ players0(N, T, [PS|R]) :-
 
 	PS = [ 
 		P@[position->Pos],
-		P@[velocity->vector(0,0)],
+		P@[speed->vector(0,0)],
 		P@[acceleration->vector(0,0)],
 		P@[team->T]
 	     ].
@@ -81,8 +116,27 @@ computeDistance(X,Y,X0,Y0,D) :-
 	Sum is SDx + SDy,
 	sqrt(Sum, D).
 
-
 genPlayerPosition(X,Y) :-
 	genPosition(X0,Y0),
 	((pointInRink(X0,Y0), X = X0, Y = Y0) ;
 	 (genPlayerPosition(X,Y))).
+	 
+sumVectors(vector(X,Y), vector(X1,Y1), vector(X2,Y2)) :-
+	X2 is X + X1,
+	Y2 is Y + Y1.
+	 
+multVector(vector(X,Y), K, vector(X1,Y1)) :-
+	X1 is X * K,
+	Y1 is Y * K.
+	
+modulo(vector(X,Y), M) :-
+	computeDistance(X,Y,0,0,M).
+	
+limitModulo(V, M, R) :-
+	
+	modulo(V, Mold),
+	
+	((Mold > 0, Ratio is M / Mold, multVector(V, Ratio, R)) ;
+	 (Mold =< 0, R = V))
+	
+	.
