@@ -144,6 +144,7 @@ public class FluxCommunicativeAgent extends CommunicativeAgentImpl {
 
 				if (as == null) {
 					as = new OOState();
+					newAgentKB.put(agId, as);
 				}
 
 				updateOOState(as, new EclipsePrologFluent((CompoundTerm) ef

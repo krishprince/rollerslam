@@ -51,7 +51,8 @@ public class CommunicativeAgentImpl extends CommunicativeAgent {
 
 	protected Set<Message> processCycle(Set<Message> perceptions) {
 		Set<Message> messages = new HashSet<Message>();
-
+		Set<AgentID> forbidden = new HashSet<AgentID>();
+		
 		for (Message message : perceptions) {
 			if (message instanceof TellAction) {
 				TellAction tellAction = (TellAction) message;
@@ -76,11 +77,16 @@ public class CommunicativeAgentImpl extends CommunicativeAgent {
 				ta.getReceiver().add(message.getSender());
 				messages.add(ta);
 			} else if (message instanceof AskAllAction) {
-				TellAction ta = new TellAction();
-				ta.setObjects(new HashSet<WorldObject>(this.getKb().getObjects().values()));
+				AgentID sender = message.getSender();
 
-				ta.getReceiver().add(message.getSender());
-				messages.add(ta);
+				if (!forbidden.contains(sender)) {
+					TellAction ta = new TellAction();
+					ta.setObjects(new HashSet<WorldObject>(this.getKb().getObjects().values()));
+
+					ta.getReceiver().add(sender);
+					forbidden.add(sender);
+					messages.add(ta);					
+				}
 			} else {
 				processSpecificMessage(message);
 			}
