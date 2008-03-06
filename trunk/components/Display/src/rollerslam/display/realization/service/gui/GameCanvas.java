@@ -143,8 +143,8 @@ public class GameCanvas extends Canvas implements MouseMotionListener {
 			Object value = attributeDiscoverer(worldObject, attribute);
 			if (value instanceof CompoundTerm) {
 				CompoundTerm compoundTerm = (CompoundTerm) value;
-				Integer x = (Integer) compoundTerm.arg(1);
-				Integer y = (Integer) compoundTerm.arg(2);
+				int x = (int)Double.parseDouble(compoundTerm.arg(1).toString());
+				int y = (int)Double.parseDouble(compoundTerm.arg(2).toString());
 				final SpriteKind sprite = getSprite(worldObject);
 				ss.getSprite(sprite).draw(graphics2D,
 						translatex(x) - 5, translatey(y) - 5);
