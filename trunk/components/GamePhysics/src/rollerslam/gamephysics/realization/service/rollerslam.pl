@@ -2,7 +2,7 @@
 :- ['updateModel'].
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Follow is the list of possible actions   %%     
+%% Follow is the list of possible actions   %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% STAND UP ACTION
@@ -30,14 +30,18 @@ state_update(Z1, jumpV(P), Z3, []) :-
 
 %% SKATE ACTION
 
-state_update(Z1,skate(P, vector(Axa, Aya)), Z3, []) :-
-            holds(P@[acceleration->OldAcc], Z1),
-            holds(P@[speed->OldSpd],Z1),
-            holds(P@[position->OldPos],Z1),
+state_update(Z1,skate(P, Error), Z3, []) :-
+            holds(P@[acceleration->vector(Ax0,Ay0)], Z1),
+            holds(P@[speed->vector(Vx0,Vy0)],Z1),
+            holds(P@[position->vector(Sx0,Sy0)],Z1),
             holds(P@[stamina->Strength], Z1),
-            NewStamina #= Strength + (Strength * (1/100)),
-            update(Z1,[P@[acceleration->vector(Axa, Aya)], P@[stamina->NewStamina]],[P@[acceleration->OldAcc],P@[stamina->Strength]],Z2),
-            ramify(Z2,[P@[acceleration->vector(Axa, Aya)], P@[speed->OldSpd], P@[position->OldPos]], [],Z3).
+            moduleAcc(Error,Strength, vector(Ax0,Ay0), vector(NewAx,NewAy)),
+            speedPositionRamification(P, NewAx, NewAy, NewVx, NewVy, NewSx, NewSy, Z1),
+            NewStamina #= Strength - (Strength/100),
+            update(Z1,
+                   [P@[acceleration->vector(NewAx, NewAy)], P@[speed->vector(NewVx,NewVy)], P@[position->vector(NewSx,NewSy)], P@[stamina->NewStamina]],
+                   [P@[acceleration->vector(Ax0, Ay0)], P@[speed->vector(Vx0,Vy0)], P@[position->vector(Sx0,Sy0)], P@[stamina->Strength]],
+                   Z2).
 
 %% Actions with ball
 

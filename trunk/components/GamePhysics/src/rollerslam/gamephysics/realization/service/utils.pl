@@ -1,5 +1,3 @@
-:- ['flux'].
-
 
 %%%%%%%%%%%%%%%%%%%%%
 %% helper functions%%
@@ -30,7 +28,8 @@ calcDistance(Sxb, Syb, Sxa, Sya, A) :-
 insideBoundary(vector(NSx,NSy)):-
                  isOnInTrack(vector(NSx,NSy)).
                  
-                 
+
+%% retrieves the new acceleration vector (Resultx,Resulty) based on the Strength and the current acceleration vector (Vx,Vy)
 moduleAcc(Error,Strength, vector(Vx,Vy), vector(Resultx,Resulty)):-
                               validateError(Error, 0.15, ErrorR),
                               moduleFlux(ErrorR,Strength, ResultX, ResultY),
@@ -65,6 +64,8 @@ isPointInEllipse(MajorAxis, F1x, F1y, F2x, F2y, Px, Py) :-
 
 sumVector(vector(X,Y), vector(X1,Y1), vector(XR, YR)) :- XR is X + X1, YR is Y + Y1.
 subtractVector(vector(X,Y), vector(X1,Y1), vector(XR, YR)) :- XR is X - X1, YR is Y - Y1.
+
+%% multiples the vector (X,Y) by Num and returns (XR,YR)
 multVector(vector(X,Y), Num, vector(XR, YR)):- XR is X * Num, YR is Y * Num.
 
 getModule(vector(X,Y), Result) :- 
@@ -108,6 +109,6 @@ moduleFlux(Strength,ModResult, ResultX, ResultY):-
        ResultY is 1)
        ;
        (ResultX is 1,
-       ResultY is Strength).              	    
+       ResultY is Strength).
        
 %%---------------------
