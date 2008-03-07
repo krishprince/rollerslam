@@ -10,18 +10,20 @@
 %% Vy = V Sin @
 %% Where Vx is the component in axis x, Vy is the component is axis y and @ = 45º
 %% And to calculate a module based on his components: V = sqrt(Vx² + Vy²)
+%% The following idea is update the Fluent Object speed and position based on his acceleration.
 
-%% The following idea is update the Fluent Object speed based on his acceleration.
+speedPositionRamification(FluentObject, Ax, Ay, Vx, Vy, NewSx, NewSy, Z) :-
+       holds(FluentObject@[speed->vector(Vix, Viy)], Z),
+       holds(FluentObject@[position->vector(Six, Siy)], Z),
 
-causes([FluentObject@[acceleration->vector(Ax,Ay)],FluentObject@[speed->vector(Vix, Viy)],FluentObject@[position->vector(Six, Siy)]],
-       [FluentObject@[speed->vector(Vx,Vy)],FluentObject@[position->vector(NewSx,NewSy)]],Z):-
-                                                  VectorA #= sqrt((Ax*Ax)+(Ay*Ay)),
-                                                  Vx #= Vix + VectorA * 2,
-                                                  Vy #= Viy + VectorA * 2,
-                                                  Sx #= Six + Vix * 2 + (VectorA * 4)/2,
-                                                  Sy #= Siy + Viy * 2 + (VectorA * 4)/2,
-                                                  existsSomeone(vector(Six,Siy), vector(Sx,Sy),Z,vector(MidSx, MidSy)),
-                                                  outBoundary(vector(MidSx, MidSy),vector(NewSx,NewSy)).
+       VectorA is sqrt((Ax*Ax)+(Ay*Ay)),
+       Vx is Vix + VectorA * 2,
+       Vy is Viy + VectorA * 2,
+       Sx is Six + Vix * 2 + (VectorA * 4)/2,
+       Sy is Siy + Viy * 2 + (VectorA * 4)/2,
+
+       existsSomeone(vector(Six,Siy), vector(Sx,Sy),Z,vector(MidSx, MidSy)),
+       outBoundary(vector(MidSx, MidSy),vector(NewSx,NewSy)).
 
 %% The following idea is update the position by considering that the player is jumping horizontally on the field
 
