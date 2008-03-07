@@ -12,13 +12,13 @@
 %% And to calculate a module based on his components: V = sqrt(Vx² + Vy²)
 %% The following idea is update the Fluent Object speed and position based on his acceleration.
 
-speedPositionRamification(FluentObject, Ax, Ay, Vx, Vy, NewSx, NewSy, Z) :-
+speedPositionRamification(FluentObject, Ax, Ay, NewVx, NewVy, NewSx, NewSy, Z) :-
        holds(FluentObject@[speed->vector(Vix, Viy)], Z),
        holds(FluentObject@[position->vector(Six, Siy)], Z),
 
        VectorA is sqrt((Ax*Ax)+(Ay*Ay)),
-       Vx is Vix + VectorA * 2,
-       Vy is Viy + VectorA * 2,
+       NewVx is Vix + VectorA * 2,
+       NewVy is Viy + VectorA * 2,
        Sx is Six + Vix * 2 + (VectorA * 4)/2,
        Sy is Siy + Viy * 2 + (VectorA * 4)/2,
 
