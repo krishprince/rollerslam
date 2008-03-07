@@ -13,19 +13,19 @@ state_update(Z1,standUp(P),Z2,[]) :-
 %% By considering that the player may execute two kind of jump actions, a vertical one and a horizontal one.
 
 %% JUMP HORIZONTAL ACTION
-state_update(Z1, jumpH(P), Z3, []) :-
+state_update(Z1, jumpH(P), Z2, []) :-
             poss(jumpH(P),Z1),
             holds(P@[speed->Spd], Z1),
-            update(Z1,[P@[jumpingH->Spd]],[],Z2),
-            ramify(Z2,[P@[jumpingH->Spd]],[],Z3).
+            jumpH(Spd,Z1,vector(NewSx,NewSy)),
+            update(Z1,[P@[position->vector(NewSx,NewSy)]],[],Z2).
 
 
 %% JUMP VERTICAL ACTION
-state_update(Z1, jumpV(P), Z3, []) :-
+state_update(Z1, jumpV(P), Z2, []) :-
             poss(jumpV(P),Z1),
             holds(P@[position->Pos], Z1),
-            update(Z1,[P@[jumpingV->Pos]],[],Z2),
-            ramify(Z2,[P@[jumpingV->Pos]],[],Z3).
+            jumpV(Pos,Z1,vector(NewSx,NewSy)),
+            update(Z1,[P@[position->vector(NewSx,NewSy)]],[],Z2).
 
 
 %% SKATE ACTION
