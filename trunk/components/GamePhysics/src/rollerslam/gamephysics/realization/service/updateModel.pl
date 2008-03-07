@@ -32,10 +32,11 @@ speedPositionRamification(FluentObject, Ax, Ay, NewVx, NewVy, NewSx, NewSy, Z) :
 %% Hy(t)= (Vi Sin @)t - (gt)²div 2
 %% @ = 45º, t=2, g=10
 
-causes([FluentObject@[jumpingH->vector(Vx,Vy)]],[FluentObject@[position->vector(NewSx,NewSy)]],Z):-
-                                                         Sx #= Vx * 2 * sqrt(2)/2,
-                                                         Sy #= Vy * 2 * sqrt(2)/2,
-                                                         existsSomeone(vector(Sx,Sy),Z,vector(NewSx, NewSy)) .
+jumpH(vector(Vx,Vy),CurrentState,vector(NewSx,NewSy)):-
+                                Sx #= Vx * 2 * sqrt(2)/2,
+                                Sy #= Vy * 2 * sqrt(2)/2,
+                                existsSomeone(vector(Sx,Sy),CurrentState,vector(MidSx, MidSy)),
+                                outBoundary(vector(MidSx, MidSy),vector(NewSx,NewSy)).
 
 %% The following idea is update the position by considering that the player is jumping vertically on the ramp
 
@@ -44,9 +45,11 @@ causes([FluentObject@[jumpingH->vector(Vx,Vy)]],[FluentObject@[position->vector(
 %% Hy(t)= (Vi Sin @)t - (gt)²div 2
 %% @ = 90º, t=2, g=10
 
-causes([FluentObject@[jumpingV->vector(Six,Siy)]],[FluentObject[position->vector(Sx,Sy)]],Z):-
-                                                         Sx = Six,
-                                                         Sy = Siy.
+jumpV(vector(Six,Siy),CurrentState,vector(NewSx,NewSy)):-
+                                  Sx = Six,
+                                  Sy = Siy,
+                                  existsSomeone(vector(Sx,Sy),CurrentState,vector(MidSx, MidSy)),
+                                  outBoundary(vector(MidSx, MidSy),vector(NewSx,NewSy)).
 
 %% To check if exist someone in the new localization. In this case, the position is updated to a near location.
 
