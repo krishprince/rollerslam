@@ -45,17 +45,6 @@ runSeriesOfActions(CurrentState, [], CurrentState).
 runSeriesOfActions(CurrentState, [C|L], FinalState) :- runAction(CurrentState, C, NextState),
                                                        runSeriesOfActions(NextState, L, FinalState).
 
-collect_ramifiable_agents(State, Result) :- collect_ramifiable_agents0(State, [], Result).
-collect_ramifiable_agents0([], UpToNow, UpToNow).
-collect_ramifiable_agents0([speed(Agent, _) | R], UpToNow, Result) :-
-				(in_list(Agent, UpToNow), collect_ramifiable_agents0(R, UpToNow, Result))
-									;
-				(not in_list(Agent, UpToNow), collect_ramifiable_agents0(R, [Agent|UpToNow], Result)).
-collect_ramifiable_agents0([X | R], UpToNow, Result) :- 
- 			collect_ramifiable_agents0(R, UpToNow, Result).
-
-complex_action(..., Z1, Z2) :- Z2 = Z1.
-
 isPointInEllipse(MajorAxis, F1x, F1y, F2x, F2y, Px, Py) :-
 	calcDistance(F1x, F1y, Px, Py, Dist1),
 	calcDistance(F2x, F2y, Px, Py, Dist2),
