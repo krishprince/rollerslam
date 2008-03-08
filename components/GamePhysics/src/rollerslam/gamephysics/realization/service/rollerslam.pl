@@ -77,12 +77,12 @@ state_update(Z1, dropAndKick(P,Error,vector(Vx,Vy)), Z3, []):-
 
 %% KICK ACTION
 state_update(Z1,kick(P,Error), Z2,[]):-
-             poss(kick(P),Z1),
              holds(P@[stamina->Strength], Z1),
              holds(P@[acceleration->vector(Ax,Ay)], Z1),
              holds(Ball@[acceleration->OldAcc],Z1),
              holds(Ball@[position->OldPos],Z1),
              holds(Ball@[speed->OldSpd],Z1),
+             poss(kick(P,OldPos),Z1),
              moduleAcc(Error, Strength, vector(Ax,Ay), vector(NewPAx,NewPAy)),
              speedPositionRamification(Ball, NewPAx, NewPAy, NewBVx, NewBVy, NewBSx, NewBSy, Z1),
              NewStamina is Strength - (Strength/10),
@@ -106,10 +106,10 @@ state_update(Z1, throw(P), Z3, []):-
 
 %% VOLLEY ACTION
 state_update(Z1,volley(P,Error, vector(Vx,Vy)), Z3,[]):-
-             poss(volley(P),Z1),
              holds(P@[stamina->Strength], Z1),
              holds(Ball@[position->OldPos],Z1),
              holds(Ball@[speed->OldSpd],Z1),
+             poss(volley(P,OldPos),Z1),
              moduleAcc(Error,Strength, vector(Vx,Vy), vector(Ax,Ay)),
              NewStamina #= Strength - (Strength * (1/10)),
              update(Z1,[Ball@[acceleration->vector(Ax, Ay)], P@[stamina->NewStamina]],[],Z2),
@@ -118,10 +118,10 @@ state_update(Z1,volley(P,Error, vector(Vx,Vy)), Z3,[]):-
 
 %% SPIKE KICK ACTION
 state_update(Z1,spike(P, Error, vector(Vx,Vy)), Z3,[]):-
-             poss(spike(P),Z1),
              holds(P@[stamina->Strength], Z1),
              holds(Ball@[position->OldPos],Z1),
              holds(Ball@[speed->OldSpd],Z1),
+             poss(spike(P,OldPos),Z1),
              moduleAcc(Error,Strength, vector(Vx,Vy), vector(Ax,Ay)),
              NewStamina #= Strength - (Strength * (1/5)),
              update(Z1,[Ball@[acceleration->vector(Ax, Ay)], P@[stamina->NewStamina]],[],Z2),
@@ -131,7 +131,6 @@ state_update(Z1,spike(P, Error, vector(Vx,Vy)), Z3,[]):-
 
 %% SCREEN ACTION
 state_update(Z1, screen(P,Pb), Z3,[]):-
-            poss(screen(P,Pb),Z1),
             holds(P@[stamina->StrengthA], Z1),
             holds(Pb@[stamina->StrengthB],Z1),
             (StrengthA > StrengthB,
