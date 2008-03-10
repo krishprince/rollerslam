@@ -83,67 +83,67 @@ contains(X1, Y1, X2, Y2, X, Y) :-
 boxscoreInitializeModel(_, []).
 
 boxscoreUpdateModel(Z0, Z1) :-
-            processaRamifications(Z0, [pass, shootStreak, pass_suc, stolen_pass, tackle_suc, counter_tackle_suc], Z2),
-            processaRamifications(Z2, [kick, throw, spike, volley, dropAndKick, tackle, counter_tackle], Z1).
+            processRamifications(Z0, [pass, shootStreak, pass_suc, stolen_pass, tackle_suc, counter_tackle_suc], Z2),
+            processRamifications(Z2, [kick, throw, spike, volley, dropAndKick, tackle, counter_tackle], Z1).
             
 boxscoreUpdateModel(Z0, Z1) :- Z1 = Z0.            
 
 boxscoreComputeNextAction(Z, askAll).
 
-processaRamifications(Z0, [],Z1) :- Z1 = Z0.
+processRamifications(Z0, [],Z1) :- Z1 = Z0.
 
-processaRamifications(Z0, [Action|L],Z1) :- processaRamification(Z0, Action, Z2), processaRamifications(Z2, L, Z1).
+processRamifications(Z0, [Action|L],Z1) :- processRamification(Z0, Action, Z2), processRamifications(Z2, L, Z1).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%ramifications - Memorize Actions   %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-processaRamification(Z0, kick, Z1) :-
+processRamification(Z0, kick, Z1) :-
             actionKick(P, Z0),
             update(Z0, [action(kick, P)], [], Z1).
 
-processaRamification(Z0, kick, Z1) :- Z1 = Z0.
+processRamification(Z0, kick, Z1) :- Z1 = Z0.
 
-processaRamification(Z0, throw, Z1) :-
+processRamification(Z0, throw, Z1) :-
             actionThrow(P, Z0),
             update(Z0, [action(throw, P)], [], Z1).
             
-processaRamification(Z0, throw, Z1) :- Z1 = Z0.
+processRamification(Z0, throw, Z1) :- Z1 = Z0.
 
-processaRamification(Z0, spike, Z1) :-
+processRamification(Z0, spike, Z1) :-
             actionSpike(P, Z0),
             update(Z0, [action(spike, P)], [], Z1).
             
-processaRamification(Z0, spike, Z1) :- Z1 = Z0.
+processRamification(Z0, spike, Z1) :- Z1 = Z0.
 
-processaRamification(Z0, volley, Z1) :-
+processRamification(Z0, volley, Z1) :-
             actionVolley(P, Z0),
             update(Z0, [action(volley, P)], [], Z1).
             
-processaRamification(Z0, volley, Z1) :- Z1 = Z0.
+processRamification(Z0, volley, Z1) :- Z1 = Z0.
 
-processaRamification(Z0, dropAndKick, Z1) :-
+processRamification(Z0, dropAndKick, Z1) :-
             actionDropAndKick(P, Z0),
             update(Z0, [action(dropAndKick, P)], [], Z1).
             
-processaRamification(Z0, dropAndKick, Z1) :- Z1 = Z0.
+processRamification(Z0, dropAndKick, Z1) :- Z1 = Z0.
 
-processaRamification(Z0, tackle, Z1) :-
+processRamification(Z0, tackle, Z1) :-
             actionTackle(P, P2, Z0),
             update(Z0, [action(tackle, P, P2)], [], Z1).
             
-processaRamification(Z0, tackle, Z1) :- Z1 = Z0.
+processRamification(Z0, tackle, Z1) :- Z1 = Z0.
 
-processaRamification(Z0, counter_tackle, Z1) :-
+processRamification(Z0, counter_tackle, Z1) :-
             actionCounter_tackle(P, P2, Z0),
             update(Z0, [action(counter_tackle, P, P2)], [], Z1).
             
-processaRamification(Z0, counter_tackle, Z1) :- Z1 = Z0.
+processRamification(Z0, counter_tackle, Z1) :- Z1 = Z0.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%ramifications - stats              %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-processaRamification(Z0, pass, Z1) :-
+processRamification(Z0, pass, Z1) :-
             holds(action(Action, P), Z0),
             member(Action, [kick, throw, spike, volley, dropAndKick]),
             playerTeam(P, Team, Z0),
@@ -155,9 +155,9 @@ processaRamification(Z0, pass, Z1) :-
             collisionPath(BallPosition, BallSpeed, P2Position),
             update(Z0, [pass(P, Action, P2), passAttempt(P, P2)], [action(Action, P)], Z1).
             
-processaRamification(Z0, pass, Z1) :- Z1 = Z0.
+processRamification(Z0, pass, Z1) :- Z1 = Z0.
 
-processaRamification(Z0, shootStreak, Z1) :-
+processRamification(Z0, shootStreak, Z1) :-
             holds(action(Action, P), Z0),
             member(Action, [kick, throw, spike, volley, dropAndKick]),
             playerTeam(P, Team, Z0),
@@ -169,16 +169,16 @@ processaRamification(Z0, shootStreak, Z1) :-
             N2 is N + 1,
             update(Z0, [shootStreak(P, Action, N2), goalShot(P, Action)], [shootStreak(P, Action, N), action(Action, P)], Z1).
 
-processaRamification(Z0, shootStreak, Z1) :- Z1 = Z0.
+processRamification(Z0, shootStreak, Z1) :- Z1 = Z0.
 
-processaRamification(Z0, pass_suc, Z1) :-
+processRamification(Z0, pass_suc, Z1) :-
             holds(passAttempt(P, P2), Z0),
             holds(hasBall(player(P2)), Z0),
             update(Z0, [pass_suc(P, P2)], [passAttempt(P, P2)], Z1).
             
-processaRamification(Z0, pass_suc, Z1) :- Z1 = Z0.
+processRamification(Z0, pass_suc, Z1) :- Z1 = Z0.
 
-processaRamification(Z0, stolen_pass, Z1) :-
+processRamification(Z0, stolen_pass, Z1) :-
             holds(passAttempt(P, P1), Z0),
             playerTeam(P, Team),
             holds(hasBall(player(P2)), Z0),
@@ -186,29 +186,42 @@ processaRamification(Z0, stolen_pass, Z1) :-
             not Team = Team2,
             update(Z0, [stolen_pass(P2, P, P1)], [passAttempt(P, P1)], Z1).
 
-processaRamification(Z0, stolen_pass, Z1) :- Z1 = Z0.
+processRamification(Z0, stolen_pass, Z1) :- Z1 = Z0.
 
-processaRamification(Z0, wrong_pass, Z1) :-
+processRamification(Z0, wrong_pass, Z1) :-
             holds(passAttempt(P, P1), Z0),
             playerTeam(P, Team),
             holds(hasBall(player(P2)), Z0),
             playerTeam(P2, Team),
             update(Z0, [wrong_pass(P2, P, P1)], [passAttempt(P, P1)], Z1).
 
-processaRamification(Z0, wrong_pass, Z1) :- Z1 = Z0.
+processRamification(Z0, wrong_pass, Z1) :- Z1 = Z0.
 
-processaRamification(Z0, tackle_suc, Z1) :-
+processRamification(Z0, tackle_suc, Z1) :-
             holds(action(tackle, P, P2), Z0),
             onFloor(P2, Z0),
             update(Z0, [tackle_suc(P, N+1), tackled(P2, Y+1)], [tackle_suc(P2, N), tackled(P2, Y), action(tackle, P, P2)], Z1).
             
-processaRamification(Z0, tackle_suc, Z1) :- Z1 = Z0.
+processRamification(Z0, tackle_suc, Z1) :- Z1 = Z0.
 
-processaRamification(Z0, counter_tackle_suc, Z1) :-
+processRamification(Z0, counter_tackle_suc, Z1) :-
             holds(action(counter_tackle, P), Z0),
             holds(action(tackle, P2, P), Z0),
             not onFloor(P, Z0),
             update(Z0, [counter_tackle_suc(P, N+1)], [counter_tackle_suc(P, N), action(counter_tackle, P, P2)], Z1).
             %retirar os counter tackle
             
-processaRamification(Z0, counter_tackle_suc, Z1) :- Z1 = Z0.
+processRamification(Z0, counter_tackle_suc, Z1) :- Z1 = Z0.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%ramifications - Scores   %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+processRamification(Z0, lowGoalScored, Z1) :-
+			holds(goalShot(P, Action), Z0),
+			ballLine(BallLine, Z0),
+            lowGoalLine(GoalLine, Team),
+			intersect(BallLine, GoalLine),
+			holds(score(lowGoal, Action, N), Z0),
+			update(Z0, [score(lowGoal, Action, N+1)], [goalShot(P, Action), score(lowGoal, Action, N)], Z1).
+			
+processRamification(Z0, lowGoalScored, Z1) :- Z1 = Z0.
