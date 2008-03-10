@@ -20,6 +20,8 @@ public class RollerslamImpl extends Rollerslam {
 	private static final int PLAYER_CYCLE = 500;
 	
 	private static final String TEAM_A = "TEAM_A";
+	private static final String TEAM_B = "TEAM_B";
+	private static final int NUMBER_PLAYERS = 4;
 	
 	private SimulationInfrastructure infrastructure;
 	private CommunicativeAgent		display;
@@ -64,15 +66,31 @@ public class RollerslamImpl extends Rollerslam {
 			AgentID displayID = new CommunicativeAgentID("display");
 			AgentID gamePhysicsID = new FluxAgentID("gamePhysics");
 			AgentID playerID = new FluxAgentID("player");
+			
+			
+			
 
 			Agent displayConnector = infrastructure.connectAgent(displayID);
 			Agent gamePhysicsConnector = infrastructure.connectAgent(gamePhysicsID);
 			Agent playerConnector = infrastructure.connectAgent(playerID);
+			
 
 			display = new DisplayAgent(displayConnector, gamePhysicsID, DISPLAY_CYCLE);
-			gamePhysics = new GamePhysicsAgent(gamePhysicsConnector, GAME_PHYSICS_CYCLE, 2);
-			player = new PlayerAgent(playerConnector, PLAYER_CYCLE, TEAM_A, 1);
+			gamePhysics = new GamePhysicsAgent(gamePhysicsConnector, GAME_PHYSICS_CYCLE, NUMBER_PLAYERS);
+			//player = new PlayerAgent(playerConnector, PLAYER_CYCLE, TEAM_A, 1);
+			for(int i=1; i<=NUMBER_PLAYERS;i++){		
+				AgentID playerIDGen = new FluxAgentID("player"+i);
+				Agent playerConnectorGen = infrastructure.connectAgent(playerIDGen);
+				player = new PlayerAgent(playerConnectorGen, PLAYER_CYCLE,TEAM_A,i);
 
+			}
+			for(int i=1; i<=NUMBER_PLAYERS;i++){		
+				AgentID playerIDGen = new FluxAgentID("player"+i);
+				Agent playerConnectorGen = infrastructure.connectAgent(playerIDGen);
+				player = new PlayerAgent(playerConnectorGen, PLAYER_CYCLE,TEAM_B,i);
+
+			}
+	
 			infrastructure.getSimAdmin().setState(SimulationState.RUNNING);
 	}
 
