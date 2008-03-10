@@ -137,6 +137,4 @@ limitModulo(V, M, R) :-
 	modulo(V, Mold),
 	
 	((Mold > 0, Ratio is M / Mold, multVector(V, Ratio, R)) ;
-	 (Mold =< 0, R = V))
-	
-	.
+	 (Mold =< 0, R = V)).
