@@ -1,6 +1,7 @@
 package rollerslam.toplevel.realization.service;
 import rollerslam.agent.communicative.specification.service.CommunicativeAgent;
 import rollerslam.agent.communicative.specification.type.CommunicativeAgentID;
+import rollerslam.boxscore.realization.service.BoxScore;
 import rollerslam.display.realization.service.DisplayAgent;
 import rollerslam.fluxcommunicativeagent.realization.type.FluxAgentID;
 import rollerslam.gamephysics.realization.service.GamePhysicsAgent;
@@ -18,6 +19,7 @@ public class RollerslamImpl extends Rollerslam {
 	private static final int DISPLAY_CYCLE = 500;
 	private static final int GAME_PHYSICS_CYCLE = 100;
 	private static final int PLAYER_CYCLE = 500;
+	private static final int BOXSCORE_CYCLE = 300;
 	
 	private static final String TEAM_A = "TEAM_A";
 	private static final String TEAM_B = "TEAM_B";
@@ -27,6 +29,7 @@ public class RollerslamImpl extends Rollerslam {
 	private CommunicativeAgent		display;
 	private CommunicativeAgent		gamePhysics;
 	private CommunicativeAgent		player;
+	private CommunicativeAgent		boxscore;
 
 	public SimulationInfrastructure getInfrastructure() {
 		return infrastructure;
@@ -66,15 +69,15 @@ public class RollerslamImpl extends Rollerslam {
 			AgentID displayID = new CommunicativeAgentID("display");
 			AgentID gamePhysicsID = new FluxAgentID("gamePhysics");
 			AgentID playerID = new FluxAgentID("player");
-			
-			
-			
+			AgentID boxscoreID = new FluxAgentID("boxscore");
 
 			Agent displayConnector = infrastructure.connectAgent(displayID);
 			Agent gamePhysicsConnector = infrastructure.connectAgent(gamePhysicsID);
 			Agent playerConnector = infrastructure.connectAgent(playerID);
+			Agent boxscoreConnector = infrastructure.connectAgent(boxscoreID);
 			
-
+			
+			boxscore = new BoxScore(boxscoreConnector, BOXSCORE_CYCLE);
 			display = new DisplayAgent(displayConnector, gamePhysicsID, DISPLAY_CYCLE);
 			gamePhysics = new GamePhysicsAgent(gamePhysicsConnector, GAME_PHYSICS_CYCLE, NUMBER_PLAYERS);
 			//player = new PlayerAgent(playerConnector, PLAYER_CYCLE, TEAM_A, 1);
