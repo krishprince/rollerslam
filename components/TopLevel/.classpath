@@ -9,5 +9,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/FluxCommunicativeAgent"/>
 	<classpathentry kind="lib" path="/FluxInferenceEngine/lib/eclipse.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Display"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/BoxScore"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
