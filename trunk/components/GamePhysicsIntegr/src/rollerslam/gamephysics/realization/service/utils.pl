@@ -30,13 +30,11 @@ insideBoundary(vector(NSx,NSy)):-
                  
 
 %% retrieves the new acceleration vector (Resultx,Resulty) based on the Strength and the current acceleration vector (Vx,Vy)
-moduleAcc(Error,Strength, vector(Vx,Vy), vector(Resultx,Resulty)):-
-                              validateError(Error, 0.15, ErrorR),
-                              moduleFlux(ErrorR,Strength, ResultX, ResultY),
+moduleAcc(Strength, vector(Vx,Vy), vector(Resultx,Resulty)):-
                               Num is ((1 + Strength) * 1.25),
                               multVector(vector(Vx,Vy), Num , vector(XR, YR)),
-                              Resultx is XR * ResultX,
-                              Resulty is YR * ResultY.
+                              Resultx is XR,
+                              Resulty is YR.
 
 
 
@@ -78,15 +76,7 @@ checkModule(V, Max, VR):-
 	    (limitModuloTo(V, Max), V=VR)
 	    ;
 	    setModule(V, Max, VR).
-	    
-checkError(Error, Num):-
-        Error > Num.
-        
-validateError(Error, Num, Result):-
-        (checkError(Error, Num),
-         Result is Num)
-        ; 
-        (Result is Error).  
+ 
         
 checkModule(Param):-
        Param = 0.
