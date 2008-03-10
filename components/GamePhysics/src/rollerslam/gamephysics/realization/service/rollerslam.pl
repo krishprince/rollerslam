@@ -40,8 +40,14 @@ state_update(Z1,skate(P, Error), Z2, []) :-
             speedPositionRamification(P, NewAx, NewAy, NewVx, NewVy, NewSx, NewSy, Z1),
             NewStamina #= Strength - (Strength/100),
             update(Z1,
-                   [P@[acceleration->vector(NewAx, NewAy)], P@[speed->vector(NewVx,NewVy)], P@[position->vector(NewSx,NewSy)], P@[stamina->NewStamina]],
-                   [P@[acceleration->vector(Ax0, Ay0)], P@[speed->vector(Vx0,Vy0)], P@[position->vector(Sx0,Sy0)], P@[stamina->Strength]],
+                   [P@[acceleration->vector(NewAx, NewAy)],
+                    P@[speed->vector(NewVx,NewVy)],
+                    P@[position->vector(NewSx,NewSy)],
+                    P@[stamina->NewStamina]],
+                   [P@[acceleration->vector(Ax0, Ay0)],
+                    P@[speed->vector(Vx0,Vy0)],
+                    P@[position->vector(Sx0,Sy0)],
+                    P@[stamina->Strength]],
                    Z2).
 
 %% Actions with ball
@@ -80,17 +86,23 @@ state_update(Z1,kick(P,Error), Z2,[]):-
              holds(P@[stamina->Strength], Z1),
              holds(P@[acceleration->vector(Ax,Ay)], Z1),
              holds(Ball@[acceleration->OldAcc],Z1),
-             holds(Ball@[position->OldPos],Z1),
+             holds(Ball@[position->vector(Sbx,Sby)],Z1),
              holds(Ball@[speed->OldSpd],Z1),
-             poss(kick(P,OldPos),Z1),
+             poss(kick(P,vector(Sbx,Sby)),Z1),
              moduleAcc(Error, Strength, vector(Ax,Ay), vector(NewPAx,NewPAy)),
              speedPositionRamification(Ball, NewPAx, NewPAy, NewBVx, NewBVy, NewBSx, NewBSy, Z1),
              NewStamina is Strength - (Strength/10),
              update(Z1,
-                    [Ball@[acceleration->vector(NewPAx,NewPAy)], Ball@[position->vector(NewBSx,NewBSy)], Ball@[position->vector(NewBVx,NewBVy)], P@[stamina->NewStamina]],
-                    [P@[hasBall->false], P@[stamina->Strength], Ball@[acceleration->OldAcc], Ball@[position->OldPos], Ball@[position->OldSpd]],
+                    [Ball@[acceleration->vector(NewPAx,NewPAy)],
+                     Ball@[speed->vector(NewBSx,NewBSy)],
+                     Ball@[position->vector(NewBVx,NewBVy)],
+                     P@[stamina->NewStamina]],
+                    [P@[hasBall->false],
+                     P@[stamina->Strength],
+                     Ball@[acceleration->OldAcc],
+                     Ball@[position->vector(Sbx,Sby)],
+                     Ball@[speed->OldSpd]],
                     Z2).
-
 
 %% THROW ACTION
 state_update(Z1, throw(P), Z3, []):-

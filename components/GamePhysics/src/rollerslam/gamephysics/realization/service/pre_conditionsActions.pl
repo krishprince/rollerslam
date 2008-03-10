@@ -31,7 +31,7 @@ poss(catch(P),Z):- holds(Ball@[free->true], Z),
 
 poss(dropAndKick(P),Z):- holds(P@[hasBall->true],Z).
 
-poss(kick(P,vector(Sbx, Sby)),Z):-  holds(P@[position->vector(Sx, Sy)], Z),
+poss(kick(P,vector(Sbx, Sby)),Z) :-  holds(P@[position->vector(Sx, Sy)], Z),
                    closer(Sx, Sy, Sbx, Sby, 500).
 
 poss(throw(P),Z):- holds(P@[hasBall->true],Z).
