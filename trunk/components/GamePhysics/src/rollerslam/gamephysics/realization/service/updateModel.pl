@@ -15,13 +15,14 @@
 speedPositionRamification(FluentObject, Ax, Ay, NewVx, NewVy, NewSx, NewSy, Z) :-
        holds(FluentObject@[speed->vector(Vix, Viy)], Z),
        holds(FluentObject@[position->vector(Six, Siy)], Z),
-
-       VectorA is sqrt((Ax*Ax)+(Ay*Ay)),
-       NewVx is Vix + VectorA * 2,
-       NewVy is Viy + VectorA * 2,
-       Sx is Six + Vix * 2 + (VectorA * 4)/2,
-       Sy is Siy + Viy * 2 + (VectorA * 4)/2,
-
+       Ax2 is (Ax*Ax),
+       Ay2 is (Ay*Ay),
+       VectorA is sqrt(Ax2 + Ay2),
+       VectorA2 is VectorA * 2,
+       NewVx is Vix + VectorA2,
+       NewVy is Viy + VectorA2,
+       Sx is Six + (Vix * 2) + VectorA2,
+       Sy is Siy + (Viy * 2) + VectorA2,
        existsSomeone(vector(Six,Siy), vector(Sx,Sy),Z,vector(MidSx, MidSy)),
        outBoundary(vector(MidSx, MidSy),vector(NewSx,NewSy)).
 
@@ -33,10 +34,12 @@ speedPositionRamification(FluentObject, Ax, Ay, NewVx, NewVy, NewSx, NewSy, Z) :
 %% @ = 45º, t=2, g=10
 
 jumpH(vector(Vx,Vy),CurrentState,vector(NewSx,NewSy)):-
-                                Sx #= Vx * 2 * sqrt(2)/2,
-                                Sy #= Vy * 2 * sqrt(2)/2,
-                                existsSomeone(vector(Sx,Sy),CurrentState,vector(MidSx, MidSy)),
-                                outBoundary(vector(MidSx, MidSy),vector(NewSx,NewSy)).
+       Sqr2 is sqrt(2),
+       HalfSqr2 is Sqr2/2,
+       Sx is Vx * 2 * HalfSqr2,
+       Sy is Vy * 2 * HalfSqr2,
+       existsSomeone(vector(Sx,Sy),CurrentState,vector(MidSx, MidSy)),
+       outBoundary(vector(MidSx, MidSy),vector(NewSx,NewSy)).
 
 %% The following idea is update the position by considering that the player is jumping vertically on the ramp
 
@@ -46,31 +49,35 @@ jumpH(vector(Vx,Vy),CurrentState,vector(NewSx,NewSy)):-
 %% @ = 90º, t=2, g=10
 
 jumpV(vector(Six,Siy),CurrentState,vector(NewSx,NewSy)):-
-                                  Sx = Six,
-                                  Sy = Siy,
-                                  existsSomeone(vector(Sx,Sy),CurrentState,vector(MidSx, MidSy)),
-                                  outBoundary(vector(MidSx, MidSy),vector(NewSx,NewSy)).
+       Sx = Six,
+       Sy = Siy,
+       existsSomeone(vector(Sx,Sy),CurrentState,vector(MidSx, MidSy)),
+       outBoundary(vector(MidSx, MidSy),vector(NewSx,NewSy)).
 
 %% To check if exist someone in the new localization. In this case, the position is updated to a near location.
 
 existsSomeone(vector(Six,Siy),vector(Sx,Sy),State,vector(NewSx, NewSy)):-
-                                                    (
-                                                    holds(position(_,vector(NewSx,NewSy)),State),
-                                                    pertencesToLine(vector(Six,Siy),vector(Sx,Sy),vector(NewSx, NewSy)),
-                                                    Sx #= Sx + 1,
-                                                    Sy #= Sy + 1,
-                                                    existsSomeone(vector(Six,Siy),vector(Sx,Sy),State,vector(NewSx, NewSy))
-                                                     );
-                                                    (NewSx = Sx, NewSy = Sy).
+       (
+         holds(position(_,vector(NewSx,NewSy)),State),
+         pertencesToLine(vector(Six,Siy),vector(Sx,Sy),vector(NewSx, NewSy)),
+         Sx #= Sx + 1,
+         Sy #= Sy + 1,
+         existsSomeone(vector(Six,Siy),vector(Sx,Sy),State,vector(NewSx, NewSy))
+        );
+       (NewSx = Sx, NewSy = Sy).
+
+%% Verifies if the point (Pi,Pf) belongs to the line that crosses the points (Xi,Yi) and (Xf,Yf)
 
 pertencesToLine(vector(Xi,Yi), vector(Xf,Yf), vector(Pi,Pf)):-
-                                           A #= (Yf - Yi)/(Xf-Xi),
-                                           B #= Yi - ((Yf - Yi)/(Xf-Xi)*Xi),
-                                           Pf = A * Pi + B,
-                                           ((Xf>=Xi, Xf>=Pi);(Xf<Xi,Pi<Xi)),
-                                           ((Yf>=Yi, Yf>=Pf);(Yf<Yi,Pf<Yi)).
-
-
+       Dify is Yf - Yi,
+       Difx is Xf - Xi,
+       A is Dify / Difx,
+       AXi is A * Xi,
+       B is Yi - AXi,
+       APi is A * Pi,
+       Pf = APi + B,
+       ((Xf >= Xi, Xf >= Pi);(Xf < Xi,Pi < Xi)),
+       ((Yf >= Yi, Yf >= Pf);(Yf < Yi,Pf < Yi)).
 
 %%  Colision response (what happens after the colision)
 
@@ -85,15 +92,15 @@ pertencesToLine(vector(Xi,Yi), vector(Xf,Yf), vector(Pi,Pf)):-
 %% Considering the player impact, we keep the same vector direction and change the sense
 
 outBoundary(vector(MidSx, MidSy),vector(NewSx,NewSy)):-
-                                    (
-                                     isOnInTrack(vector(MidSx,MidSy)),
-                                     NewSx = MidSx,
-                                     NewSy = MidSy
-                                     );
-                                     (
-                                     NewSx #= MidSx * (-1),
-                                     NewSy #= MidSy * (-1)
-                                     ).
+       (
+        isOnInTrack(vector(MidSx,MidSy)),
+        NewSx = MidSx,
+        NewSy = MidSy
+       );
+       (
+       NewSx is MidSx * (-1),
+       NewSy is MidSy * (-1)
+       ).
 
 
 
