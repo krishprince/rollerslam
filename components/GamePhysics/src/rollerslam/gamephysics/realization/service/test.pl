@@ -3,7 +3,7 @@
 :- ['rollerslam'].
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% SKATE
+%% SKATE (Yes)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 mainSkate(FinalState) :-
@@ -24,7 +24,7 @@ mainSkate(FinalState) :-
           runSeriesOfActions(CurrentState, Actions, FinalState).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% KICK Near Ball
+%% KICK Near Ball (Yes)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 mainKickNear(FinalState) :-
@@ -36,9 +36,9 @@ mainKickNear(FinalState) :-
             agent1@[speed->vector(1,1)],
             agent1@[position->vector(1,1)],
             agent1@[stamina->1000],
-            Ball@[acceleration->vector(1,1)],
-            Ball@[position->vector(1,1)],
-            Ball@[speed->vector(1,1)]
+            ball@[acceleration->vector(1,1)],
+            ball@[position->vector(1,1)],
+            ball@[speed->vector(1,1)]
                 ],
 %% action sequence
 
@@ -47,7 +47,7 @@ mainKickNear(FinalState) :-
           runSeriesOfActions(CurrentState, Actions, FinalState).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% KICK Not Near Ball
+%% KICK Not Near Ball (No)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 mainKickNotNear(FinalState) :-
@@ -59,9 +59,9 @@ mainKickNotNear(FinalState) :-
             agent1@[speed->vector(1,1)],
             agent1@[position->vector(1,1)],
             agent1@[stamina->1000],
-            Ball@[acceleration->vector(1,1)],
-            Ball@[position->vector(1000,1000)],
-            Ball@[speed->vector(1,1)]
+            ball@[acceleration->vector(1,1)],
+            ball@[position->vector(1000,1000)],
+            ball@[speed->vector(1,1)]
                 ],
 %% action sequence
 

@@ -55,15 +55,16 @@ state_update(Z1,skate(P, Error), Z2, []) :-
 %% RELEASE ACTION
 state_update(Z1, release(P), Z2, [Whistle]):-
              poss(release(P),Z1),
+             holds(ball@[free->true], Z1),
              Whistle = true,
-             update(Z1,[Ball@[free->true]],[P@[hasBall->false]],Z2).
+             update(Z1,[ball@[free->true]],[P@[hasBall->false]],Z2).
 
 
 %% CATCH ACTION
 state_update(Z1, catch(P), Z2, []):-
-            poss(catch(P),Z1),
-            update(Z1,[P@[hasBall->true]],[Ball@[free->false]],Z2).
-
+             poss(catch(P),Z1),
+             holds(ball@[free->false], Z1),
+             update(Z1,[P@[hasBall->true]],[ball@[free->false]],Z2).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%% HOLDING BALL ACTIONS %%%%%%%%%%%%%%%%%%%%%%
@@ -73,71 +74,71 @@ state_update(Z1, catch(P), Z2, []):-
 state_update(Z1, dropAndKick(P,Error,vector(Vx,Vy)), Z3, []):-
              poss(dropAndKick(P),Z1),
              holds(P@[stamina->Strength], Z1),
-             holds(Ball@[position->OldPos],Z1),
-             holds(Ball@[speed->OldSpd],Z1),
+             holds(ball@[position->OldPos],Z1),
+             holds(ball@[speed->OldSpd],Z1),
              moduleAcc(Error,Strength, vector(Vx,Vy), vector(Ax,Ay)),
              NewStamina #= Strength - (Strength * (1/10)),
-             update(Z1,[Ball@[acceleration->vector(Ax, Ay)], P@[stamina->NewStamina], Ball@[free->true]],[P@[hasBall->false]],Z2),
-             ramify(Z2,[Ball@[acceleration->vector(Ax, Ay)],Ball@[position->OldPos],Ball@[speed->OldSpd]],[],Z3).
+             update(Z1,[ball@[acceleration->vector(Ax, Ay)], P@[stamina->NewStamina], ball@[free->true]],[P@[hasBall->false]],Z2),
+             ramify(Z2,[ball@[acceleration->vector(Ax, Ay)],ball@[position->OldPos],ball@[speed->OldSpd]],[],Z3).
 
 
 %% KICK ACTION
 state_update(Z1,kick(P,Error), Z2,[]):-
              holds(P@[stamina->Strength], Z1),
              holds(P@[acceleration->vector(Ax,Ay)], Z1),
-             holds(Ball@[acceleration->OldAcc],Z1),
-             holds(Ball@[position->vector(Sbx,Sby)],Z1),
-             holds(Ball@[speed->OldSpd],Z1),
+             holds(ball@[acceleration->OldAcc],Z1),
+             holds(ball@[position->vector(Sbx,Sby)],Z1),
+             holds(ball@[speed->OldSpd],Z1),
              poss(kick(P,vector(Sbx,Sby)),Z1),
              moduleAcc(Error, Strength, vector(Ax,Ay), vector(NewPAx,NewPAy)),
-             speedPositionRamification(Ball, NewPAx, NewPAy, NewBVx, NewBVy, NewBSx, NewBSy, Z1),
+             speedPositionRamification(ball, NewPAx, NewPAy, NewBVx, NewBVy, NewBSx, NewBSy, Z1),
              NewStamina is Strength - (Strength/10),
              update(Z1,
-                    [Ball@[acceleration->vector(NewPAx,NewPAy)],
-                     Ball@[speed->vector(NewBSx,NewBSy)],
-                     Ball@[position->vector(NewBVx,NewBVy)],
+                    [ball@[acceleration->vector(NewPAx,NewPAy)],
+                     ball@[speed->vector(NewBSx,NewBSy)],
+                     ball@[position->vector(NewBVx,NewBVy)],
                      P@[stamina->NewStamina]],
                     [P@[hasBall->false],
                      P@[stamina->Strength],
-                     Ball@[acceleration->OldAcc],
-                     Ball@[position->vector(Sbx,Sby)],
-                     Ball@[speed->OldSpd]],
+                     ball@[acceleration->OldAcc],
+                     ball@[position->vector(Sbx,Sby)],
+                     ball@[speed->OldSpd]],
                     Z2).
 
 %% THROW ACTION
 state_update(Z1, throw(P), Z3, []):-
              poss(throw(P,Error,vector(Vx,Vy)),Z1),
              holds(P@[stamina->Strength], Z1),
-             holds(Ball@[position->OldPos],Z1),
-             holds(Ball@[speed->OldSpd],Z1),
+             holds(ball@[position->OldPos],Z1),
+             holds(ball@[speed->OldSpd],Z1),
              moduleAcc(Error,Strength, vector(Vx,Vy), vector(Ax,Ay)),
              NewStamina #= Strength - (Strength * (1/5)),
-             update(Z1,[Ball@[acceleration->vector(Ax, Ay)], P@[stamina->NewStamina],Ball@[free->true]],[P@[hasBall->false]],Z2),
-             ramify(Z2,[Ball@[acceleration->vector(Ax, Ay)],Ball@[position->OldPos],Ball@[speed->OldSpd]],[],Z3).
+             update(Z1,[ball@[acceleration->vector(Ax, Ay)], P@[stamina->NewStamina],ball@[free->true]],[P@[hasBall->false]],Z2),
+             ramify(Z2,[ball@[acceleration->vector(Ax, Ay)],ball@[position->OldPos],ball@[speed->OldSpd]],[],Z3).
 
 
 %% VOLLEY ACTION
 state_update(Z1,volley(P,Error, vector(Vx,Vy)), Z3,[]):-
              holds(P@[stamina->Strength], Z1),
-             holds(Ball@[position->OldPos],Z1),
-             holds(Ball@[speed->OldSpd],Z1),
+             holds(ball@[position->OldPos],Z1),
+             holds(ball@[speed->OldSpd],Z1),
              poss(volley(P,OldPos),Z1),
              moduleAcc(Error,Strength, vector(Vx,Vy), vector(Ax,Ay)),
              NewStamina #= Strength - (Strength * (1/10)),
-             update(Z1,[Ball@[acceleration->vector(Ax, Ay)], P@[stamina->NewStamina]],[],Z2),
-             ramify(Z2,[Ball@[acceleration->vector(Ax, Ay)],Ball@[position->OldPos],Ball@[speed->OldSpd]],[],Z3).
+             update(Z1,[ball@[acceleration->vector(Ax, Ay)], P@[stamina->NewStamina]],[],Z2),
+             ramify(Z2,[ball@[acceleration->vector(Ax, Ay)],ball@[position->OldPos],ball@[speed->OldSpd]],[],Z3).
 
 
 %% SPIKE KICK ACTION
 state_update(Z1,spike(P, Error, vector(Vx,Vy)), Z3,[]):-
              holds(P@[stamina->Strength], Z1),
-             holds(Ball@[position->OldPos],Z1),
-             holds(Ball@[speed->OldSpd],Z1),
+             holds(ball@[position->OldPos],Z1),
+             holds(ball@[speed->OldSpd],Z1),
              poss(spike(P,OldPos),Z1),
              moduleAcc(Error,Strength, vector(Vx,Vy), vector(Ax,Ay)),
              NewStamina #= Strength - (Strength * (1/5)),
-             update(Z1,[Ball@[acceleration->vector(Ax, Ay)], P@[stamina->NewStamina]],[],Z2),
-             ramify(Z2,[Ball@[acceleration->vector(Ax, Ay)],Ball@[position->OldPos],Ball@[speed->OldSpd]],[],Z3).
+             update(Z1,[ball@[acceleration->vector(Ax, Ay)], P@[stamina->NewStamina]],[],Z2),
+             ramify(Z2,[ball@[acceleration->vector(Ax, Ay)],ball@[position->OldPos],ball@[speed->OldSpd]],[],Z3).
 
 
 
@@ -206,7 +207,7 @@ state_update(Z1, tackle(P,Pb), Z2, []):-
 %% DUNK ACTION
 state_update(Z1, dunk(P,Dir), Z2, []):-
                poss(dunk(P),Z1),
-               holds(Ball@[position->OldPos],Z1),
-               update(Z1,[Ball@[position->Dir]],[Ball@[position->OldPos], P@[hasBall->false]],Z2).
+               holds(ball@[position->OldPos],Z1),
+               update(Z1,[ball@[position->Dir]],[ball@[position->OldPos], P@[hasBall->false]],Z2).
 
 
